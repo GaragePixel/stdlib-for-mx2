@@ -1,8 +1,8 @@
 ***** Welcome to stdlib! *****
 
-	stdlib version 1.0.0
-		Mark Sibly, Monkey coders and iDkP from GaragePixel
-		Please read the licence contained in the LICENCE file of this distribution.
+stdlib version 1.0.0
+	Mark Sibly, Monkey coders and iDkP from GaragePixel
+	Please read the licence contained in the LICENCE file of this distribution.
 
 ***** This library is written for a specific language *****
 
