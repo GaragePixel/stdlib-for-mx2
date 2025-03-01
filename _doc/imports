@@ -1,0 +1,227 @@
+
+	Files in include-order with namespaces declared inside:
+
+________Plugins:
+		
+		#Import "plugins/makefile"
+			Namespace stdlib.plugins
+		
+			#Import "plugins/libc/libc"
+				Namespace stdlib.plugins.libc
+			#Import "plugins/zlib/zlib"
+				Namespace stdlib.plugins.zlib
+			#Import "plugins/miniz/miniz"
+				Namespace stdlib.plugins.miniz
+			#Import "plugins/jni/jni"
+				Namespace stdlib.plugins.jni
+			#Import "plugins/sdl2/sdl2"
+				Namespace stdlib.plugins.sdl2
+			#Import "plugins/stb/stb"
+				Namespace stdlib.plugins.stb
+				#Import "plugins/stb-image/stb-image"
+					Namespace stdlib.plugins.stb.image
+				#Import "plugins/stb-image-write/stb-image-write"
+					Namespace stdlib.plugins.stb.image
+				#Import "plugins/stb-vorbis/stb-vorbis"
+					Namespace stdlib.plugins.stb.vorbis
+				#Import "plugins/stb-truetype/stb-truetype"
+					Namespace stdlib.plugins.stb.truetype
+		
+________Targets:
+		
+		#Import "targets/makefile" 
+			Namespace stdlib.targets
+		
+		#If __TARGET__="emscripten"
+				#Import "emscripten/emscripten"
+				Namespace stdlib.targets.emscripten
+		
+		#ElseIf __TARGET__="android"
+				#Import "android/android"
+				Namespace stdlib.targets.android
+		
+		#ElseIf __TARGET__="ios"
+				'#Import "<ios>" 'it's the wrong path to the machine world
+		
+		#ElseIf __TARGET__="raspbian"
+				#Import "raspbian/raspberry"
+				Namespace stdlib.targets.raspberry
+					#Import "pigpio/pigpio"
+					Namespace stdlib.targets.raspberry.pigpio
+		
+		#If __TARGET__="windows"
+				'Note: If you don't need the win32 api, you can comment
+				'the import command. Just recompile the lib after that.
+				#Import "win32/win32"
+				Namespace stdlib.target.win32
+		#Endif
+		
+________Kernel:
+		
+		#Import "collections/collections"
+			Namespace stdlib.collections
+		
+			#Import "container"
+			#Import "list"
+			#Import "stack"
+			#Import "deque"
+			#Import "map"
+				Namespace stdlib.collections
+		
+		#Import "system/system"
+			Namespace stdlib.system
+		
+			#Import "system/resources/resource"
+				Namespace stdlib.system.resource
+		
+			#Import "system/io/stream/stream"
+				Namespace stdlib.system.io
+		
+			#Import "system/io/stream/filestream"
+				Namespace stdlib.system.io
+		
+			#Import "system/memory/byteorder"
+				Namespace stdlib.system.memory
+		
+			#Import "system/memory/databuffer"
+				Namespace stdlib.system.memory
+		
+			#Import "system/memory/datastream"
+				Namespace stdlib.system.memory
+		
+			#Import "system/async/async"
+				Namespace stdlib.system.async
+		
+			#Import "system/time/timecore"
+				Namespace stdlib.system.time
+			#Import "system/time/time-parser"
+				Namespace stdlib.system.time
+			#Import "system/time/timer"
+				Namespace stdlib.system.timer
+		
+			#Import "system/fiber/fiber"
+				Namespace stdlib.system.fiber
+			#Import "system/fiber/future"
+				Namespace stdlib.system.fiber
+			#Import "system/process/process"
+				Namespace stdlib.system.process
+			#Import "system/process/processstream"
+				Namespace stdlib.system.process
+		
+			#Import "io/filesystem/filesystem" 'not really needed here
+				Namespace stdlib.system.io.filesystem
+		
+____________Auxiliary-systems:
+		
+			#Import "io/requesters/requesters"
+				Namespace stdlib.system.io.requesters
+			#Import "io/permissions/permissions"
+				Namespace stdlib.system.io.permissions
+		
+			#Import "io/socket/socket"
+				Namespace stdlib.system.io.socket
+			#Import "io/socket/socketstream"
+				Namespace stdlib.system.io.socket
+		
+			#Import "thread/thread"
+				Namespace stdlib.system.thread
+
+			#Import "system/reflection/reflection"
+				Namespace stdlib.reflection
+		
+________Sub-systems:
+		
+		#Import "math/math"
+			Namespace stdlib.math
+		
+			#Import "algebraic/vectorials/types/box"
+			#Import "algebraic/vectorials/types/line"
+			#Import "algebraic/vectorials/types/plane"
+			#Import "algebraic/vectorials/types/quat"
+			#Import "algebraic/vectorials/types/rect"
+			#Import "algebraic/vectorials/types/vec2"
+			#Import "algebraic/vectorials/types/vec3"
+			#Import "algebraic/vectorials/types/vec4"
+			Namespace stdlib.math.types
+		
+			#Import "algebraic/linear/matrices/affines/affinemat3"
+				Namespace stdlib.math.matrices.affinemat3
+		
+			#Import "algebraic/linear/matrices/affines/affinemat4"
+				Namespace stdlib.math.matrices.affinemat4
+		
+			#Import "algebraic/linear/matrices/mat3"
+				Namespace stdlib.math.matrices
+			#Import "algebraic/linear/matrices/mat4"
+				Namespace stdlib.math.matrices
+		
+			#Import "algebraic/vectorials/coordinates/axis"
+				Namespace stdlib.math.coordinates
+		
+			#Import "random/random"
+				Namespace stdlib.math.random
+		
+		#Import "resources/graphics/pixelformat"
+		#Import "resources/graphics/pixmap"
+		#Import "resources/graphics/pixmaploader"
+		#Import "resources/graphics/pixmapsaver"
+		#Import "resources/graphics/color"
+			Namespace stdlib.graphics
+		
+		#import "resources/audio/audioformat"
+		#import "resources/audio/audiodata"
+		#import "resources/audio/load_wav"
+		#import "resources/audio/load_vorbis"
+			Namespace stdlib.audio
+		
+________Algorithms:
+		
+		#Import "algorithms/compression/compression"
+			Namespace stdlib.compression
+			#Import "zip/zipfile"
+				Namespace stdlib.compression.zipfile
+		
+		#Import "algorithms/cryptography/crypto"
+			Namespace stdlib.crypto
+		
+			#Import "tinyaes/tinyaes"
+				Namespace stdlib.cryptography.aes
+		
+			Namespace stdlib.crypto.hashing
+				Namespace stdlib.crypto.hashing
+		
+				#Import "hashing/md5"
+					Namespace stdlib.crypto.hashing.md5
+					#Import "utils"
+						Namespace stdlib.crypto.hashing.utils
+					Using stdlib.crypto.hashing.utils
+				#Import "hashing/sha1"
+					Namespace stdlib.crypto.hashing.sha1
+					#Import "utils"
+						Namespace stdlib.crypto.hashing.utils
+					Using stdlib.crypto.hashing.utils
+				#Import "hashing/sha256"
+					Namespace stdlib.crypto.hashing.sha256
+					#Import "utils"
+						Namespace stdlib.crypto.hashing.utils
+					Using stdlib.crypto.hashing.utils
+		
+		#Import "algorithms/encoding/base64/base64"
+			Namespace stdlib.base64
+		
+________Front-end io:
+		
+			#Import "io"
+			Namespace stdlib.io
+		
+				#Import "io/json/json"
+					Namespace stdlib.io.json
+				#Import "io/json/jsonify"
+					Namespace stdlib.io.jsonify
+			
+				#Import "io/stringio"
+					Namespace stdlib.stringio
+			
+			
+				#Import "io/chartype"
+					Namespace stdlib.stringio

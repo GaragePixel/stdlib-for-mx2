@@ -1,0 +1,84 @@
+
+	Namespaces:
+
+		stdlib
+		
+______________plugins
+			
+			stdlib.plugins
+				stdlib.plugins.libc
+				stdlib.plugins.zlib
+				stdlib.plugins.miniz
+				stdlib.plugins.jni
+				stdlib.plugins.sdl2
+				stdlib.plugins.stb
+					stdlib.plugins.stb.image
+					stdlib.plugins.stb.vorbis
+					stdlib.plugins.stb.truetype
+		
+______________platforms
+
+			stdlib.platforms
+				stdlib.platforms.emscripten
+				stdlib.platforms.android
+				stdlib.platforms.win32
+				stdlib.platforms.raspberry
+					stdlib.platforms.raspberry.pigpio
+			
+______________kernel
+		
+			stdlib.collections
+
+			stdlib.system
+				stdlib.system.resource
+				stdlib.system.memory
+				stdlib.system.async
+				stdlib.system.time
+				stdlib.system.timer
+				stdlib.system.fiber
+				stdlib.system.process
+				stdlib.system.thread
+				stdlib.system.io
+					stdlib.system.io.filesystem
+					stdlib.system.io.requesters
+					stdlib.system.io.permissions
+					stdlib.system.io.socket
+			
+______________sub-system
+			
+			stdlib.math
+				stdlib.math.types
+				stdlib.math.matrices
+					stdlib.math.matrices.affinemat3
+					stdlib.math.matrices.affinemat4
+				stdlib.math.coordinates	
+				stdlib.math.random
+				
+			stdlib.graphics
+			
+			stdlib.audio
+			
+			stdlib.reflection
+			
+______________algorithms
+			
+			stdlib.compression
+				stdlib.compression.zipfile
+				
+			stdlib.crypto
+				stdlib.crypto.aes
+				stdlib.crypto.hashing
+					stdlib.crypto.hashing.md5
+					stdlib.crypto.hashing.sha1
+					stdlib.crypto.hashing.sha256				
+						stdlib.crypto.hashing.utils
+
+			stdlib.base64
+			
+______________io
+			
+			stdlib.io
+				stdlib.io.json
+				stdlib.io.jsonify
+
+			stdlib.stringio

@@ -1,0 +1,79 @@
+
+	stdlib - Development log:
+
+		PLANNEDs:
+
+			- Planned: full std library, main features:
+				- Fully dynamic library in the sense of dynamic programming
+				- Many sugars and new function template that allows unordoned arguments
+				- String function a-la Lua
+				- Added a large number of mathematic features and primitives
+				- Essential and solid implementations of popular algorithms
+				- Should be 3x faster than the legacy std
+				- New error handling sub-library
+				- Multi-dialects (En, Jp, Fr... )
+				- Please wait for the new agnostic graphic module in place of Mojo
+
+		TODOs:
+		
+			- Merge stdlib with the new math module (THE next big step! )
+		
+			- Plugins updates
+	
+		VERSION 1.0 (16 days):
+		
+			RELEASE (1 day):
+	
+				2025-02-01 - Publish stdlib on github
+				2025-03-01 - Make a documentation for stdlib
+				2025-03-01 - Make a licence file for stdlib
+			
+			QUALITY CONTROL (3 days):
+	
+				2025-02-28 - Test the full bana/examples folder
+
+				2025-02-27 - Test stdlib with sdk_mojo
+				2025-02-27 - Test stdlib with sdk
+
+				2025-02-26 - Sandbox test (legacy libs severed from modules, new libs recompiled)
+				2025-02-26 - Each tests folders for stdlib, sdk and sdk_mojo are now stand alones
+			
+			DOCUMENTATION (7 days):
+
+				2025-02-28 - Updated Map (tinyxml2 added, plugins)
+
+				2025-02-23 - Make a header/manpage for stdlib		
+
+				2025-02-21 - Draw the file hierarchie
+				2025-02-21 - Draw the spacename hierarchie
+				2025-02-21 - Make a map of stdlib about sub-libraries references
+				2025-02-21 - Make a diagram about plugin and platform features in stdlib
+			
+			INTEGRATION (4 days? no 12 days^^ tinyxml2 has almost been forgotten):
+
+				2025-02-28 - Fork for a new standard and updated library in coming... :D
+				2025-02-28 - Tinyxml2 integrated! (plugins)
+	
+				2025-02-20 - Passes the legacy tests battery
+				2025-02-20 - Validate the namespaces' tree
+				2025-02-20 - Clean the code
+				2025-02-20 - Change the name "anewmoduletest" library for "stdlib"
+	
+				2025-02-19 - Merge 'misc's content
+				2025-02-19 - Integrate the plateform plugins
+				2025-02-19 - Add a dummy module math for geom in the new std folder
+				2025-02-19 - Integration of the plugin's content
+		
+				2025-02-17 - Integration of the dependencies in the new file structure	
+			
+			PLANNING (2 days):
+				
+				2025-02-17 - Make a new and modern file structure (planning process)
+	
+				2025-02-16 - New structure draft
+	
+			ANALYSIS (2 days):
+	
+				2025-02-15 - Make schemas about the dependencies of the legacy std (analysis' product)
+		
+				2025-02-14 - Begin integration of the std's content (structure analysis, tests)

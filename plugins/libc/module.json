@@ -1,0 +1,8 @@
+{
+	"module":"libc",
+	"about":"StdC library wrapper",
+	"author":"Mark Sibly",
+	"version":"1.0.0",
+	"support":"http://monkeycoder.co.nz",
+	"depends":[]
+}

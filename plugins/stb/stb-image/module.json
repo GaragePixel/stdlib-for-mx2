@@ -1,0 +1,8 @@
+{
+	"module":"stb-image",
+	"about":"Minimal image loader",
+	"author":"Sean T Barret/Mark Sibly",
+	"version":"1.0.0",
+	"support":"http://monkeycoder.co.nz",
+	"depends":["libc"]
+}

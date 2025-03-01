@@ -1,0 +1,8 @@
+{
+	"module":"stdlib",
+	"about":"Standard library for Monkey2",
+	"author":"Mark Sibly, Monkey coders, iDkP from GaragePixel",
+	"version":"1.0.0",
+	"support":"http://monkeycoder.co.nz",
+	"depends":["monkey"]
+}

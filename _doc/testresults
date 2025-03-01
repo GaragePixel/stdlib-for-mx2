@@ -1,0 +1,48 @@
+
+	Tests results:
+	
+		audiodata.monkey2							✓ PASSED
+		base64.monkey2								✓ PASSED
+		color.monkey2								✓ PASSED
+		digest.monkey2								✓ PASSED
+		permissions.monkey2							× CAN'T TEST :(
+		time.monkey2								✓ PASSED
+		
+		plateforms/win32
+			createwindow.monkey2					✓ PASSED
+			messagebox.monkey2						✓ PASSED
+
+		plateforms/raspbian/pigpio
+			pigpio_init.monkey2						× CAN'T TEST :(
+			pigpio_version.monkey2					× CAN'T TEST :(
+			
+		reflection/
+			alltypes.monkey2						✓ NEVER PASSED (NEVER, CANNOT PASSES NEITHER NOW, SO I GUESS ✓=--×)
+			enum.monkey2							✓ PASSED
+			property.monkey2						✓ PASSED
+
+		thread/
+			These tests cannot passes because the Color type 
+			wanted by mojo, mojo3d and mojox must be the type 
+			declared in std, not in stdlib. 
+			Thus, all programs using mojo, mojo3d and mojox 
+			cannot work with the stdlib.
+
+			It shoulds work using the sdklib module available
+			on github.
+			
+			test1.monkey2							× Multiple definitions
+			test2.monkey2							× Multiple definitions
+			test3.monkey2							× Multiple definitions
+			test4.monkey2							× Multiple definitions
+			
+		plugins/miniaudio/simple_playback_sine		✓ PASSED (but need to clean the old build each time)
+		plugins/miniaudio/simple_enumeration		✓ PASSED (but need to clean the old build each time)
+		
+		From the test folder:
+
+			reflectiontest -> moved in stdlib_tests							✓ NEVER PASSED (NEVER, CANNOT PASSES NEITHER NOW, SO I GUESS ✓=--×)
+			tinyxml2 -> moved to stdlib_tests/plugins/						✓ PASSED
+			echoserver -> moved to stdlib_tests/system/io/socket/			✓ PASSED
+			echoserver_udp -> moved to stdlib_tests/system/io/socket/		✓ PASSED
+			zipfiletest -> moved to stdlib_tests/plugins/zlib/				✓ PASSED

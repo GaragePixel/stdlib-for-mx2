@@ -1,0 +1,8 @@
+{
+	"module":"stb-truetype",
+	"about":"Minimal truetype lib",
+	"author":"Mark Sibly",
+	"version":"1.0.0",
+	"support":"http://monkeycoder.co.nz",
+	"depends":[]
+}
