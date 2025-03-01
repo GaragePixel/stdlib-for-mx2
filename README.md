@@ -4,14 +4,15 @@
 
 	stdlib version 1.0.0
 		Mark Sibly, Monkey coders and iDkP from GaragePixel
-		Please read the licence contained in the LICENCE.TXT file of this distribution.
+		Please read the licence contained in the LICENCE file of this distribution.
 
 	***** This library is written for a specific language *****
 
 		Mx2 is a language and a transpiler from the Blitz family languages 
 		released by Mark Sibly in 2018 as a CPSM 
 		(https://en.wikipedia.org/wiki/Cross-platform_support_middleware).
-		It's general-purpose, open-source, user-friendly and cross-platform.
+		It's general-purpose, open-source, user-friendly and cross-platform:
+  		https://github.com/blitz-research/monkey2
 	
 		The original package comes with a number of modules, all essential 
 		but relatively scattered and lost in the module folder. 
@@ -200,7 +201,7 @@
 		whether your test is about stdlib and, if possible, find a way
 		not to involve sdk.
 
-		You can download this folder-test at: 
+		You can download this folder-test at: https://github.com/GaragePixel/Monkey2_stdlib_tests
 		it's a large and organized folder that contains also
 		the tests of sdk and sdk_mojo.
 	
