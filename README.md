@@ -1,4 +1,4 @@
-# Monkey2 stdlib
+
 
 	***** Welcome to stdlib! *****
 
