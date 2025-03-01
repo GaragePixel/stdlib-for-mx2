@@ -1,5 +1,3 @@
-
-
 	***** Welcome to stdlib! *****
 
 	stdlib version 1.0.0
