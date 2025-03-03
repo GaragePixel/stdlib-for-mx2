@@ -51,7 +51,7 @@ directly with stdlib, sdk_mojo contains an update of Mojo, adapted to work with 
 stdlib itself don't need sdk_mojo, the same for sdk.
 		
 You can get a copy of the sdk at this address: https://github.com/GaragePixel/sdk
-And a copy of the sdk_mojo at this address:
+And a copy of the sdk_mojo at this address: https://github.com/GaragePixel/sdk_mojo-for-monkey2
 	
 ***** Installation *****
 
