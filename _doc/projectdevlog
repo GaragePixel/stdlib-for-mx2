@@ -22,13 +22,13 @@
 	
 		Phase 3:
 	
-		2025-02-xx - Publish sdk_mojo on github
-		2025-02-xx - Make a header/manpage for sdk_mojo
-		2025-02-xx - Make a documentation for sdk_mojo
+		2025-02-03 - Publish sdk_mojo on github
+		2025-02-03 - Make a header/manpage for sdk_mojo
+		2025-02-03 - Make a documentation for sdk_mojo
 		2025-03-01 - Make a licence file for sdk_mojo
-		2025-02-xx - Publish sdk on github
-		2025-02-xx - Make a header/manpage for sdk
-		2025-02-xx - Make a documentation for sdk
+		2025-02-02 - Publish sdk on github
+		2025-02-02 - Make a header/manpage for sdk
+		2025-02-02 - Make a documentation for sdk
 		2025-03-01 - Make a licence file for sdk
 		2025-02-01 - Publish stdlib on github
 		2025-03-01 - Make a documentation for stdlib
@@ -36,9 +36,9 @@
 
 		Phase 2:
 
-		2025-02-xx - Draw the references map (sdk_mojo)
+		2025-02-06 - Draw the references map (sdk_mojo)
 		2025-02-xx - Make a schema of the sdk_mojo library
-		2025-02-xx - Draw the references map (sdk)
+		2025-02-02 - Draw the references map (sdk)
 
 		2025-02-28 - Test the full bana/examples folder
 
