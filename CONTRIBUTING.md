@@ -15,7 +15,8 @@ in stdlib, the code can be *eventually* written only in pure mx2.
 Just keep in mind that your sub-library must fulfill a fundamental role, 
 because the stdlib must remain lightweight and approach perfection 
 (remove more than add). Also respect the hierarchy of directories 
-as well as the structure of namespaces. 
+as well as the structure of namespaces. You can consult the actual
+roadmap: https://github.com/users/GaragePixel/projects/2/views/3
 		
 · 	Keep in mind too that hierarchy satisfies the criterion of 'organization' 
 	--> https://en.wikipedia.org/wiki/Organizing_principle
