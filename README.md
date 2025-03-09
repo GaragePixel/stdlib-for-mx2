@@ -44,7 +44,7 @@ Mx2 is a language and a transpiler from the Blitz family languages
 released by Mark Sibly in 2018 as a CPSM 
 [(Wikipedia)](https://en.wikipedia.org/wiki/Cross-platform_support_middleware).
 It's general-purpose, open-source, user-friendly and cross-platform:
-[GitHub repository](https://github.com/blitz-research/monkey2) [prebuild](https://blitzresearch.itch.io/monkey2)
+[GitHub repository](https://github.com/blitz-research/monkey2) or [prebuild](https://blitzresearch.itch.io/monkey2)
 	
 The original package comes with a number of modules, all essential 
 but relatively scattered and lost in the module folder. 
