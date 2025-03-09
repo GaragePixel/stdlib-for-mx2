@@ -53,7 +53,7 @@ There are 14 vital libraries littering the module directory,
 but we find two libraries to be the most important:
 	
 - **Core-language library:** Contains the front-end of the language.
-- **Standard library (std):** Provides access to essential features for writing programs. 
+- **Standard library (stdlib):** Provides access to essential features for writing programs. 
 		
 The standard library has a flat namespace structure, as designed by Sibly, 
 which makes it challenging for beginners 
