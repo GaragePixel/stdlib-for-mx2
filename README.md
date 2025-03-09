@@ -138,7 +138,8 @@ legacy distribution of Monkey at: https://github.com/blitz-research/monkey2
 # stblib's origin and goal
 	
 The development of the Mx2 compiler continued under the guidance of 
-@seyhajin and @D-a-n-i-l-o, evolving into what is now known as the Wx compiler. 
+[seyhajin](https://github.com/seyhajin)
+ and  [D-a-n-i-l-o)(https://github.com/D-a-n-i-l-o), evolving into what is now known as the Wx compiler. 
 While stdlib is set to be adapted for the Wx compiler soon, 
 you can already test it with the Mx compiler version 1.1.15 
 from the last official release by Sibly in September 2018. Check it out [here](https://github.com/blitz-research/monkey2/blob/develop/VERSIONS.TXT).
