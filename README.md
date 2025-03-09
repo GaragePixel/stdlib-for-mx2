@@ -16,6 +16,7 @@
 ![Views](https://views.whatilearened.today/views/github/wonkey-coders/wonkey.svg)
 
 Mark Sibly, Monkey coders and iDkP from GaragePixel
+
 Please read the licence contained in the LICENCE file of this distribution.
 
 # The Project you can consult (roadmap, etc)
