@@ -4,8 +4,6 @@
 	<img src="title.svg" alt="Large Title Example">
 </div>
 
-# Welcome to stdlib!
-
 [![Build Status](https://img.shields.io/github/actions/workflow/status/GaragePixel/stdlib-for-mx2/ci.yml?branch=main)](https://github.com/GaragePixel/stdlib-for-mx2/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Code Coverage](https://img.shields.io/codecov/c/github/GaragePixel/stdlib-for-mx2/main.svg)](https://codecov.io/gh/GaragePixel/stdlib-for-mx2)
@@ -15,9 +13,9 @@
 [![Watchers](https://img.shields.io/github/watchers/GaragePixel/stdlib-for-mx2)](https://github.com/GaragePixel/stdlib-for-mx2/watchers)
 ![Views](https://views.whatilearened.today/views/github/wonkey-coders/wonkey.svg)
 
-Mark Sibly, Monkey coders and iDkP from GaragePixel
+[Mark Sibly](https://github.com/blitz-research), Monkey coders and iDkP from GaragePixel
 
-Please read the licence contained in the LICENCE file of this distribution.
+Please read the licence contained in the [LICENCE](https://github.com/GaragePixel/stdlib-for-mx2/blob/main/LICENCE) file of this distribution.
 
 # The Project you can consult (roadmap, etc)
 
@@ -53,7 +51,7 @@ There are 14 vital libraries littering the module directory,
 but we find two libraries to be the most important:
 	
 - **Core-language library:** Contains the front-end of the language.
-- **Standard library (stdlib):** Provides access to essential features for writing programs. 
+- **Standard library (std):** Provides access to essential features for writing programs. 
 		
 The standard library has a flat namespace structure, as designed by Sibly, 
 which makes it challenging for beginners 
@@ -169,17 +167,17 @@ providing a clear overview at a glance.
 
 The standard library is divided into several sub-libraries, each targeting a specific area of functionality:
 
-- lib/collections
+- stdlib/collections
   - Basic data structures and algorithms
-- lib/io
+- stdlib/io
   - Data-driven Input and output operations.
-- lib/algorithms
+- stdlib/algorithms
   - Compression, cryptographic and decoding/encoding functions.
-- lib/math
+- stdlib/math
   - Basic datatypes and math functions
-- lib/platforms
+- stdlib/platforms
   - APIs from the target platforms where compilation is possible.
-- lib/plugin:
+- stdlib/plugin:
   - The `plugins` directory contains several subdirectories and files that are essential for various plugin functionalities:
    - jni: [View directory](https://github.com/GaragePixel/stdlib-for-mx2/tree/main/plugins/jni)
    - libc: [View directory](https://github.com/GaragePixel/stdlib-for-mx2/tree/main/plugins/libc)
@@ -191,9 +189,9 @@ The standard library is divided into several sub-libraries, each targeting a spe
    - zlib: [View directory](https://github.com/GaragePixel/stdlib-for-mx2/tree/main/plugins/zlib)
    
    For further details, you can explore the directory on GitHub: [plugins directory](https://github.com/GaragePixel/stdlib-for-mx2/tree/main/plugins).
-- lib/ressources
+- stdlib/ressources
   - How the library memory handles audio and graphic primitives (like pixmaps).
-- lib/system
+- stdlib/system
   - Core functionalities and utilities, including file handling and data serialization.
   - Networking functionalities, including socket programming and HTTP operations.
 
@@ -225,7 +223,7 @@ sub-libraries will be updated.
 
 # Who is Mark Sibly?
 	
-The stdlib project is dedicated to the memory of Mark Sibly, 
+The stdlib project is dedicated to the memory of [Mark Sibly](https://github.com/blitz-research),
 who sadly passed away in November 2024. Mark was a visionary in the video game industry, 
 leaving an indelible mark as a pioneer and co-inventor of middleware since the Amiga era. 
 His early work laid the groundwork for modern engines like unreal and other 'godot'.
@@ -252,7 +250,7 @@ and simplify its use through stdlib.
 
 # License
 
-This repository is licensed under the MIT License. See the LICENSE file for more information.
+This repository is licensed under the MIT License. See the [LICENCE](https://github.com/GaragePixel/stdlib-for-mx2/blob/main/LICENCE) file for more information.
 
 # Contact
 
