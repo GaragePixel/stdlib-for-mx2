@@ -1,3 +1,9 @@
+<div align="center">
+	<h1>Mx2</h1>
+	<p><strong>Mx2</strong> is a easy to learn, oriented object, modern programming language for creating cross-platform applications.</p>
+	<img src="title.svg" alt="Large Title Example">
+</div>
+
 # Welcome to stdlib!
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/GaragePixel/stdlib-for-mx2/ci.yml?branch=main)](https://github.com/GaragePixel/stdlib-for-mx2/actions)
@@ -7,6 +13,7 @@
 [![Forks](https://img.shields.io/github/forks/GaragePixel/stdlib-for-mx2)](https://github.com/GaragePixel/stdlib-for-mx2/network/members)
 [![Stars](https://img.shields.io/github/stars/GaragePixel/stdlib-for-mx2)](https://github.com/GaragePixel/stdlib-for-mx2/stargazers)
 [![Watchers](https://img.shields.io/github/watchers/GaragePixel/stdlib-for-mx2)](https://github.com/GaragePixel/stdlib-for-mx2/watchers)
+![Views](https://views.whatilearened.today/views/github/wonkey-coders/wonkey.svg)
 
 Mark Sibly, Monkey coders and iDkP from GaragePixel
 Please read the licence contained in the LICENCE file of this distribution.
@@ -15,15 +22,18 @@ Please read the licence contained in the LICENCE file of this distribution.
 
 https://github.com/users/GaragePixel/projects/2/views/3
 
-## Language Composition
-
-![Language Composition](https://quickchart.io/chart?c=%7B%22type%22%3A%22horizontalBar%22%2C%22data%22%3A%7B%22labels%22%3A%5B%22C%22%2C%22C%2B%2B%22%2C%22Objective-C%22%2C%22Monkey%22%2C%22Roff%22%2C%22Assembly%22%2C%22Other%22%5D%2C%22datasets%22%3A%5B%7B%22label%22%3A%22Language%20Composition%22%2C%22data%22%3A%5B85.2%2C4.0%2C3.3%2C2.3%2C1.8%2C1.3%2C2.1%5D%2C%22backgroundColor%22%3A%5B%22%23ff9999%22%2C%22%2366b3ff%22%2C%22%2399ff99%22%2C%22%23ffcc99%22%2C%22%23c2c2f0%22%2C%22%23ffb3e6%22%2C%22%23c4e17f%22%5D%7D%5D%7D%2C%22options%22%3A%7B%22title%22%3A%7B%22display%22%3Atrue%2C%22text%22%3A%22Language%20Composition%20of%20stdlib-for-mx2%22%7D%7D%7D)
-
-
 ## Repository Details
 - **Repository URL**: [stdlib-for-mx2](https://github.com/GaragePixel/stdlib-for-mx2)
 - **Repository ID**: 940956438
-- **Owner**: GaragePixel
+- **Description**: Standard library for Mx2
+- **Primary Language**: C (85.2%)
+- **Additional Languages**:
+  - C++ (4%)
+  - Objective-C (3.3%)
+  - Monkey (2.3%)
+  - Roff (1.8%)
+  - Assembly (1.3%)
+  - Other (2.1%)
 
 # This library is written for a specific language
 
