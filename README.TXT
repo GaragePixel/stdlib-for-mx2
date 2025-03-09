@@ -1,15 +1,21 @@
-***** Welcome to stdlib! *****
+#***** Welcome to stdlib! *****
 
-stdlib version 1.0.0
+[![Build Status](https://img.shields.io/github/actions/workflow/status/GaragePixel/stdlib-for-mx2/ci.yml?branch=main)](https://github.com/GaragePixel/stdlib-for-mx2/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Code Coverage](https://img.shields.io/codecov/c/github/GaragePixel/stdlib-for-mx2/main.svg)](https://codecov.io/gh/GaragePixel/stdlib-for-mx2)
+[![Issues](https://img.shields.io/github/issues/GaragePixel/stdlib-for-mx2)](https://github.com/GaragePixel/stdlib-for-mx2/issues)
+[![Forks](https://img.shields.io/github/forks/GaragePixel/stdlib-for-mx2)](https://github.com/GaragePixel/stdlib-for-mx2/network/members)
+[![Stars](https://img.shields.io/github/stars/GaragePixel/stdlib-for-mx2)](https://github.com/GaragePixel/stdlib-for-mx2/stargazers)
+[![Watchers](https://img.shields.io/github/watchers/GaragePixel/stdlib-for-mx2)](https://github.com/GaragePixel/stdlib-for-mx2/watchers)
 
 Mark Sibly, Monkey coders and iDkP from GaragePixel
 Please read the licence contained in the LICENCE file of this distribution.
 
-***** The Project you can consult (roadmap, etc) *****
+#***** The Project you can consult (roadmap, etc) *****
 
 https://github.com/users/GaragePixel/projects/2/views/3
 
-***** This library is written for a specific language *****
+#***** This library is written for a specific language *****
 
 Mx2 is a language and a transpiler from the Blitz family languages 
 released by Mark Sibly in 2018 as a CPSM 
@@ -46,7 +52,7 @@ that guided the design of stdlib. And also, stdlib contains itself. Apart the
 language module, no need to integrate external elements that make all this work, 
 we will now find them in the plugins directory and they will be periodically updated.
 	
-***** stdlib breaks compatibility with the current distribution of mojo *****
+#***** stdlib breaks compatibility with the current distribution of mojo *****
 
 stdlib comes with two supplements, one called sdk contains all the essential
 modules to creating a program.
@@ -58,7 +64,7 @@ stdlib itself don't need sdk_mojo, the same for sdk.
 You can get a copy of the sdk at this address: https://github.com/GaragePixel/sdk
 And a copy of the sdk_mojo at this address: https://github.com/GaragePixel/sdk_mojo-for-monkey2
 	
-***** Installation *****
+#***** Installation *****
 
 Place the folder in the Monkey's Modules directory and precompile the library. 
 You'll need the Mx2cc version 1.1.15, it can be downloaded with the last
@@ -94,7 +100,7 @@ monkey installation, then write:
 	
 	or with the linux compiler: mx2cc_linux -makemods -target=desktop -config=release
 
-***** stblib's origin and goal *****
+#***** stblib's origin and goal *****
 	
 The developement of the mx2 compiler where continued by a group inside the mx2 community
 directed by @seyhajin and @D-a-n-i-l-o, the distribution becames the wx compiler. 
@@ -117,13 +123,13 @@ small, correct, self contained and use few resources while retaining
 the same performance and feature completeness than the original std and its
 14 satellites libraries.
 	
-***** Working with the library *****
+#***** Working with the library *****
 
 You will find diagrams that will allow you to see at a glance the namespaces, 
 objects and declarations contained in the stdlib sub-libraries. 
 These diagrams are located in the _doc directory of the library.
 	
-***** Legacy *****
+#***** Legacy *****
 
 Because stdlib is an experimental project, you can already base your prototype programs 
 on this library, knowing that it will work identically with wx. 
@@ -136,7 +142,7 @@ and make suggestions during my ongoing coding/merge process of the next std
 (it will take a few months^^ ). Until the next big step of this std library, the
 sub-libraries will be updated.
 
-***** Who is Mark Sibly? *****
+#***** Who is Mark Sibly? *****
 	
 stdlib is dedicated to Mark Sibly who has definitely left us 
 since November 2024, honor and glory to you, o Great Master! 
@@ -148,7 +154,7 @@ His contribution goes beyond his middlewares,
 think of all those retro-gaming videos on youtube and game licenses such as Worms 
 that once benefited from Mark's products.
 
-***** Note from iDkP about stdlib *****
+#***** Note from iDkP about stdlib *****
 
 This library was created (compiled?) by iDkP from GaragePixel 
 (attention, a little joker took my nickname on internet around 2015, 
