@@ -21,6 +21,10 @@ Please read the licence contained in the [LICENCE](https://github.com/GaragePixe
 
 https://github.com/users/GaragePixel/projects/2/views/3
 
+The stdlib-for-mx2 repository is crucial for Mx2 as it enriches the language 
+with a comprehensive set of tools and utilities, 
+making it practical and powerful for modern application development.
+
 ## Repository Details
 - **Repository URL**: [stdlib-for-mx2](https://github.com/GaragePixel/stdlib-for-mx2)
 - **Repository ID**: 940956438
@@ -65,7 +69,17 @@ This is why it was decided to redesign the standard library (``stdlib``), focusi
 '``Organization``', '``Ergonomics``', and '``Affordance``' were the three core concepts that guided the design of the stdlib. 
 And also, stdlib contains itself. Apart from the language module, there is no need to integrate external elements, 
 as all necessary components are now located in the plugins directory and will be periodically updated.
-	
+
+## Why Choose stdlib-for-mx2?
+
+- **Tailored for Mx2**: The `stdlib-for-mx2` is specifically designed for the Mx2 programming language, ensuring compatibility and optimized performance.
+- **Ease of Use**: Built with Mx2 in mind, the standard library provides a more intuitive and seamless experience for Mx2 developers, reducing the learning curve.
+- **Comprehensive Functionality**: The `stdlib-for-mx2` includes a wide range of utilities and functionalities essential for Mx2 applications, allowing you to build robust and efficient applications without needing third-party libraries.
+- **Cross-Platform Support**: The library is designed to support cross-platform development, aligning with Mx2’s goal of creating cross-platform applications.
+- **Community and Support**: Using a library specifically developed for Mx2 means you have access to a community of users and developers who are focused on the same language and tools, providing better support and resources.
+
+In summary, the `stdlib-for-mx2` repository is crucial for Mx2 as it enriches the language with a comprehensive set of tools and utilities, making it practical and powerful for modern application development.
+ 
 # stdlib breaks compatibility with the current distribution of mojo
 
 stdlib comes with two supplements, one called ``sdk`` contains all the essential
@@ -76,6 +90,7 @@ directly with ``stdlib``, ``sdk_mojo`` contains an update of Mojo, adapted to wo
 ``stdlib`` itself don't need ``sdk_mojo``, the same for ``sdk``.
 		
 You can get a copy of the ``sdk`` at this address: https://github.com/GaragePixel/sdk
+
 And a copy of the ``sdk_mojo`` at this address: https://github.com/GaragePixel/sdk_mojo-for-monkey2
 
 # How to Set Up and Precompile stdlib
@@ -309,8 +324,8 @@ old-fashioned brace-powered punched-card language. I don't like braces. They dri
 
 Braces drive me crazy.
 
-I've worked with JS, JSX, MaxScript, and other brace-based languages
-​​(although MaxScript uses parentheses like Lisp). 
+I've worked with JS, JSX, MaxScript, and other brace-based languages ​​(although 
+MaxScript uses parentheses like Lisp). 
 Yet on my keyboard, using AltGr+= and AltGr+' all the time is a pain. 
 Mark's languages ​​always felt like I was in a cozy bed with warm blankets. 
 A family of languages ​​where keystrokes were minimal, except for the occasional |. 
