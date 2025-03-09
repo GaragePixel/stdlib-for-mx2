@@ -29,9 +29,9 @@ https://github.com/users/GaragePixel/projects/2/views/3
 
 Mx2 is a language and a transpiler from the Blitz family languages 
 released by Mark Sibly in 2018 as a CPSM 
-(https://en.wikipedia.org/wiki/Cross-platform_support_middleware).
+[(Wikipedia)](https://en.wikipedia.org/wiki/Cross-platform_support_middleware).
 It's general-purpose, open-source, user-friendly and cross-platform:
-https://github.com/blitz-research/monkey2
+[GitHub repository](https://github.com/blitz-research/monkey2)
 	
 The original package comes with a number of modules, all essential 
 but relatively scattered and lost in the module folder. 
@@ -41,117 +41,150 @@ historically these implementations have not evolved from a common project.
 There are 14 vital libraries littering the module directory, 
 but we find two libraries to be the most important:
 	
-· 	The core-language library contains the front-end of the language
-· 	and its compagnon called std library provides access to 
-	certain essential features for writing program. 
+- **Core-language library:** Contains the front-end of the language.
+- **Standard library (std):** Provides access to essential features for writing programs. 
 		
-This last library is without folder structure, its namespaces are as flat as possible 
-on the will of Sibly. In the end, it is not easy for a beginner 
-and even in the case of production use to exploit this 'standard library'.
+The standard library has a flat namespace structure, as designed by Sibly, 
+which makes it challenging for beginners 
+and even for production use to fully exploit this 'standard library'.
 	
 As the creator of Chipmunk said in his TODO file:
 	- "Reorganize Chimpnuk (sic) Pro directory structure. Too flat and confusing."
 	
-Which is why it was decided to redesign the std by giving it a structure 
-both at the level of its files (organization), but also at the level of 
-the namespace tree (ergonomics) with the desire that it can be used only after 
-a learning time of the shortest (affordance).
+This is why it was decided to redesign the standard library (``stdlib``), focusing on both file structure (``organization``) and namespace tree (``ergonomics``), with the aim of making it easy to use with minimal learning time (``affordance``).
 		
-'Organization', 'Ergonomics' and 'Affordance' were the three initial concepts 
-that guided the design of stdlib. And also, stdlib contains itself. Apart the
-language module, no need to integrate external elements that make all this work, 
-we will now find them in the plugins directory and they will be periodically updated.
+'``Organization``', '``Ergonomics``', and '``Affordance``' were the three core concepts that guided the design of the stdlib. 
+And also, stdlib contains itself. Apart from the language module, there is no need to integrate external elements, 
+as all necessary components are now located in the plugins directory and will be periodically updated.
 	
 # stdlib breaks compatibility with the current distribution of mojo
 
-stdlib comes with two supplements, one called sdk contains all the essential
+stdlib comes with two supplements, one called ``sdk`` contains all the essential
 modules to creating a program.
 		
 Because mojo - the legacy graphic framework of the language build on sdl2 - cannot work 
-directly with stdlib, sdk_mojo contains an update of Mojo, adapted to work with stdlib. 
-stdlib itself don't need sdk_mojo, the same for sdk.
+directly with ``stdlib``, ``sdk_mojo`` contains an update of Mojo, adapted to work with ``stdlib``. 
+``stdlib`` itself don't need ``sdk_mojo``, the same for ``sdk``.
 		
-You can get a copy of the sdk at this address: https://github.com/GaragePixel/sdk
-And a copy of the sdk_mojo at this address: https://github.com/GaragePixel/sdk_mojo-for-monkey2
-	
-# Installation
+You can get a copy of the ``sdk`` at this address: https://github.com/GaragePixel/sdk
+And a copy of the ``sdk_mojo`` at this address: https://github.com/GaragePixel/sdk_mojo-for-monkey2
+
+# How to Set Up and Precompile stdlib
 
 Place the folder in the Monkey's Modules directory and precompile the library. 
 You'll need the Mx2cc version 1.1.15, it can be downloaded with the last
 legacy distribution of Monkey at: https://github.com/blitz-research/monkey2
-	
-If you want precompile in command line, open a cmd and go to the bin folder of your
-monkey installation, then write:
-	
-	mx2cc_windows.exe -makemods stdlib -target=desktop -config=release
-		
-stdlib should precompile in 2 minutes and 13 seconds for the release mode 
-and 2 minutes 20 seconds for the debug mode, both for the desktop target. 
-stdlib can compile for html5 via emscripten, android and raspberry.
-Not support for ios actually, probably ethically never. But we should not never say never...
-		
-If you want to use Ted2Go, you can use Build > Update / Rebuild modules,
-then select the stdlib module, then update.
-	
-If sdk and sdk_mojo are also in your modules folder, you can put each old modules in a
-subdirectory called, by example, 'legacy_modules'. The legacy modules will not
-interferes with stdlib, sdk and sdk_mojo, but as you don't need them anymore,
-it will keep the modules folder clean. You need the monkey module in the modules folder.
-	
-Monkey, stdlib, sdk and sdk_mojo are in your modules folder? You can use
-Ted2Go to precompile each libraries in just one step (Build > Update / Rebuild modules),
-it will take around 23 minutes if you compile only for the windows platform, 
-both release and debug mode.
-	
-You can also use the compiler directly. Open a cmd and go to the bin folder of your
-monkey installation, then write:
-	
-	mx2cc_windows.exe -makemods -target=desktop -config=release
-	
-	or with the linux compiler: mx2cc_linux -makemods -target=desktop -config=release
 
+1. **Place the Folder:**
+   - Copy the `stdlib` folder into the `Monkey`'s `Modules` directory.
+
+2. **Download Mx2cc:**
+   - Ensure you have Mx2cc version 1.1.15. You can download it from the [last legacy distribution of Monkey](https://github.com/blitz-research/monkey2).
+
+3. **Precompile Using Command Line:**
+   - Open Command Prompt (cmd).
+   - Navigate to the `bin` folder of your Monkey installation.
+   - Run the following command to precompile the `stdlib` for desktop target in release mode:
+     ```sh
+     mx2cc_windows.exe -makemods stdlib -target=desktop -config=release
+     ```
+   - The precompilation should take approximately:
+     - 2 minutes and 13 seconds for release mode.
+     - 2 minutes and 20 seconds for debug mode.
+
+4. **Precompile for Other Targets:**
+   - `stdlib` can also be compiled for HTML5 via Emscripten, Android, and Raspberry Pi.
+   - Note: iOS is not supported and likely will never be for ethical reasons.
+
+5. **Using Ted2Go for Precompilation:**
+   - Open Ted2Go.
+   - Navigate to `Build > Update / Rebuild modules`.
+   - Select the `stdlib` module and click `Update`.
+
+6. **Organizing Modules:**
+   - If you have `sdk` and `sdk_mojo` in your `Modules` folder, you can move old modules to a subdirectory named `legacy_modules`.
+   - This will prevent interference with `stdlib`, `sdk`, and `sdk_mojo` and keep your `Modules` folder clean.
+   - Ensure the `monkey` module remains in the `Modules` folder.
+
+7. **Batch Precompilation Using Ted2Go:**
+   - With `Monkey`, `stdlib`, `sdk`, and `sdk_mojo` in your `Modules` folder:
+     - Open Ted2Go.
+     - Navigate to `Build > Update / Rebuild modules`.
+     - Select all libraries and click `Update`.
+     - This process will take around 23 minutes if compiling only for the Windows platform, in both release and debug modes.
+
+8. **Alternative Command Line Precompilation:**
+   - Open Command Prompt (cmd).
+   - Navigate to the `bin` folder of your Monkey installation.
+   - Run the following command for Windows:
+     ```sh
+     mx2cc_windows.exe -makemods -target=desktop -config=release
+     ```
+   - Alternatively, for Linux, use:
+     ```sh
+     mx2cc_linux -makemods -target=desktop -config=release
+     ```
 # stblib's origin and goal
 	
-The developement of the mx2 compiler where continued by a group inside the mx2 community
-directed by @seyhajin and @D-a-n-i-l-o, the distribution becames the wx compiler. 
-stdlib is planned to be adapted to work with the wx compiler in a couple of time, 
-but you can already test stdlib for the mx compiler version 1.1.15 of the last official release 
-of mx2 by Sibly, 2018.09: https://github.com/blitz-research/monkey2/blob/develop/VERSIONS.TXT
-		
-Without the wx2cc code cleaner which allows not to copy unused code blocks into the source,
-the mx2cc stdlib produces a 1.46 MB executable file and embed some of its dlls inside.
-The executable produced by stdlib will be much more thin with wxcc. Also you can
-considerate stdlib as 'legacy' (iDkP wrote 0.0001% of the codebases).
-		
-stdlib contains an implementation of a strictly similar efficiency to the original std 
-and the 14 other satellite libraries of the original distribution. 
-You only have to call a single library.
-	
-As stovepipe system, stdlib integrates the original independent libraries 
-in order to avoiding dependency hell. The main design goal of this library is to be 
-small, correct, self contained and use few resources while retaining
-the same performance and feature completeness than the original std and its
-14 satellites libraries.
-	
+The development of the Mx2 compiler continued under the guidance of 
+@seyhajin and @D-a-n-i-l-o, evolving into what is now known as the Wx compiler. 
+While stdlib is set to be adapted for the Wx compiler soon, 
+you can already test it with the Mx compiler version 1.1.15 
+from the last official release by Sibly in September 2018. Check it out [here](https://github.com/blitz-research/monkey2/blob/develop/VERSIONS.TXT).
+
+Without the Wx2cc code cleaner, which cleverly omits unused code blocks, 
+the Mx2cc stdlib churns out a 1.46 MB executable file, embedding a few of its DLLs. 
+With Wxcc, the stdlib-generated executable will be remarkably leaner. 
+Think of stdlib as 'legacy' (iDkP's contribution was a minuscule 0.0001% of the codebase).
+
+Stdlib delivers an implementation with efficiency on par with the original std 
+and its 14 satellite libraries. You only need to call a single library.
+
+Functioning as a stovepipe system, stdlib integrates the original independent libraries, 
+expertly sidestepping dependency hell. The primary design goal of this library is 
+to remain compact, precise, self-contained, and resource-efficient, 
+while preserving the same performance and comprehensive features as the original std 
+and its 14 satellite libraries.
+ 
 # Working with the library
 
-You will find diagrams that will allow you to see at a glance the namespaces, 
-objects and declarations contained in the stdlib sub-libraries. 
-These diagrams are located in the _doc directory of the library.
+Dive into the world of stdlib with ease and clarity. 
+Explore the comprehensive diagrams that map out namespaces, objects, and declarations 
+within the stdlib sub-libraries. These visual guides are conveniently located in the `_doc` directory, 
+providing a clear overview at a glance.
 
 # Sub-Libraries
 
 The standard library is divided into several sub-libraries, each targeting a specific area of functionality:
 
-- lib/core
-  - Core functionalities and utilities, including basic data structures and algorithms.
+- lib/collections
+  - Basic data structures and algorithms
 - lib/io
-  - Input and output operations, including file handling and data serialization.
-- lib/net
+  - Data-driven Input and output operations.
+- lib/algorithms
+  - Compression, cryptographic and decoding/encoding functions.
+- lib/math
+  - Basic datatypes and math functions
+- lib/platforms
+  - APIs from the target platforms where compilation is possible.
+- lib/plugin:
+  - The `plugins` directory contains several subdirectories and files that are essential for various plugin functionalities:
+   - jni: [View directory](https://github.com/GaragePixel/stdlib-for-mx2/tree/main/plugins/jni)
+   - libc: [View directory](https://github.com/GaragePixel/stdlib-for-mx2/tree/main/plugins/libc)
+   - makefile.monkey2: [View file](https://github.com/GaragePixel/stdlib-for-mx2/blob/main/plugins/makefile.monkey2)
+   - miniaudio: [View directory](https://github.com/GaragePixel/stdlib-for-mx2/tree/main/plugins/miniaudio)
+   - miniz: [View directory](https://github.com/GaragePixel/stdlib-for-mx2/tree/main/plugins/miniz)
+   - sdl2: [View directory](https://github.com/GaragePixel/stdlib-for-mx2/tree/main/plugins/sdl2)
+   - stb: [View directory](https://github.com/GaragePixel/stdlib-for-mx2/tree/main/plugins/stb)
+   - tinyxml2: [View directory](https://github.com/GaragePixel/stdlib-for-mx2/tree/main/plugins/tinyxml2)
+   - zlib: [View directory](https://github.com/GaragePixel/stdlib-for-mx2/tree/main/plugins/zlib)
+   
+   For further details, you can explore the directory on GitHub: [plugins directory](https://github.com/GaragePixel/stdlib-for-mx2/tree/main/plugins).
+- lib/ressources
+  - How the library memory handles audio and graphic primitives (like pixmaps).
+- lib/system
+  - Core functionalities and utilities, including file handling and data serialization.
   - Networking functionalities, including socket programming and HTTP operations.
-- lib/graphics
-  - Graphics and rendering functionalities, leveraging OpenGL and Direct3D for cross-platform graphics support.
-
 
 # Why This Library Is Better
 
