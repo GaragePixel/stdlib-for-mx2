@@ -13,7 +13,7 @@
 [![Watchers](https://img.shields.io/github/watchers/GaragePixel/stdlib-for-mx2)](https://github.com/GaragePixel/stdlib-for-mx2/watchers)
 ![Views](https://views.whatilearened.today/views/github/wonkey-coders/wonkey.svg)
 
-[Mark Sibly](https://github.com/blitz-research), [Monkey coders](https://github.com/wonkey-coders) and [iDkP](https://github.com/GaragePixel)
+[Mark Sibly](https://github.com/blitz-research), [Monkey coders](https://github.com/wonkey-coders) and [iDkP from GaragePixel](https://github.com/GaragePixel)
 
 Please read the licence contained in the [LICENCE](https://github.com/GaragePixel/stdlib-for-mx2/blob/main/LICENCE) file of this distribution.
 
