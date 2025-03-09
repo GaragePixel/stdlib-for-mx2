@@ -57,7 +57,7 @@ The standard library has a flat namespace structure, as designed by Sibly,
 which makes it challenging for beginners 
 and even for production use to fully exploit this 'standard library'.
 	
-As the creator of Chipmunk said in his TODO file:
+As the creator of [Chipmunk2d](https://github.com/slembcke/Chipmunk2D/blob/master/TODO.txt) said in his TODO file:
 	- "*Reorganize Chimpnuk* (sic) *Pro directory structure. Too flat and confusing.*"
 	
 This is why it was decided to redesign the standard library (``stdlib``), focusing on both file structure (``organization``) and namespace tree (``ergonomics``), with the aim of making it easy to use with minimal learning time (``affordance``).
