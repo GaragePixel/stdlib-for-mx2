@@ -13,7 +13,7 @@
 [![Watchers](https://img.shields.io/github/watchers/GaragePixel/stdlib-for-mx2)](https://github.com/GaragePixel/stdlib-for-mx2/watchers)
 ![Views](https://views.whatilearened.today/views/github/wonkey-coders/wonkey.svg)
 
-[Mark Sibly](https://github.com/blitz-research), Monkey coders and iDkP from GaragePixel
+[Mark Sibly](https://github.com/blitz-research), [Monkey coders](https://github.com/wonkey-coders) and [iDkP](https://github.com/GaragePixel)
 
 Please read the licence contained in the [LICENCE](https://github.com/GaragePixel/stdlib-for-mx2/blob/main/LICENCE) file of this distribution.
 
@@ -58,7 +58,7 @@ which makes it challenging for beginners
 and even for production use to fully exploit this 'standard library'.
 	
 As the creator of Chipmunk said in his TODO file:
-	- "Reorganize Chimpnuk (sic) Pro directory structure. Too flat and confusing."
+	- "*Reorganize Chimpnuk* (sic) *Pro directory structure. Too flat and confusing.*"
 	
 This is why it was decided to redesign the standard library (``stdlib``), focusing on both file structure (``organization``) and namespace tree (``ergonomics``), with the aim of making it easy to use with minimal learning time (``affordance``).
 		
