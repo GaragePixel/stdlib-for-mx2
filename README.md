@@ -248,6 +248,58 @@ with the number of users, that's why I worked to reduce
 the barriers to understanding the library by creating some diagrams 
 and simplify its use through stdlib.
 
+# Note from iDkP about Sibly's Mx language
+
+I know Blitz3D, BlitzPlus, BlitzMax, Monkey and Monkey2. Like many, my journey started with QBasic. 
+I discovered Mark's creations during my short but fruitful career as a 3D modeler, 
+before the dawn of Google, in the days of DarkBasic and the like. 
+I was a user of ClickTeam software which was Mark's direct competitor since the Amiga days, 
+but from Click & Play to MultiMedia Fusion, they seemed limited and poorly designed for my needs. 
+I also know that Mark had created something before Blitz when I was drawing my first RPGs on paper. 
+I joined the Blitz3D community in 2004 and have bought all of Mark's products since then.
+
+In my opinion, the decline of Blitz Research began after BlitzMax, when the new languages ​​(Monkey, Monkey2) 
+stopped compiling to native code. Few people were interested in these new tools, 
+and only a few followed Mark who was the visionary of the time. 
+This was before the rise of gobot and similar technologies. 
+Within a once thriving community, only a few ventured into the new areas. 
+Perhaps users did not want tools that looked like simple "to C++" translators.
+
+But let's be honest, development tools have evolved considerably in the last 15-20 years. 
+Back then, they were mostly closed-source commercial software 
+(Visual Studio, PureBasic, BlitzBasic/3D, PowerBasic, etc.). 
+Today, the industry has moved towards free open-source programming languages, 
+IDEs, and countless libraries. Almost everything is free now. 
+PureBasic still exists, although it is a niche closed-source product. 
+PowerBasic (its creator having left) and the entire Blitz-Research line... 
+have all disappeared in the meantime.
+
+If you've used godot over the years, you know that with a strong team and internal communication, 
+great 3D capabilities, and a robust copy of 3D Studio's internal code, 
+Godot has raised significant funding and outperformed formidable opponents 
+like Autodesk's Stingray or CrystalSpace. 
+But when you want to tackle really complex tasks, like porting a NES emulator, 
+gscript may not be the best choice. 
+You can turn to C#, but probably later to Sibly's Mx2 when you get tired of an 
+old-school language braces-powered. I don't like braces. They drive me crazy.
+
+Braces drive me crazy.
+
+I've worked with JS, JSX, MaxScript, and other brace-based languages ​​(although MaxScript uses parentheses like Lisp). Yet on my keyboard, using AltGr+= and AltGr+' all the time is a pain. Mark's languages ​​always felt like I was in a cozy bed with warm blankets. A family of languages ​​where keystrokes were minimal, except for the occasional |. Mx2/Wonkey will never become a brace language.
+
+Regarding the syntax of Mx1, when planning the cross-platform compiler, 
+Mark always said that case insensitivity did not fit with C++ internals, 
+which caused problems with BlitzMax, leading to the creation of Mx1. 
+Mx2 introduced advanced features like reflection, first-class functions, 
+and operator overloading, which were not possible with Monkey-X or its forks. 
+Using Mx1 or its forks feels like going back to the Middle Ages. 
+Mx2/Wonkey is the best choice today because it compiles to native C/C++, 
+unlike some non-free and non-open products like Delphi (a virtual machine-based language). 
+It is now essential to provide Mx2 with a real standard library and SDK, 
+as well as modern and functional libraries. 
+The language is therefore now optimized for various uses 
+like software creation and building AI for embedded applications.
+
 # License
 
 This repository is licensed under the MIT License. See the [LICENCE](https://github.com/GaragePixel/stdlib-for-mx2/blob/main/LICENCE) file for more information.
