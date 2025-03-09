@@ -171,7 +171,6 @@ The standard library is divided into several sub-libraries, each targeting a spe
   - The `plugins` directory contains several subdirectories and files that are essential for various plugin functionalities:
    - jni: [View directory](https://github.com/GaragePixel/stdlib-for-mx2/tree/main/plugins/jni)
    - libc: [View directory](https://github.com/GaragePixel/stdlib-for-mx2/tree/main/plugins/libc)
-   - makefile.monkey2: [View file](https://github.com/GaragePixel/stdlib-for-mx2/blob/main/plugins/makefile.monkey2)
    - miniaudio: [View directory](https://github.com/GaragePixel/stdlib-for-mx2/tree/main/plugins/miniaudio)
    - miniz: [View directory](https://github.com/GaragePixel/stdlib-for-mx2/tree/main/plugins/miniz)
    - sdl2: [View directory](https://github.com/GaragePixel/stdlib-for-mx2/tree/main/plugins/sdl2)
@@ -234,6 +233,11 @@ This library was created (compiled?) by iDkP from GaragePixel
 it's iDkP from GaragePixel with stylized capitals). stdlib is intended for 
 the Monkey2/Wonkey community, as your contributions have brought me many benefits.
 
+The value of these sub-libraries, wraps, patches and additions will increase 
+with the number of users, that's why I worked to reduce 
+the barriers to understanding the library by creating some diagrams 
+and simplify its use through stdlib.
+
 # License
 
 This repository is licensed under the MIT License. See the LICENSE file for more information.
@@ -241,8 +245,3 @@ This repository is licensed under the MIT License. See the LICENSE file for more
 # Contact
 
 If you have any questions or suggestions, feel free to open an issue or contact the repository owner.
-
-The value of these sub-libraries, wraps, patches and additions will increase 
-with the number of users, that's why I worked to reduce 
-the barriers to understanding the library by creating some diagrams 
-and simplify its use through stdlib.
