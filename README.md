@@ -260,14 +260,14 @@ I joined the Blitz3D community in 2004 and have bought all of Mark's products si
 
 In my opinion, the decline of Blitz Research began after BlitzMax, when the new languages ​​(Monkey, Monkey2) 
 stopped compiling to native code. Few people were interested in these new tools, 
-and only a few followed Mark who was the visionary of the time. 
+and only a small group followed Mark who was the visionary of the time. 
 This was before the rise of gobot and similar technologies. 
 Within a once thriving community, only a few ventured into the new areas. 
 Perhaps users did not want tools that looked like simple "to C++" translators.
 
 But let's be honest, development tools have evolved considerably in the last 15-20 years. 
 Back then, they were mostly closed-source commercial software 
-(Visual Studio, PureBasic, BlitzBasic/3D, PowerBasic, etc.). 
+(Visual Studio, PureBasic, BlitzBasic/3D, PowerBasic, Clickteam products etc). 
 Today, the industry has moved towards free open-source programming languages, 
 IDEs, and countless libraries. Almost everything is free now. 
 PureBasic still exists, although it is a niche closed-source product. 
@@ -276,16 +276,21 @@ have all disappeared in the meantime.
 
 If you've used godot over the years, you know that with a strong team and internal communication, 
 great 3D capabilities, and a robust copy of 3D Studio's internal code, 
-Godot has raised significant funding and outperformed formidable opponents 
+godot has raised significant funding and outperformed formidable opponents 
 like Autodesk's Stingray or CrystalSpace. 
 But when you want to tackle really complex tasks, like porting a NES emulator, 
 gscript may not be the best choice. 
 You can turn to C#, but probably later to Sibly's Mx2 when you get tired of an 
-old-school language braces-powered. I don't like braces. They drive me crazy.
+old-fashioned brace-powered punched-card language. I don't like braces. They drive me crazy.
 
 Braces drive me crazy.
 
-I've worked with JS, JSX, MaxScript, and other brace-based languages ​​(although MaxScript uses parentheses like Lisp). Yet on my keyboard, using AltGr+= and AltGr+' all the time is a pain. Mark's languages ​​always felt like I was in a cozy bed with warm blankets. A family of languages ​​where keystrokes were minimal, except for the occasional |. Mx2/Wonkey will never become a brace language.
+I've worked with JS, JSX, MaxScript, and other brace-based languages 
+​​(although MaxScript uses parentheses like Lisp). 
+Yet on my keyboard, using AltGr+= and AltGr+' all the time is a pain. 
+Mark's languages ​​always felt like I was in a cozy bed with warm blankets. 
+A family of languages ​​where keystrokes were minimal, except for the occasional |. 
+Mx2/Wonkey will never become a brace language.
 
 Regarding the syntax of Mx1, when planning the cross-platform compiler, 
 Mark always said that case insensitivity did not fit with C++ internals, 
