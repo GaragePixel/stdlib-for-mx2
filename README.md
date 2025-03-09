@@ -85,12 +85,14 @@ You'll need the Mx2cc version 1.1.15, it can be downloaded with the last
 legacy distribution of Monkey at: https://github.com/blitz-research/monkey2
 
 1. **Place the Folder:**
-   - Copy the `stdlib` folder into the `Monkey`'s `Modules` directory.
+   - Copy the `stdlib-for-mx2` folder into the `Monkey`'s `Modules` directory.
+   - Rename the `stdlib-for-mx2` folder `stdlib`.
 
 2. **Download Mx2cc:**
    - Ensure you have Mx2cc version 1.1.15. You can download it from the [last legacy distribution of Monkey](https://github.com/blitz-research/monkey2).
 
 3. **Precompile Using Command Line:**
+   - Rename the `stdlib-for-mx2` folder `stdlib`.
    - Open Command Prompt (cmd).
    - Navigate to the `bin` folder of your Monkey installation.
    - Run the following command to precompile the `stdlib` for desktop target in release mode:
@@ -101,7 +103,7 @@ legacy distribution of Monkey at: https://github.com/blitz-research/monkey2
      - 2 minutes and 13 seconds for release mode.
      - 2 minutes and 20 seconds for debug mode.
 
-4. **Precompile for Other Targets:**
+4. **Precompile for other Targets:**
    - `stdlib` can also be compiled for HTML5 via Emscripten, Android, and Raspberry Pi.
    - Note: iOS is not supported and likely will never be for ethical reasons.
 
@@ -150,6 +152,31 @@ Think of stdlib as 'legacy' (iDkP's contribution was a minuscule 0.0001% of the 
 Stdlib delivers an implementation with efficiency on par with the original std 
 and its 14 satellite libraries. You only need to call a single library.
 
+This array compare the executable's file with Mx2cc against the new Wx2cc:
+__________________________________________________
+|         wake Linux size optimizations          |
+|------------------------------------------------|
+| Test Name      | Old size | New size |    %    |
+|----------------+----------+----------+---------|
+| HelloWorld     |  183 KB  |   49 KB  |  -73%   |
+| wide           | 16.5 MB  |  9.7 MB  |  -41%   |
+| wake           |  6.9 MB  |  3.2 MB  |  -54%   |
+| PromptInvasion |  6.7 MB  |  3.7 MB  |  -45%   |
+| Billiards/Pool |  7.2 MB  |  4.0 MB  |  -44%   |
+| Commanche      |  6.0 MB  |  3.3 MB  |  -45%   |
+| GridShooter    |  6.3 MB  |  3.4 MB  |  -46%   |
+| Life           |  6.0 MB  |  3.3 MB  |  -45%   |
+| Particles      |  6.0 MB  |  3.3 MB  |  -45%   |
+| Shoot-Out      |  6.1 MB  |  3.4 MB  |  -44%   |
+| SimpleLight    |  6.0 MB  |  3.3 MB  |  -45%   |
+| StarGate       |  8.8 MB  |  4.6 MB  |  -48%   |
+| Toy-Plane      | 10.1 MB  |  5.3 MB  |  -48%   |
+| VSynth         |  6.3 MB  |  3.4 MB  |  -46%   |
+| 3d: test-scene | 12.2 MB  |  9.6 MB  |  -21%   |
+| 3d: shapes     | 10.1 MB  |  5.4 MB  |  -47%   |
+| dockingviewtest|  8.6 MB  |  3.6 MB  |  -58%   |
+|________________|__________|__________|_________|
+
 Functioning as a stovepipe system, stdlib integrates the original independent libraries, 
 expertly sidestepping dependency hell. The primary design goal of this library is 
 to remain compact, precise, self-contained, and resource-efficient, 
@@ -195,7 +222,7 @@ The standard library is divided into several sub-libraries, each targeting a spe
   - Core functionalities and utilities, including file handling and data serialization.
   - Networking functionalities, including socket programming and HTTP operations.
 
-# Why This Library Is Better
+# Why stdlib is better than the legacy std
 
 - **Comprehensive Documentation:** Detailed documentation and examples make it easy to learn and use the library.
 - **Cross-Platform Support:** Designed to work seamlessly across multiple platforms, including Windows, mac, Linux and Rapsberry.
@@ -285,7 +312,7 @@ old-fashioned brace-powered punched-card language. I don't like braces. They dri
 
 Braces drive me crazy.
 
-I've worked with JS, JSX, MaxScript, and other brace-based languages 
+I've worked with JS, JSX, MaxScript, and other brace-based languages
 ​​(although MaxScript uses parentheses like Lisp). 
 Yet on my keyboard, using AltGr+= and AltGr+' all the time is a pain. 
 Mark's languages ​​always felt like I was in a cozy bed with warm blankets. 
