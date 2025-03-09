@@ -40,7 +40,7 @@ Mx2 is a language and a transpiler from the Blitz family languages
 released by Mark Sibly in 2018 as a CPSM 
 [(Wikipedia)](https://en.wikipedia.org/wiki/Cross-platform_support_middleware).
 It's general-purpose, open-source, user-friendly and cross-platform:
-[GitHub repository](https://github.com/blitz-research/monkey2)
+[GitHub repository](https://github.com/blitz-research/monkey2) [prebuild](https://blitzresearch.itch.io/monkey2)
 	
 The original package comes with a number of modules, all essential 
 but relatively scattered and lost in the module folder. 
@@ -82,7 +82,8 @@ And a copy of the ``sdk_mojo`` at this address: https://github.com/GaragePixel/s
 
 Place the folder in the Monkey's Modules directory and precompile the library. 
 You'll need the Mx2cc version 1.1.15, it can be downloaded with the last
-legacy distribution of Monkey at: https://github.com/blitz-research/monkey2
+legacy distribution of Monkey at: https://blitzresearch.itch.io/monkey2
+or from its repositiory: https://github.com/blitz-research/monkey2
 
 1. **Place the Folder:**
    - Copy the `stdlib-for-mx2` folder into the `Monkey`'s `Modules` directory.
@@ -144,20 +145,9 @@ While stdlib is set to be adapted for the Wx compiler soon,
 you can already test it with the Mx compiler version 1.1.15 
 from the last official release by Sibly in September 2018. Check it out [here](https://github.com/blitz-research/monkey2/blob/develop/VERSIONS.TXT).
 
-Without the Wx2cc code cleaner, which cleverly omits unused code blocks, 
-the Mx2cc stdlib churns out a 1.46 MB executable file, embedding a few of its DLLs. 
-With Wxcc, the stdlib-generated executable will be remarkably leaner. 
-Think of stdlib as 'legacy' (iDkP's contribution was a minuscule 0.0001% of the codebase).
-
-Stdlib delivers an implementation with efficiency on par with the original std 
-and its 14 satellite libraries. You only need to call a single library.
-
 This array compare the executable's file with Mx2cc against the new Wx2cc:
-__________________________________________________
-|         wake Linux size optimizations          |
-|------------------------------------------------|
 | Test Name      | Old size | New size |    %    |
-|----------------+----------+----------+---------|
+|----------------|----------|----------|---------|
 | HelloWorld     |  183 KB  |   49 KB  |  -73%   |
 | wide           | 16.5 MB  |  9.7 MB  |  -41%   |
 | wake           |  6.9 MB  |  3.2 MB  |  -54%   |
@@ -175,7 +165,14 @@ __________________________________________________
 | 3d: test-scene | 12.2 MB  |  9.6 MB  |  -21%   |
 | 3d: shapes     | 10.1 MB  |  5.4 MB  |  -47%   |
 | dockingviewtest|  8.6 MB  |  3.6 MB  |  -58%   |
-|________________|__________|__________|_________|
+
+Without the Wx2cc code cleaner, which cleverly omits unused code blocks, 
+the Mx2cc stdlib churns out a 1.46 MB executable file, embedding a few of its DLLs. 
+With Wxcc, the stdlib-generated executable will be remarkably leaner. 
+Think of stdlib as 'legacy' (iDkP's contribution was a minuscule 0.0001% of the codebase).
+
+Stdlib delivers an implementation with efficiency on par with the original std 
+and its 14 satellite libraries. You only need to call a single library.
 
 Functioning as a stovepipe system, stdlib integrates the original independent libraries, 
 expertly sidestepping dependency hell. The primary design goal of this library is 
