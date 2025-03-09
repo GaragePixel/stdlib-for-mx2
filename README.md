@@ -90,7 +90,7 @@ or from its repositiory: https://github.com/blitz-research/monkey2
    - Rename the `stdlib-for-mx2` folder `stdlib`.
 
 2. **Download Mx2cc:**
-   - Ensure you have Mx2cc version 1.1.15. You can download it from the [last legacy distribution of Monkey](https://github.com/blitz-research/monkey2).
+   - Ensure you have Mx2cc version 1.1.15. You can download it from the [last legacy distribution of Monkey](https://blitzresearch.itch.io/monkey2).
 
 3. **Precompile Using Command Line:**
    - Rename the `stdlib-for-mx2` folder `stdlib`.
