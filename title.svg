@@ -1,3 +1,6 @@
 <svg width="500" height="100" xmlns="http://www.w3.org/2000/svg">
-  <text x="10" y="60" font-family="Arial" font-size="80" fill="black">stdlib for mx2</text>
+  <text x="10" y="50" font-family="Arial" font-size="40" fill="black">
+    stdlib for mx2
+    <animate attributeName="x" from="10" to="100" dur="2s" repeatCount="indefinite" />
+  </text>
 </svg>
