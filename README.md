@@ -70,6 +70,25 @@ This is why it was decided to redesign the standard library (``stdlib``), focusi
 And also, stdlib contains itself. Apart from the language module, there is no need to integrate external elements, 
 as all necessary components are now located in the plugins directory and will be periodically updated.
 
+## Targets
+### Desktop targets
+
+| Windows                                | MacOS                                | Linux                                | Raspbian                                 |
+| -------------------------------------- | ------------------------------------ | ------------------------------------ | ---------------------------------------- |
+| ![](./_doc/img/icons/logo-windows.svg) | ![](./_doc/img/icons/logo-apple.svg) | ![](./_doc/img/icons/logo-linux.svg) | ![](./_doc/img/icons/logo-raspberry.png) |
+
+### Mobile targets
+
+| Android                                | iOS                                  |
+| -------------------------------------- | ------------------------------------ |
+| ![](./_doc/img/icons/logo-android.svg) | ![](./_doc/img/icons/logo-apple.svg) |
+
+### Web targets
+
+| Emscripten                                                   |
+| ------------------------------------------------------------ |
+| ![](./docs/img/icons/logo-html5.svg)![](./_doc/img/icons/logo-javascript.svg) |
+
 ## Why Choose stdlib-for-mx2?
 
 - **Tailored for Mx2**: The `stdlib-for-mx2` is specifically designed for the Mx2 programming language, ensuring compatibility and optimized performance.
