@@ -13,6 +13,9 @@ Alias FloatStack:Stack<Float>
 #end
 Alias StringStack:Stack<String>
 
+Alias StackSortFilter:Variant 	' A variant you can pass trough the Sort function.
+								' See the Sort With Filter extension by iDkP from GaragePixel
+
 #rem monkeydoc The Stack class provides suport for dynamic arrays.
 
 A stack is an 'array like' container that grows dynamically as necessary.
@@ -811,5 +814,63 @@ Class Stack<T> Implements IContainer<T>
 	Method Join:String( separator:String ) Where T=String
 		Return separator.Join( ToArray() )
 	End
+
+	' Extension: Sort With Filter
+	' iDkP from GaragePixel
+	' 2025-01
+	'
+	' The filter is just a Variant passed to the Sort in the way
+	' it can be in the compare function's scope. So we can use
+	' some extra parameters and tests in the compare function
+	' in order to turn it as a filter.
+	'
+	' It was an extension, so for to access to the private content,
+	' it was used Self a lot.
+	'
+	' TODO: Replace Self with the private variables
+
+	Method Sort( filter:StackSortFilter,compare:Int( x:T,y:T ) )
+		Sort( filter,compare,0,Length-1 )
+	End
+
+	Method Sort( filter:StackSortFilter,compare:Int( x:T,y:T ),lo:Int,hi:Int )
 	
+		If hi<=lo Return
+		
+		If lo+1=hi
+			If compare( Self[hi],Self[lo] )<0 Swap( hi,lo )
+			Return
+		Endif
+		
+		Local i:=(lo+hi)/2
+		
+		If compare( Self[i],Self[lo] )<0 Swap( i,lo )
+
+		If compare( Self[hi],Self[i] )<0
+			Swap( hi,i )
+			If compare( Self[i],Self[lo] )<0 Swap( i,lo )
+		Endif
+		
+		Local x:=lo+1
+		Local y:=hi-1
+		Repeat
+			Local p:=Self[i]
+			While compare( Self[x],p )<0
+				x+=1
+			Wend
+			While compare( p,Self[y] )<0
+				y-=1
+			Wend
+			If x>y Exit
+			If x<y
+				Swap( x,y )
+				If i=x i=y Else If i=y i=x
+			Endif
+			x+=1
+			y-=1
+		Until x>y
+
+		Sort( filter,compare,lo,y )
+		Sort( filter,compare,x,hi )
+	End
 End
