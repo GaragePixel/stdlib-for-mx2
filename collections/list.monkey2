@@ -704,5 +704,24 @@ Class List<T> Implements IContainer<T>
 		Wend
 		Return Null
 	End
+
+	' Extension: List As Queue
+	' iDkP from GaragePixel
+	' 2024-11
+	'
+	'List with the Queue instructions' set
+	'
+	'Note: 
+	'	Should we use Deque to implement a similar instruction set?	
+	'
+	'	FIFO Operations:
+	'		Possible usage of the list as queue is the implementation of BFS (Breadth-First Search).
 	
+	Method Enqueue(n:T)
+		AddFirst(n)
+	End 
+	
+	Method Dequeue:T()
+		Return RemoveFirst()
+	End
 End
