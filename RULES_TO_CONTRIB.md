@@ -146,4 +146,4 @@ These rules apply specifically To Monkey2/Wonkey/Aida when used with Aida 4. Do 
 * MonkeyX - Has a different approach to array declarations that conflicts with Monkey2/Aida's memory manager
 * Cerberus-X - Uses different ternary operators that Monkey2/Aida 4 cannot properly interpret
 
-Following these syntax rules ensures optimal integration between your application, stdlib, sdk, sdk_mojo And Aida 4's advanced mathematic capabilities.
+Following these syntax rules ensures optimal integration between your application, Monkey2, stdlib, sdk, sdk_mojo and Aida 4's advanced mathematic capabilities.
