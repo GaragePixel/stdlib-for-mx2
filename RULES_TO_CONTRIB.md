@@ -113,7 +113,7 @@ End  ' Try blocks terminate with "End"
     Constants use UPPERCASE_WITH_UNDERSCORES
     Method parameters use lowerCamelCase
     Class names use PascalCase
-
+```
 ## Notes
 
 - These syntax rules have been carefully optimized
