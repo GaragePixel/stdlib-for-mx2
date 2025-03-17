@@ -4,7 +4,8 @@
 
 ## Purpose
 
-This guide provides comprehensive syntax rules for developing applications with Monkey2/Wonkey when integrating with Monkey2/Aida 4/stdlib/sdk/sdk_mojo's programs and apps, following these conventions ensures optimal compatibility between your code and Aida's processing pipeline.
+This document summarizes the essential coding conventions, syntax rules, and best practices for Monkey2 development based on the GaragePixel repositories and Aida 4. These guidelines ensure consistent, maintainable code across projects while leveraging Monkey2's unique language features effectively, ensuring optimal compatibility between your code and Aida's processing pipeline.
+
 
 ## Functionality
 
@@ -145,5 +146,57 @@ These rules apply specifically To Monkey2/Wonkey/Aida when used with Aida 4. Do 
 * Monkey1 - Uses different block termination rules incompatible with Monkey2/Aida 4
 * MonkeyX - Has a different approach to array declarations that conflicts with Monkey2/Aida's memory manager
 * Cerberus-X - Uses different ternary operators that Monkey2/Aida 4 cannot properly interpret
+
+# Monkey2 Coding Style and Syntax Guidelines
+*Authored by iDkP from GaragePixel*
+*2025-03-17 17:13:24*
+*Aida 4*
+
+## Purpose
+
+This document summarizes the essential coding conventions, syntax rules, and best practices for Monkey2 development based on the GaragePixel repositories. These guidelines ensure consistent, maintainable code across projects while leveraging Monkey2's unique language features effectively.
+
+## Functionality
+
+- Standard block syntax termination (End, Wend, EndIf)
+- Variable declaration patterns with type inference support
+- Proper handling of canvas rendering methods
+- Input management conventions (Mouse/Tablet)
+- Class/Method organization guidelines
+- Naming conventions for variables, constants, and types
+- File organization and module imports
+
+## Syntax Rules
+
+### Block Structure
+- Tab-only indentation (never spaces)
+- For loops terminated with "End" (not "Next")
+- While loops terminated with "Wend"
+- Method definitions ended with "End"
+- Function definitions ended with "End"
+- Class definitions ended with "End"
+- Interface definitions ended with "End"
+- If/Else blocks ended with "EndIf" (one word)
+- Select/Case blocks ended with "End"
+- Try/Catch blocks ended with "End"
+
+### Reserved Words
+- Never use "end", "next", "local", or "field" as variable names
+- Keywords like "Public", "Private", "Protected" should not be used as identifiers
+
+### Notes
+    Monkey2 is distinct from Monkey1, MonkeyX, or Cerberus-X with different syntax rules
+    The sdk_mojo module is used for graphics, not mojo (different implementation)
+    Prefer using Class fields over static variables in methods to maintain state
+    Canvas manipulation should use the provided transformation methods
+    Proper error checking is essential, especially when dealing with CopyPixmap returns
+    DrawRect and DrawCircle implementations in sdk_mojo do not use fill parameters
+    The Tablet API extends input capabilities with pressure sensitivity and tilt detection
+    Window management uses carefully controlled viewport settings to maintain drawing quality
+    Color objects should be carefully managed with proper alpha handling
+    Pixmaps should be checked for null before accessing pixel data
+    Mouse and keyboard input should be properly managed in OnKeyEvent and OnMouseEvent methods
+    App initialization should occur in a clear order: fields, constructor, OnCreateWindow, New App
+
 
 Following these syntax rules ensures optimal integration between your application, Monkey2, stdlib, sdk, sdk_mojo and Aida 4's advanced mathematic capabilities.
