@@ -4,8 +4,7 @@
 
 ## Purpose
 
-This document summarizes the essential coding conventions, syntax rules, and best practices for Monkey2 development based on the GaragePixel repositories and Aida 4. These guidelines ensure consistent, maintainable code across projects while leveraging Monkey2's unique language features effectively, ensuring optimal compatibility between your code and Aida's processing pipeline.
-
+This document outlines the essential guidelines and requirements for contributing to the Monkey2/Wonkey standard library repositories maintained by GaragePixel. Following these conventions ensures code consistency, maintainability, and compatibility across the ecosystem. Please read about the coding conventions, syntax rules, and best practices for Monkey2 development based on the GaragePixel repositories and Aida 4. These guidelines ensure consistent, maintainable code across projects while leveraging Monkey2's unique language features effectively, ensuring optimal compatibility between your code and Aida's processing pipeline.
 
 ## Functionality
 
@@ -183,6 +182,92 @@ This document summarizes the essential coding conventions, syntax rules, and bes
 ### Reserved Words
 - Never use "end", "next", "local", or "field" as variable names
 - Keywords like "Public", "Private", "Protected" should not be used as identifiers
+
+## Contribution Rules
+
+### Code Style Requirements
+- Tab-only indentation (never spaces)
+- Block termination must follow language conventions:
+  - For loops terminated with "End" (never "Next")
+  - While loops terminated with "Wend"
+  - Method/Function/Class definitions ended with "End"
+  - If/Else blocks ended with "EndIf" (one word)
+  - Select/Case blocks ended with "End"
+  - Try/Catch blocks ended with "End"
+- Variable naming restrictions:
+  - Never use "end", "next", "local", or "field" as variable names
+  - Follow naming conventions (PascalCase for types, lowerCamelCase for variables)
+  - Use _prefixWithUnderscore for private members
+
+### Documentation Requirements
+- Each module must include header comments with:
+  - Author name/handle
+  - Creation date (YYYY-MM-DD format)
+  - Brief description of functionality
+  - Version number if applicable
+- Public methods must include comments describing:
+  - Purpose
+  - Parameters and return values
+  - Any side effects or exceptions
+
+### Testing Standards
+- All new modules must include test cases
+- Tests should cover standard usage and edge cases
+- Regression tests must be included for bug fixes
+- Performance benchmarks for critical operations
+
+### Pull Request Process
+- Fork the repository and create a feature branch
+- Ensure all tests pass locally before submission
+- Include clear commit messages describing changes
+- Update relevant documentation
+- Submit pull request with comprehensive description
+- Address review feedback promptly
+
+## Module Organization
+
+### Core Standard Library
+- Mathematical functions must maintain precision
+- String operations should be unicode-aware
+- Collections must document complexity guarantees
+- System interfaces should be cross-platform when possible
+
+### Graphics Modules
+- Canvas operations must follow established patterns
+- Color operations should preserve alpha channel correctly
+- Never assume specific rendering behavior across platforms
+- Clearly document performance implications
+
+### Input Handling
+- Support both mouse and tablet input where appropriate
+- Document input sampling rates and precision
+- Provide fallbacks for unsupported input methods
+
+## Technical Advantages
+
+- **Consistency**: Following these guidelines ensures code readability and reduces maintenance burden
+- **Compatibility**: Proper module organization prevents unexpected interactions between components
+- **Performance**: Style guidelines prevent common performance pitfalls specific to Monkey2/Wonkey
+- **Portability**: Clear platform requirements ensure code works across supported targets
+- **Maintainability**: Standard documentation makes future updates easier and safer
+- **Community Development**: Clear contribution standards lower the barrier to entry for new contributors
+
+## Distribution Rules
+
+- All contributions must adhere to the repository license
+- Third-party dependencies must be clearly documented with licenses
+- Platform-specific code must be clearly marked
+- Experimental features must be labeled accordingly
+- Breaking changes require proper deprecation notices
+
+## Common Mistakes to Avoid
+
+- Mixing syntax from Monkey1, MonkeyX, or Cerberus-X
+- Adding platform-specific code without proper conditionals
+- Implementing features already present elsewhere in the library
+- Missing proper error handling
+- Neglecting edge cases in mathematical operations
+- Assuming specific garbage collection behavior
 
 ### Notes
     Monkey2 is distinct from Monkey1, MonkeyX, or Cerberus-X with different syntax rules
