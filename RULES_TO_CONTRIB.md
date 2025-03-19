@@ -179,10 +179,54 @@ This document summarizes the essential coding conventions, syntax rules, and bes
 - Select/Case blocks ended with "End"
 - Try/Catch blocks ended with "End"
 
+### About array's syntax:
+
+Create an array:
+
+	Global myArray:String[]=New String[2](0,1)
+ 	or 
+ 	Global myArray:=New String[2](0,1)
+
+In monkey2 language, the following syntax is wrong:
+
+	If parts[0] = ""
+		parts = parts[1..]
+	End
+
+This is the fixed syntax:
+
+	If parts[0] = ""
+		Local newParts:String[] = New String[parts.Length - 1]
+		For Local i:Int = 1 Until parts.Length
+			newParts[i - 1] = parts[i]
+		Next
+		parts = newParts
+	End
+
+	In this fixture, the rules are: 
+	    	- Create a new array with size reduced by one
+	    	- Copy elements starting from index 1 to the new array
+	    	- Assign the new array back to the variable
+
+	This is the standard approach in Monkey2/Wonkey since it doesn't support slice notation as seen in other languages.
+	You will ensure to follow your specific syntax requirements: Proper Monkey2/Wonkey syntax without confusing it with other Monkey variants
+
 ### Reserved Words
-- Never use "end", "next", "local", or "field" as variable names
+- Never use "end", "next", "namespace", "local", "extension" or "field" as variable names
 - Keywords like "Public", "Private", "Protected" should not be used as identifiers
 
+### Namespace
+
+Under the introduction block (commentary) and before the #import macro and anything else.
+
+### Syntax
+
+Not equal:
+	Wrong syntax:
+		If closeParenIndex != filename.Length - 9 ' ".monkey2" is 8 chars
+	Right syntax:
+		If closeParenIndex <> filename.Length - 9 ' ".monkey2" is 8 chars
+ 
 ## Contribution Rules
 
 ### Code Style Requirements
