@@ -170,22 +170,22 @@ This document summarizes the essential coding conventions, syntax rules, and bes
 
 ```monkey2
 ' Ocean Unflatten - File Hierarchy Restructuring Tool
-' Version 1.2
+' Version 1.3
 ' Implementation: iDkP from GaragePixel
 ' Date: 2025-03-18, Aida 4
 
 ' Purpose:
 ' 
-' This tool restores proper directory hierarchies from flattened file
-' structures. It identifies flattened pathnames in file names and
-' reconstructs them into proper directory trees while combining
-' multi-part files into single files.
+' 	This tool restores proper directory hierarchies from flattened file
+' 	structures. It identifies flattened pathnames in file names and
+' 	reconstructs them into proper directory trees while combining
+' 	multi-part files into single files.
 '
-' It provides an intuitive graphical tool for restructuring flattened file hierarchies
-' back into their original directory structure. The application specializes in handling
-' multi-part files that have been flattened with underscore notation, rebuilding proper
-' directory structures, and concatenating split files. Particularly useful for organizing
-' library source code files that have been flattened for distribution or storage.
+' 	It provides an intuitive graphical tool for restructuring flattened file hierarchies
+' 	back into their original directory structure. The application specializes in handling
+' 	multi-part files that have been flattened with underscore notation, rebuilding proper
+' 	directory structures, and concatenating split files. Particularly useful for organizing
+' 	library source code files that have been flattened for distribution or storage.
 '
 ' Functionality:
 '
@@ -203,32 +203,32 @@ This document summarizes the essential coding conventions, syntax rules, and bes
 ' 		- Non-destructive operation with files copied to a project subfolder
 ' 		- Comment and import directive normalization
 '
-'	- Application interface and thema:
+'	- Application interface and theme:
 ' 		- Visual feedback with pleasing ocean-themed interface with animated bubbles
 '		- This 2025-03-18 is a special day to me and I've made this application in
-'		  order to celebrate this day. My old friend and familly knows what the
-'		  special day of the 18 march meant for me.
+'		  order to celebrate this day. My old friend and family knows what the
+'		  special day of the 18th March meant for me.
 '
 ' Notes:
 '
-' 	The implementation uses a systematic approach to analyzing flattened filenames
-' 	and reconstructing their intended directory structures. File content is processed
-' 	to ensure proper concatenation of multi-part files while preserving semantic
-' 	integrity. The drag and drop interface provides a frictionless way to process
-' 	entire directory structures in a single operation.
+'	The implementation uses a systematic approach to analyzing flattened filenames
+'	and reconstructing their intended directory structures. File content is processed
+'	to ensure proper concatenation of multi-part files while preserving semantic
+'	integrity. The drag and drop interface provides a frictionless way to process
+'	entire directory structures in a single operation.
 '
 ' Advantages:
 '
-' - Intuitive single-step process for restructuring entire libraries
-' - Intelligent part-file detection preserves code integrity
-' - Original files remain untouched during restructuring
-' - Comment and namespace processing ensures clean output files
-' - Duplicate file resolution prevents version conflicts
-' - Visual ocean-themed interface provides engaging feedback
-' - Minimal dependencies for broad compatibility
-' - Careful handling of edge cases in filename patterns
-' - Clean separation between file operations and UI components
-' - Non-blocking UI during intensive file operations
+' 	- Intuitive single-step process for restructuring entire libraries
+' 	- Intelligent part-file detection preserves code integrity
+' 	- Original files remain untouched during restructuring
+' 	- Comment and namespace processing ensures clean output files
+' 	- Duplicate file resolution prevents version conflicts
+' 	- Visual ocean-themed interface provides engaging feedback
+' 	- Minimal dependencies for broad compatibility
+' 	- Careful handling of edge cases in filename patterns
+' 	- Clean separation between file operations and UI components
+' 	- Non-blocking UI during intensive file operations
 ```
 
 ### Block Structure
