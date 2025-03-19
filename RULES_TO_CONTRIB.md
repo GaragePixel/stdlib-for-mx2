@@ -1,5 +1,5 @@
 # Monkey2/Wonkey Syntax Guide for Aida 4 Integration
-*Authored by iDkP from GaragePixel*
+*iDkP from GaragePixel*
 *2025-03-17*
 
 ## Purpose
