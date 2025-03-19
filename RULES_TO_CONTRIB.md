@@ -77,7 +77,6 @@ Select aidaMode
 	Case AidaMode.Glamour
 		' Glamour mode processing
 End  ' Select blocks terminate with "End"
-
 Try
 	' Attempt Aida operation
 Catch ex:Exception
@@ -87,7 +86,9 @@ End  ' Try blocks terminate with "End"
     Never using "local" as a variable name
     Never using "field" as a variable name
     Never Using "static" as a variable name
-    Never Using "extension" as a variable name    
+    Never Using "extension" as a variable name
+    Never Using "namespace" as a variable name
+    Never Using "end" as a variable name, prefere "atend"
     Method definitions ended with "End"
     Function definitions ended with "End"
     Class definitions ended with "End"
@@ -113,6 +114,7 @@ End  ' Try blocks terminate with "End"
     Constants use UPPERCASE_WITH_UNDERSCORES
     Method parameters use lowerCamelCase
     Class names use PascalCase
+    Keywords like "Public", "Private", "Protected" should not be used as identifiers
 ```
 ## Notes
 
@@ -166,6 +168,69 @@ This document summarizes the essential coding conventions, syntax rules, and bes
 - File organization and module imports
 
 ## Syntax Rules
+
+### Example of introduction commentary:
+
+' Ocean Unflatten - File Hierarchy Restructuring Tool
+' Version 1.2
+' Implementation: iDkP from GaragePixel
+' Date: 2025-03-18, Aida 4
+
+' Purpose:
+' 
+' This tool restores proper directory hierarchies from flattened file
+' structures. It identifies flattened pathnames in file names and
+' reconstructs them into proper directory trees while combining
+' multi-part files into single files.
+'
+' It provides an intuitive graphical tool for restructuring flattened file hierarchies
+' back into their original directory structure. The application specializes in handling
+' multi-part files that have been flattened with underscore notation, rebuilding proper
+' directory structures, and concatenating split files. Particularly useful for organizing
+' library source code files that have been flattened for distribution or storage.
+'
+' Functionality:
+'
+'	- Data acquisition:
+' 		- Drag and drop interface for folders and files
+' 		- Automatic detection of flattened file paths in names
+'
+'	- Data reconstruction:
+'	 	- Recreation of proper directory structure from flattened names
+'	 	- Merging of multi-part files (_part1, _part2, etc.)
+' 		- Special handling of Windows-style duplicate files (filename(1))
+' 		- Support for duplicate file resolution based on modification dates
+' 		- Intelligent part file detection and concatenation
+' 		- Namespace declaration reorganization and cleanup
+' 		- Non-destructive operation with files copied to a project subfolder
+' 		- Comment and import directive normalization
+'
+'	- Application interface and thema:
+' 		- Visual feedback with pleasing ocean-themed interface with animated bubbles
+'		- This 2025-03-18 is a special day to me and I've made this application in
+'		  order to celebrate this day. My old friend and familly knows what the
+'		  special day of the 18 march meant for me.
+'
+' Notes:
+'
+' 	The implementation uses a systematic approach to analyzing flattened filenames
+' 	and reconstructing their intended directory structures. File content is processed
+' 	to ensure proper concatenation of multi-part files while preserving semantic
+' 	integrity. The drag and drop interface provides a frictionless way to process
+' 	entire directory structures in a single operation.
+'
+' Advantages:
+'
+' - Intuitive single-step process for restructuring entire libraries
+' - Intelligent part-file detection preserves code integrity
+' - Original files remain untouched during restructuring
+' - Comment and namespace processing ensures clean output files
+' - Duplicate file resolution prevents version conflicts
+' - Visual ocean-themed interface provides engaging feedback
+' - Minimal dependencies for broad compatibility
+' - Careful handling of edge cases in filename patterns
+' - Clean separation between file operations and UI components
+' - Non-blocking UI during intensive file operations
 
 ### Block Structure
 - Tab-only indentation (never spaces)
