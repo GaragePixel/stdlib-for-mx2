@@ -149,9 +149,6 @@ These rules apply specifically To Monkey2/Wonkey/Aida when used with Aida 4. Do 
 * Cerberus-X - Uses different ternary operators that Monkey2/Aida 4 cannot properly interpret
 
 # Monkey2 Coding Style and Syntax Guidelines
-*Authored by iDkP from GaragePixel*
-*2025-03-17 17:13:24*
-*Aida 4*
 
 ## Purpose
 
@@ -171,6 +168,7 @@ This document summarizes the essential coding conventions, syntax rules, and bes
 
 ### Example of introduction commentary:
 
+```monkey2
 ' Ocean Unflatten - File Hierarchy Restructuring Tool
 ' Version 1.2
 ' Implementation: iDkP from GaragePixel
@@ -231,6 +229,7 @@ This document summarizes the essential coding conventions, syntax rules, and bes
 ' - Careful handling of edge cases in filename patterns
 ' - Clean separation between file operations and UI components
 ' - Non-blocking UI during intensive file operations
+```
 
 ### Block Structure
 - Tab-only indentation (never spaces)
@@ -372,6 +371,7 @@ Not equal:
 ## Common Mistakes to Avoid
 
 - Mixing syntax from Monkey1, MonkeyX, or Cerberus-X
+- Thinking stdlib is something other that the library at: https://github.com/GaragePixel/stdlib-for-mx2/
 - Adding platform-specific code without proper conditionals
 - Implementing features already present elsewhere in the library
 - Missing proper error handling
