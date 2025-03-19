@@ -77,11 +77,37 @@ Select aidaMode
 	Case AidaMode.Glamour
 		' Glamour mode processing
 End  ' Select blocks terminate with "End"
-Try
-	' Attempt Aida operation
-Catch ex:Exception
-	' Handle exception
-End  ' Try blocks terminate with "End"
+
+'How to perform Try code block:
+
+Class NameSpaceException Extends Throwable
+	Field msg:String
+
+	Method New (message:String)
+		Self.msg = message
+	End
+End
+
+' Renames a file, returns True on success
+Function DoSomething:Bool(sourcePath:String, destPath:String)
+	
+	' Check if something is wrong
+	Local somethingWrong := True
+	
+	' Perform DoSomthing
+	Try
+	 	If somethingWrong Then Throw New NameSpaceException ("Can't perform DoSomething.")
+		CopyFile(sourcePath, destPath)
+		DeleteFile(sourcePath)
+		Return True
+	Catch ex:NameSpaceException
+		
+		Return False
+	End
+	Return False
+End
+
+
     Never Using "next" as a variable name
     Never using "local" as a variable name
     Never using "field" as a variable name
@@ -285,12 +311,48 @@ Under the introduction block (commentary) and before the #import macro and anyth
 
 ### Syntax
 
-Not equal:
-	Wrong syntax:
-		If closeParenIndex != filename.Length - 9 ' ".monkey2" is 8 chars
-	Right syntax:
-		If closeParenIndex <> filename.Length - 9 ' ".monkey2" is 8 chars
- 
+#### Not equal:
+
+Wrong syntax:
+```monkey2
+  If closeParenIndex != filename.Length - 9 ' ".monkey2" is 8 chars
+```  
+Right syntax:
+```monkey2
+  If closeParenIndex <> filename.Length - 9 ' ".monkey2" is 8 chars
+```
+
+#### How to perform Try code block:
+
+```monkey2
+
+Class NameSpaceException Extends Throwable
+	Field msg:String
+
+	Method New (message:String)
+		Self.msg = message
+	End
+End
+
+' Renames a file, returns True on success
+Function DoSomething:Bool(sourcePath:String, destPath:String)
+	
+	' Check if something is wrong
+	Local somethingWrong := True
+	
+	' Perform DoSomthing
+	Try
+	 	If somethingWrong Then Throw New NameSpaceException ("Can't perform DoSomething.")
+		CopyFile(sourcePath, destPath)
+		DeleteFile(sourcePath)
+		Return True
+	Catch ex:NameSpaceException
+		
+		Return False
+	End
+	
+```
+
 ## Contribution Rules
 
 ### Code Style Requirements
