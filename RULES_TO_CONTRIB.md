@@ -206,7 +206,7 @@ This document summarizes the essential coding conventions, syntax rules, and bes
 '	- Application interface and theme:
 ' 		- Visual feedback with pleasing ocean-themed interface with animated bubbles
 '		- This 2025-03-18 is a special day to me and I've made this application in
-'		  order to celebrate this day. My old friend and family knows what the
+'		  order to celebrate this day. My old friends and family knows what the
 '		  special day of the 18th March meant for me.
 '
 ' Notes:
