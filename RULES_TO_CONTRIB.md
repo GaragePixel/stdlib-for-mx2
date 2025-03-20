@@ -137,6 +137,24 @@ End
         											5,6,7,8,9	)
 
 
+About the syntax, we can't write: 
+
+			vertices[i] = New Vec2<Float>(
+				center.x + Cos(angle) * radius,
+				center.y + Sin(angle) * radius
+			)
+
+we must write:
+
+			vertices[i] = New Vec2<Float>(
+				center.x + Cos(angle) * radius,
+				center.y + Sin(angle) * radius)
+
+And we can't write:
+	Local yOffset:= isPressed ? 2.0 : 0.0
+but we must write instead:
+	Local yOffset:= isPressed ? 2.0 Else 0.0
+
     Functions imported via #Import are available directly in the current namespace
     No need for dotted notation when calling functions in the same namespace
     When functions are added to the source via #Import, they become part of the current scope
