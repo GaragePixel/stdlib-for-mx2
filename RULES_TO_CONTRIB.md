@@ -135,6 +135,12 @@ End
         Can be written: Local myArr:=New Int[10](0,1,2,3,4,5,6,7,8,9)
         Can be written: Local myArr:=New Int[10](	0,1,2,3,4,
         											5,6,7,8,9	)
+
+
+    Functions imported via #Import are available directly in the current namespace
+    No need for dotted notation when calling functions in the same namespace
+    When functions are added to the source via #Import, they become part of the current scope
+
     Field/Property/Method visibility uses standard modifiers (Public, Private, Protected)
     Mouse input accessed via Mouse.X, Mouse.Y, Mouse.ButtonDown(), etc.
     Constants use UPPERCASE_WITH_UNDERSCORES
