@@ -166,6 +166,28 @@ but we must write instead:
     Class names use PascalCase
     Keywords like "Public", "Private", "Protected" should not be used as identifiers
 ```
+
+### Introduction example:
+```monkey2
+' Purpose:
+' 
+'	Clear description of component's role
+'
+' Functionality:
+'
+'	- major category:
+'		- specific capability
+'		- another capability
+'
+' Notes:
+'
+'	Implementation details and design choices
+'
+' Technical advantages:
+'
+'	- advantage category:
+'		detailed explanation of benefit
+```
 ## Notes
 
 - These syntax rules have been carefully optimized
