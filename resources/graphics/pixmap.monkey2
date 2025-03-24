@@ -417,7 +417,21 @@ Class Pixmap Extends Resource
 			Next
 		Next
 	End
+
+	#rem monkeydoc Clears the pixmap to an ARGB color.
 	
+	@param color ARGB color to clear the pixmap to.
+	
+	#end
+	Method Clear( color:UInt ) 'iDkP: Overloaded version of something clear :D
+
+		For Local y:=0 Until _height
+			For Local x:=0 Until _width
+				SetPixelARGB( x,y,color )
+			Next
+		Next
+	End
+
 	#rem monkeydoc Clears the pixmap to an ARGB color.
 	
 	@param color ARGB color to clear the pixmap to.
@@ -511,7 +525,12 @@ Class Pixmap Extends Resource
 	#rem monkeydoc Premultiply pixmap r,g,b components by alpha.
 	#end
 	Method PremultiplyAlpha()
-		
+
+		'Mark: Optimize!
+
+		'iDkP: Yes, we need to store an Alpha property state for the instance
+		'instead of doing this kind of bizarro inefficient procedural code blocks.	
+
 		Select _format
 		Case PixelFormat.IA8,PixelFormat.RGBA8,PixelFormat.RGBA16F,PixelFormat.RGBA32F
 			
@@ -527,11 +546,15 @@ Class Pixmap Extends Resource
 		End
 	End
 	
+#rem Deprecated by GaragePixel	
+
 	#rem monkeydoc @hidden Halves the pixmap for mipmapping
 	
 	Mipmap must be even width and height.
 	
 	FIXME: Handle funky sizes.
+	
+	iDkP from Garagepixel : FIXED, Mark!
 	
 	#end
 	Method MipHalve:Pixmap()
@@ -597,6 +620,137 @@ Class Pixmap Extends Resource
 		
 		Return dst
 	End
+#End
+
+	#rem monkeydoc @hidden Halves the pixmap for mipmapping with support for odd dimensions
+	
+	Creates a mipmap that's approximately half the size of the original.
+	Properly handles cases where width or height are odd numbers.
+	
+	#end
+	Method MipHalve:Pixmap()
+		
+		' Added by iDkP:
+		' Works correctly for all dimension combinations:
+		' even-even, even-odd, odd-even, and odd-odd
+		
+		' Return null if we can't halve anymore
+		If Width=1 And Height=1 Return Null
+		
+		' Calculate new dimensions, properly handling odd sizes
+		Local newWidth:Int = Max(Width/2, 1)
+		Local newHeight:Int = Max(Height/2, 1)
+		
+		' Adjust the new dimensions if original dimensions are odd
+		If Width Mod 2 <> 0 Then newWidth = (Width+1)/2
+		If Height Mod 2 <> 0 Then newHeight = (Height+1)/2
+		
+		Local dst:=New Pixmap(newWidth, newHeight, Format)
+		
+		' Handle special case: 1-pixel wide image
+		If Width=1
+			For Local y:=0 Until dst.Height
+				' Calculate proper source Y coordinates, handling edge cases
+				Local y0:Int = Min(y*2, Height-1)
+				Local y1:Int = Min(y*2+1, Height-1)
+				
+				Local c0:=GetPixel(0, y0)
+				Local c1:=GetPixel(0, y1)
+				dst.SetPixel(0, y, (c0+c1)*0.5)
+			Next
+			Return dst
+		' Handle special case: 1-pixel tall image
+		Else If Height=1
+			For Local x:=0 Until dst.Width
+				' Calculate proper source X coordinates, handling edge cases
+				Local x0:Int = Min(x*2, Width-1)
+				Local x1:Int = Min(x*2+1, Width-1)
+				
+				Local c0:=GetPixel(x0, 0)
+				Local c1:=GetPixel(x1, 0)
+				dst.SetPixel(x, 0, (c0+c1)*0.5)
+			Next
+			Return dst
+		Endif
+
+		Select _format
+		Case PixelFormat.RGBA8
+			
+			For Local y:=0 Until dst.Height
+				
+				Local dstp:=Cast<UInt Ptr>(dst.PixelPtr(0, y))
+				
+				' Calculate source Y coordinates, handling edge cases
+				Local srcY0:Int = Min(y*2, Height-2)
+				Local srcY1:Int = Min(srcY0+1, Height-1)
+				
+				Local srcp0:=Cast<UInt Ptr>(PixelPtr(0, srcY0))
+				Local srcp1:=Cast<UInt Ptr>(PixelPtr(0, srcY1))
+				
+				For Local x:=0 Until dst.Width
+					
+					' Handle edge case for odd width
+					Local isRightEdge:Bool = (x*2 >= Width-1)
+					
+					' Get the 4 source pixels to average, handling edge cases
+					Local src0:UInt, src1:UInt, src2:UInt, src3:UInt
+					
+					src0 = srcp0[0]
+					
+					If isRightEdge
+						src1 = src0  ' Clamp to edge for odd width
+					Else
+						src1 = srcp0[1]
+					Endif
+					
+					src2 = srcp1[0]
+					
+					If isRightEdge
+						src3 = src2  ' Clamp to edge for odd width
+					Else
+						src3 = srcp1[1]
+					Endif
+					
+					' Calculate the average pixel value
+					Local pixel:UInt = ((src0 Shr 2)+(src1 Shr 2)+(src2 Shr 2)+(src3 Shr 2)) & $ff000000
+					pixel |= ((src0 & $ff0000)+(src1 & $ff0000)+(src2 & $ff0000)+(src3 & $ff0000)) Shr 2 & $ff0000
+					pixel |= ((src0 & $ff00)+(src1 & $ff00)+(src2 & $ff00)+(src3 & $ff00)) Shr 2 & $ff00
+					pixel |= ((src0 & $ff)+(src1 & $ff)+(src2 & $ff)+(src3 & $ff)) Shr 2
+					
+					dstp[x] = pixel
+					
+					' Advance source pointers, handling edge case
+					If Not isRightEdge
+						srcp0 += 2
+						srcp1 += 2
+					Else
+						srcp0 += 1
+						srcp1 += 1
+					Endif
+				Next
+			Next
+		Default
+			For Local y:=0 Until dst.Height
+				For Local x:=0 Until dst.Width
+					
+					' Calculate proper source coordinates, handling edge cases
+					Local x0:Int = Min(x*2, Width-1)
+					Local x1:Int = Min(x*2+1, Width-1)
+					Local y0:Int = Min(y*2, Height-1)
+					Local y1:Int = Min(y*2+1, Height-1)
+					
+					Local c0:=GetPixel(x0, y0)
+					Local c1:=GetPixel(x1, y0)
+					Local c2:=GetPixel(x1, y1)
+					Local c3:=GetPixel(x0, y1)
+					Local cm:=(c0+c1+c2+c3)*.25
+					dst.SetPixel(x, y, cm)
+				Next
+			Next
+		End
+		
+		Return dst
+	End
 	
 	#rem monkeydoc Flips the pixmap on the Y axis.
 	#end
@@ -616,7 +770,42 @@ Class Pixmap Extends Resource
 			stdlib.plugins.libc.memcpy( p2,tmp.Data,sz )
 		Next
 	End
-	
+
+	#rem monkeydoc Flips the pixmap on the X axis.
+	#end
+	Method FlipX()
+		
+		'Added by iDkP:
+		'	This implementation swaps pixels across the middle line of each row, 
+		'	which reduces memory operations and may have better cache behavior
+		'	since it only needs to allocate a single pixel's worth of temporary storage.
+		
+		Local halfWidth:=Width/2
+		Local pixelSize:=Depth
+		
+		' Process each row
+		For Local y:=0 Until Height
+			
+			' Get pointer to current row
+			Local rowPtr:=PixelPtr(0, y)
+			
+			' Swap pixels across the middle
+			For Local x:=0 Until halfWidth
+				
+				Local p1:=rowPtr + x*pixelSize
+				Local p2:=rowPtr + (Width-1-x)*pixelSize
+				
+				' Temporary storage for one pixel
+				Local tmp:=New UByte[pixelSize]
+				
+				' Swap the pixels
+				stdlib.plugins.libc.memcpy(tmp.Data, p1, pixelSize)
+				stdlib.plugins.libc.memcpy(p1, p2, pixelSize)
+				stdlib.plugins.libc.memcpy(p2, tmp.Data, pixelSize)
+			Next
+		Next
+	End
+
 	#rem monkeydoc Returns a rectangular window into the pixmap.
 	
 	In debug builds, a runtime error will occur if the rectangle lies outside of the pixmap area.
