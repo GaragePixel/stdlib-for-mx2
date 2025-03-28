@@ -204,15 +204,23 @@ Class Gradient<T> Where T=Color Or T=Int 'Takes Color, Int as Hex or Truecolor
 			Local colors:String
 			Local stops:String
 
-			For Local n:=0 Until _colors.Length-1
-				colors+=String(_colors[n])+","
-			Next
-			colors+=String(_colors[_colors.Length-1])
-			
-			For Local n:=0 Until _stops.Length-2
-				stops+=_stops[n]+","
-			Next
-			stops+=_stops[_stops.Length]
+			If _colors.Length>=3
+
+				For Local n:=0 Until _colors.Length-2
+					colors+=String(_colors[n])+","
+				Next
+				colors+=String(_colors[_colors.Length-1])
+				
+				For Local n:=0 Until _stops.Length-2
+					stops+=_stops[n]+","
+				Next
+				stops+=_stops[_stops.Length-1]
+			Else
+				colors+=_color[0]+","
+				colors+=_color[1]
+				stops+=_color[0]+","
+				stops+=_color[1]
+			End
 			
 			Return "Gradient (type: "+type+", mode:" +mode+", colors: "+_colors.Length+", stops: "+stops+")"
 		End
