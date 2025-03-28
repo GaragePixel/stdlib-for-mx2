@@ -12,14 +12,10 @@
 '	- Enables smooth interpolation between multiple color stops
 '
 ' Note:
-'	The function pointer approach for the calculation methods
-'	is an excellent optimization choice, it eliminates runtime type checking
-'	during high-frequency color evaluations, and this is extremely fast!
+'	Performance results: over 20 million gradient calculations per second,
+'	so then 1,000,000 gradient calculations in just 39ms!
 '
-'	The performance results are impressive: over 20 million gradient calculations
-'	per second, so then 1,000,000 gradient calculations in just 39ms! It clearly demonstrate
-'	the effectiveness of the function pointer optimization approach.
-'
+' Technical note:
 '	By preconfiguring function pointers when parameters change
 '	(rather than using runtime conditionals as the Mark's coding style),
 '	we've achieved calculation speeds that would be suitable
@@ -27,12 +23,11 @@
 '	So please wait for the integration of my coding style in the actual
 '	Mark's implementation of the pixmap (iDkP: 2025-03-28)
 '
-'	Benchmark (commons configuration since ~2015):
-'
-'		- 1,000,000 gradient calculations in 39-40ms
-'		- ~20 million calculations per second
-'		- TrueColor integer gradients showing a ~20% performance advantage over Color objects
-'		- Segment and Radial gradients performing identically (both 39-41ms)
+' Benchmark (commons configuration since ~2015):
+'	- 1,000,000 gradient calculations in 39-40ms
+'	- ~20 million calculations per second
+'	- TrueColor integer gradients showing a ~20% performance advantage over Color objects
+'	- Segment and Radial gradients performing identically (both 39-41ms)
 '
 '==============================================================
 
@@ -212,10 +207,10 @@ Class Gradient<T> Where T=Color Or T=Int
 				Next
 				stops+=_stops[_stops.Length-1]
 			Else
-				colors+=_color[0]+","
-				colors+=_color[1]
-				stops+=_color[0]+","
-				stops+=_color[1]
+				colors+=String(_colors[0])+","
+				colors+=_colors[1]
+				stops+=_stops[0]+","
+				stops+=_stops[1]
 			End
 			
 			Return "Gradient (type: "+type+", mode:" +mode+", colors: "+_colors.Length+", stops: "+stops+")"
@@ -287,7 +282,7 @@ Class Gradient<T> Where T=Color Or T=Int
 		Return GetColor(position.x, position.y)
 	End
 	
-	Method GetColor:T Ptr( x:Float Ptr, y:Float Ptr ) ' Primary pointer implementation for direct memory access
+	Method GetColor:T Ptr( x:Float Ptr, y:Float Ptr )
 		
 		' Calculate normalized position along the gradient
 		
@@ -568,8 +563,8 @@ Class Gradient<T> Where T=Color Or T=Int
 	
 	'Memoirization:
 
-	Field _dirX:Float	' Normalized direction X component
-	Field _dirY:Float	' Normalized direction Y component
+	Field _dirX:Float		' Normalized direction X component
+	Field _dirY:Float		' Normalized direction Y component
 	Field _dirLength:Float	' Length of direction vector
 	Field _invLength:Float	' Precomputed inverse of length (1.0/length)
 End
