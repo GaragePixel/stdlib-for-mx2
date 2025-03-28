@@ -568,8 +568,8 @@ Class Gradient<T> Where T=Color Or T=Int
 	
 	'Memoirization:
 
-	Field _dirX:Float		' Normalized direction X component
-	Field _dirY:Float		' Normalized direction Y component
+	Field _dirX:Float	' Normalized direction X component
+	Field _dirY:Float	' Normalized direction Y component
 	Field _dirLength:Float	' Length of direction vector
 	Field _invLength:Float	' Precomputed inverse of length (1.0/length)
 End
