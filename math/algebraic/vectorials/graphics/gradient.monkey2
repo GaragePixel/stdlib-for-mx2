@@ -2,6 +2,7 @@
 ' 2D Geometric Primitives Library
 ' Implementation: iDkP for GaragePixel
 ' 2025-03-28 (Aida 4)
+'==============================================================
 '
 ' Generic Gradient Class with Runtime Optimization
 '	- Allows both graphical and non graphical operations.
@@ -32,8 +33,7 @@
 '		~20 million calculations per second
 '		TrueColor integer gradients showing a ~20% performance advantage over Color objects
 '		Segment and Radial gradients performing identically (both 39-41ms)
-
-
+'
 '==============================================================
 
 Using stdlib..
