@@ -24,12 +24,13 @@
 		
 			- 2025-03-24 - Added Drawing functions in pixmap (bezier, line, circle, gradiant, bayer matrix... )
 			- 2025-03-17 - Added Graphical Tablet API that should compile for Windows, Cocoa and Linux.
+			- 2025-03-15 - Added Line2, Circle2, Triangle2 and Poly2 as geometric primitive.
 
 		VERSION 1.0 (16 days):
 		
 			RELEASE (1 day):
 	
-				2025-02-01 - Publish stdlib on github
+				2025-03-01 - Publish stdlib on github
 				2025-03-01 - Make a documentation for stdlib
 				2025-03-01 - Make a licence file for stdlib
 			
