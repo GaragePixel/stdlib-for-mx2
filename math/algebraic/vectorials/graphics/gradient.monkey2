@@ -5,10 +5,10 @@
 '
 ' Generic Gradient Class with Runtime Optimization
 ' 	- Allows both graphical and non graphical operations.
-'   - Supports both Color and Int gradient calculations with a single implementation
-'   - Implements three gradient types: segment, directional, and radial
+'	- Supports both Color and Int gradient calculations with a single implementation
+'	- Implements three gradient types: segment, directional, and radial
 '	- Allow multi-colors gradients
-'   - Enables smooth interpolation between multiple color stops
+'	- Enables smooth interpolation between multiple color stops
 '
 ' Note:
 '	The function pointer approach for the calculation methods
