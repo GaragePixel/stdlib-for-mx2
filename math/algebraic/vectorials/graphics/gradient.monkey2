@@ -29,10 +29,10 @@
 '
 '	Benchmark (commons configuration since ~2015):
 '
-'		1,000,000 gradient calculations in 39-40ms
-'		~20 million calculations per second
-'		TrueColor integer gradients showing a ~20% performance advantage over Color objects
-'		Segment and Radial gradients performing identically (both 39-41ms)
+'		- 1,000,000 gradient calculations in 39-40ms
+'		- ~20 million calculations per second
+'		- TrueColor integer gradients showing a ~20% performance advantage over Color objects
+'		- Segment and Radial gradients performing identically (both 39-41ms)
 '
 '==============================================================
 
