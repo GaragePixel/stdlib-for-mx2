@@ -550,25 +550,24 @@ Class Gradient<T> Where T=Color Or T=Int Or T=UInt
 		
 		' Type-specific int color interpolation
 		
-		Local a1:Int = (argb1[0] Shr 24) & $FF
-		Local r1:Int = (argb1[0] Shr 16) & $FF
-		Local g1:Int = (argb1[0] Shr 8) & $FF
-		Local b1:Int = argb1[0] & $FF
+		Local a1:UInt = (argb1[0] Shr 24) & $FF
+		Local r1:UInt = (argb1[0] Shr 16) & $FF
+		Local g1:UInt = (argb1[0] Shr 8) & $FF
+		Local b1:UInt = argb1[0] & $FF
 		
-		Local a2:Int = (argb2[0] Shr 24) & $FF
-		Local r2:Int = (argb2[0] Shr 16) & $FF
-		Local g2:Int = (argb2[0] Shr 8) & $FF
-		Local b2:Int = argb2[0] & $FF
+		Local a2:UInt = (argb2[0] Shr 24) & $FF
+		Local r2:UInt = (argb2[0] Shr 16) & $FF
+		Local g2:UInt = (argb2[0] Shr 8) & $FF
+		Local b2:UInt = argb2[0] & $FF
 		
-		Local a:Int = a1 + Int((a2 - a1) * t[0])
-		Local r:Int = r1 + Int((r2 - r1) * t[0])
-		Local g:Int = g1 + Int((g2 - g1) * t[0])
-		Local b:Int = b1 + Int((b2 - b1) * t[0])
+		Local a:UInt = a1 + UInt((a2 - a1) * t[0])
+		Local r:UInt = r1 + UInt((r2 - r1) * t[0])
+		Local g:UInt = g1 + UInt((g2 - g1) * t[0])
+		Local b:UInt = b1 + UInt((b2 - b1) * t[0])
 		
 		Local result:=(a Shl 24) | (r Shl 16) | (g Shl 8) | b
 		
-		Local resultcast:=Cast<UInt>(result)
-		Return Varptr(resultcast)
+		Return Varptr(result)
 	End
 	
 	Method UpdateDirectionVectors()
