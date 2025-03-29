@@ -31,6 +31,7 @@ Namespace stdlib.math.graphics
 Using stdlib..
 
 Enum DitherMode 
+	None'No dither
 	RGB'Solid 
 	A'Alpha 
 	ARGB'Composite
