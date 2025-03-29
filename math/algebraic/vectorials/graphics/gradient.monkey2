@@ -31,6 +31,8 @@
 '
 '==============================================================
 
+Namespace stdlib.math.graphics
+
 Using stdlib..
 
 Public
