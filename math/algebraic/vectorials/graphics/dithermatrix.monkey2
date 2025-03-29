@@ -30,6 +30,12 @@ Namespace stdlib.math.graphics
 
 Using stdlib..
 
+Enum DitherMode 
+	RGB'Solid 
+	A'Alpha 
+	ARGB'Composite
+End
+
 Class DitherMatrix<T> Where T=Int Or T=Float
 	
 	Property Square:Bool()
