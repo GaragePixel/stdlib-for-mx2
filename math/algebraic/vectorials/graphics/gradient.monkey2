@@ -152,6 +152,7 @@ Class DitherMatrix<T> Where T=Int Or T=Float
 	' Amaze me by proposing original extensions for integration into stdlib
 
 	Function BayerMatrix:DitherMatrix<T>(size:Int, normalize:T=1.0)
+
 		' Generate a Bayer dithering matrix of specified size (must be power of 2)
 		' Returns integer matrix with values normalized to 0-15 range
 	
@@ -197,6 +198,7 @@ Class DitherMatrix<T> Where T=Int Or T=Float
 	End
 	
 	Function HalftoneMatrix:DitherMatrix<T>(size:Int, normalize:T=1.0)
+
 		' Generate a radial halftone matrix of specified size (must be power of 2)
 		' with integer thresholds (0-15 range)
 	
