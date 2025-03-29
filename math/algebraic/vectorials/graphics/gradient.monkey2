@@ -530,6 +530,30 @@ Class Gradient<T> Where T=Color Or T=Int Or T=UInt
 		
 		Return Varptr(result)
 	End
+
+	Function Interpolate_:Int Ptr( grad:Gradient, argb1:UInt Ptr, argb2:UInt Ptr, t:Float Ptr)
+		
+		' Type-specific int color interpolation
+		
+		Local a1:Int = (argb1[0] Shr 24) & $FF
+		Local r1:Int = (argb1[0] Shr 16) & $FF
+		Local g1:Int = (argb1[0] Shr 8) & $FF
+		Local b1:Int = argb1[0] & $FF
+		
+		Local a2:Int = (argb2[0] Shr 24) & $FF
+		Local r2:Int = (argb2[0] Shr 16) & $FF
+		Local g2:Int = (argb2[0] Shr 8) & $FF
+		Local b2:Int = argb2[0] & $FF
+		
+		Local a:Int = a1 + Int((a2 - a1) * t[0])
+		Local r:Int = r1 + Int((r2 - r1) * t[0])
+		Local g:Int = g1 + Int((g2 - g1) * t[0])
+		Local b:Int = b1 + Int((b2 - b1) * t[0])
+		
+		Local result:=(a Shl 24) | (r Shl 16) | (g Shl 8) | b
+		
+		Return Varptr(result)
+	End
 	
 	Method UpdateDirectionVectors()
 		
@@ -565,8 +589,8 @@ Class Gradient<T> Where T=Color Or T=Int Or T=UInt
 	
 	'Memoirization:
 
-	Field _dirX:Float	' Normalized direction X component
-	Field _dirY:Float	' Normalized direction Y component
-	Field _dirLength:Float	' Length of direction vector
-	Field _invLength:Float	' Precomputed inverse of length (1.0/length)
+	Field _dirX:Float		' Normalized direction X component
+	Field _dirY:Float		' Normalized direction Y component
+	Field _dirLength:Float		' Length of direction vector
+	Field _invLength:Float		' Precomputed inverse of length (1.0/length)
 End
