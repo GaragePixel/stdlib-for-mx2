@@ -150,47 +150,71 @@ Class DitherMatrix<T> Where T=Int Or T=Float
 	
 	' I'm not Mark, isn't private, isn't protected. 
 	' Amaze me by proposing original extensions for integration into stdlib
-
+	
 	Function BayerMatrix:DitherMatrix<T>(size:Int, normalize:T=1.0)
-
+		
 		' Generate a Bayer dithering matrix of specified size (must be power of 2)
 		' Returns integer matrix with values normalized to 0-15 range
-	
-#If __DEBUG__ 	
+
+#If __DEBUG__
 		If size>64 Return Null 'protects against exploit
 #Endif
 		
 		' Validate size is power of 2
 		If size & (size - 1) <> 0
-			Print "Warning: Bayer matrix size should be power of 2. Using nearest power of 2."
+			Print "Warning: Bayer matrix size should be power of 2"
+			
+			' Find nearest power of 2
+			Local p:Int = 1
+			While p < size
+				p *= 2
+			Wend
+			size = p
 		End
 	
-		' Find the actual dimension of the matrix (square root of size)
-		Local dimension:Int = Int(Sqrt(size))
+		' Calculate actual matrix dimension (size parameter might not be dimension)
+		Local dimension:Int = size
 		
 		' Initialize matrix
 		Local matrix:Int[] = New Int[dimension * dimension]
-		Local log2Size:Int = Int(Log(dimension) / Log(2))
 		
-		' Generate the correct Bayer pattern with bit interleaving
+		' Calculate log2 of dimension for bit operations
+		Local log2Dim:Int = 0
+		Local temp:Int = dimension
+		While temp > 1
+			temp = temp Shr 1
+			log2Dim += 1
+		Wend
+		
 		For Local y:Int = 0 Until dimension
 			For Local x:Int = 0 Until dimension
 				Local value:Int = 0
 				
-				' Construct Bayer pattern through bit interleaving
-				For Local bit:Int = 0 Until log2Size
-					' Extract bits from x and y coordinates
+				' Bayer bit-interleaving algorithm
+				For Local bit:Int = 0 Until log2Dim
+					' Extract bits from coordinates
 					Local xBit:Int = (x Shr bit) & 1
 					Local yBit:Int = (y Shr bit) & 1
 					
-					' Properly interleave bits with XOR pattern
-					value = value Shl 2  ' Shift left by 2 for each bit pair
-					value |= yBit Shl 1  ' Y bit goes in second position
-					value |= xBit        ' X bit goes in first position
+					' Monkey2-compatible bit manipulation (no xor operator)
+					Local notEqual:Int = 0
+					If (xBit = 1 And yBit = 0) Or (xBit = 0 And yBit = 1) Then notEqual = 1
+					
+					' Shift and set bits
+					value = value Shl 1
+					value = value | notEqual
 				Next
 				
-				' Scale to normalize range
-				matrix[y * dimension + x] = (value * normalize) / (dimension * dimension / 4)
+				' Scale value to range (0 to normalize)
+				' Note: 2^(2*log2Dim) equals dimension*dimension
+				Local maxValue:Int = (1 Shl (log2Dim * 2)) - 1
+				
+				' Avoid division by zero
+				If maxValue > 0
+					matrix[y * dimension + x] = (value * normalize) / maxValue
+				Else
+					matrix[y * dimension + x] = 0  ' Fallback for 1x1 matrix
+				End
 			Next
 		Next
 		
@@ -198,37 +222,44 @@ Class DitherMatrix<T> Where T=Int Or T=Float
 	End
 	
 	Function HalftoneMatrix:DitherMatrix<T>(size:Int, normalize:T=1.0)
-
-		' Generate a radial halftone matrix of specified size (must be power of 2)
-		' with integer thresholds (0-15 range)
-	
-#If __DEBUG__ 	
-		If size>64 Return Null 'protects against exploit
-#Endif
 		
-		' Find the actual dimension of the matrix (square root of size)
-		Local dimension:Int = Int(Sqrt(size))
+		' Generate a radial halftone matrix of specified size
+		' with integer thresholds (0-15 range)
+
+#If __DEBUG__		
+		If size>64 Return Null 'protects against exploit
+#endif
+		
+		' Calculate actual matrix dimension (square root of size)
+		Local dimension:Int = Int(Sqrt(Float(size)))
+		
+		' Ensure dimension is at least 2
+		If dimension < 2 dimension = 2
 		
 		' Initialize matrix
 		Local matrix:Int[] = New Int[dimension * dimension]
 		Local center:Float = Float(dimension - 1) / 2.0
-		Local maxDistance:Float = Sqrt(center * center + center * center)  ' Distance to corner
+		
+		' Calculate maximum distance (corner to center)
+		Local maxDistance:Float = Sqrt(center * center + center * center)
+		
+		' Avoid division by zero
+		If maxDistance < 0.001 maxDistance = 0.001
 		
 		For Local y:Int = 0 Until dimension
 			For Local x:Int = 0 Until dimension
 				' Calculate distance from center
-				Local dx:Float = x - center
-				Local dy:Float = y - center
+				Local dx:Float = Float(x) - center
+				Local dy:Float = Float(y) - center
 				
 				' Normalized distance (0-1 range)
-				' Divide by maxDistance to get proper scaling
 				Local distance:Float = Sqrt(dx * dx + dy * dy) / maxDistance
 				
-				' Invert and scale to 0-normalize integer range
-				' This creates higher values at center, lower at edges
+				' Invert and scale to 0-normalize range
+				' Higher values at center (furthest from corners)
 				Local value:Int = Int((1.0 - distance) * normalize)
 				
-				' Clamp to valid range
+				' Ensure value is within range
 				value = Max(0, Min(Int(normalize), value))
 				
 				' Store in the matrix
