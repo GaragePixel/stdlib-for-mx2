@@ -113,7 +113,7 @@ Class DitherMatrix<T> Where T=Int Or T=Float
 		Local my:Int = y Mod matrix._height
 		
 		' Handle negative coordinates for y-coordinate if needed
-		' (Only relevant for negative y values with Monkey2's modulo behavior)
+		' (Only relevant for negative y values with Monkey2's modulo behavior, TOTEST)
 		'If my < 0 my += matrix._height
 		
 		' Direct array access with minimal computation
@@ -146,15 +146,17 @@ Class DitherMatrix<T> Where T=Int Or T=Float
 
 	Function BayerMatrix:DitherMatrix<T>(size:Int, normalize:T=1.0)
 		' Generate a Bayer dithering matrix of specified size (must be power of 2)
-		' Returns integer matrix with values normalized to 0-15 range
+		' Returns integer matrix with values normalized to 0-any range
 		
 		If size>64 Return Null 'protects against exploit
 		
+#If __DEBUG__ 
 		' Validate size is power of 2
 		If size & (size - 1) <> 0
+
 			Print "Warning: Bayer matrix size should be power of 2. Using nearest power of 2."
 		End
-	
+#End	
 		' Initialize matrix
 		Local matrix:Int[] = New Int[size * size]
 		Local log2Size:Int = Int(Log(size) / Log(2))
@@ -193,14 +195,16 @@ Class DitherMatrix<T> Where T=Int Or T=Float
 	
 	Function HalftoneMatrix:DitherMatrix<T>(size:Int, normalize:T=1.0)
 		' Generate a radial halftone matrix of specified size (must be power of 2)
-		' with integer thresholds (0-15 range)
+		' with integer thresholds (0-any range)
 		
 		If size>64 Return Null 'protects against exploit
 		
+#If __DEBUG__ 		
 		' Validate size is power of 2
 		If size & (size - 1) <> 0
 			Print "Warning: Halftone matrix size should be power of 2. Using nearest power of 2."
 		End
+#End
 		
 		Local matrix:Int[] = New Int[size * size]
 		Local center:Float = Float(size - 1) / 2.0
@@ -214,7 +218,7 @@ Class DitherMatrix<T> Where T=Int Or T=Float
 				' Normalized distance (0-1 range)
 				Local distance:Float = Sqrt(dx * dx + dy * dy) / center
 				
-				' Invert and scale to 0-15 integer range
+				' Invert and scale to 0-any integer range
 				' Using 15.999 to ensure 1.0 maps to exactly 15
 				Local value:Int = Int((1.0 - distance) * normalize)
 				
