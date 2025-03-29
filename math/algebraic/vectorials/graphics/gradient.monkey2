@@ -457,7 +457,22 @@ Class Gradient<T> Where T=Color Or T=Int Or T=UInt
 		Return Interpolate_(grad, color1, color2, t)
 	End
 
-	Function Interpolate:T Ptr( grad:Gradient, color1:T Ptr, color2:T Ptr, t:Float Ptr )
+'	Function Interpolate:T Ptr( grad:Gradient, color1:T Ptr, color2:T Ptr, t:Float Ptr )
+'		' Interpolate between two colors based on t
+'		Return Interpolate_(grad, color1, color2, t)
+'	End
+
+	Function Interpolate:Color Ptr( grad:Gradient, color1:Color Ptr, color2:Color Ptr, t:Float Ptr )
+		' Interpolate between two colors based on t
+		Return Interpolate_(grad, color1, color2, t)
+	End
+
+	Function Interpolate:Int Ptr( grad:Gradient, color1:Int Ptr, color2:Int Ptr, t:Float Ptr )
+		' Interpolate between two colors based on t
+		Return Interpolate_(grad, color1, color2, t)
+	End
+
+	Function Interpolate:UInt Ptr( grad:Gradient, color1:UInt Ptr, color2:UInt Ptr, t:Float Ptr )
 		' Interpolate between two colors based on t
 		Return Interpolate_(grad, color1, color2, t)
 	End
@@ -531,7 +546,7 @@ Class Gradient<T> Where T=Color Or T=Int Or T=UInt
 		Return Varptr(result)
 	End
 
-	Function Interpolate_:Int Ptr( grad:Gradient, argb1:UInt Ptr, argb2:UInt Ptr, t:Float Ptr)
+	Function Interpolate_:UInt Ptr( grad:Gradient, argb1:UInt Ptr, argb2:UInt Ptr, t:Float Ptr)
 		
 		' Type-specific int color interpolation
 		
@@ -552,7 +567,8 @@ Class Gradient<T> Where T=Color Or T=Int Or T=UInt
 		
 		Local result:=(a Shl 24) | (r Shl 16) | (g Shl 8) | b
 		
-		Return Varptr(result)
+		Local resultcast:=Cast<UInt>(result)
+		Return Varptr(resultcast)
 	End
 	
 	Method UpdateDirectionVectors()
@@ -591,6 +607,6 @@ Class Gradient<T> Where T=Color Or T=Int Or T=UInt
 
 	Field _dirX:Float		' Normalized direction X component
 	Field _dirY:Float		' Normalized direction Y component
-	Field _dirLength:Float		' Length of direction vector
-	Field _invLength:Float		' Precomputed inverse of length (1.0/length)
+	Field _dirLength:Float	' Length of direction vector
+	Field _invLength:Float	' Precomputed inverse of length (1.0/length)
 End
