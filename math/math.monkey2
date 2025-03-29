@@ -13,6 +13,7 @@ Namespace stdlib.math
 
 #Import "algebraic/vectorials/coordinates/axis"
 
+#Import "algebraic/vectorials/graphics/dithermatrix"
 #Import "algebraic/vectorials/graphics/gradient"
 
 #Import "algebraic/linear/matrices/mat3"
