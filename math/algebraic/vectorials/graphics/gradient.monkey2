@@ -51,7 +51,7 @@ End
 Alias Gradientc:Gradient<Color>
 Alias Gradienti:Gradient<Int>
 
-Class Gradient<T> Where T=Color Or T=Int
+Class Gradient<T> Where T=Color Or T=Int Or T=UInt
 	
 	' Colors are interpolated in their native format (either Color objects or
 	' Int ARGB values) to avoid unnecessary conversions in the rendering pipeline.
