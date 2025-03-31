@@ -37,6 +37,12 @@ Namespace stdlib
 #Import "resources/graphics/pixmapsaver"
 #Import "resources/graphics/color"
 
+#Import "resources/graphics/wrappers/texturewrapper"
+#Import "resources/graphics/wrappers/imagewrapper"
+#Import "resources/graphics/wrappers/canvaswrapper"
+#Import "resources/graphics/buffers/imagebuffer"
+#Import "resources/graphics/buffers/framebuffer"
+
 #import "resources/audio/audioformat"
 #import "resources/audio/audiodata"
 #import "resources/audio/load_wav"
