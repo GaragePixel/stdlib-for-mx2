@@ -211,7 +211,6 @@ Class CanvasWrapper<C,I,T>
 	'*******************************************
 ' Update the InitializeHandlers method to include CopyPixels handler
 	Method InitializeHandlers:Void()
-		' Existing handlers...
 		
 		' DrawImage handler - for wrapped images
 		Local drawImgHandler:Void(image:ImageWrapper<C,I,T>, x:Float, y:Float, rotation:Float, scaleX:Float, scaleY:Float)
