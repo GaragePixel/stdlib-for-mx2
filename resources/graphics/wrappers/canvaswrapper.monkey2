@@ -31,7 +31,7 @@ Class CanvasWrapper<C,I,T>
 	End
 	
 	' For use with regular Image objects
-	Method DrawImage:CanvasWrapper<C,I,T>(image:Image, x:Float, y:Float, rotation:Float=0.0, scaleX:Float=1.0, scaleY:Float=1.0)
+	Method DrawImage:CanvasWrapper<C,I,T>(image:I, x:Float, y:Float, rotation:Float=0.0, scaleX:Float=1.0, scaleY:Float=1.0)
 		If _drawDirectImageHandler<>Null Then _drawDirectImageHandler(image, x, y, rotation, scaleX, scaleY)
 		Return Self
 	End
