@@ -37,6 +37,8 @@ Namespace stdlib
 #Import "resources/graphics/pixmapsaver"
 #Import "resources/graphics/color"
 
+#Import "resources/graphics/enums"
+
 #Import "resources/graphics/wrappers/texturewrapper"
 #Import "resources/graphics/wrappers/imagewrapper"
 #Import "resources/graphics/wrappers/canvaswrapper"
