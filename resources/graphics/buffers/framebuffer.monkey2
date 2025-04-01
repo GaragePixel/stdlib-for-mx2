@@ -379,6 +379,7 @@ Class FrameBuffer<C,I,T>
 			' Front buffer becomes pending buffer (ready for drawing)
 			' Back buffer becomes front buffer (displayed next frame)
 			' Pending buffer becomes back buffer (queued for display)
+			' As we can see, it's a very simple zero-copy technique.
 			
 			Local temp:Buffer = _frontBuffer
 			_frontBuffer = _backBuffer
