@@ -68,7 +68,7 @@ Namespace stdlib.graphics
 '	a canvas mojo-alike).
 '
 ' Note:
-'	No, isn't not an interface. Because with an interface, you
+'	No, isn't an interface. Because with an interface, you
 '	need to implement the classes with the interface. And I
 '	don't want change the Mojo stuff in that way.
 '	My simple goal was just to provide a class that contains a Pixmap, 
