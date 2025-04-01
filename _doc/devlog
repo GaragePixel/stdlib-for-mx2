@@ -22,7 +22,7 @@
 
 		VERSION 1.1:
 
-			- 2025-03-31 - Added cross renderer texture, Image and Canvas wrapper, ImageBuffer and FrameBuffer
+			- 2025-03-31 - Added cross renderer Texture, Image and Canvas wrapper, ImageBuffer and FrameBuffer
 			- 2025-03-28 - Added Gradiant primitive (stdlib/math/algebraic/vectorials/graphics/... )		
 			- 2025-03-24 - Added Drawing functions in pixmap (bezier, line, circle, gradiant, bayer matrix... )
 			- 2025-03-17 - Added Graphical Tablet API that should compile for Windows, Cocoa and Linux.
