@@ -12,8 +12,6 @@ Using stdlib.graphics.pixmaploader
 Using stdlib.math.types..
 Using stdlib.collections..
 
-Const Zero:Int=0
-
 Extern Private
 
 Function ldexp:Float( x:Float,exp:Int )
@@ -21,6 +19,8 @@ Function ldexp:Float( x:Float,exp:Int )
 Function frexp:Float( arg:Float,exp:Int Ptr )
 	
 Private
+
+Const Zero:Int=0
 
 Function GetColorRGBE8:Color( p:UByte Ptr)
 	If Not p[3] Return Color.Black
