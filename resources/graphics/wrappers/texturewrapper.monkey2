@@ -203,8 +203,7 @@ Class TextureWrapper<T>
 		' This avoids compiler issues with function resolution
 		
 		' Property handlers
-		Local sizeFunc:Vec2i()
-		sizeFunc = Lambda:Vec2i()
+		Local sizeFunc:Vec2i() = Lambda:Vec2i() ' this one's explicitly named
 			Return _texture.Size
 		End
 		SetSizeHandler(sizeFunc)
