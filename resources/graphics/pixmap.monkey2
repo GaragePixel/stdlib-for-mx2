@@ -12,6 +12,8 @@ Using stdlib.graphics.pixmaploader
 Using stdlib.math.types..
 Using stdlib.collections..
 
+Const Zero:Int=0
+
 Extern Private
 
 Function ldexp:Float( x:Float,exp:Int )
@@ -79,8 +81,6 @@ Class Pixmap Extends Resource
 	
 	#end
 	Method New( width:Int,height:Int,format:PixelFormat=PixelFormat.RGBA8 )
-	
-'		Print "New pixmap1, width="+width+", height="+height
 
 		Local depth:=PixelFormatDepth( format )
 		Local pitch:=width*depth
@@ -93,11 +93,14 @@ Class Pixmap Extends Resource
 		_pitch=pitch
 		_owned=True
 		_data=data
+		InitSetPixel(Self) 		'iDkP: Added for the little bird's happiness
+		InitSetPixelARGB(Self) 	'iDkP: Added for the little bird's happiness
+		InitGetPixel(Self) 		'iDkP: Added for the little bird's happiness
+		InitGetPixelARGB(Self) 	'iDkP: Added for the little bird's happiness
+		InitHasAlpha(Self) 		'iDkP: Added for the little bird's happiness
 	End
 	
 	Method New( width:Int,height:Int,format:PixelFormat,data:UByte Ptr,pitch:Int )
-	
-'		Print "New pixmap2, width="+width+", height="+height
 
 		Local depth:=PixelFormatDepth( format )
 		
@@ -107,13 +110,27 @@ Class Pixmap Extends Resource
 		_depth=depth
 		_data=data
 		_pitch=pitch
+		InitSetPixel(Self) 		'iDkP: Added for the little bird's happiness
+		InitSetPixelARGB(Self) 	'iDkP: Added for the little bird's happiness
+		InitGetPixel(Self) 		'iDkP: Added for the little bird's happiness
+		InitGetPixelARGB(Self) 	'iDkP: Added for the little bird's happiness
+		InitHasAlpha(Self) 		'iDkP: Added for the little bird's happiness
+	End
+
+	#rem monkeydoc Optional name.
+	
+	#end
+	Property Name:String()
+		Return _name
+	Setter( name:String )
+		If name.Length>32 name=name.Slice(0,32) 'Against exploit
+		_name=name
 	End
 	
 	#rem monkeydoc The width and height of the pixmap.
 	
 	#end
 	Property Size:Vec2i()
-		
 		Return New Vec2i( _width,_height )
 	End
 
@@ -121,7 +138,6 @@ Class Pixmap Extends Resource
 	
 	#end
 	Property Width:Int()
-		
 		Return _width
 	End
 	
@@ -129,7 +145,6 @@ Class Pixmap Extends Resource
 	
 	#end
 	Property Height:Int()
-		
 		Return _height
 	End
 	
@@ -137,7 +152,6 @@ Class Pixmap Extends Resource
 	
 	#end
 	Property Format:PixelFormat()
-		
 		Return _format
 	End
 	
@@ -147,20 +161,24 @@ Class Pixmap Extends Resource
 	
 	#end
 	Property Depth:Int()
-		
 		Return _depth
 	End
 	
 	#rem monkeydoc True if pixmap format includes alpha.
 	#end
 	Property HasAlpha:Bool()
-		
-		Select _format
-		Case PixelFormat.A8,PixelFormat.IA8,PixelFormat.RGBA8
-			Return True
-		End
-		Return False
+		Return _hasAlpha
 	End
+	
+	'iDkP whatza?
+'	Property HasAlpha:Bool()
+'		
+'		Select _format
+'		Case PixelFormat.A8,PixelFormat.IA8,PixelFormat.RGBA8
+'			Return True
+'		End
+'		Return False
+'	End
 	
 	#rem monkeydoc The raw pixmap data.
 	
@@ -200,9 +218,37 @@ Class Pixmap Extends Resource
 	
 	#end
 	Method PixelPtr:UByte Ptr( x:Int,y:Int )
-		
+		' iDkP: Keeped for front programmer
 		Return _data + y*_pitch + x*_depth
 	End
+
+	Function PixelPtr:UByte Ptr( p:Pixmap, x:Int,y:Int )
+		' iDkP: Keeped for front programmer
+		Return p.Data + y*p.Pitch + x*p.Depth
+	End
+
+	Method PixelPtr:UByte Ptr( x:Int Ptr,y:Int Ptr )
+		'Added by iDkP - Always use pointer in backstage
+		Return _data + y[0]*_pitch + x[0]*_depth
+	End
+
+	Function PixelPtr:UByte Ptr( p:Pixmap, x:Int Ptr,y:Int Ptr )
+		'Added by iDkP - Always use pointer in backstage
+		Return p.Data + y[0]*p.Pitch + x[0]*p.Depth
+	End
+
+	Method PixelPtr:UByte Ptr( y:Int Ptr )
+		'Added by iDkP - Always use pointer in backstage
+		Return _data + y[0]*_pitch' + 0*_depth
+	End
+
+	Function PixelPtr:UByte Ptr( p:Pixmap, y:Int Ptr )
+		'Added by iDkP - Always use pointer in backstage
+		Return p.Data + y[0]*p.Pitch' + 0*p.Depth
+	End
+
+	' -------------------- 	iDkP's Standard Zero-Branch Execution programming style
+	' 						350% speed up
 	
 	#rem monkeydoc Sets a pixel to a color.
 	
@@ -218,8 +264,15 @@ Class Pixmap Extends Resource
 	
 	#end
 	Method SetPixel( x:Int,y:Int,color:Color )
+		
 		DebugAssert( x>=0 And y>=0 And x<_width And y<_height,"Pixmap pixel coordinates out of range" )
 		
+		'Added by iDkP
+		Local argb:=color.ToARGB()
+		_SetPixelARGB_( Self, Varptr(x), Varptr(y), Varptr(argb) )
+		
+		#rem UNDONED by iDkP from GaragePixel, 2025-04-01: 
+
 		Local p:=PixelPtr( x,y )
 		
 		Select _format
@@ -253,53 +306,18 @@ Class Pixmap Extends Resource
 		Case PixelFormat.RGBE8
 			SetColorRGBE8( p,color )
 		Default
-			Assert( False )
+			Assert( False ) 'Mark, you assert an unknow format while we can't even create a pixmap from an unknow format?
 		End
+		#end
 	End
-
-	#rem monkeydoc Gets the color of a pixel.
 	
-	Gets the pixel at `x`, `y` and returns it in ARGB format.
-	
-	In debug builds, a runtime error will occur if the pixel coordinates lie outside of the pixmap area.
-
-	@param x The x coordinate of the pixel.
-	
-	@param y The y coordinate of the pixel.
-	
-	@return The color of the pixel at `x`, `y`.
-	
-	#end
-	Method GetPixel:Color( x:Int,y:Int )
-		DebugAssert( x>=0 And y>=0 And x<_width And y<_height,"Pixmap pixel coordinates out of range" )
-	
-		Local p:=PixelPtr( x,y )
-
-		Select _format
-		Case PixelFormat.A8 
-			Return New Color( 0,0,0,p[0]/255.0 )
-		Case PixelFormat.I8
-			Local i:=p[0]/255.0
-			Return New Color( i,i,i,1 )
-		Case PixelFormat.IA8
-			Local i:=p[0]/255.0
-			Return New Color( i,i,i,p[1]/255.0 )
-		Case PixelFormat.RGB8
-			Return New Color( p[0]/255.0,p[1]/255.0,p[2]/255.0,1 )
-		Case PixelFormat.RGBA8
-			Return New Color( p[0]/255.0,p[1]/255.0,p[2]/255.0,p[3]/255.0 )
-		Case PixelFormat.RGB32F
-			Local f:=Cast<Float Ptr>( p )
-			Return New Color( f[0],f[1],f[2] )
-		Case PixelFormat.RGBA32F
-			Local f:=Cast<Float Ptr>( p )
-			Return New Color( f[0],f[1],f[2],f[3] )
-		Case PixelFormat.RGBE8
-			Return GetColorRGBE8( p )
-		Default
-			Assert( False )
-		End
-		Return Color.None
+	'Added by iDkP
+	Method SetPixel( x:Int Ptr,y:Int Ptr,color:Color Ptr)
+		
+		DebugAssert( x[0]>=0 And y[0]>=0 And x[0]<_width And y[0]<_height,"Pixmap pixel coordinates out of range" )
+		
+		Local argb:=color[0].ToARGB()
+		_SetPixelARGB_( Self, x, y, Varptr(argb) )
 	End
 	
 	#rem monkeydoc Sets a pixel to an ARGB color.
@@ -316,9 +334,13 @@ Class Pixmap Extends Resource
 	
 	#end
 	Method SetPixelARGB( x:Int,y:Int,color:UInt )
+		
 		DebugAssert( x>=0 And y>=0 And x<_width And y<_height,"Pixmap pixel coordinates out of range" )
 	
-		Local p:=PixelPtr( x,y )
+		' Added by iDkP
+		_SetPixelARGB_( Self, Varptr(x), Varptr(y), Varptr(color) )
+		
+		#rem UNDONED by iDkP from GaragePixel, 2025-04-01:
 		
 		Select _format
 		Case PixelFormat.A8
@@ -353,6 +375,75 @@ Class Pixmap Extends Resource
 		Default
 			SetPixel( x,y,New Color( ((color Shr 16)&255)/255.0,((color Shr 8)&255)/255.0,(color&255)/255.0,((color Shr 24)&255)/255.0 ) )
 		End
+		#End of the massacre
+	End
+
+	'Added by iDkP
+	Method SetPixelARGB( x:Int Ptr,y:Int Ptr,color:UInt Ptr)
+		
+		DebugAssert( x[0]>=0 And y[0]>=0 And x[0]<_width And y[0]<_height,"Pixmap pixel coordinates out of range" )
+		
+		_SetPixelARGB_( Self, x, y, color )
+	End
+
+	#rem monkeydoc Gets the color of a pixel.
+	
+	Gets the pixel at `x`, `y` and returns it in ARGB format.
+	
+	In debug builds, a runtime error will occur if the pixel coordinates lie outside of the pixmap area.
+
+	@param x The x coordinate of the pixel.
+	
+	@param y The y coordinate of the pixel.
+	
+	@return The color of the pixel at `x`, `y`.
+	
+	#end
+	Method GetPixel:Color( x:Int,y:Int )
+		
+		DebugAssert( x>=0 And y>=0 And x<_width And y<_height,"Pixmap pixel coordinates out of range" )
+	
+		Return Color.FromARGB(_GetPixelARGB_( Self, Varptr(x), Varptr(y) ))
+		
+		#rem UNDONED by iDkP from GaragePixel, 2025-04-01:
+	
+		Local p:=PixelPtr( x,y )
+
+		Select _format
+		Case PixelFormat.A8 
+			Return New Color( 0,0,0,p[0]/255.0 )
+		Case PixelFormat.I8
+			Local i:=p[0]/255.0
+			Return New Color( i,i,i,1 )
+		Case PixelFormat.IA8
+			Local i:=p[0]/255.0
+			Return New Color( i,i,i,p[1]/255.0 )
+		Case PixelFormat.RGB8
+			Return New Color( p[0]/255.0,p[1]/255.0,p[2]/255.0,1 )
+		Case PixelFormat.RGBA8
+			Return New Color( p[0]/255.0,p[1]/255.0,p[2]/255.0,p[3]/255.0 )
+		Case PixelFormat.RGB32F
+			Local f:=Cast<Float Ptr>( p )
+			Return New Color( f[0],f[1],f[2] )
+		Case PixelFormat.RGBA32F
+			Local f:=Cast<Float Ptr>( p )
+			Return New Color( f[0],f[1],f[2],f[3] )
+		Case PixelFormat.RGBE8
+			Return GetColorRGBE8( p )
+		Default
+			Assert( False )
+		End
+		Return Color.None
+		
+		#end
+	End
+
+	'Added by iDkP
+	Method GetPixel:Color( x:Int Ptr,y:Int Ptr )
+		
+		DebugAssert( x[0]>=0 And y[0]>=0 And x[0]<_width And y[0]<_height,"Pixmap pixel coordinates out of range" )
+		
+		Return Color.FromARGB(_GetPixelARGB_( Self, x, y ))
 	End
 
 	#rem monkeydoc Gets the ARGB color of a pixel.
@@ -367,7 +458,13 @@ Class Pixmap Extends Resource
 	
 	#end
 	Method GetPixelARGB:UInt( x:Int,y:Int )
+		
 		DebugAssert( x>=0 And y>=0 And x<_width And y<_height,"Pixmap pixel coordinates out of range" )
+	
+		'Added by iDkP
+		Return _GetPixelARGB_( Self, Varptr(x), Varptr(y) )
+		
+		#rem UNDONED by iDkP from GaragePixel, 2025-04-01:
 	
 		Local p:=PixelPtr( x,y )
 		
@@ -399,10 +496,18 @@ Class Pixmap Extends Resource
 		End
 
 		Return 0
+		#end
 	End
 
-'-----------------------
-'iDkP: will be deprecated
+	'Added by iDkP
+	Method GetPixelARGB( x:Int Ptr,y:Int Ptr )
+		
+		DebugAssert( x[0]>=0 And y[0]>=0 And x[0]<_width And y[0]<_height,"Pixmap pixel coordinates out of range" )
+		
+		_GetPixelARGB_( Self, x, y )
+	End
+	
+	'-----------------------
 
 'jl added
 	#rem monkeydoc Sets a pixel to a RGBA color using bytes or floats.
@@ -422,22 +527,40 @@ Class Pixmap Extends Resource
 	@param a the alpha component of the pixel.
 	#end
 	Method SetPixelRGBA8( x:Int, y:Int, r:UByte, g:UByte, b:UByte, a:UByte )
-		Local p:=PixelPtr( x,y )
+		Local p:=PixelPtr( Varptr(x), Varptr(y) ) 'iDkP: always use pointer in the backstage
 		p[0] = r
 		p[1] = g
 		p[2] = b
 		p[3] = a
-	End Method
+	End
+	
 	Method SetPixelRGBA8( x:Int, y:Int, r:Float, g:Float, b:Float, a:Float )
-		Local p:=PixelPtr( x,y )
+		Local p:=PixelPtr( Varptr(x), Varptr(y) ) 'iDkP: always use pointer in the backstage
 		p[0] = r * 255
 		p[1] = g * 255
 		p[2] = b * 255
 		p[3] = a * 255
-	End Method
-'-----------------------
+	End
+
+	' Added by iDkP, for back end programmer.
 	
-	'Optimize!
+	Method SetPixelRGBA8( x:Int Ptr, y:Int Ptr, r:UByte Ptr, g:UByte Ptr, b:UByte Ptr, a:UByte Ptr )
+		Local p:=PixelPtr( x, y )
+		p[0] = r[0]
+		p[1] = g[0]
+		p[2] = b[0]
+		p[3] = a[0]
+	End
+	
+	Method SetPixelRGBA8( x:Int Ptr, y:Int Ptr, r:Float Ptr, g:Float Ptr, b:Float Ptr, a:Float Ptr )
+		Local p:=PixelPtr( x, y )
+		p[0] = r[0] * 255
+		p[1] = g[0] * 255
+		p[2] = b[0] * 255
+		p[3] = a[0] * 255
+	End
+	
+	'Optimized!
 	'
 	#rem monkeydoc Clears the pixmap to a given color.
 	
@@ -465,8 +588,8 @@ Class Pixmap Extends Resource
 		For Local y:=0 Until _height
 			For Local x:=0 Until _width
 				SetPixelARGB( x,y,color )
-			Next
-		Next
+			End
+		End
 	End
 	
 	#rem monkeydoc Clears the pixmap to an ARGB color.
@@ -493,7 +616,7 @@ Class Pixmap Extends Resource
 		Local pitch:=Width * Depth
 		Local data:=Cast<UByte Ptr>( stdlib.plugins.libc.malloc( pitch * Height ) )
 		For Local y:=0 Until Height
-			stdlib.plugins.libc.memcpy( data+y*pitch,PixelPtr( 0,y ),pitch )
+			stdlib.plugins.libc.memcpy( data+y*pitch,PixelPtr( Varptr(y) ),pitch )
 		Next
 		Return New Pixmap( Width,Height,Format,data,pitch )
 	End
@@ -552,12 +675,12 @@ Class Pixmap Extends Resource
 					t.SetPixel( x,y,GetPixel( x,y ) )
 				Next
 			Next
-		Endif
+		End
 		
 		Return t
 	End
 	
-	'Optimize!
+	'Optimized!
 	'
 	#rem monkeydoc Premultiply pixmap r,g,b components by alpha.
 	#end
@@ -567,9 +690,11 @@ Class Pixmap Extends Resource
 		
 		'iDkP: Yes, we need to store an Alpha property state for the instance
 		'instead of doing this kind of bizarro inefficient procedural code blocks.
+		'Let's bring Monkey2 into Aida's world.
 		
-		Select _format
-			Case PixelFormat.IA8,PixelFormat.RGBA8,PixelFormat.RGBA16F,PixelFormat.RGBA32F
+		'Select _format
+			'Case PixelFormat.IA8,PixelFormat.RGBA8,PixelFormat.RGBA16F,PixelFormat.RGBA32F
+			If HasAlpha ' like that
 				
 				For Local y:=0 Until _height
 					For Local x:=0 Until _width
@@ -583,81 +708,7 @@ Class Pixmap Extends Resource
 			End
 	End
 
-#rem Deprecated by GaragePixel	
-
-	#rem monkeydoc @hidden Halves the pixmap for mipmapping
-	
-	Mipmap must be even width and height.
-	
-	FIXME: Handle funky sizes.
-	
-	iDkP from Garagepixel : FIXED, Mark!
-	
-	#end
-	Method MipHalve:Pixmap()
-		
-		If Width=1 And Height=1 Return Null
-		
-		Local dst:=New Pixmap( Max( Width/2,1 ),Max( Height/2,1 ),Format )
-		
-		If Width=1
-			For Local y:=0 Until dst.Height
-				Local c0:=GetPixel( 0,y*2 )
-				Local c1:=GetPixel( 0,y*2+1 )
-				dst.SetPixel( 0,y,(c0+c1)*0.5 )
-			Next
-			Return dst
-		Else If Height=1
-			For Local x:=0 Until dst.Width
-				Local c0:=GetPixel( x*2,0 )
-				Local c1:=GetPixel( x*2+1,0 )
-				dst.SetPixel( x,0,(c0+c1)*0.5 )
-			Next
-			Return dst
-		Endif
-
-		Select _format
-		Case PixelFormat.RGBA8
-			
-			For Local y:=0 Until dst.Height
-				
-				Local dstp:=Cast<UInt Ptr>( dst.PixelPtr( 0,y ) )
-				Local srcp0:=Cast<UInt Ptr>( PixelPtr( 0,y*2 ) )
-				Local srcp1:=Cast<UInt Ptr>( PixelPtr( 0,y*2+1 ) )
-				
-				For Local x:=0 Until dst.Width
-					
-					Local src0:=srcp0[0],src1:=srcp0[1],src2:=srcp1[0],src3:=srcp1[1]
-					
-					Local dst:=( (src0 Shr 2)+(src1 Shr 2)+(src2 Shr 2)+(src3 Shr 2) ) & $ff000000
-					dst|=( (src0 & $ff0000)+(src1 & $ff0000)+(src2 & $ff0000)+(src3 & $ff0000) ) Shr 2 & $ff0000
-					dst|=( (src0 & $ff00)+(src1 & $ff00)+(src2 & $ff00)+(src3 & $ff00) ) Shr 2 & $ff00
-					dst|=( (src0 & $ff)+(src1 & $ff)+(src2 & $ff)+(src3 & $ff) ) Shr 2
-					
-					dstp[x]=dst
-					
-					srcp0+=2
-					srcp1+=2
-				Next
-			Next
-		Default
-			For Local y:=0 Until dst.Height
-				
-				For Local x:=0 Until dst.Width
-					
-					Local c0:=GetPixel( x*2,y*2 )
-					Local c1:=GetPixel( x*2+1,y*2 )
-					Local c2:=GetPixel( x*2+1,y*2+1 )
-					Local c3:=GetPixel( x*2,y*2+1 )
-					Local cm:=(c0+c1+c2+c3)*.25
-					dst.SetPixel( x,y,cm )
-				Next
-			Next
-		End
-		
-		Return dst
-	End
-#End
+	'iDkP added: Mipmapping support
 
 	#rem monkeydoc @hidden Halves the pixmap for mipmapping with support for odd dimensions
 	
@@ -679,13 +730,14 @@ Class Pixmap Extends Resource
 		Local newHeight:Int = Max(Height/2, 1)
 		
 		' Adjust the new dimensions if original dimensions are odd
-		If Width Mod 2 <> 0 Then newWidth = (Width+1)/2
-		If Height Mod 2 <> 0 Then newHeight = (Height+1)/2
+		If Width Mod 2 <> 0 newWidth = (Width+1)/2
+		If Height Mod 2 <> 0 newHeight = (Height+1)/2
 		
 		Local dst:=New Pixmap(newWidth, newHeight, Format)
 		
 		' Handle special case: 1-pixel wide image
 		If Width=1
+			
 			For Local y:=0 Until dst.Height
 				' Calculate proper source Y coordinates, handling edge cases
 				Local y0:Int = Min(y*2, Height-1)
@@ -694,10 +746,13 @@ Class Pixmap Extends Resource
 				Local c0:=GetPixel(0, y0)
 				Local c1:=GetPixel(0, y1)
 				dst.SetPixel(0, y, (c0+c1)*0.5)
-			Next
+			End
+			
 			Return dst
+			
 		' Handle special case: 1-pixel tall image
-		Else If Height=1
+		ElseIf Height=1
+			
 			For Local x:=0 Until dst.Width
 				' Calculate proper source X coordinates, handling edge cases
 				Local x0:Int = Min(x*2, Width-1)
@@ -706,84 +761,89 @@ Class Pixmap Extends Resource
 				Local c0:=GetPixel(x0, 0)
 				Local c1:=GetPixel(x1, 0)
 				dst.SetPixel(x, 0, (c0+c1)*0.5)
-			Next
+			End
+			
 			Return dst
+			
 		Endif
 
 		Select _format
-		Case PixelFormat.RGBA8
 			
-			For Local y:=0 Until dst.Height
+			Case PixelFormat.RGBA8
 				
-				Local dstp:=Cast<UInt Ptr>(dst.PixelPtr(0, y))
+				For Local y:=0 Until dst.Height
+					
+					Local dstp:=Cast<UInt Ptr>(dst.PixelPtr(Varptr(y)))
+					
+					' Calculate source Y coordinates, handling edge cases
+					Local srcY0:Int = Min(y*2, Height-2)
+					Local srcY1:Int = Min(srcY0+1, Height-1)
+					
+					Local srcp0:=Cast<UInt Ptr>(PixelPtr(Varptr(srcY0)))
+					Local srcp1:=Cast<UInt Ptr>(PixelPtr(Varptr(srcY1)))
+					
+					For Local x:=0 Until dst.Width
+						
+						' Handle edge case for odd width
+						Local isRightEdge:Bool = (x*2 >= Width-1)
+						
+						' Get the 4 source pixels to average, handling edge cases
+						Local src0:UInt, src1:UInt, src2:UInt, src3:UInt
+						
+						src0 = srcp0[0]
+						
+						If isRightEdge
+							src1 = src0  ' Clamp to edge for odd width
+						Else
+							src1 = srcp0[1]
+						Endif
+						
+						src2 = srcp1[0]
+						
+						If isRightEdge
+							src3 = src2  ' Clamp to edge for odd width
+						Else
+							src3 = srcp1[1]
+						Endif
+						
+						' Calculate the average pixel value
+						Local pixel:UInt = ((src0 Shr 2)+(src1 Shr 2)+(src2 Shr 2)+(src3 Shr 2)) & $ff000000
+						pixel |= ((src0 & $ff0000)+(src1 & $ff0000)+(src2 & $ff0000)+(src3 & $ff0000)) Shr 2 & $ff0000
+						pixel |= ((src0 & $ff00)+(src1 & $ff00)+(src2 & $ff00)+(src3 & $ff00)) Shr 2 & $ff00
+						pixel |= ((src0 & $ff)+(src1 & $ff)+(src2 & $ff)+(src3 & $ff)) Shr 2
+						
+						dstp[x] = pixel
+						
+						' Advance source pointers, handling edge case
+						If Not isRightEdge
+							srcp0 += 2
+							srcp1 += 2
+						Else
+							srcp0 += 1
+							srcp1 += 1
+						End
+					End
+				End
 				
-				' Calculate source Y coordinates, handling edge cases
-				Local srcY0:Int = Min(y*2, Height-2)
-				Local srcY1:Int = Min(srcY0+1, Height-1)
+			Default
 				
-				Local srcp0:=Cast<UInt Ptr>(PixelPtr(0, srcY0))
-				Local srcp1:=Cast<UInt Ptr>(PixelPtr(0, srcY1))
-				
-				For Local x:=0 Until dst.Width
-					
-					' Handle edge case for odd width
-					Local isRightEdge:Bool = (x*2 >= Width-1)
-					
-					' Get the 4 source pixels to average, handling edge cases
-					Local src0:UInt, src1:UInt, src2:UInt, src3:UInt
-					
-					src0 = srcp0[0]
-					
-					If isRightEdge
-						src1 = src0  ' Clamp to edge for odd width
-					Else
-						src1 = srcp0[1]
-					Endif
-					
-					src2 = srcp1[0]
-					
-					If isRightEdge
-						src3 = src2  ' Clamp to edge for odd width
-					Else
-						src3 = srcp1[1]
-					Endif
-					
-					' Calculate the average pixel value
-					Local pixel:UInt = ((src0 Shr 2)+(src1 Shr 2)+(src2 Shr 2)+(src3 Shr 2)) & $ff000000
-					pixel |= ((src0 & $ff0000)+(src1 & $ff0000)+(src2 & $ff0000)+(src3 & $ff0000)) Shr 2 & $ff0000
-					pixel |= ((src0 & $ff00)+(src1 & $ff00)+(src2 & $ff00)+(src3 & $ff00)) Shr 2 & $ff00
-					pixel |= ((src0 & $ff)+(src1 & $ff)+(src2 & $ff)+(src3 & $ff)) Shr 2
-					
-					dstp[x] = pixel
-					
-					' Advance source pointers, handling edge case
-					If Not isRightEdge
-						srcp0 += 2
-						srcp1 += 2
-					Else
-						srcp0 += 1
-						srcp1 += 1
-					Endif
-				Next
-			Next
-		Default
-			For Local y:=0 Until dst.Height
-				For Local x:=0 Until dst.Width
-					
-					' Calculate proper source coordinates, handling edge cases
-					Local x0:Int = Min(x*2, Width-1)
-					Local x1:Int = Min(x*2+1, Width-1)
-					Local y0:Int = Min(y*2, Height-1)
-					Local y1:Int = Min(y*2+1, Height-1)
-					
-					Local c0:=GetPixel(x0, y0)
-					Local c1:=GetPixel(x1, y0)
-					Local c2:=GetPixel(x1, y1)
-					Local c3:=GetPixel(x0, y1)
-					Local cm:=(c0+c1+c2+c3)*.25
-					dst.SetPixel(x, y, cm)
-				Next
-			Next
+				For Local y:=0 Until dst.Height
+					For Local x:=0 Until dst.Width
+						
+						' Calculate proper source coordinates, handling edge cases
+						Local x0:Int = Min(x*2, Width-1)
+						Local x1:Int = Min(x*2+1, Width-1)
+						Local y0:Int = Min(y*2, Height-1)
+						Local y1:Int = Min(y*2+1, Height-1)
+						
+						Local c0:=GetPixel(x0, y0)
+						Local c1:=GetPixel(x1, y0)
+						Local c2:=GetPixel(x1, y1)
+						Local c3:=GetPixel(x0, y1)
+						Local cm:=(c0+c1+c2+c3)*.25
+						dst.SetPixel(x, y, cm)
+					End
+				End
 		End
 		
 		Return dst
@@ -793,14 +853,18 @@ Class Pixmap Extends Resource
 	#end
 	Method FlipY()
 		
+		'iDkP: gooood, memcpy, good
+		
 		Local sz:=Width*Depth
 		
 		Local tmp:=New UByte[sz]
 		
+		Local row:Int 'iDkP small optimisation
+		
 		For Local y:=0 Until Height/2
 			
-			Local p1:=PixelPtr( 0,y )
-			Local p2:=PixelPtr( 0,Height-1-y )
+			Local p1:=PixelPtr( Varptr(y) ) 'iDkP small optimisation
+			Local p2:=PixelPtr( Varptr(row) ) 'iDkP small optimisation
 			
 			stdlib.plugins.libc.memcpy( tmp.Data,p1,sz )
 			stdlib.plugins.libc.memcpy( p1,p2,sz )
@@ -824,7 +888,7 @@ Class Pixmap Extends Resource
 		For Local y:=0 Until Height
 			
 			' Get pointer to current row
-			Local rowPtr:=PixelPtr(0, y)
+			Local rowPtr:=PixelPtr(Varptr(y))
 			
 			' Swap pixels across the middle
 			For Local x:=0 Until halfWidth
@@ -839,8 +903,8 @@ Class Pixmap Extends Resource
 				stdlib.plugins.libc.memcpy(tmp.Data, p1, pixelSize)
 				stdlib.plugins.libc.memcpy(p1, p2, pixelSize)
 				stdlib.plugins.libc.memcpy(p2, tmp.Data, pixelSize)
-			Next
-		Next
+			End
+		End
 	End
 	
 	#rem monkeydoc Returns a rectangular window into the pixmap.
@@ -859,7 +923,7 @@ Class Pixmap Extends Resource
 	Method Window:Pixmap( x:Int,y:Int,width:Int,height:Int )
 		DebugAssert( x>=0 And y>=0 And width>=0 And height>=0 And x+width<=_width And y+height<=_height )
 		
-		Local pixmap:=New Pixmap( width,height,_format,PixelPtr( x,y ),_pitch )
+		Local pixmap:=New Pixmap( width,height,_format,PixelPtr( Varptr(x),Varptr(y) ),_pitch )
 		
 		Return pixmap
 	End
@@ -916,14 +980,228 @@ Class Pixmap Extends Resource
 
 	Private
 
+	Field _name:String 'iDkP added
 	Field _filePath:string	'jl added
+	Field _hasAlpha:Bool 'iDkP added
+	
+	Field _GetPixel_:UInt( this:Pixmap, x:Int Ptr, y:Int Ptr ) 'iDkP added
+	Field _SetPixel_:Void( this:Pixmap, x:Int Ptr, y:Int Ptr, argb:UInt Ptr ) 'iDkP added
+	
+	Field _GetPixelARGB_:UInt( this:Pixmap, x:Int Ptr, y:Int Ptr ) 'iDkP added
+	Field _SetPixelARGB_:Void( this:Pixmap, x:Int Ptr, y:Int Ptr, color:UInt Ptr ) 'iDkP added
+	
+	Field _format:PixelFormat
 	Field _width:Int
 	Field _height:Int
-	Field _format:PixelFormat
 	Field _depth:Int
 	Field _pitch:Int
 	Field _owned:Bool
 	Field _data:UByte Ptr
+
+	' -------------------- 	iDkP's Standard Zero-Branch Execution programming style
+	' 						300% speed up
+	
+	Function InitHasAlpha(p:Pixmap)
+
+		Select p._format
+			Case PixelFormat.A8
+				p._hasAlpha=True
+			Case PixelFormat.IA8
+				p._hasAlpha=True
+			Case PixelFormat.RGBA8
+				p._hasAlpha=True
+			Case PixelFormat.RGBA32F
+				p._hasAlpha=True
+			Default 
+				p._hasAlpha=False
+		End
+	End
+
+	Function InitGetPixel(p:Pixmap)
+		
+		Select p._format
+			Case PixelFormat.A8
+				p._GetPixel_=GetPixelA8ARGB
+			Case PixelFormat.I8
+				p._GetPixel_=GetPixelI8ARGB
+			Case PixelFormat.IA8
+				p._GetPixel_=GetPixelIA8ARGB
+			Case PixelFormat.RGB8
+				p._GetPixel_=GetPixelRGB8ARGB
+			Case PixelFormat.RGBA8
+				p._GetPixel_=GetPixelRGBA8ARGB
+			Case PixelFormat.RGB32F
+				p._GetPixel_=GetPixelRGB32FARGB
+			Case PixelFormat.RGBA32F
+				p._GetPixel_=GetPixelRGBA32FARGB
+			Case PixelFormat.RGBE8
+				p._GetPixel_=GetPixelRGBE8ARGB
+		End
+	End
+
+	Function InitGetPixelARGB(p:Pixmap)
+		
+		Select p._format
+			Case PixelFormat.A8
+				p._GetPixelARGB_=GetPixelA8ARGB
+			Case PixelFormat.I8
+				p._GetPixelARGB_=GetPixelI8ARGB
+			Case PixelFormat.IA8
+				p._GetPixelARGB_=GetPixelIA8ARGB
+			Case PixelFormat.RGB8
+				p._GetPixelARGB_=GetPixelRGB8ARGB
+			Case PixelFormat.RGBA8
+				p._GetPixelARGB_=GetPixelRGBA8ARGB
+			Case PixelFormat.RGB32F
+				p._GetPixelARGB_=GetPixelRGB32FARGB
+			Case PixelFormat.RGBA32F
+				p._GetPixelARGB_=GetPixelRGBA32FARGB
+			Case PixelFormat.RGBE8
+				p._GetPixelARGB_=GetPixelRGBE8ARGB
+		End
+	End
+
+	Function GetPixelA8ARGB:UInt( this:Pixmap,x:Int Ptr,y:Int Ptr )
+		Local p:=PixelPtr( this, x, y )
+		Return p[0] Shl 24
+	End 
+
+	Function GetPixelI8ARGB:UInt( this:Pixmap,x:Int Ptr,y:Int Ptr )
+		Local p:=PixelPtr( this, x, y )
+		Local i:=p[0]
+		Return UByte($ff) Shl 24 | i Shl 16 | i Shl 8 | i
+	End 
+
+	Function GetPixelIA8ARGB:UInt( this:Pixmap,x:Int Ptr,y:Int Ptr )
+		Local p:=PixelPtr( this, x, y )
+		Local i:=p[1]
+		Return p[0] Shl 24 | i Shl 16 | i Shl 8 | i
+	End 
+
+	Function GetPixelRGB8ARGB:UInt( this:Pixmap,x:Int Ptr,y:Int Ptr )
+		Local p:=PixelPtr( this, x, y )
+		Return UByte($ff) Shl 24 | p[0] Shl 16 | p[1] Shl 8 | p[2]
+	End 
+
+	Function GetPixelRGBA8ARGB:UInt( this:Pixmap,x:Int Ptr,y:Int Ptr )
+		Local p:=PixelPtr( this, x, y )
+		Return p[3] Shl 24 | p[0] Shl 16 | p[1] Shl 8 | p[2]
+	End 
+
+	Function GetPixelRGB32FARGB:UInt( this:Pixmap,x:Int Ptr,y:Int Ptr )
+		Local p:=PixelPtr( this, x, y )
+		Local f:=Cast<Float Ptr>( p )
+		Return UInt($ff) Shl 24 | UInt(f[0]*255.0) Shl 16 | UInt(f[1]*255.0) Shl 8 | UInt(f[2]*255.0)
+	End 
+
+	Function GetPixelRGBA32FARGB:UInt( this:Pixmap,x:Int Ptr,y:Int Ptr )
+		Local p:=PixelPtr( this, x, y )
+		Local f:=Cast<Float Ptr>( p )
+		Return UInt(f[3]*255.0) Shl 24 | UInt(f[0]*255.0) Shl 16 | UInt(f[1]*255.0) Shl 8 | UInt(f[2]*255.0)
+	End 
+
+	Function GetPixelRGBE8ARGB:UInt( this:Pixmap,x:Int Ptr,y:Int Ptr )
+		Local p:=PixelPtr( this, x, y )
+		Local color:=GetColorRGBE8( p )
+		Return UInt($ff) Shl 24 | UInt(color.r*255.0) Shl 16 | UInt(color.g*255.0) Shl 8 | UInt(color.b*255.0)
+	End
+
+	Function InitSetPixel(p:Pixmap)
+		
+		Select p._format
+			Case PixelFormat.A8
+				p._SetPixel_=SetPixelA8ARGB
+			Case PixelFormat.I8
+				p._SetPixel_=SetPixelI8ARGB
+			Case PixelFormat.IA8
+				p._SetPixel_=SetPixelIA8ARGB
+			Case PixelFormat.RGB8
+				p._SetPixel_=SetPixelRGB8ARGB
+			Case PixelFormat.RGBA8
+				p._SetPixel_=SetPixelRGBA8ARGB
+			Case PixelFormat.RGB32F
+				p._SetPixel_=SetPixelRGB32FARGB
+			Case PixelFormat.RGBA32F
+				p._SetPixel_=SetPixelRGBA32FARGB
+			Case PixelFormat.RGBE8
+				p._SetPixel_=SetPixelRGBE8ARGB
+		End
+	End
+
+	Function InitSetPixelARGB(p:Pixmap)
+		
+		Select p._format
+			Case PixelFormat.A8
+				p._SetPixelARGB_=SetPixelA8ARGB
+			Case PixelFormat.I8
+				p._SetPixelARGB_=SetPixelI8ARGB
+			Case PixelFormat.IA8
+				p._SetPixelARGB_=SetPixelIA8ARGB
+			Case PixelFormat.RGB8
+				p._SetPixelARGB_=SetPixelRGB8ARGB
+			Case PixelFormat.RGBA8
+				p._SetPixelARGB_=SetPixelRGBA8ARGB
+			Case PixelFormat.RGB32F
+				p._SetPixelARGB_=SetPixelRGB32FARGB
+			Case PixelFormat.RGBA32F
+				p._SetPixelARGB_=SetPixelRGBA32FARGB
+			Case PixelFormat.RGBE8
+				p._SetPixelARGB_=SetPixelRGBE8ARGB
+		End
+	End
+
+	Function SetPixelA8ARGB( this:Pixmap, x:Int Ptr,y:Int Ptr,color:UInt Ptr )
+		Local p:=PixelPtr( this, x, y )
+		p[0]=color[0] Shr 24
+	End 
+
+	Function SetPixelI8ARGB( this:Pixmap, x:Int Ptr,y:Int Ptr,color:UInt Ptr )
+		Local p:=PixelPtr( this, x, y )
+		p[0]=color[0] Shr 16
+	End 
+
+	Function SetPixelIA8ARGB( this:Pixmap, x:Int Ptr,y:Int Ptr,color:UInt Ptr )
+		Local p:=PixelPtr( this, x, y )
+		p[0]=color[0] Shr 24
+		p[1]=color[0] Shr 16
+	End 
+
+	Function SetPixelRGB8ARGB( this:Pixmap, x:Int Ptr,y:Int Ptr,color:UInt Ptr )
+		Local p:=PixelPtr( this, x, y )
+		p[0]=color[0] Shr 16
+		p[1]=color[0] Shr 8
+		p[2]=color[0]
+	End 
+
+	Function SetPixelRGBA8ARGB( this:Pixmap, x:Int Ptr,y:Int Ptr,color:UInt Ptr )
+		Local p:=PixelPtr( this, x, y )
+		p[0]=color[0] Shr 16
+		p[1]=color[0] Shr 8
+		p[2]=color[0]
+		p[3]=color[0] Shr 24
+	End 
+
+	Function SetPixelRGB32FARGB( this:Pixmap, x:Int Ptr,y:Int Ptr,color:UInt Ptr )
+		Local p:=PixelPtr( this, x, y )
+		Local f:=Cast<Float Ptr>( p )
+		f[0]=((color[0] Shr 16)&255)/255.0
+		f[1]=((color[0] Shr 8)&255)/255.0
+		f[2]=(color[0]&255)/255.0
+	End 
+
+	Function SetPixelRGBA32FARGB( this:Pixmap, x:Int Ptr,y:Int Ptr,color:UInt Ptr )
+		Local p:=PixelPtr( this, x, y )
+		Local f:=Cast<Float Ptr>( p )
+		f[0]=((color[0] Shr 16)&255)/255.0
+		f[1]=((color[0] Shr 8)&255)/255.0
+		f[2]=(color[0]&255)/255.0
+		f[3]=((color[0] Shr 24)&255)/255.0
+	End 
+
+	Function SetPixelRGBE8ARGB( this:Pixmap, x:Int Ptr,y:Int Ptr,color:UInt Ptr )
+		Local p:=PixelPtr( this, x, y )
+		SetColorRGBE8( p,New Color( ((color[0] Shr 16)&255)/255.0,((color[0] Shr 8)&255)/255.0,(color[0]&255)/255.0,((color[0] Shr 24)&255)/255.0 ) )
+	End 
 
 End
 
