@@ -116,7 +116,7 @@ Class CanvasWrapper<C,I,T>
 		_drawImageHandler = handler
 	End
 	
-	Method SetDrawDirectImageHandler:Void(handler:Void(image:Image, x:Float, y:Float, rotation:Float, scaleX:Float, scaleY:Float))
+	Method SetDrawDirectImageHandler:Void(handler:Void(image:T, x:Float, y:Float, rotation:Float, scaleX:Float, scaleY:Float))
 		_drawDirectImageHandler = handler
 	End
 	
