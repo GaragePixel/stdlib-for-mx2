@@ -39,11 +39,16 @@ Namespace stdlib
 
 #Import "resources/graphics/enums"
 
-#Import "resources/graphics/wrappers/texturewrapper"
-#Import "resources/graphics/wrappers/imagewrapper"
-#Import "resources/graphics/wrappers/canvaswrapper"
-#Import "resources/graphics/buffers/imagebuffer"
-#Import "resources/graphics/buffers/framebuffer"
+' --- Added by iDkP from GaragePixel
+
+#Import "resources/graphics/wrappers/texturewrapper"	' Cross renderer texture wrapper
+#Import "resources/graphics/wrappers/imagewrapper"		' Cross renderer image wrapper
+#Import "resources/graphics/wrappers/canvaswrapper"		' Cross renderer canvas wrapper
+
+#Import "resources/graphics/buffers/imagebuffer"		' Cross renderer imagebuffer
+#Import "resources/graphics/buffers/framebuffer"		' Cross renderer framebuffer
+
+' ---
 
 #import "resources/audio/audioformat"
 #import "resources/audio/audiodata"
