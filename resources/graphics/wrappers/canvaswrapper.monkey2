@@ -221,9 +221,9 @@ Class CanvasWrapper<C,I,T>
 		SetDrawImageHandler(drawImgHandler)
 		
 		' DrawImage handler - for direct images
-		Local drawDirectImgHandler:Void(image:Image, x:Float, y:Float, rotation:Float, scaleX:Float, scaleY:Float)
-		drawDirectImgHandler = Lambda(img:Image, x:Float, y:Float, rotation:Float, scaleX:Float, scaleY:Float)
-			_canvas.DrawImage(img, x, y, rotation, scaleX, scaleY)
+		Local drawDirectImgHandler:Void(image:I, x:Float, y:Float, rotation:Float, scaleX:Float, scaleY:Float)
+		drawDirectImgHandler = Lambda(image:I, x:Float, y:Float, rotation:Float, scaleX:Float, scaleY:Float)
+			_canvas.DrawImage(image, x, y, rotation, scaleX, scaleY)
 		End
 		SetDrawDirectImageHandler(drawDirectImgHandler)
 		
