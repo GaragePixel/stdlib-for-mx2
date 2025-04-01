@@ -12,21 +12,21 @@ Namespace stdlib.graphics
 '	The FrameBuffer is the compagnon for drawing with the pixmap
 '	of stdlib.
 '
-' 	It provides a high-performance triple-buffered image surface 
-'	for smooth rendering, reduces stalls between rendering and 
-'	presentation phases, allows for continuous drawing 
+' 	It provides a high-performance triple-buffered image surface
+'	for smooth rendering, reduces stalls between rendering and
+'	presentation phases, allows for continuous drawing
 '	while vsync is occurring.
 '
-' 	The FrameBuffer class implements a rendering pipeline 
+' 	The FrameBuffer class implements a rendering pipeline
 ' 	that bridges the zero-branch pixel operations of the
-' 	stdlib's Aida 4's pixmap with the legacy 
+' 	stdlib's Aida 4's pixmap with the legacy
 ' 	Monkey2's Mojo's Canvas rendering system in the actual
-' 	sdk_mojo library (mojo is actually deprecated). 
-' 	It encapsulates the complexity of maintaining 
-'	separate buffers for drawing and display operations 
+' 	sdk_mojo library (mojo is actually deprecated).
+' 	It encapsulates the complexity of maintaining
+'	separate buffers for drawing and display operations
 '	and it's absolutly agnostic, so you can made your own
 '	wrappers of Mojo's Canvas, Image and Texture and use
-'	our own classes with the Framebuffer. 
+'	our own classes with the Framebuffer.
 '
 '	The FrameBuffer was originally attented to be a
 '	renderer for the pixmaps, so you can use it for
@@ -34,7 +34,7 @@ Namespace stdlib.graphics
 '	until the need to draw the pixmap on the screen.
 '	For doing that, you need a canvas, then the FrameBuffer
 '	will handle some basic operations in an agnostic way.
-'	
+'
 '	The FrameBuffer can be used to draw in an OS's Window with
 '	the native bitmap object and can helps to create some
 '	interesting things like program's splashes, semi-transparent
@@ -49,7 +49,7 @@ Namespace stdlib.graphics
 ' 	- Front buffer - currently being displayed
 ' 	- Back buffer - being prepared for swap to display
 ' 	- Pending buffer - available for immediate drawing operations
-'	
+'
 ' This eliminates the wait time between vsync operations and
 ' allows for continuous rendering cycles without stalling.
 '
@@ -63,7 +63,7 @@ Namespace stdlib.graphics
 '   - Drawing the resulting Image to the Canvas
 '   - FPS history updates for moving average calculation
 '
-' TODO: 
+' TODO:
 '	Shader for the agnostic canvas renderer (must be
 '	a canvas mojo-alike).
 '
@@ -71,10 +71,10 @@ Namespace stdlib.graphics
 '	No, isn't an interface. Because with an interface, you
 '	need to implement the classes with the interface. And I
 '	don't want change the Mojo stuff in that way.
-'	My simple goal was just to provide a class that contains a Pixmap, 
-'	an Image and its Texture, in order to draw an image on the pixmap 
-'	and, eventually, use any system to display the pixmap. 
-'	So since I didn't want to create an interface, 
+'	My simple goal was just to provide a class that contains a Pixmap,
+'	an Image and its Texture, in order to draw an image on the pixmap
+'	and, eventually, use any system to display the pixmap.
+'	So since I didn't want to create an interface,
 '	I ended up with a wrapper, and it's now a part of stdlib.
 
 '==============================================================
@@ -475,6 +475,7 @@ Class FrameBuffer<C,I,T>
 	End
 
 	'Very experimental, copy a framebuffer into another one of the same type.
+	'TODO: another type is theorically possible since the system is agnostic.
 	Method DrawRegion(x:Int, y:Int, width:Int, height:Int, renderer:Void(buffer:FrameBuffer<C,I,T>, x:Int, y:Int, w:Int, h:Int))
 		renderer(Self, x, y, width, height)
 	End
@@ -524,23 +525,23 @@ Class FrameBuffer<C,I,T>
 		
 		Private 
 		
-		Field _p:Pixmap							' CPU-side pixel data, drawable with the stdlib's Aida 4's Draw Api
+		Field _p:Pixmap						' CPU-side pixel data, drawable with the stdlib's Aida 4's Draw Api
 		Field _i:ImageWrapper<C,I,T>			' Drawable image
-		Field _t:TextureWrapper<T>				' GPU texture wrapper (because we run over SDL2, not MS-DOS^^ )
+		Field _t:TextureWrapper<T>			' GPU texture wrapper (because we run over SDL2, not MS-DOS^^ )
 		
-		Field _position:Vec2i = New Vec2i(0, 0)	' Position of the drawn buffer on the canvas.
+		Field _position:Vec2i = New Vec2i(0, 0)
 	End 
 
-	Field _name:String 							' Framebuffer optional name
+	Field _name:String 						' Framebuffer optional name
 
-	Field _f:C									' Front buffer target (where we display)
+	Field _f:C								' Front buffer target (where we display)
 	Field _canvasWrapper:CanvasWrapper<C,I,T>  	' The wrapper for the canvas
 	
 	' Triple-buffer implementation fields
-	Field _frontBuffer:Buffer					' Currently being displayed
-	Field _backBuffer:Buffer					' Ready for next display
-	Field _pendingBuffer:Buffer					' Available for drawing
-	Field _activeBuffer:Buffer					' Currently active buffer for drawing (points to pending)
+	Field _frontBuffer:Buffer				' Currently being displayed
+	Field _backBuffer:Buffer				' Ready for next display
+	Field _pendingBuffer:Buffer				' Available for drawing
+	Field _activeBuffer:Buffer				' Currently active buffer for drawing (points to pending)
 	
 	Field _width:Int 
 	Field _height:Int
@@ -563,9 +564,9 @@ Class FrameBuffer<C,I,T>
 	Field _fps:Int
 	
 	' FPS display
-	Field _fpsDisplayValue:Int = 60         	' The currently displayed FPS value
-	Field _fpsDisplayUpdateInterval:Int = 500 	' Update interval in milliseconds
-	Field _lastFpsDisplayUpdate:Int = 0     	' When the display was last updated
+	Field _fpsDisplayValue:Int = 60         ' The currently displayed FPS value
+	Field _fpsDisplayUpdateInterval:Int = 500 ' Update interval in milliseconds
+	Field _lastFpsDisplayUpdate:Int = 0     ' When the display was last updated
 
 	Field _frameDuration:Int
 	Field _startTime:Int
