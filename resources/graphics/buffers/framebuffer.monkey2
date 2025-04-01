@@ -496,7 +496,7 @@ Class FrameBuffer<C,I,T>
 			_t = New TextureWrapper<T>(New T(width, height, pixelFormat, TextureFlags.Dynamic))
 
 			' Create base image then wrap it
-			_i=New ImageWrapperMojo(width, height, pixelFormat)
+			_i=New ImageWrapper<I>(width, height, pixelFormat)
 			_i.Image.Texture = _t.Texture
 
 		End
