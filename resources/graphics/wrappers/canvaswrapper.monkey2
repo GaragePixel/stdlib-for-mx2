@@ -327,7 +327,7 @@ Class CanvasWrapper<C,I,T>
 	
 	' Drawing operation handlers
 	Field _drawImageHandler:Void(image:ImageWrapper<C,I,T>, x:Float, y:Float, rotation:Float, scaleX:Float, scaleY:Float)
-	Field _drawDirectImageHandler:Void(image:Image, x:Float, y:Float, rotation:Float, scaleX:Float, scaleY:Float)
+	Field _drawDirectImageHandler:Void(image:I, x:Float, y:Float, rotation:Float, scaleX:Float, scaleY:Float)
 	Field _drawRectHandler:Void(x:Float, y:Float, width:Float, height:Float)
 	Field _drawOvalHandler:Void(x:Float, y:Float, width:Float, height:Float)
 	Field _drawLineHandler:Void(x1:Float, y1:Float, x2:Float, y2:Float)
