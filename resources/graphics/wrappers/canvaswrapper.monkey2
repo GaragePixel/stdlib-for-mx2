@@ -2,11 +2,11 @@
 Namespace stdlib.graphics
 
 '==============================================================
-' Image Wrapper - Low-level Graphics Resource Abstraction
+' Canvas Wrapper - Low-level Graphics Resource Abstraction
 ' Implementation: iDkP from GaragePixel
 ' 2025-03-31 (Aida 4)
 '==============================================================
-' Image Wrapper is a kind of abstraction layer around Canvas objects.
+' Canvas Wrapper is a kind of abstraction layer around Canvas objects.
 ' It enables swapping underlying rendering implementation 
 ' without code changes, it uses closures for customizable behavior 
 ' without inheritance, and it integrates smoothly with FrameBuffer 
