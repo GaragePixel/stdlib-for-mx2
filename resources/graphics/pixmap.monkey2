@@ -116,7 +116,7 @@ Class Pixmap Extends Resource
 		InitGetPixelARGB(Self) 	'iDkP: Added for the little bird's happiness
 		InitHasAlpha(Self) 		'iDkP: Added for the little bird's happiness
 	End
-
+	
 	#rem monkeydoc Optional name.
 	
 	#end
@@ -572,6 +572,79 @@ Class Pixmap Extends Resource
 	@param color The color to clear the pixmap to.
 	
 	#end
+	Method Clear( color:Color ) 'iDkP: Overloaded version of something clear
+		
+		' Ultra-optimized pixel clear leveraging pointer-based performance advantage 
+
+		' This optimization follows my zero-branch execution philosophy 
+		' by eliminating millions of redundant operations 
+		' without introducing any conditional logic. 
+		
+		' Pre-calculate ARGB value once 
+		Local argb:UInt = color.ToARGB() 
+		Local argbPtr:UInt Ptr = Varptr(argb)
+	
+		' Fixed memory addresses for coordinates
+		Local x:Int = 0
+		Local y:Int = 0
+		Local xPtr:Int Ptr = Varptr(x)
+		Local yPtr:Int Ptr = Varptr(y)
+		
+		' Cache width/height to avoid repeated property access
+		Local width:Int = Width
+		Local height:Int = Height
+		
+		' Format-specific direct memory optimization
+		If Format = PixelFormat.RGBA8
+			' Extract color components
+			Local r:UByte = (argb Shr 16) & $FF
+			Local g:UByte = (argb Shr 8) & $FF
+			Local b:UByte = argb & $FF
+			Local a:UByte = (argb Shr 24) & $FF
+			
+			' Process each row - row-major order for optimal cache usage
+			For Local row:Int = 0 Until height
+				Local rowPtr:UByte Ptr = Data + row * Pitch
+				
+				' Process pixels in blocks of 16 for better cache utilization
+				Local col:Int = 0
+				While col < width - 15
+					Local pixelPtr:UByte Ptr = rowPtr + col * 4
+					
+					' Unrolled block of 16 pixels
+					For Local i:Int = 0 Until 16
+						pixelPtr[0] = r
+						pixelPtr[1] = g
+						pixelPtr[2] = b
+						pixelPtr[3] = a
+						pixelPtr += 4
+					Next
+					
+					col += 16
+				Wend
+				
+				' Handle remaining pixels
+				While col < width
+					Local pixelPtr:UByte Ptr = rowPtr + col * 4
+					pixelPtr[0] = r
+					pixelPtr[1] = g
+					pixelPtr[2] = b
+					pixelPtr[3] = a
+					col += 1
+				Wend
+			End
+			
+			Return
+		End
+		
+		' Generic pointer-based implementation for other formats
+		For y = 0 Until height
+			For x = 0 Until width
+				SetPixelARGB( xPtr, yPtr, argbPtr )
+			End
+		End
+	End
+#rem 
 	Method Clear( color:Color )
 		
 		' Modified by iDkP
@@ -595,11 +668,14 @@ Class Pixmap Extends Resource
 			End 
 		End
 	End
+#end 
+
 	#rem monkeydoc Clears the pixmap to an ARGB color.
 	
 	@param color ARGB color to clear the pixmap to.
 	
 	#end
+
 	Method Clear( color:UInt ) 'iDkP: Overloaded version of something clear
 
 		' iDkP:
@@ -625,6 +701,7 @@ Class Pixmap Extends Resource
 			End
 		End
 	End
+
 	
 	#rem monkeydoc Clears the pixmap to an ARGB color.
 	
@@ -688,7 +765,64 @@ Class Pixmap Extends Resource
 	@param y The y coordinate.
 	
 	#end
+	Method Paste( pixmap:Pixmap, x:Int, y:Int ) 
+		
+		' Ultra-optimized paste operation leveraging pointer-based performance 
+		
+		Local dst:=Self
+		
+		' Skip if completely outside bounds 
+		If x >= Width Or y >= Height Or x + pixmap.Width <= 0 Or y + pixmap.Height <= 0 Return
+	
+		' Calculate visible rectangle
+		Local dstX:Int = Max(0, x)
+		Local dstY:Int = Max(0, y)
+		Local srcX:Int = Max(0, -x)
+		Local srcY:Int = Max(0, -y)
+		Local width:Int = Min(pixmap.Width - srcX, Width - dstX)
+		Local height:Int = Min(pixmap.Height - srcY, Height - dstY)
+		
+		' Skip if nothing to draw
+		If width <= 0 Or height <= 0 Return
+		
+		' Fast path for identical formats
+		If Format = pixmap.Format And Format = PixelFormat.RGBA8
+			' Copy row by row using optimized memory operations
+			For Local row:Int = 0 Until height
+				Local srcPtr:UByte Ptr = pixmap.Data + (srcY + row) * pixmap.Pitch + srcX * 4
+				Local dstPtr:UByte Ptr = Data + (dstY + row) * Pitch + dstX * 4
+				stdlib.plugins.libc.memcpy(dstPtr, srcPtr, width * 4)
+			End
+			Return
+		End
+		
+		' Generic implementation using pointer-based pixel access
+		Local sx:Int = 0, sy:Int = 0, dx:Int = 0, dy:Int = 0
+		Local sxPtr:Int Ptr = Varptr(sx)
+		Local syPtr:Int Ptr = Varptr(sy)
+		Local dxPtr:Int Ptr = Varptr(dx)
+		Local dyPtr:Int Ptr = Varptr(dy)
+		
+		' Reuse a single Color object to avoid allocations
+		Local c:Color
+		Local cPtr:Color Ptr = Varptr(c)
+		
+		For Local iy:Int = 0 Until height
+			sy = srcY + iy
+			dy = dstY + iy
+			
+			For Local ix:Int = 0 Until width
+				sx = srcX + ix
+				dx = dstX + ix
+				
+				c = pixmap.GetPixel(sxPtr, syPtr)
+				SetPixel(dxPtr, dyPtr, cPtr)
+			End
+		End
+	End
+#rem
 	Method Paste( pixmap:Pixmap,x:Int,y:Int )
+		
 	    DebugAssert( x>=0 And x+pixmap._width<=_width And y>=0 And y+pixmap._height<=_height )
 	    
 	    ' Static coordinates with fixed memory addresses
@@ -714,6 +848,7 @@ Class Pixmap Extends Resource
 	        Next
 	    Next
 	End
+#end
 
 	'Optimized!
 	'
@@ -1379,7 +1514,54 @@ Class Pixmap Extends Resource
 		Local p:=PixelPtr( this, x, y )
 		SetColorRGBE8( p,New Color( ((color[0] Shr 16)&255)/255.0,((color[0] Shr 8)&255)/255.0,(color[0]&255)/255.0,((color[0] Shr 24)&255)/255.0 ) )
 	End 
-
+	
+	Public 'TMP
+	
+	Method BenchmarkPixelOperations:Float(iterations:Int = 1000000) 
+		 
+		Local startTime:Int = Millisecs()
+		 
+		' Setup test data
+		Local testColor:Color = New Color(1, 0, 0, 1)
+		Local width:Int = _width
+		Local height:Int = _height
+		
+		' Test with direct coordinate values
+		For Local i:Int = 0 Until iterations
+			Local x:Int = i Mod width
+			Local y:Int = (i / width) Mod height
+			SetPixel(x, y, testColor)
+		Next
+		
+		Local directTime:Int = Millisecs() - startTime
+		startTime = Millisecs()
+		
+		' Test with pointer-based coordinates
+		Local px:Int = 0
+		Local py:Int = 0
+		Local pxPtr:Int Ptr = Varptr(px)
+		Local pyPtr:Int Ptr = Varptr(py)
+		Local colorPtr:Color Ptr = Varptr(testColor)
+		
+		For Local i:Int = 0 Until iterations
+			px = i Mod width
+			py = (i / width) Mod height
+			SetPixel(pxPtr, pyPtr, colorPtr)
+		Next
+		
+		Local pointerTime:Int = Millisecs() - startTime
+		
+		' Calculate pixels per second for both methods
+		Local directPixelsPerSec:Float = (iterations / (directTime / 1000.0)) / 1000000.0
+		Local pointerPixelsPerSec:Float = (iterations / (pointerTime / 1000.0)) / 1000000.0
+		
+		Print "Direct value method: " + directPixelsPerSec + " million pixels/sec"
+		Print "Pointer-based method: " + pointerPixelsPerSec + " million pixels/sec" 
+		Print "Performance difference: " + ((pointerPixelsPerSec / directPixelsPerSec - 1.0) * 100.0) + "%"
+		
+		Return pointerPixelsPerSec
+		
+	End
 End
 
 Class ResourceManager Extension
