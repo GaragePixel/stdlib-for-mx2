@@ -237,6 +237,11 @@ Class Pixmap Extends Resource
 		Return p.Data + y[0]*p.Pitch + x[0]*p.Depth
 	End
 
+	Method PixelPtr:UByte Ptr( y:Int )
+		'Added by iDkP
+		Return _data + y*_pitch' + 0*_depth
+	End
+
 	Method PixelPtr:UByte Ptr( y:Int Ptr )
 		'Added by iDkP - Always use pointer in backstage
 		Return _data + y[0]*_pitch' + 0*_depth
@@ -568,26 +573,55 @@ Class Pixmap Extends Resource
 	
 	#end
 	Method Clear( color:Color )
-
-		For Local y:=0 Until _height
-			For Local x:=0 Until _width
-				SetPixel( x,y,color )
-			Next
-		Next
+		
+		' Modified by iDkP
+		' This optimization follows my zero-branch execution philosophy 
+		' by eliminating millions of redundant operations 
+		' without introducing any conditional logic. 
+		
+		' Static coordinates with fixed memory addresses
+		Local xCoord:Int = 0
+		Local yCoord:Int = 0
+		
+		' Calculate pointers once
+		Local xPtr:Int Ptr = Varptr(xCoord)
+		Local yPtr:Int Ptr = Varptr(yCoord)
+		Local colorPtr:Color Ptr = Varptr(color)
+		
+		' Use the pointers with in-place value updates
+		For yCoord = 0 Until _height
+			For xCoord = 0 Until _width
+				SetPixel(xPtr, yPtr, colorPtr)
+			End 
+		End
 	End
-
 	#rem monkeydoc Clears the pixmap to an ARGB color.
 	
 	@param color ARGB color to clear the pixmap to.
 	
 	#end
 	Method Clear( color:UInt ) 'iDkP: Overloaded version of something clear
+
+		' iDkP:
+		' This optimization follows my zero-branch execution philosophy 
+		' by eliminating millions of redundant operations 
+		' without introducing any conditional logic. 
 		
 		'Sugar
 
-		For Local y:=0 Until _height
-			For Local x:=0 Until _width
-				SetPixelARGB( x,y,color )
+		' Static coordinates with fixed memory addresses
+		Local xCoord:Int = 0
+		Local yCoord:Int = 0
+		
+		' Calculate pointers once
+		Local xPtr:Int Ptr = Varptr(xCoord)
+		Local yPtr:Int Ptr = Varptr(yCoord)
+		Local colorPtr:UInt Ptr = Varptr(color)
+		
+		' Use the pointers with in-place value updates
+		For yCoord = 0 Until _height
+			For xCoord = 0 Until _width
+				SetPixelARGB(xPtr, yPtr, colorPtr)
 			End
 		End
 	End
@@ -599,11 +633,26 @@ Class Pixmap Extends Resource
 	#end
 	Method ClearARGB( color:UInt )
 
-		For Local y:=0 Until _height
-			For Local x:=0 Until _width
-				SetPixelARGB( x,y,color )
-			Next
-		Next
+		' Modified by iDkP
+		' This optimization follows my zero-branch execution philosophy 
+		' by eliminating millions of redundant operations 
+		' without introducing any conditional logic. 
+		
+		' Static coordinates with fixed memory addresses
+		Local xCoord:Int = 0
+		Local yCoord:Int = 0
+		
+		' Calculate pointers once
+		Local xPtr:Int Ptr = Varptr(xCoord)
+		Local yPtr:Int Ptr = Varptr(yCoord)
+		Local colorPtr:UInt Ptr = Varptr(color)
+		
+		' Use the pointers with in-place value updates
+		For yCoord = 0 Until _height
+			For xCoord = 0 Until _width
+				SetPixelARGB( xPtr, yPtr, colorPtr )
+			End
+		End
 	End
 
 	#rem monkeydoc Creates a copy of the pixmap.
@@ -612,13 +661,18 @@ Class Pixmap Extends Resource
 	
 	#end
 	Method Copy:Pixmap()
-		
-		Local pitch:=Width * Depth
-		Local data:=Cast<UByte Ptr>( stdlib.plugins.libc.malloc( pitch * Height ) )
-		For Local y:=0 Until Height
-			stdlib.plugins.libc.memcpy( data+y*pitch,PixelPtr( Varptr(y) ),pitch )
-		Next
-		Return New Pixmap( Width,Height,Format,data,pitch )
+	    Local pitch:=Width * Depth
+	    Local data:=Cast<UByte Ptr>( stdlib.plugins.libc.malloc( pitch * Height ) )
+	    
+	    ' Static y coordinate with fixed memory address
+	    Local y:Int = 0
+	    Local yPtr:Int Ptr = Varptr(y)
+	    
+	    For y = 0 Until Height
+	        stdlib.plugins.libc.memcpy( data+y*pitch, PixelPtr(yPtr), pitch )
+	    Next
+	    
+	    Return New Pixmap( Width,Height,Format,data,pitch )
 	End
 	
 	#rem monkeydoc Paste a pixmap to the pixmap.
@@ -635,17 +689,33 @@ Class Pixmap Extends Resource
 	
 	#end
 	Method Paste( pixmap:Pixmap,x:Int,y:Int )
-
-		DebugAssert( x>=0 And x+pixmap._width<=_width And y>=0 And y+pixmap._height<=_height )
-		
-		For Local ty:=0 Until pixmap._height
-			For Local tx:=0 Until pixmap._width
-				SetPixel( x+tx,y+ty,pixmap.GetPixel( tx,ty ) )
-			Next
-		Next
+	    DebugAssert( x>=0 And x+pixmap._width<=_width And y>=0 And y+pixmap._height<=_height )
+	    
+	    ' Static coordinates with fixed memory addresses
+	    Local dstX:Int = 0, dstY:Int = 0
+	    Local srcX:Int = 0, srcY:Int = 0
+	    
+	    ' Calculate pointers once
+	    Local dstXPtr:Int Ptr = Varptr(dstX)
+	    Local dstYPtr:Int Ptr = Varptr(dstY)
+	    Local srcXPtr:Int Ptr = Varptr(srcX)
+	    Local srcYPtr:Int Ptr = Varptr(srcY)
+	    
+	    ' Reusable color object
+	    Local c:Color
+	    Local cPtr:Color Ptr = Varptr(c)
+	    
+	    For srcY = 0 Until pixmap._height
+	        dstY = y + srcY
+	        For srcX = 0 Until pixmap._width
+	            dstX = x + srcX
+	            c = pixmap.GetPixel(srcXPtr, srcYPtr)
+	            SetPixel(dstXPtr, dstYPtr, cPtr)
+	        Next
+	    Next
 	End
 
-	'Optimize!
+	'Optimized!
 	'
 	#rem monkeydoc Converts the pixmap to a different format.
 	
@@ -658,23 +728,40 @@ Class Pixmap Extends Resource
 		
 		Local t:=New Pixmap( _width,_height,format )
 		
+		' Static coordinates with fixed memory addresses
+		Local xCoord:Int = 0
+		Local yCoord:Int = 0
+		
+		' Calculate pointers once
+		Local xPtr:Int Ptr = Varptr(xCoord)
+		Local yPtr:Int Ptr = Varptr(yCoord)
+		
 		If IsFloatPixelFormat( _format ) And Not IsFloatPixelFormat( format )
-			For Local y:=0 Until _height
-				For Local x:=0 Until _width
-					Local c:=GetPixel( x,y )
-					c.r=Clamp( c.r,0.0,1.0 )
-					c.g=Clamp( c.g,0.0,1.0 )
-					c.b=Clamp( c.b,0.0,1.0 )
-					c.a=Clamp( c.a,0.0,1.0 )
-					t.SetPixel( x,y,c )
-				Next
-			Next
+			' Local variable to hold pixel color across iterations
+			Local c:Color
+			Local cPtr:Color Ptr = Varptr(c)
+			
+			For yCoord = 0 Until _height
+				For xCoord = 0 Until _width
+					c = GetPixel( xCoord, yCoord )
+					c.r = Clamp( c.r, 0.0, 1.0 )
+					c.g = Clamp( c.g, 0.0, 1.0 )
+					c.b = Clamp( c.b, 0.0, 1.0 )
+					c.a = Clamp( c.a, 0.0, 1.0 )
+					t.SetPixel( xPtr, yPtr, cPtr )
+				End
+			End
 		Else
-			For Local y:=0 Until _height
-				For Local x:=0 Until _width
-					t.SetPixel( x,y,GetPixel( x,y ) )
-				Next
-			Next
+			' Local variable to store pixel color
+			Local c:Color
+			Local cPtr:Color Ptr = Varptr(c)
+			
+			For yCoord = 0 Until _height
+				For xCoord = 0 Until _width
+					c = GetPixel( xCoord, yCoord )
+					t.SetPixel( xPtr, yPtr, cPtr )
+				End
+			End
 		End
 		
 		Return t
@@ -688,24 +775,42 @@ Class Pixmap Extends Resource
 		
 		'Mark: Optimize!
 		
-		'iDkP: Yes, we need to store an Alpha property state for the instance
+		'iDkP: Yep, done, dear Mark. We need to store an Alpha property state for the instance
 		'instead of doing this kind of bizarro inefficient procedural code blocks.
 		'Let's bring Monkey2 into Aida's world.
 		
 		'Select _format
 			'Case PixelFormat.IA8,PixelFormat.RGBA8,PixelFormat.RGBA16F,PixelFormat.RGBA32F
-			If HasAlpha ' like that
-				
-				For Local y:=0 Until _height
-					For Local x:=0 Until _width
-						Local color:=GetPixel( x,y )
-						color.r*=color.a
-						color.g*=color.a
-						color.b*=color.a
-						SetPixel( x,y,color )
-					Next
-				Next
-			End
+
+		' Only proceed if format has alpha component
+		If HasAlpha
+			' Static coordinates with fixed memory addresses
+			Local xCoord:Int = 0
+			Local yCoord:Int = 0
+			
+			' Calculate pointers once
+			Local xPtr:Int Ptr = Varptr(xCoord)
+			Local yPtr:Int Ptr = Varptr(yCoord)
+			
+			' Local variable to hold pixel color across iterations
+			Local color:Color
+			Local colorPtr:Color Ptr = Varptr(color)
+			
+			For yCoord = 0 Until _height
+				For xCoord = 0 Until _width
+					' Get the color at current coordinates
+					color = GetPixel(xCoord, yCoord)
+					
+					' Premultiply RGB by alpha
+					color.r *= color.a
+					color.g *= color.a
+					color.b *= color.a
+					
+					' Set the premultiplied color
+					SetPixel(xPtr, yPtr, colorPtr)
+				End
+			End 
+		End
 	End
 
 	'iDkP added: Mipmapping support
@@ -737,50 +842,84 @@ Class Pixmap Extends Resource
 		
 		' Handle special case: 1-pixel wide image
 		If Width=1
+			' Static coordinates with fixed memory addresses
+			Local yDst:Int = 0
+			Local yDstPtr:Int Ptr = Varptr(yDst)
+			Local xZero:Int = 0
+			Local xZeroPtr:Int Ptr = Varptr(xZero)
 			
-			For Local y:=0 Until dst.Height
+			' Single Color object for reuse
+			Local c0:Color
+			Local c1:Color
+			Local cAvg:Color
+			Local cAvgPtr:Color Ptr = Varptr(cAvg)
+			
+			For yDst = 0 Until dst.Height
 				' Calculate proper source Y coordinates, handling edge cases
-				Local y0:Int = Min(y*2, Height-1)
-				Local y1:Int = Min(y*2+1, Height-1)
+				Local y0:Int = Min(yDst*2, Height-1)
+				Local y1:Int = Min(yDst*2+1, Height-1)
 				
-				Local c0:=GetPixel(0, y0)
-				Local c1:=GetPixel(0, y1)
-				dst.SetPixel(0, y, (c0+c1)*0.5)
+				c0 = GetPixel(0, y0)
+				c1 = GetPixel(0, y1)
+				cAvg = (c0+c1)*0.5
+				dst.SetPixel(xZeroPtr, yDstPtr, cAvgPtr)
 			End
 			
 			Return dst
 			
 		' Handle special case: 1-pixel tall image
 		ElseIf Height=1
+			' Static coordinates with fixed memory addresses
+			Local xDst:Int = 0
+			Local xDstPtr:Int Ptr = Varptr(xDst)
+			Local yZero:Int = 0
+			Local yZeroPtr:Int Ptr = Varptr(yZero)
 			
-			For Local x:=0 Until dst.Width
+			' Single Color object for reuse
+			Local c0:Color
+			Local c1:Color
+			Local cAvg:Color
+			Local cAvgPtr:Color Ptr = Varptr(cAvg)
+			
+			For xDst = 0 Until dst.Width
 				' Calculate proper source X coordinates, handling edge cases
-				Local x0:Int = Min(x*2, Width-1)
-				Local x1:Int = Min(x*2+1, Width-1)
+				Local x0:Int = Min(xDst*2, Width-1)
+				Local x1:Int = Min(xDst*2+1, Width-1)
 				
-				Local c0:=GetPixel(x0, 0)
-				Local c1:=GetPixel(x1, 0)
-				dst.SetPixel(x, 0, (c0+c1)*0.5)
+				c0 = GetPixel(x0, 0)
+				c1 = GetPixel(x1, 0)
+				cAvg = (c0+c1)*0.5
+				dst.SetPixel(xDstPtr, yZeroPtr, cAvgPtr)
 			End
 			
 			Return dst
-			
-		Endif
-
+		End
+		
+		' Static zero for base offsets
+		Local zero:Int = 0
+		Local zeroPtr:Int Ptr = Varptr(zero)
+		
 		Select _format
 			
 			Case PixelFormat.RGBA8
+				' Static y coordinate with fixed memory address
+				Local y:Int = 0
+				Local yPtr:Int Ptr = Varptr(y)
 				
-				For Local y:=0 Until dst.Height
+				For y = 0 Until dst.Height
 					
-					Local dstp:=Cast<UInt Ptr>(dst.PixelPtr(Varptr(y)))
+					' Calculate destination row pointer
+					Local dstp:=Cast<UInt Ptr>(dst.PixelPtr(zeroPtr, yPtr))
 					
 					' Calculate source Y coordinates, handling edge cases
 					Local srcY0:Int = Min(y*2, Height-2)
 					Local srcY1:Int = Min(srcY0+1, Height-1)
 					
-					Local srcp0:=Cast<UInt Ptr>(PixelPtr(Varptr(srcY0)))
-					Local srcp1:=Cast<UInt Ptr>(PixelPtr(Varptr(srcY1)))
+					' Calculate source row pointers
+					Local srcY0Ptr:Int Ptr = Varptr(srcY0)
+					Local srcY1Ptr:Int Ptr = Varptr(srcY1)
+					Local srcp0:=Cast<UInt Ptr>(PixelPtr(zeroPtr, srcY0Ptr))
+					Local srcp1:=Cast<UInt Ptr>(PixelPtr(zeroPtr, srcY1Ptr))
 					
 					For Local x:=0 Until dst.Width
 						
@@ -796,7 +935,7 @@ Class Pixmap Extends Resource
 							src1 = src0  ' Clamp to edge for odd width
 						Else
 							src1 = srcp0[1]
-						Endif
+						End
 						
 						src2 = srcp1[0]
 						
@@ -804,7 +943,7 @@ Class Pixmap Extends Resource
 							src3 = src2  ' Clamp to edge for odd width
 						Else
 							src3 = srcp1[1]
-						Endif
+						End
 						
 						' Calculate the average pixel value
 						Local pixel:UInt = ((src0 Shr 2)+(src1 Shr 2)+(src2 Shr 2)+(src3 Shr 2)) & $ff000000
@@ -826,22 +965,35 @@ Class Pixmap Extends Resource
 				End
 				
 			Default
+				' Static coordinates with fixed memory addresses
+				Local xDst:Int = 0
+				Local yDst:Int = 0
+				Local xDstPtr:Int Ptr = Varptr(xDst)
+				Local yDstPtr:Int Ptr = Varptr(yDst)
 				
-				For Local y:=0 Until dst.Height
-					For Local x:=0 Until dst.Width
+				' Single Color object for reuse
+				Local c0:Color
+				Local c1:Color
+				Local c2:Color
+				Local c3:Color
+				Local cm:Color
+				Local cmPtr:Color Ptr = Varptr(cm)
+				
+				For yDst = 0 Until dst.Height
+					For xDst = 0 Until dst.Width
 						
 						' Calculate proper source coordinates, handling edge cases
-						Local x0:Int = Min(x*2, Width-1)
-						Local x1:Int = Min(x*2+1, Width-1)
-						Local y0:Int = Min(y*2, Height-1)
-						Local y1:Int = Min(y*2+1, Height-1)
+						Local x0:Int = Min(xDst*2, Width-1)
+						Local x1:Int = Min(xDst*2+1, Width-1)
+						Local y0:Int = Min(yDst*2, Height-1)
+						Local y1:Int = Min(yDst*2+1, Height-1)
 						
-						Local c0:=GetPixel(x0, y0)
-						Local c1:=GetPixel(x1, y0)
-						Local c2:=GetPixel(x1, y1)
-						Local c3:=GetPixel(x0, y1)
-						Local cm:=(c0+c1+c2+c3)*.25
-						dst.SetPixel(x, y, cm)
+						c0 = GetPixel(x0, y0)
+						c1 = GetPixel(x1, y0)
+						c2 = GetPixel(x1, y1)
+						c3 = GetPixel(x0, y1)
+						cm = (c0+c1+c2+c3)*.25
+						dst.SetPixel(xDstPtr, yDstPtr, cmPtr)
 					End
 				End
 		End
@@ -855,21 +1007,37 @@ Class Pixmap Extends Resource
 		
 		'iDkP: gooood, memcpy, good
 		
+		' Size of one row in bytes
 		Local sz:=Width*Depth
 		
+		' Temporary buffer for row swap (allocated once)
 		Local tmp:=New UByte[sz]
 		
-		Local row:Int 'iDkP small optimisation
+		' Static coordinates with fixed memory addresses
+		Local yTop:Int = 0
+		Local yBottom:Int = 0
+		Local x:Int = 0
 		
-		For Local y:=0 Until Height/2
+		' Calculate pointers once
+		Local yTopPtr:Int Ptr = Varptr(yTop)
+		Local yBottomPtr:Int Ptr = Varptr(yBottom)
+		Local xPtr:Int Ptr = Varptr(x)
+		
+		' Swap top and bottom rows
+		For yTop = 0 Until Height/2
 			
-			Local p1:=PixelPtr( Varptr(y) ) 'iDkP small optimisation
-			Local p2:=PixelPtr( Varptr(row) ) 'iDkP small optimisation
+			' Calculate bottom row index properly
+			yBottom = Height-1-yTop
 			
-			stdlib.plugins.libc.memcpy( tmp.Data,p1,sz )
-			stdlib.plugins.libc.memcpy( p1,p2,sz )
-			stdlib.plugins.libc.memcpy( p2,tmp.Data,sz )
-		Next
+			' Get pointers to top and bottom rows
+			Local p1:=PixelPtr(xPtr, yTopPtr)
+			Local p2:=PixelPtr(xPtr, yBottomPtr)
+			
+			' Swap rows using temporary buffer
+			stdlib.plugins.libc.memcpy(tmp.Data, p1, sz)
+			stdlib.plugins.libc.memcpy(p1, p2, sz)
+			stdlib.plugins.libc.memcpy(p2, tmp.Data, sz)
+		End
 	End
 
 	#rem monkeydoc Flips the pixmap on the X axis.
@@ -884,22 +1052,31 @@ Class Pixmap Extends Resource
 		Local halfWidth:=Width/2
 		Local pixelSize:=Depth
 		
+		' Allocate temporary storage once instead of per pixel
+		Local tmp:=New UByte[pixelSize]
+		
+		' Static coordinates with fixed memory addresses
+		Local y:Int = 0
+		Local x:Int = 0
+		Local zero:Int = 0
+		
+		' Calculate pointers once
+		Local yPtr:Int Ptr = Varptr(y)
+		Local zeroPtr:Int Ptr = Varptr(zero)
+		
 		' Process each row
-		For Local y:=0 Until Height
+		For y = 0 Until Height
 			
 			' Get pointer to current row
-			Local rowPtr:=PixelPtr(Varptr(y))
+			Local rowPtr:=PixelPtr(zeroPtr, yPtr)
 			
 			' Swap pixels across the middle
-			For Local x:=0 Until halfWidth
+			For x = 0 Until halfWidth
 				
 				Local p1:=rowPtr + x*pixelSize
 				Local p2:=rowPtr + (Width-1-x)*pixelSize
 				
-				' Temporary storage for one pixel
-				Local tmp:=New UByte[pixelSize]
-				
-				' Swap the pixels
+				' Swap the pixels using our single temporary buffer
 				stdlib.plugins.libc.memcpy(tmp.Data, p1, pixelSize)
 				stdlib.plugins.libc.memcpy(p1, p2, pixelSize)
 				stdlib.plugins.libc.memcpy(p2, tmp.Data, pixelSize)
