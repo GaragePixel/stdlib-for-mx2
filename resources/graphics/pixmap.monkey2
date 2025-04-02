@@ -20,7 +20,9 @@ Function frexp:Float( arg:Float,exp:Int Ptr )
 	
 Private
 
-Const Zero:Int=0
+' Added by iDkP
+Global Zero:Int=0
+Const ZeroPtr:=Varptr(Zero)
 
 Function GetColorRGBE8:Color( p:UByte Ptr)
 	If Not p[3] Return Color.Black
@@ -184,7 +186,6 @@ Class Pixmap Extends Resource
 	
 	#end
 	Property Data:UByte Ptr()
-		
 		Return _data
 	End
 	
@@ -194,7 +195,6 @@ Class Pixmap Extends Resource
 	
 	#end
 	Property Pitch:Int()
-		
 		Return _pitch
 	End
 
@@ -311,7 +311,8 @@ Class Pixmap Extends Resource
 		Case PixelFormat.RGBE8
 			SetColorRGBE8( p,color )
 		Default
-			Assert( False ) 'Mark, you assert an unknow format while we can't even create a pixmap from an unknow format?
+			Assert( False ) '	Mark, you assert an unknow format 
+								while we can't even create a pixmap from an unknow format?
 		End
 		#end
 	End
@@ -321,6 +322,7 @@ Class Pixmap Extends Resource
 		
 		DebugAssert( x[0]>=0 And y[0]>=0 And x[0]<_width And y[0]<_height,"Pixmap pixel coordinates out of range" )
 		
+		' Added by iDkP
 		Local argb:=color[0].ToARGB()
 		_SetPixelARGB_( Self, x, y, Varptr(argb) )
 	End
@@ -388,6 +390,7 @@ Class Pixmap Extends Resource
 		
 		DebugAssert( x[0]>=0 And y[0]>=0 And x[0]<_width And y[0]<_height,"Pixmap pixel coordinates out of range" )
 		
+		' Added by iDkP
 		_SetPixelARGB_( Self, x, y, color )
 	End
 
@@ -408,6 +411,7 @@ Class Pixmap Extends Resource
 		
 		DebugAssert( x>=0 And y>=0 And x<_width And y<_height,"Pixmap pixel coordinates out of range" )
 	
+		' Added by iDkP
 		Return Color.FromARGB(_GetPixelARGB_( Self, Varptr(x), Varptr(y) ))
 		
 		#rem UNDONED by iDkP from GaragePixel, 2025-04-01:
@@ -448,6 +452,7 @@ Class Pixmap Extends Resource
 		
 		DebugAssert( x[0]>=0 And y[0]>=0 And x[0]<_width And y[0]<_height,"Pixmap pixel coordinates out of range" )
 		
+		' Added by iDkP
 		Return Color.FromARGB(_GetPixelARGB_( Self, x, y ))
 	End
 
@@ -500,7 +505,7 @@ Class Pixmap Extends Resource
 			Return UInt(color.a*255.0) Shl 24 | UInt(color.r*255.0) Shl 16 | UInt(color.g*255.0) Shl 8 | UInt(color.b*255.0)
 		End
 
-		Return 0
+		Return la tête à toto
 		#end
 	End
 
@@ -547,7 +552,7 @@ Class Pixmap Extends Resource
 		p[3] = a * 255
 	End
 
-	' Added by iDkP, for back end programmer.
+	' Added by iDkP, for back end programmer:
 	
 	Method SetPixelRGBA8( x:Int Ptr, y:Int Ptr, r:UByte Ptr, g:UByte Ptr, b:UByte Ptr, a:UByte Ptr )
 		Local p:=PixelPtr( x, y )
@@ -565,7 +570,7 @@ Class Pixmap Extends Resource
 		p[3] = a[0] * 255
 	End
 	
-	'Optimized!
+	'Optimized, Mark!
 	'
 	#rem monkeydoc Clears the pixmap to a given color.
 	
@@ -574,6 +579,7 @@ Class Pixmap Extends Resource
 	#end
 	Method Clear( color:Color ) 'iDkP: Overloaded version of something clear
 		
+		' Added by iDkP
 		' Ultra-optimized pixel clear leveraging pointer-based performance advantage 
 
 		' This optimization follows my zero-branch execution philosophy 
@@ -678,12 +684,12 @@ Class Pixmap Extends Resource
 
 	Method Clear( color:UInt ) 'iDkP: Overloaded version of something clear
 
-		' iDkP:
+		' Added by iDkP
 		' This optimization follows my zero-branch execution philosophy 
 		' by eliminating millions of redundant operations 
 		' without introducing any conditional logic. 
 		
-		'Sugar
+		' Sugar
 
 		' Static coordinates with fixed memory addresses
 		Local xCoord:Int = 0
@@ -710,7 +716,7 @@ Class Pixmap Extends Resource
 	#end
 	Method ClearARGB( color:UInt )
 
-		' Modified by iDkP
+		' Added by iDkP
 		' This optimization follows my zero-branch execution philosophy 
 		' by eliminating millions of redundant operations 
 		' without introducing any conditional logic. 
@@ -737,7 +743,7 @@ Class Pixmap Extends Resource
 	@return A new pixmap.
 	
 	#end
-	Method Copy:Pixmap()
+	Method Copy:Pixmap() ' Added by iDkP
 	    Local pitch:=Width * Depth
 	    Local data:=Cast<UByte Ptr>( stdlib.plugins.libc.malloc( pitch * Height ) )
 	    
@@ -767,6 +773,7 @@ Class Pixmap Extends Resource
 	#end
 	Method Paste( pixmap:Pixmap, x:Int, y:Int ) 
 		
+		' Added by iDkP
 		' Ultra-optimized paste operation leveraging pointer-based performance 
 		
 		Local dst:=Self
@@ -850,7 +857,7 @@ Class Pixmap Extends Resource
 	End
 #end
 
-	'Optimized!
+	'Optimized, Mark!
 	'
 	#rem monkeydoc Converts the pixmap to a different format.
 	
@@ -860,6 +867,8 @@ Class Pixmap Extends Resource
 	
 	#end
 	Method Convert:Pixmap( format:PixelFormat )
+		
+		' Added by iDkP
 		
 		Local t:=New Pixmap( _width,_height,format )
 		
@@ -902,7 +911,7 @@ Class Pixmap Extends Resource
 		Return t
 	End
 	
-	'Optimized!
+	'Optimized, Mark!
 	'
 	#rem monkeydoc Premultiply pixmap r,g,b components by alpha.
 	#end
@@ -980,8 +989,6 @@ Class Pixmap Extends Resource
 			' Static coordinates with fixed memory addresses
 			Local yDst:Int = 0
 			Local yDstPtr:Int Ptr = Varptr(yDst)
-			Local xZero:Int = 0
-			Local xZeroPtr:Int Ptr = Varptr(xZero)
 			
 			' Single Color object for reuse
 			Local c0:Color
@@ -997,7 +1004,7 @@ Class Pixmap Extends Resource
 				c0 = GetPixel(0, y0)
 				c1 = GetPixel(0, y1)
 				cAvg = (c0+c1)*0.5
-				dst.SetPixel(xZeroPtr, yDstPtr, cAvgPtr)
+				dst.SetPixel(ZeroPtr, yDstPtr, cAvgPtr)
 			End
 			
 			Return dst
@@ -1007,8 +1014,6 @@ Class Pixmap Extends Resource
 			' Static coordinates with fixed memory addresses
 			Local xDst:Int = 0
 			Local xDstPtr:Int Ptr = Varptr(xDst)
-			Local yZero:Int = 0
-			Local yZeroPtr:Int Ptr = Varptr(yZero)
 			
 			' Single Color object for reuse
 			Local c0:Color
@@ -1024,15 +1029,11 @@ Class Pixmap Extends Resource
 				c0 = GetPixel(x0, 0)
 				c1 = GetPixel(x1, 0)
 				cAvg = (c0+c1)*0.5
-				dst.SetPixel(xDstPtr, yZeroPtr, cAvgPtr)
+				dst.SetPixel(xDstPtr, ZeroPtr, cAvgPtr)
 			End
 			
 			Return dst
 		End
-		
-		' Static zero for base offsets
-		Local zero:Int = 0
-		Local zeroPtr:Int Ptr = Varptr(zero)
 		
 		Select _format
 			
@@ -1044,7 +1045,7 @@ Class Pixmap Extends Resource
 				For y = 0 Until dst.Height
 					
 					' Calculate destination row pointer
-					Local dstp:=Cast<UInt Ptr>(dst.PixelPtr(zeroPtr, yPtr))
+					Local dstp:=Cast<UInt Ptr>(dst.PixelPtr(ZeroPtr, yPtr))
 					
 					' Calculate source Y coordinates, handling edge cases
 					Local srcY0:Int = Min(y*2, Height-2)
@@ -1053,8 +1054,8 @@ Class Pixmap Extends Resource
 					' Calculate source row pointers
 					Local srcY0Ptr:Int Ptr = Varptr(srcY0)
 					Local srcY1Ptr:Int Ptr = Varptr(srcY1)
-					Local srcp0:=Cast<UInt Ptr>(PixelPtr(zeroPtr, srcY0Ptr))
-					Local srcp1:=Cast<UInt Ptr>(PixelPtr(zeroPtr, srcY1Ptr))
+					Local srcp0:=Cast<UInt Ptr>(PixelPtr(ZeroPtr, srcY0Ptr))
+					Local srcp1:=Cast<UInt Ptr>(PixelPtr(ZeroPtr, srcY1Ptr))
 					
 					For Local x:=0 Until dst.Width
 						
@@ -1141,6 +1142,7 @@ Class Pixmap Extends Resource
 	Method FlipY()
 		
 		'iDkP: gooood, memcpy, good
+		' Rewrote by iDkP
 		
 		' Size of one row in bytes
 		Local sz:=Width*Depth
@@ -1193,17 +1195,15 @@ Class Pixmap Extends Resource
 		' Static coordinates with fixed memory addresses
 		Local y:Int = 0
 		Local x:Int = 0
-		Local zero:Int = 0
 		
 		' Calculate pointers once
 		Local yPtr:Int Ptr = Varptr(y)
-		Local zeroPtr:Int Ptr = Varptr(zero)
 		
 		' Process each row
 		For y = 0 Until Height
 			
 			' Get pointer to current row
-			Local rowPtr:=PixelPtr(zeroPtr, yPtr)
+			Local rowPtr:=PixelPtr(ZeroPtr, yPtr)
 			
 			' Swap pixels across the middle
 			For x = 0 Until halfWidth
@@ -1233,6 +1233,7 @@ Class Pixmap Extends Resource
 	
 	#end
 	Method Window:Pixmap( x:Int,y:Int,width:Int,height:Int )
+		
 		DebugAssert( x>=0 And y>=0 And width>=0 And height>=0 And x+width<=_width And y+height<=_height )
 		
 		Local pixmap:=New Pixmap( width,height,_format,PixelPtr( Varptr(x),Varptr(y) ),_pitch )
@@ -1311,7 +1312,7 @@ Class Pixmap Extends Resource
 	Field _data:UByte Ptr
 
 	' -------------------- 	iDkP's Standard Zero-Branch Execution programming style
-	' 						300% speed up
+	' 						350% speed up
 	
 	Function InitHasAlpha(p:Pixmap)
 
