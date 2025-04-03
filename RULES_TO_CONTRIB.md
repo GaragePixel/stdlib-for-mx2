@@ -110,6 +110,10 @@ End
 
     Never Using "next" as a variable name
     Never Using "void" as a variable name
+    Never Using "super" as a variable name
+    Never Using "cast" as a variable name
+    Never Using "cast" as a method name
+    Never Using "cast" as a function name
     Never using "local" as a variable name
     Never using "field" as a variable name
     Never Using "static" as a variable name
@@ -117,6 +121,7 @@ End
     Never Using "extension" as a variable name
     Never Using "namespace" as a variable name
     Never Using "end" as a variable name, prefere "atend"
+    Never Using "Pointer" for naming a method, class, a variable, a value or a namespace
     Method definitions ended with "End"
     Function definitions ended with "End"
     Class definitions ended with "End"
@@ -419,6 +424,13 @@ Right syntax:
 			"^->":"stringValue", 
 			"val":Value])
 	End
+
+#### Verify code coherence:
+
+ If you write something like:
+	Field _state:StoryState
+	Field _mainContentContainer:Container
+Be sure that StoryState and Container corresponds an object, class, struct, original and derivated, in the code or the dependency code.
 
 #### Best way to write a multiline function arguments method:
 
