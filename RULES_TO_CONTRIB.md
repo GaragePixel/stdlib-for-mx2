@@ -8,7 +8,7 @@ This document outlines the essential guidelines and requirements for contributin
 
 ## Functionality
 
-- Defines correct block structure termination (End, Wend, EndIf)
+- Defines correct block structure termination (End, Wend)
 - Explains restricted variable naming conventions
 - Outlines proper operator usage, particularly for ternary expressions
 - Details variable and array declaration patterns
@@ -119,6 +119,7 @@ End
     Method definitions ended with "End"
     Function definitions ended with "End"
     Class definitions ended with "End"
+    "If" condition ended with "End"
     Interface definitions ended with "End"    
     Select/Case blocks ended with "End"
     Try/Catch blocks ended with "End"
@@ -229,7 +230,7 @@ This document summarizes the essential coding conventions, syntax rules, and bes
 
 ## Functionality
 
-- Standard block syntax termination (End, Wend, EndIf)
+- Standard block syntax termination (End, Wend, but never use "Endif" or "End If")
 - Variable declaration patterns with type inference support
 - Proper handling of canvas rendering methods
 - Input management conventions (Mouse/Tablet)
@@ -352,6 +353,10 @@ This is the fixed syntax:
 - Never use "end", "next", "namespace", "local", "extension", "continue" or "field" as variable names
 - Keywords like "Public", "Private", "Protected" should not be used as identifiers
 
+### Never use these words:
+
+- Never use "Endif", "End function", "End If", "End Property", "End function", "End select", "End Operator", "End Method", "Throw" (use instead "RuntimeError").
+
 ### Dependencies
 
 - Never use "std" from monkey2 or wonkey repository
@@ -374,6 +379,18 @@ Right syntax:
 ```monkey2
   If closeParenIndex <> filename.Length - 9 ' ".monkey2" is 8 chars
 ```
+
+#### How to use the Access modifiers and what never do to :
+
+Write the word but never inline something after
+
+Wrong syntax:
+Protected Method PopulateCurrentTags()
+
+Right syntax:
+Protected 
+	Method PopulateCurrentTags()
+ 	...
 
 #### How to perform Try code block:
 
