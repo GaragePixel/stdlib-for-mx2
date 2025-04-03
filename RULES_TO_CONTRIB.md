@@ -358,6 +358,14 @@ This is the fixed syntax:
 
 - Never use "Endif", "End function", "End If", "End Property", "End function", "End select", "End Operator", "End Method", "Throw" (use instead "RuntimeError").
 
+### How write Virtual class keywords:
+
+Wrong syntax:
+Function FromJson:InkObject(json:JsonValue) Static
+
+Right syntax:
+Function FromJson:InkObject(json:JsonValue) Final
+
 ### Dependencies
 
 - Never use "std" from monkey2 or wonkey repository
