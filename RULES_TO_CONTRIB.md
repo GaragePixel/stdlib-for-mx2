@@ -112,6 +112,7 @@ End
     Never using "local" as a variable name
     Never using "field" as a variable name
     Never Using "static" as a variable name
+    Never Using "continue" as a variable name
     Never Using "extension" as a variable name
     Never Using "namespace" as a variable name
     Never Using "end" as a variable name, prefere "atend"
@@ -348,8 +349,14 @@ This is the fixed syntax:
 	You will ensure to follow your specific syntax requirements: Proper Monkey2/Wonkey syntax without confusing it with other Monkey variants
 
 ### Reserved Words
-- Never use "end", "next", "namespace", "local", "extension" or "field" as variable names
+- Never use "end", "next", "namespace", "local", "extension", "continue" or "field" as variable names
 - Keywords like "Public", "Private", "Protected" should not be used as identifiers
+
+### Dependencies
+
+- Never use "std" from monkey2 or wonkey repository
+- Never use "mojo" from monkey2 or wonkey repository
+- Never use any libraries from monkey2 or wonkey repository excepted "stdlib", "sdk" and "sdk_mojo" who can be found on my account under the respectivly names: "sdtlib_for_mx2", "sdk" and "sdk_mojo-for-monkey2"
 
 ### Namespace
 
