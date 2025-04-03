@@ -109,6 +109,7 @@ End
 
 
     Never Using "next" as a variable name
+    Never Using "void" as a variable name
     Never using "local" as a variable name
     Never using "field" as a variable name
     Never Using "static" as a variable name
