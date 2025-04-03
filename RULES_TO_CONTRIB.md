@@ -401,6 +401,65 @@ Protected
 	Method PopulateCurrentTags()
  	...
 
+#### Multiline:
+
+Wrong syntax:
+
+	Method ToJson:JsonValue() Override
+		Return New JsonObject().Init([
+			"^->":"stringValue", 
+			"val":Value
+		])
+	End
+
+Right syntax:
+
+	Method ToJson:JsonValue() Override
+		Return New JsonObject().Init([
+			"^->":"stringValue", 
+			"val":Value])
+	End
+
+#### Best way to write a multiline function arguments method:
+
+Example to follow:
+
+	Method DrawPixmap( 
+		
+			'Pixmap to past
+			pixmap:Pixmap,
+			x:Int,y:Int,
+		
+			'The region of the pixmap to draw. Defaults to the entire pixmap (-1)
+			srcx:Int=0,srcy:Int=0,srcw:Int=-1,srch:Int=-1 )
+		
+		' Added by iDkP
+		
+		If srcw<0 srcw=pixmap._width
+		If srch<0 srch=pixmap._height
+		
+		Local dstx:Int=x,dsty:Int=y
+		
+		If srcx<0 dstx-=srcx;srcw+=srcx;srcx=0
+		If srcy<0 dsty-=srcy;srch+=srcy;srcy=0
+		
+		srcw=Min( srcw,pixmap._width-srcx )
+		srch=Min( srch,pixmap._height-srcy )
+		
+		If dstx<0 srcx-=dstx;srcw+=dstx;dstx=0
+		If dsty<0 srcy-=dsty;srch+=dsty;dsty=0
+		
+		srcw=Min( srcw,_width-dstx )
+		srch=Min( srch,_height-dsty )
+		
+		If srcw<=0 Or srch<=0 Return
+		
+		For Local ty:Int=0 Until srch
+			For Local tx:Int=0 Until srcw
+				SetPixel( dstx+tx,dsty+ty,GetPixel( srcx+tx,srcy+ty ) )
+			End
+		End
+	End
 #### How to perform Try code block:
 
 ```monkey2
