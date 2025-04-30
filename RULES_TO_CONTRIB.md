@@ -134,7 +134,7 @@ End
     Try blocks terminate with End
     For loops terminate with End
     While loops terminate with Wend
-    If blocks terminate with Endif
+    If blocks terminate with End
 ```
 - Never use:
 ```
