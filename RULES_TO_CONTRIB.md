@@ -731,6 +731,70 @@ End
     Mouse and keyboard input should be properly managed in OnKeyEvent and OnMouseEvent methods
     App initialization should occur in a clear order: fields, constructor, OnCreateWindow, New App
 
+# Monkey2 Language and Ecosystem Analysis
+
+## Purpose
+This document provides a comprehensive overview of the Monkey2 programming language ecosystem, clarifying its distinct identity from other Monkey variants and outlining its modular architecture. This analysis focuses on understanding the structure of Monkey2's standard libraries and its contribution standards.
+
+## List of Functionality
+- **Standard Library Modules**
+  - `stdlib` - Core standard library functionality
+  - `sdk_mojo` - Graphics, UI and application framework
+  - `sdk` - Additional system development components
+
+- **Language Syntax Characteristics**
+  - Block-based structure with explicit terminators
+  - Tab-based indentation standard
+  - PascalCase method naming convention
+  - Explicit loop termination keywords
+
+- **Module Organization**
+  - Hierarchical file structure (module.component.monkey2)
+  - Markdown-based documentation
+
+## Notes on Implementation
+Monkey2 implements a distinct language design that differentiates it from related languages like Wonkey, Monkey (Monkey1), MonkeyX, and Cerberus-X. This separation is deliberate and requires careful attention when developing or porting code between these environments.
+
+The standard library architecture follows a modular organization with three core components:
+1. The `stdlib` module (https://github.com/GaragePixel/stdlib-for-mx2) provides fundamental language functionality
+2. The `sdk_mojo` module (https://github.com/GaragePixel/sdk_mojo-for-monkey2) delivers graphics and UI capabilities
+3. The `sdk` module (https://github.com/GaragePixel/sdk) offers additional system development tools
+
+Library contributions maintain consistency through structured file organization where supporting files use a dot notation hierarchical naming system:
+
+```monkey2
+	Using math.monkey2          	' Main module file
+	Using math.functions.monkey2  	' Supporting component file
+```
+
+This approach creates logical groupings while preserving clear modularity and compile-time optimizations.
+
+## Technical Advantages
+The strict syntactic requirements of Monkey2, including tab-based indentation and explicit block terminators, reduce common programming errors related to code structure. For example:
+
+```monkey2
+Function CalculateArea:Float(width:Float, height:Float)
+	Local area:Float = width * height
+	Return area
+End Function
+
+For i:=0 Until 10
+	Print "Iteration: "+i
+End
+
+While condition
+	DoSomething()
+Wend
+```
+
+The module structure with dot notation provides significant organization benefits compared to flat module systems. This hierarchical approach:
+1. Improves compile-time efficiency by allowing selective compilation
+2. Enhances code navigation by establishing logical relationships
+3. Facilitates documentation generation through predictable file locations
+
+The documentation standards require markdown-based documentation with explicit versioning, parameter descriptions, and usage examples, ensuring that the codebase remains accessible to new developers while maintaining comprehensive knowledge transfer.
+
+The separation of visual components (sdk_mojo) from core functionality (stdlib) creates a clean architectural boundary that enhances portability across different target platforms while maintaining consistent behavior for core language features.
 
 Following these syntax rules ensures optimal integration between your application, Monkey2, stdlib, sdk, sdk_mojo and Aida 4's advanced mathematic capabilities.
 std from Monkey2/Wonkey is superseeded by stdlib. stdlib, sdk and sdk_mojo are only the repository you can find in: https://github.com/GaragePixel?tab=repositories
