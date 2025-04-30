@@ -783,7 +783,7 @@ This document provides a comprehensive overview of the Monkey2 programming langu
 
 - **Module Organization**
   - Hierarchical file structure (module.component.monkey2)
-  - Markdown-based documentation
+  - incode-based documentation (read good pratice: https://github.com/GaragePixel/stdlib-for-mx2/tree/main/io/tablet)
 
 ## Notes on Implementation
 Monkey2 implements a distinct language design that differentiates it from related languages like Wonkey, Monkey (Monkey1), MonkeyX, and Cerberus-X. This separation is deliberate and requires careful attention when developing or porting code between these environments.
@@ -927,7 +927,7 @@ The module structure with dot notation provides significant organization benefit
 2. Enhances code navigation by establishing logical relationships
 3. Facilitates documentation generation through predictable file locations
 
-The documentation standards require markdown-based documentation with explicit versioning, parameter descriptions, and usage examples, ensuring that the codebase remains accessible to new developers while maintaining comprehensive knowledge transfer.
+The documentation standards require incode-based documentation with explicit versioning, parameter descriptions, and usage examples, ensuring that the codebase remains accessible to new developers while maintaining comprehensive knowledge transfer.
 
 The separation of visual components (sdk_mojo) from core functionality (stdlib), additional generic functionalities (sdk) and specific functionalities (like sdk_games) creates a clean architectural boundary that enhances portability across different target platforms while maintaining consistent behavior for core language features.
 
