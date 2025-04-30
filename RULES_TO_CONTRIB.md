@@ -337,6 +337,7 @@ This document summarizes the essential coding conventions, syntax rules, and bes
 - If/Else blocks ended with "EndIf" (one word)
 - Select/Case blocks ended with "End"
 - Try/Catch blocks ended with "End"
+- Using Then, example "If path = Null Then Return Null" must be wrote "If path = Null Return Null"
 
 ### Errors
 - Never use Throw but instead RuntimeError
@@ -374,12 +375,12 @@ This is the fixed syntax:
 	You will ensure to follow your specific syntax requirements: Proper Monkey2/Wonkey syntax without confusing it with other Monkey variants
 
 ### Reserved Words
-- Never use "end", "next", "namespace", "local", "extension", "continue" or "field", "not" as variable names
+- Never use "end", "next", "namespace", "local", "extension", "then", "continue" or "field", "not" as variable names
 - Keywords like "Public", "Private", "Protected" should not be used as identifiers
 
 ### Never use these words:
 
-- Never use "Endif", "End function", "End If", "End Property", "End function", "End select", "End Operator", "End Method", "Throw" (use instead "RuntimeError").
+- Never use "Endif", "End function", "End If", "End Property", "End function", "End select", "End Operator", "End Method", "Throw" (use instead "RuntimeError"), "Then"
 
 ### How write Virtual class keywords:
 
@@ -609,6 +610,10 @@ End
 - Missing proper error handling
 - Neglecting edge cases in mathematical operations
 - Assuming specific garbage collection behavior
+- Using throw instead of RuntimeError
+- Using reserved keyword to naming a method or a member
+- Using shit keywords like End Function, use only End for everything excepted the loop While who must ends by Wend.
+- Using Then, example "If path = Null Then Return Null" must be wrote "If path = Null Return Null"
 
 ### Notes
     Monkey2 is distinct from Monkey1, MonkeyX, or Cerberus-X with different syntax rules
@@ -626,3 +631,6 @@ End
 
 
 Following these syntax rules ensures optimal integration between your application, Monkey2, stdlib, sdk, sdk_mojo and Aida 4's advanced mathematic capabilities.
+std from Monkey2/Wonkey is superseeded by stdlib. stdlib, sdk and sdk_mojo are only the repository you can find in: https://github.com/GaragePixel?tab=repositories
+here, stdlib is called stdlib-for-mx2, sdk is called sdk, sdk_mojo is called sdk_mojo_for_monkey2
+And you will strictly follow the rules described in: https://github.com/GaragePixel/stdlib-for-mx2/blob/main/RULES_TO_CONTRIB.md
