@@ -118,6 +118,26 @@ Function DoSomething:Bool(sourcePath:String, destPath:String)
 	Return False
 End
 ```
+
+- Try-Catch Block Structure
+
+    Try block initialization with Try
+    Exception catching with Catch
+    Proper block termination with End (not End Try)
+    Exception typing and handling mechanics
+
+- Block Termination Consistency
+
+    Functions terminate with End
+    Methods terminate with End
+    Classes terminate with End
+    Try blocks terminate with End
+    For loops terminate with End
+    While loops terminate with Wend
+    If blocks terminate with Endif
+
+- Never use:
+
     Never Using "next" as a variable name
     Never Using "not" as a variable name
     Never Using "void" as a variable name
@@ -134,6 +154,25 @@ End
     Never Using "end" as a variable name, prefere "atend"
     Never Using "Pointer" for naming a method, class, a variable, a value or a namespace
     Never use "not" as a method name
+    Never use Static, use Local
+    Never use '* or other shits, a one-line commentary begins with ' in Monkey2 language
+    Never use a reserved word for naming a member.
+    Never use "Int" to name a member.
+    Never use "Float" to name a member.
+    Never use "Bool" to name a member.
+    Never use "String" to name a member.
+    Never use "Mod" to name a member.
+    Never use "New" to name a member.
+    Never use "Throw" to name a member.
+    Never use "Case" to name a member.
+    Never use "Select" to name a member.
+    Never use "If" to name a member.
+    Never use "Method" to name a member.
+    Never use "Else" to name a member.
+    Never use "Elseif" to name a member.
+
+- Always use:
+  
     Method definitions ended with "End"
     Function definitions ended with "End"
     Class definitions ended with "End"
@@ -143,8 +182,7 @@ End
     Try/Catch blocks ended with "End"
     If/Else blocks ended with "End" (one word)
     Elseif (one word) instead of Else If (two words)
-    Never use Static, use Local
-    Never use '* or other shits, a one-line commentary begins with ' in Monkey2 language
+
     Ternary operator uses ? and Else (not colon):
         Example: Local value:Int = condition ? trueValue Else falseValue
     Variable declarations use colon for type specification:
@@ -156,20 +194,7 @@ End
         Can be written: Local myArr:=New Int[10](0,1,2,3,4,5,6,7,8,9)
         Can be written: Local myArr:=New Int[10](	0,1,2,3,4,
         											5,6,7,8,9	)
-	Never use a reserved word for naming a member.
-	Never use "Int" to name a member.
-	Never use "Float" to name a member.
-	Never use "Bool" to name a member.
-	Never use "String" to name a member.
-	Never use "Mod" to name a member.
-	Never use "New" to name a member.
-	Never use "Throw" to name a member.
-	Never use "Case" to name a member.
-	Never use "Select" to name a member.
-	Never use "If" to name a member.
-	Never use "Method" to name a member.
-	Never use "Else" to name a member.
-	Never use "Elseif" to name a member.
+
 
 About the syntax, we can't write: 
 ```monkey2
