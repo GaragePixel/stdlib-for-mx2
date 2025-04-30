@@ -107,7 +107,7 @@ Function DoSomething:Bool(sourcePath:String, destPath:String)
 	
 	' Perform DoSomthing
 	Try
-	 	If somethingWrong Then Throw New NameSpaceException ("Can't perform DoSomething.")
+	 	If somethingWrong Throw New NameSpaceException ("Can't perform DoSomething.")
 		CopyFile(sourcePath, destPath)
 		DeleteFile(sourcePath)
 		Return True
@@ -445,7 +445,7 @@ Write instead:
 - If/Else blocks ended with "EndIf" (one word)
 - Select/Case blocks ended with "End"
 - Try/Catch blocks ended with "End"
-- Using Then, example "If path = Null Then Return Null" must be wrote "If path = Null Return Null"
+- Never use Then, example "If path = Null Then Return Null" must be wrote "If path = Null Return Null"
 
 ### Errors
 - Never use Throw but instead RuntimeError
