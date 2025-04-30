@@ -6,6 +6,8 @@
 
 This document outlines the essential guidelines and requirements for contributing to the Monkey2/Wonkey standard library repositories maintained by GaragePixel. Following these conventions ensures code consistency, maintainability, and compatibility across the ecosystem. Please read about the coding conventions, syntax rules, and best practices for Monkey2 development based on the GaragePixel repositories and Aida 4. These guidelines ensure consistent, maintainable code across projects while leveraging Monkey2's unique language features effectively, ensuring optimal compatibility between your code and Aida's processing pipeline.
 
+Good pratice: https://github.com/GaragePixel/stdlib-for-mx2/tree/main/io/tablet
+
 ## Functionality
 
 - Defines correct block structure termination (End, Wend)
