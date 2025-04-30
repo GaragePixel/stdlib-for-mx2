@@ -120,14 +120,14 @@ End
 ```
 
 - Try-Catch Block Structure
-
+```
     Try block initialization with Try
     Exception catching with Catch
     Proper block termination with End (not End Try)
     Exception typing and handling mechanics
-
+```
 - Block Termination Consistency
-
+```
     Functions terminate with End
     Methods terminate with End
     Classes terminate with End
@@ -135,9 +135,9 @@ End
     For loops terminate with End
     While loops terminate with Wend
     If blocks terminate with Endif
-
+```
 - Never use:
-
+```
     Never Using "next" as a variable name
     Never Using "not" as a variable name
     Never Using "void" as a variable name
@@ -170,9 +170,9 @@ End
     Never use "Method" to name a member.
     Never use "Else" to name a member.
     Never use "Elseif" to name a member.
-
+```
 - Always use:
-  
+```
     Method definitions ended with "End"
     Function definitions ended with "End"
     Class definitions ended with "End"
@@ -193,7 +193,7 @@ End
         Can be written: Local myArr:=New Int[10]
         Can be written: Local myArr:=New Int[10](0,1,2,3,4,5,6,7,8,9)
         Can be written: Local myArr:=New Int[10](	0,1,2,3,4,
-        											5,6,7,8,9	)
+   ```     											5,6,7,8,9	)
 
 
 About the syntax, we can't write: 
