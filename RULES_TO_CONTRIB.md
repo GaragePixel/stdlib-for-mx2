@@ -32,31 +32,37 @@ For i:= 10 Until 0 Step - 1
 	' Tab indentation only - spaces will cause errors
 	ProcessItem(i)
 End  ' For loops use "End" terminator
-
+```
+```monkey2
 While condition
 	' Loop logic
 	condition = UpdateCondition()
 Wend  ' While loops use "Wend" terminator
-
+```
+```monkey2
 Method DrawWithAida( canvas:Canvas )
 	' Method implementation
 	Aida.ProcessCanvas( canvas )
 End  ' Methods terminate with "End"
-
+```
+```monkey2
 Method IsAidaCute:Bool( canvas:Canvas, aida:Character )
 	' Method implementation
 	Return LookAtHerBeauty( aida,canvas )
 End  ' Methods terminate with "End"
-
+```
+```monkey2
 Function CalculateAidaParameters:Float( input:Float )
 	Return input * 2.5
 End  ' Functions terminate with "End"
-
+```
+```monkey2
 Function Main()
 	'Don't write Return (0)
 	'Don't write Return 0
 End 
-
+```
+```monkey2
 Class AidaRenderer
 	' Class implementation
 End  ' Classes terminate with "End"
@@ -64,7 +70,8 @@ End  ' Classes terminate with "End"
 Interface IAidaDrawable
 	' Interface definition
 End  ' Interfaces terminate with "End"
-
+```
+```monkey2
 If condition
 	' True branch
 ElseIf otherCondition
@@ -72,16 +79,17 @@ ElseIf otherCondition
 Else
 	' Else branch
 EndIf  ' If blocks use "EndIf" (one word)
-
+```
+```monkey2
 Select aidaMode
 	Case AidaMode.Pink
 		' Pink mode life style
 	Case AidaMode.Glamour
 		' Glamour mode processing
 End  ' Select blocks terminate with "End"
-
+```
+```monkey2
 'How to perform Try code block:
-
 Class NameSpaceException Extends Throwable
 	Field msg:String
 
@@ -89,7 +97,8 @@ Class NameSpaceException Extends Throwable
 		Self.msg = message
 	End
 End
-
+```
+```monkey2
 ' Renames a file, returns True on success
 Function DoSomething:Bool(sourcePath:String, destPath:String)
 	
@@ -108,7 +117,7 @@ Function DoSomething:Bool(sourcePath:String, destPath:String)
 	End
 	Return False
 End
-
+```
     Never Using "next" as a variable name
     Never Using "not" as a variable name
     Never Using "void" as a variable name
@@ -163,22 +172,27 @@ End
 	Never use "Elseif" to name a member.
 
 About the syntax, we can't write: 
-
+```monkey2
 			vertices[i] = New Vec2<Float>(
 				center.x + Cos(angle) * radius,
 				center.y + Sin(angle) * radius
 			)
-
+```
+```monkey2
 we must write:
 
 			vertices[i] = New Vec2<Float>(
 				center.x + Cos(angle) * radius,
 				center.y + Sin(angle) * radius)
-
+```
 And we can't write:
+```monkey2
 	Local yOffset:= isPressed ? 2.0 : 0.0
+```
+```monkey2
 but we must write instead:
 	Local yOffset:= isPressed ? 2.0 Else 0.0
+```
 
     Functions imported via #Import are available directly in the current namespace
     No need for dotted notation when calling functions in the same namespace
@@ -190,30 +204,25 @@ but we must write instead:
     Method parameters use lowerCamelCase
     Class names use PascalCase
     Keywords like "Public", "Private", "Protected" should not be used as identifiers
-```
 
 Something like that is forbidden because iterative code for array [..] isn't a feature of the Monkey2 language:
-
 ```monkey2
 	Return New Path(_components[1..], _isRelative) 'FORBIDDEN
 	Return _text[_pos..(_pos+1)] 'FORBIDDEN
 ```
 
-Something like that is forbidden:
-
+Something like that is forbidden, never write this:
 ```monkey2
 	Method NavigateTo(targetPath:Path) Private
 ```
 
 The last example isn't Monkey2 syntax. When you use a Private before declaring private members, then you write public to declare the followed public member. 
 
-Do not do:
+Never write:
 ```monkey2
 Private Field _sourcePath:String
 ```
-
 But instead:
-
 ```monkey2
 Private 
 	Field _sourcePath:String
@@ -225,56 +234,53 @@ Public
 	... other variables
 ```
 
-Forbidden:
-
+Never:
 ```monkey2
 Field _variableFunctions:StringMap<Function:InkValue(params:InkValue[])>
 ```
-
 Instead:
-
 ```monkey2
 Field _variableFunctions:StringMap<InkValue(params:InkValue[])>
 ```
 
-Forbidden:
-
+Never:
 ```monkey2
 While CurrentChar <> "" And (IsDigit(CurrentChar) Or (!hasDecimal And CurrentChar = "."))
 ```
-
 Instead:
-
 ```monkey2
 While CurrentChar <> "" And (IsDigit(CurrentChar) Or ((Not hasDecimal) And CurrentChar = "."))
 ```
 
-Forbidden!!!!!!!!
-
+Forbidden!!!!!!!! Never!!!!!!! Bad code, bad:
 ```monkey2
 While CurrentChar <> "" And CurrentChar <> "~""
 ```
-
-Forbidden:
-
+Never:
 ```monkey2
 Throw New RuntimeException("Expected token of type '" + type + "' but got '" + (CurrentToken ? CurrentToken.Type : "EOF") + "' at line " + (CurrentToken ? String(CurrentToken.Line) : "EOF"))
 ```
-
 Instead:
-
 ```monkey2
 	RuntimeError("Expected token of type '" + type + "' but got '" + (CurrentToken ? CurrentToken.Type Else "EOF") + "' at line " + (CurrentToken ? String(CurrentToken.Line) Else "EOF"))
 ```
 
+Never:
 ```monkey2
 	CurrentToken ? CurrentToken.Type : "EOF") + "' at line " + (CurrentToken ? String(CurrentToken.Line) : "EOF"))
 ```
-
 Instead:
-
 ```monkey2
 	CurrentToken ? CurrentToken.Type Else "EOF") + "' at line " + (CurrentToken ? String(CurrentToken.Line) Else "EOF"))
+```
+
+Never:
+```monkey2
+	If storyJson == Null Then Return False
+```
+Instead:
+```monkey2
+	If storyJson == Null Return False
 ```
 
 ### Introduction example:
@@ -447,19 +453,22 @@ Write instead:
 ### About array's syntax:
 
 Create an array:
-
+```monkey2
 	Global myArray:String[]=New String[2](0,1)
- 	or 
+```
+ 	or
+```monkey2 
  	Global myArray:=New String[2](0,1)
+```
 
 In monkey2 language, the following syntax is wrong:
-
+```monkey2
 	If parts[0] = ""
 		parts = parts[1..]
 	End
-
+```
 This is the fixed syntax:
-
+```monkey2
 	If parts[0] = ""
 		Local newParts:String[] = New String[parts.Length - 1]
 		For Local i:Int = 1 Until parts.Length
@@ -467,7 +476,7 @@ This is the fixed syntax:
 		Next
 		parts = newParts
 	End
-
+```
 	In this fixture, the rules are: 
 	    	- Create a new array with size reduced by one
 	    	- Copy elements starting from index 1 to the new array
@@ -776,7 +785,7 @@ The strict syntactic requirements of Monkey2, including tab-based indentation an
 Function CalculateArea:Float(width:Float, height:Float)
 	Local area:Float = width * height
 	Return area
-End Function
+End
 
 For i:=0 Until 10
 	Print "Iteration: "+i
@@ -787,6 +796,88 @@ While condition
 Wend
 ```
 
+# Dangling Block Prevention in Monkey2
+
+## Purpose
+This document examines the concept of dangling blocks in programming languages and how Monkey2's design explicitly prevents this common source of logic errors through mandatory explicit block terminators. Unlike its predecessors (Monkey1, MonkeyX, Cerberus-X), Monkey2 implements a strict syntactic requirement for block termination that substantially improves code reliability and maintainability.
+
+## List of Functionality
+- **Block Termination Requirements**
+  - For loops must terminate with `End`
+  - While loops must terminate with `Wend`
+  - Functions require `End`
+  - Methods require `End`
+  - Classes require `End`
+  - Interfaces require `End`
+  - Conditional blocks require `End`
+  
+- **Visual Indentation Standards**
+  - Tab-only indentation (never spaces)
+  - Recommended 4-space tab width in editors
+  - Consistent indentation for nested blocks
+
+- **Common Dangling Block Scenarios Prevented**
+  - Unterminated conditional branches
+  - Nested loop confusion
+  - Missing function termination
+  - Improperly closed class definitions
+
+## Notes on Implementation
+Dangling blocks occur when a code block lacks proper termination, creating ambiguous scope boundaries that lead to unexpected behavior. In languages with optional or bracket-based terminators, identifying these errors can be challenging, particularly in large codebases or when different developers have different formatting preferences.
+
+Monkey2 addresses this problem through mandatory implicit terminators (always End) that clearly delineate block boundaries by using only "End". This approach differs from bracket-based languages (C, Java) or indentation-based languages (Python) by requiring specific terminator keywords that match the block type.
+
+For example, a properly terminated loop in Monkey2:
+
+```monkey2
+For i:=0 Until 10
+	Print "Current value: "+i
+	If i Mod 2 = 0
+		Print "Even number"
+	End
+End
+```
+
+The explicit `End` terminator eliminates ambiguity about where the loop concludes, even in complex nested structures. Similarly, the `End` clearly marks the boundary of the conditional block.
+
+Function definitions benefit from the same clarity:
+
+```monkey2
+Function CalculateArea:Float(width:Float, height:Float)
+	Local result:Float = width * height
+	Return result
+End
+```
+
+This approach has significant implications for code maintenance, as it prevents a class of bugs that can be extremely subtle and difficult to detect in visual inspection alone.
+
+## Technical Advantages
+The explicit and unique terminator approach "End" offers several technical advantages:
+
+1. **Error Detection** - The compiler can immediately identify missing terminators, catching errors at compile-time rather than runtime. This prevents logical errors where execution flows into unintended blocks due to ambiguous boundaries.
+
+2. **Self-Documenting Blocks** - The terminators serve as explicit documentation of block structure, making code more readable, especially for complex nested structures:
+
+```monkey2
+If condition1
+	While condition2
+		For i:=0 Until 10
+			DoSomething()
+		End
+	Wend
+End
+```
+
+3. **Format Resilience** - Unlike bracket-based languages where a misplaced bracket can drastically alter program flow, Monkey2's explicit terminators maintain correct execution regardless of formatting changes or style variations between developers.
+
+4. **Debugging Efficiency** - When errors occur, the explicit block boundaries make it substantially easier to identify the scope in which issues are occurring, reducing debugging time.
+
+5. **Refactoring Safety** - When adding or removing nested blocks, the explicit terminators reduce the risk of accidentally changing program logic through improper block closure.
+
+The combination of explicit terminators and tab-only indentation creates a dual-layer protection against dangling block errors. The visual indentation provides immediate visual feedback on block structure, while the explicit terminators ensure that this structure is correctly implemented at the syntactic level.
+
+In contrast to languages like Monkey1 or Cerberus-X where blocks might have more flexible termination rules, Monkey2's strict approach creates a more disciplined development environment that prioritizes code clarity and error prevention over syntactic brevity.
+
 The module structure with dot notation provides significant organization benefits compared to flat module systems. This hierarchical approach:
 1. Improves compile-time efficiency by allowing selective compilation
 2. Enhances code navigation by establishing logical relationships
@@ -794,7 +885,7 @@ The module structure with dot notation provides significant organization benefit
 
 The documentation standards require markdown-based documentation with explicit versioning, parameter descriptions, and usage examples, ensuring that the codebase remains accessible to new developers while maintaining comprehensive knowledge transfer.
 
-The separation of visual components (sdk_mojo) from core functionality (stdlib) creates a clean architectural boundary that enhances portability across different target platforms while maintaining consistent behavior for core language features.
+The separation of visual components (sdk_mojo) from core functionality (stdlib), additional generic functionalities (sdk) and specific functionalities (like sdk_games) creates a clean architectural boundary that enhances portability across different target platforms while maintaining consistent behavior for core language features.
 
 Following these syntax rules ensures optimal integration between your application, Monkey2, stdlib, sdk, sdk_mojo and Aida 4's advanced mathematic capabilities.
 std from Monkey2/Wonkey is superseeded by stdlib. stdlib, sdk and sdk_mojo are only the repository you can find in: https://github.com/GaragePixel?tab=repositories
