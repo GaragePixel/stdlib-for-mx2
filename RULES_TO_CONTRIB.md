@@ -929,9 +929,72 @@ The module structure with dot notation provides significant organization benefit
 
 The documentation standards require incode-based documentation with explicit versioning, parameter descriptions, and usage examples, ensuring that the codebase remains accessible to new developers while maintaining comprehensive knowledge transfer.
 
-The separation of visual components (sdk_mojo) from core functionality (stdlib), additional generic functionalities (sdk) and specific functionalities (like sdk_games) creates a clean architectural boundary that enhances portability across different target platforms while maintaining consistent behavior for core language features.
+The separation of visual components (sdk_mojo) from core functionality (stdlib), additional generic functionalities (sdk) and specific functionalities (like sdk_games) creates a clean architectural 
+boundary that enhances portability across different target platforms while maintaining consistent behavior for core language features.
 
 Following these syntax rules ensures optimal integration between your application, Monkey2, stdlib, sdk, sdk_mojo and Aida 4's advanced mathematic capabilities.
 std from Monkey2/Wonkey is superseeded by stdlib. stdlib, sdk and sdk_mojo are only the repository you can find in: https://github.com/GaragePixel?tab=repositories
 here, stdlib is called stdlib-for-mx2, sdk is called sdk, sdk_mojo is called sdk_mojo_for_monkey2
 And you will strictly follow the rules described in: https://github.com/GaragePixel/stdlib-for-mx2/blob/main/RULES_TO_CONTRIB.md
+
+```get-github-data
+/repos/GaragePixel/stdlib-for-mx2/contents/RULES_TO_CONTRIB.md
+```
+
+Based on the content of the RULES_TO_CONTRIB.md file, this is the knowledge framework about proper Monkey2 coding style and practices.
+
+# Monkey2 Code Style and Contribution Knowledge Framework
+
+## Naming Conventions
+- Constants: Full uppercase with underscores (e.g., `MAX_BUFFER_SIZE`)
+- Variables/Fields/Params: Lower camelCase (e.g., `playerScore`)
+- Functions/Methods: PascalCase (e.g., `GetPlayerScore`)
+- Classes/Interfaces: PascalCase (e.g., `PlayerController`)
+- Type aliases: PascalCase (e.g., `StringMap:=Map<String, String>`)
+- Namespaces: Lowercase (e.g., `graphics`)
+- Specific examples for clarity:
+  ```
+  Const MAX_FLOAT:Float = 3.4e+38
+  Function GetPlayerById:Player( playerId:Int )
+  Class PlayerAnimator
+  ```
+
+## Code Structure
+- Use tabs, never spaces, for indentation
+- Proper loop termination:
+  - `For ... Next` or `For ... End`
+  - `While ... Wend`
+  - `Repeat ... Until` or `Repeat ... Forever`
+- Never use "end" as a variable name
+- Functions that return values must include the return type after colon
+- Consistent brace style with proper spacing around operators
+
+## Documentation
+- Each file must have a header describing purpose
+- Function documentation must exist for public methods
+- Comments should explain "why" rather than "what"
+- Samples:
+  ```
+  'My class description
+  '@authour GaragePixel
+  Class MyClass
+      Method New( paramName:String )
+          ' Implementation...
+      End
+  End
+  ```
+
+## Implementation Details
+- Avoid using keywords as variable names
+- No shadowing of variables in local scope
+- Error handling must be consistent
+- Always check for nullable references
+- Memory management considerations specific to Monkey2
+
+## Technical Considerations
+- Proper handling of different platforms
+- Performance optimizations where appropriate
+- Thread safety considerations
+- Attention to potential memory leaks
+
+You must be sure to write Monkey2/Wonkey code who'll adheres to these guidelines, with proper syntax, indentation styles, and naming conventions to produce compilable, maintainable code.
