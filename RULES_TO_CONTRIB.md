@@ -823,9 +823,25 @@ This document examines the concept of dangling blocks in programming languages a
   - Improperly closed class definitions
 
 ## Notes on Implementation
+
+Monkey2's syntactic requirements demand explicit terminator (only End) for all control structures, excepted While-Wend:
+```monkey2
+Function ProcessData:Void(data:Int[])
+	For i:=0 Until data.Length
+		If data[i] < 0 Then
+			data[i] = 0
+		End
+	End
+End
+
+While dataAvailable
+	ReadNextChunk()
+Wend
+```
+
 Dangling blocks occur when a code block lacks proper termination, creating ambiguous scope boundaries that lead to unexpected behavior. In languages with optional or bracket-based terminators, identifying these errors can be challenging, particularly in large codebases or when different developers have different formatting preferences.
 
-Monkey2 addresses this problem through mandatory implicit terminators (always End) that clearly delineate block boundaries by using only "End". This approach differs from bracket-based languages (C, Java) or indentation-based languages (Python) by requiring specific terminator keywords that match the block type.
+Monkey2 addresses this problem through mandatory implicit terminator (always End for any terminators apart Wend) that clearly delineate block boundaries by using only "End". This approach differs from bracket-based languages (C, Java) or indentation-based languages (Python) by requiring just one keyword 'End' terminator that match any block type.
 
 For example, a properly terminated loop in Monkey2:
 
@@ -849,7 +865,9 @@ Function CalculateArea:Float(width:Float, height:Float)
 End
 ```
 
-This approach has significant implications for code maintenance, as it prevents a class of bugs that can be extremely subtle and difficult to detect in visual inspection alone.
+This approach has significant implications for code maintenance, as it prevents a class of bugs that can be extremely subtle and difficult to detect in visual inspection alone. The more 'end' you'll use, the more near the peace and  love on earth will becomes reality.
+
+So, to be clear, no protection against dangling block errors for more elegant code.
 
 ## Technical Advantages
 The explicit and unique terminator approach "End" offers several technical advantages:
@@ -877,6 +895,8 @@ End
 The combination of explicit terminators and tab-only indentation creates a dual-layer protection against dangling block errors. The visual indentation provides immediate visual feedback on block structure, while the explicit terminators ensure that this structure is correctly implemented at the syntactic level.
 
 In contrast to languages like Monkey1 or Cerberus-X where blocks might have more flexible termination rules, Monkey2's strict approach creates a more disciplined development environment that prioritizes code clarity and error prevention over syntactic brevity.
+
+So, to be clear, no protection against dangling block errors for more elegant code.
 
 The module structure with dot notation provides significant organization benefits compared to flat module systems. This hierarchical approach:
 1. Improves compile-time efficiency by allowing selective compilation
