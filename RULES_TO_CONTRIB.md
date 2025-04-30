@@ -107,8 +107,8 @@ Function DoSomething:Bool(sourcePath:String, destPath:String)
 	Return False
 End
 
-
     Never Using "next" as a variable name
+    Never Using "not" as a variable name
     Never Using "void" as a variable name
     Never Using "super" as a variable name
     Never Using "cast" as a variable name
@@ -122,6 +122,7 @@ End
     Never Using "namespace" as a variable name
     Never Using "end" as a variable name, prefere "atend"
     Never Using "Pointer" for naming a method, class, a variable, a value or a namespace
+    Never use "not" as a method name
     Method definitions ended with "End"
     Function definitions ended with "End"
     Class definitions ended with "End"
@@ -132,6 +133,7 @@ End
     If/Else blocks ended with "End" (one word)
     Elseif (one word) instead of Else If (two words)
     Never use Static, use Local
+    Never use '* or other shits, a one-line commentary begins with ' in Monkey2 language
     Ternary operator uses ? and Else (not colon):
         Example: Local value:Int = condition ? trueValue Else falseValue
     Variable declarations use colon for type specification:
@@ -143,7 +145,20 @@ End
         Can be written: Local myArr:=New Int[10](0,1,2,3,4,5,6,7,8,9)
         Can be written: Local myArr:=New Int[10](	0,1,2,3,4,
         											5,6,7,8,9	)
-
+	Never use a reserved word for naming a member.
+	Never use "Int" to name a member.
+	Never use "Float" to name a member.
+	Never use "Bool" to name a member.
+	Never use "String" to name a member.
+	Never use "Mod" to name a member.
+	Never use "New" to name a member.
+	Never use "Throw" to name a member.
+	Never use "Case" to name a member.
+	Never use "Select" to name a member.
+	Never use "If" to name a member.
+	Never use "Method" to name a member.
+	Never use "Else" to name a member.
+	Never use "Elseif" to name a member.
 
 About the syntax, we can't write: 
 
@@ -323,6 +338,9 @@ This document summarizes the essential coding conventions, syntax rules, and bes
 - Select/Case blocks ended with "End"
 - Try/Catch blocks ended with "End"
 
+### Errors
+- Never use Throw but instead RuntimeError
+
 ### About array's syntax:
 
 Create an array:
@@ -356,7 +374,7 @@ This is the fixed syntax:
 	You will ensure to follow your specific syntax requirements: Proper Monkey2/Wonkey syntax without confusing it with other Monkey variants
 
 ### Reserved Words
-- Never use "end", "next", "namespace", "local", "extension", "continue" or "field" as variable names
+- Never use "end", "next", "namespace", "local", "extension", "continue" or "field", "not" as variable names
 - Keywords like "Public", "Private", "Protected" should not be used as identifiers
 
 ### Never use these words:
@@ -516,7 +534,8 @@ End
   - Select/Case blocks ended with "End"
   - Try/Catch blocks ended with "End"
 - Variable naming restrictions:
-  - Never use "end", "next", "local", or "field" as variable names
+  - Never use "end", "next", "local", "not" or "field" as variable names
+  - Never use "not" as a method name
   - Follow naming conventions (PascalCase for types, lowerCamelCase for variables)
   - Use _prefixWithUnderscore for private members
 
