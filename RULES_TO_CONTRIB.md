@@ -138,21 +138,21 @@ End
 ```
 - Never use:
 ```
-    Never Using "next" as a variable name
-    Never Using "not" as a variable name
-    Never Using "void" as a variable name
-    Never Using "super" as a variable name
-    Never Using "cast" as a variable name
-    Never Using "cast" as a method name
-    Never Using "cast" as a function name
-    Never using "local" as a variable name
-    Never using "field" as a variable name
-    Never Using "static" as a variable name
-    Never Using "continue" as a variable name
-    Never Using "extension" as a variable name
-    Never Using "namespace" as a variable name
-    Never Using "end" as a variable name, prefere "atend"
-    Never Using "Pointer" for naming a method, class, a variable, a value or a namespace
+    Never use "next" as a variable name
+    Never use "not" as a variable name
+    Never use "void" as a variable name
+    Never use "super" as a variable name
+    Never use "cast" as a variable name
+    Never use "cast" as a method name
+    Never use "cast" as a function name
+    Never use "local" as a variable name
+    Never use "field" as a variable name
+    Never use "static" as a variable name
+    Never use "continue" as a variable name
+    Never use "extension" as a variable name
+    Never use "namespace" as a variable name
+    Never use "end" as a variable name, prefere "atend"
+    Never use "Pointer" for naming a method, class, a variable, a value or a namespace
     Never use "not" as a method name
     Never use Static, use Local
     Never use '* or other shits, a one-line commentary begins with ' in Monkey2 language
@@ -193,8 +193,7 @@ End
         Can be written: Local myArr:=New Int[10]
         Can be written: Local myArr:=New Int[10](0,1,2,3,4,5,6,7,8,9)
         Can be written: Local myArr:=New Int[10](	0,1,2,3,4,
-   ```     											5,6,7,8,9	)
-
+```     											5,6,7,8,9	)
 
 About the syntax, we can't write: 
 ```monkey2
