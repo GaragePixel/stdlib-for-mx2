@@ -190,6 +190,91 @@ but we must write instead:
     Keywords like "Public", "Private", "Protected" should not be used as identifiers
 ```
 
+Something like that is forbidden because iterative code for array [..] isn't a feature of the Monkey2 language:
+
+```monkey2
+	Return New Path(_components[1..], _isRelative) 'FORBIDDEN
+	Return _text[_pos..(_pos+1)] 'FORBIDDEN
+```
+
+Something like that is forbidden:
+
+```monkey2
+	Method NavigateTo(targetPath:Path) Private
+```
+
+The last example isn't Monkey2 syntax. When you use a Private before declaring private members, then you write public to declare the followed public member. 
+
+Do not do:
+```monkey2
+Private Field _sourcePath:String
+```
+
+But instead:
+
+```monkey2
+Private 
+	Field _sourcePath:String
+	Field _rawPath:String
+	Field _f2:int
+	... other variables
+Public
+	Field _backtonormalpublicdeclaration:int
+	... other variables
+```
+
+Forbidden:
+
+```monkey2
+Field _variableFunctions:StringMap<Function:InkValue(params:InkValue[])>
+```
+
+Instead:
+
+```monkey2
+Field _variableFunctions:StringMap<InkValue(params:InkValue[])>
+```
+
+Forbidden:
+
+```monkey2
+While CurrentChar <> "" And (IsDigit(CurrentChar) Or (!hasDecimal And CurrentChar = "."))
+```
+
+Instead:
+
+```monkey2
+While CurrentChar <> "" And (IsDigit(CurrentChar) Or ((Not hasDecimal) And CurrentChar = "."))
+```
+
+Forbidden!!!!!!!!
+
+```monkey2
+While CurrentChar <> "" And CurrentChar <> "~""
+```
+
+Forbidden:
+
+```monkey2
+Throw New RuntimeException("Expected token of type '" + type + "' but got '" + (CurrentToken ? CurrentToken.Type : "EOF") + "' at line " + (CurrentToken ? String(CurrentToken.Line) : "EOF"))
+```
+
+Instead:
+
+```monkey2
+	RuntimeError("Expected token of type '" + type + "' but got '" + (CurrentToken ? CurrentToken.Type Else "EOF") + "' at line " + (CurrentToken ? String(CurrentToken.Line) Else "EOF"))
+```
+
+```monkey2
+	CurrentToken ? CurrentToken.Type : "EOF") + "' at line " + (CurrentToken ? String(CurrentToken.Line) : "EOF"))
+```
+
+Instead:
+
+```monkey2
+	CurrentToken ? CurrentToken.Type Else "EOF") + "' at line " + (CurrentToken ? String(CurrentToken.Line) Else "EOF"))
+```
+
 ### Introduction example:
 ```monkey2
 ' Purpose:
@@ -324,6 +409,21 @@ This document summarizes the essential coding conventions, syntax rules, and bes
 ' 	- Careful handling of edge cases in filename patterns
 ' 	- Clean separation between file operations and UI components
 ' 	- Non-blocking UI during intensive file operations
+```
+
+#### Decoration:
+
+Something like that is forbidden:
+```monkey2
+'*************************************************
+'* InkObject base class 
+'*************************************************
+```
+Write instead:
+```monkey2
+'-------------------------------------------------
+' InkObject base class 
+'-------------------------------------------------
 ```
 
 ### Block Structure
