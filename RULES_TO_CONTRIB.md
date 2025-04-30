@@ -78,7 +78,7 @@ ElseIf otherCondition
 	' ElseIf branch
 Else
 	' Else branch
-EndIf  ' If blocks use "EndIf" (one word)
+End  ' If blocks use "EndIf" (one word)
 ```
 ```monkey2
 Select aidaMode
