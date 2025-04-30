@@ -443,6 +443,8 @@ This document summarizes the essential coding conventions, syntax rules, and bes
 ' 	- Non-blocking UI during intensive file operations
 ```
 
+IMPORTANT --> Name Aida 4 for Aida version 4, Aida 4 is the sole version actually public.
+
 #### Decoration:
 
 Something like that is forbidden:
@@ -520,10 +522,14 @@ This is the fixed syntax:
 ### How write Virtual class keywords:
 
 Wrong syntax:
+```monkey2
 Function FromJson:InkObject(json:JsonValue) Static
+```
 
 Right syntax:
+```monkey2
 Function FromJson:InkObject(json:JsonValue) Final
+```
 
 ### Dependencies
 
@@ -582,14 +588,16 @@ Right syntax:
 #### Verify code coherence:
 
  If you write something like:
+ ```monkey2
 	Field _state:StoryState
 	Field _mainContentContainer:Container
+```
 Be sure that StoryState and Container corresponds an object, class, struct, original and derivated, in the code or the dependency code.
 
 #### Best way to write a multiline function arguments method:
 
 Example to follow:
-
+```monkey2
 	Method DrawPixmap( 
 		
 			'Pixmap to past
@@ -626,10 +634,10 @@ Example to follow:
 			End
 		End
 	End
+``` 
 #### How to perform Try code block:
 
 ```monkey2
-
 Class NameSpaceException Extends Throwable
 	Field msg:String
 
