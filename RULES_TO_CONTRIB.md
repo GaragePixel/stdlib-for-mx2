@@ -193,7 +193,8 @@ End
         Can be written: Local myArr:=New Int[10]
         Can be written: Local myArr:=New Int[10](0,1,2,3,4,5,6,7,8,9)
         Can be written: Local myArr:=New Int[10](	0,1,2,3,4,
-```     											5,6,7,8,9	)
+     											5,6,7,8,9	)
+```
 About the syntax, we can't write: 
 ```monkey2
 			vertices[i] = New Vec2<Float>(
