@@ -202,6 +202,7 @@ About the syntax, we can't write:
 				center.y + Sin(angle) * radius
 			)
 ```
+
 ```monkey2
 we must write:
 
@@ -209,6 +210,7 @@ we must write:
 				center.x + Cos(angle) * radius,
 				center.y + Sin(angle) * radius)
 ```
+
 #### The array declaration/assignation: ####
 Don't do:
 ```monkey2
@@ -222,14 +224,14 @@ Or:
 ```monkey2
 Local numbers:=New Int[](1, 2, 3, 4, 5)
 ```
+
 #### Elvis operator ####
-```monkey2
 And we can't write:
 ```monkey2
 	Local yOffset:= isPressed ? 2.0 : 0.0
 ```
-```monkey2
 but we must write instead:
+```monkey2
 	Local yOffset:= isPressed ? 2.0 Else 0.0
 ```
 
