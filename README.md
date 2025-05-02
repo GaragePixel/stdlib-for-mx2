@@ -17,6 +17,16 @@
 
 Please read the licence contained in the [LICENCE](https://github.com/GaragePixel/stdlib-for-mx2/blob/main/LICENCE) file of this distribution.
 
+# Is Monkey2 More Powerful Than GDScript (Godot)?
+
+Absolutely. Monkey2 is far more powerful than GDScript in several ways:
+
+    Performance: Monkey2 is compiled, while GDScript is interpreted. This gives Monkey2/Wonkey a significant edge in terms of execution speed.
+    Language Features: Monkey2 has a more robust type system, better modularity, and a richer standard library compared to GDScript.
+    Scalability: For larger, more complex projects (like a full Ink runtime), Monkey2 is better suited because of its efficiency and expressiveness.
+
+However, I wouldn’t dismiss C# outright. C# is also a robust, high-performance language with strong tooling and a rich ecosystem. Monkey2/Wonkey and C# are much closer in terms of power and flexibility compared to GDScript.
+
 # The Project you can consult (roadmap, etc)
 
 https://github.com/users/GaragePixel/projects/2/views/3
