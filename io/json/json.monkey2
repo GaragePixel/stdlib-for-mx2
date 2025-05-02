@@ -67,7 +67,20 @@ Class JsonValue
 	Property IsObject:Bool() Virtual
 		Return False
 	End
-	
+
+	#rem monkeydoc Parses and constructs a JsonValue from a JSON stream.
+	#end 
+	Method FromStream:JsonValue( stream:Stream )
+		Local json:String = stream.ReadJsonString()
+		Return Parse(json)
+	End
+
+	#rem monkeydoc Serializes a JsonValue to a JSON stream.
+	#end
+	Method ToStream( stream:Stream )
+		stream.WriteJsonString(ToJson())
+	End
+
 	#rem monkeydoc Gets bool value.
 	
 	If the value is a bool, returns its actual value.
