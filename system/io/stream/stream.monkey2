@@ -570,7 +570,19 @@ Class Stream Extends stdlib.system.resource.Resource
 		WriteString( str )
 		WriteString( "~r~n" )
 	End
-	
+
+	#rem monkeydoc Reads a JSON string from the stream.
+	#end
+	Method ReadJsonString:String()
+		Return ReadString()
+	End
+
+	#rem monkeydoc Writes a JSON string to the stream.
+	#end
+	Method WriteJsonString(json:String)
+		WriteString(json)
+	End
+
 	#rem monkeydoc Opens a stream
 	
 	`mode` should be "r" for read, "w" for write or "rw" for read/write.
