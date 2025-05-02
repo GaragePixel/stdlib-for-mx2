@@ -142,9 +142,11 @@ Repeat
 While [condition]
 
 ' Repeat loop
+Local [esc]:Bool=False
 Repeat 
-    [Implementation]
-    [condition to exit the loop] (use Exit keyword)
+    [Implementation] (before exit condition)
+    If [condition to exit the loop] Exit (If [esc]=True Then Exit, more short: If [esc] Exit)
+    [Implementation] (after exit condition if needed)
 Forever
 
 ' For loop
