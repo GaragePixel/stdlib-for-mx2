@@ -39,7 +39,7 @@ Virtual, Void, Where, While, With, Wend
 Critical patterns for Monkey2 syntax:
 
 ### Class Pattern
-```
+```monkey2
 Class [ClassName] [Extends BaseClass] [Implements Interface1, Interface2]
 
 	[AccessModifier] (public aera)
@@ -102,7 +102,7 @@ End
 ```
 
 ### Property Pattern
-```
+```monkey2
 Property [Name]:[Type]()
     Return [field]
 End
@@ -115,7 +115,7 @@ End
 ```
 
 ### Loop Patterns
-```
+```monkey2
 ' For loop
 For [initialization] Until [condition] [Step]
     [Implementation]
@@ -207,14 +207,14 @@ End
 ```
 
 ### **Constructor Pattern**
-```
+```monkey2
 Method New([Parameters])
     [FieldAssignments]
 End
 ```
 
 ### **If-Else Pattern**
-```
+```monkey2
 If [Condition]
     [Implementation]
 ElseIf [Condition]
@@ -225,7 +225,7 @@ End
 ```
 
 ### **Switch-Case Pattern**
-```
+```monkey2
 Select [Variable]
 	Case [Value1]
 	    [Implementation]
@@ -237,7 +237,7 @@ End
 ```
 
 ### **Error Handling Pattern**
-```
+```monkey2
 Try
     [Implementation]
 Catch [Error]:[Type]
@@ -246,25 +246,25 @@ End
 ```
 
 ### **Function Pattern**
-```
+```monkey2
 Function [FunctionName]:[ReturnType]([Parameters])
     [Implementation]
 End
 ```
 
 ### **Module Pattern**
-```
+```monkey2
 Import [ModuleName]
 [Implementation]
 ```
 
 ### **Field Initialization Pattern**
-```
+```monkey2
 Field [FieldName]:[Type] = [InitialValue]
 ```
 
 ### **Lazy Initialization Pattern (Property with Backing Field)**
-```
+```monkey2
 Field _[FieldName]:[Type]
 
 Property [FieldName]:[Type]()
@@ -276,7 +276,7 @@ End
 ```
 
 ### **Event Pattern**
-```
+```monkey2
 Field [EventName]:Void(Type) ' Declare an event
 
 Method [TriggerEventName](value:Type)
@@ -286,6 +286,7 @@ End
 
 ### **File Structure Pattern**
 
+```monkey2
 Namespace [namespace]
 
 #Rem
@@ -332,7 +333,7 @@ Import [custom.module.path]
 ```
 
 ### **Singleton Pattern**
-```
+```monkey2
 Field _instance:[ClassName]
 
 Function GetInstance:[ClassName]()
@@ -344,7 +345,7 @@ End
 ``` 
 
 ### **Static Method Pattern**
-```
+```monkey2
 Method [MethodName]:[ReturnType]([Parameters])
     Local [Variable]:[Type] = [InitialValue]
     [Implementation]
@@ -352,7 +353,7 @@ End
 ```
 
 ### **Inline Commenting Pattern**
-```
+```monkey2
 [Code] ' [Short explanation of the code]
 ```
 
