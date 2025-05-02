@@ -222,7 +222,110 @@ Or:
 Local numbers:=New Int[](1, 2, 3, 4, 5)
 ```
 
-#### Elvis operator ####
+The **slice syntax** (e.g., `array[1..]`) is common in many programming languages like Python, JavaScript, or Ruby, but it is **not supported in Monkey2/Wonkey**. Here's an explanation of how it works in general, why it is disallowed in Monkey2, and how to handle such cases in Monkey2.
+
+---
+
+#### The array's Slice Syntax: ####
+
+##### **What is Slice Syntax?**
+Slice syntax allows you to extract a subset of elements from an array or list using a specific range of indices. For example:
+
+- **In Python**:
+  ```python
+  my_array = [1, 2, 3, 4, 5]
+  sliced_array = my_array[1:]  # Extracts [2, 3, 4, 5]
+  ```
+  - `my_array[1:]` means "start at index `1` and take all elements to the end."
+  - Similarly, `my_array[:3]` means "take all elements from the start up to (but not including) index `3`."
+
+- **In JavaScript**:
+  ```javascript
+  let myArray = [1, 2, 3, 4, 5];
+  let slicedArray = myArray.slice(1);  // Extracts [2, 3, 4, 5]
+  ```
+
+- **In Ruby**:
+  ```ruby
+  my_array = [1, 2, 3, 4, 5]
+  sliced_array = my_array[1..-1]  # Extracts [2, 3, 4, 5]
+  ```
+
+###### **Why is Slice Syntax Disallowed in Monkey2/Wonkey?**
+
+1. **Undefined Behavior**:
+   - Monkey2/Wonkey does not support slice notation like `array[1..]` because this syntax is not part of the language's design.
+   - Slice syntax implies dynamic memory allocation and array manipulation, which Monkey2/Wonkey avoids to maintain predictable memory management.
+
+2. **Performance Concerns**:
+   - Slice operations often create a new array or list behind the scenes, which can lead to inefficiencies in performance-critical applications.
+   - Monkey2/Wonkey focuses on explicit array manipulation to give developers more control over memory and performance.
+
+3. **Syntax Simplicity**:
+   - Monkey2/Wonkey aims to keep its syntax simpler and more predictable. Allowing slice notation would introduce complexity that is not aligned with the language's philosophy.
+
+4. **Compiler Limitations**:
+   - The Monkey2 compiler (`mx2cc`) does not interpret slice syntax and cannot translate it into valid machine code. Using slices would result in a syntax error.
+
+---
+
+###### **How to Handle Slicing in Monkey2/Wonkey?**
+
+Since slice syntax is not supported, you must explicitly create a new array and copy the desired elements manually. Here’s how you can do it:
+
+###### **Example: Copying a Slice Manually**
+Suppose you want to extract all elements of an array starting from a specific index:
+
+- **Incorrect (Forbidden in Monkey2)**:
+  ```monkey2
+  Local myArray:Int[] = [1, 2, 3, 4, 5]
+  Local slicedArray:Int[] = myArray[1..]  ' This is not valid in Monkey2
+  ```
+
+- **Correct (Monkey2-compatible)**:
+  ```monkey2
+  Local myArray:Int[] = New Int[](1, 2, 3, 4, 5)
+  Local slicedArray:Int[] = New Int[myArray.Length - 1]  ' Create a new array of appropriate size
+
+  For Local i:Int = 1 Until myArray.Length
+  	slicedArray[i - 1] = myArray[i]  ' Copy elements manually
+  End
+  ```
+
+###### **Explanation of the Correct Approach**:
+1. **Allocate a New Array**:
+   - Allocate a new array (`slicedArray`) with a size equal to the number of elements you want to extract (`myArray.Length - 1` in this case).
+
+2. **Copy Elements**:
+   - Use a `For` loop to copy the elements from the original array (`myArray`) to the new array (`slicedArray`). Adjust the indices as needed.
+
+3. **Precision and Clarity**:
+   - This explicit process ensures that you have full control over the new array and avoids any ambiguity about how the slicing is performed.
+
+---
+
+###### **Advantages of the Explicit Approach**
+
+1. **Predictable Memory Usage**:
+   - You control the exact size and contents of the new array, avoiding hidden memory allocations.
+
+2. **Performance Optimization**:
+   - Explicit copying allows you to optimize the loop if needed (e.g., using batch operations or skipping unnecessary elements).
+
+3. **Compiler-Friendly**:
+   - The explicit approach is compatible with Monkey2’s compiler and avoids syntax errors or undefined behavior.
+
+4. **Code Readability**:
+   - While longer than slice notation, the explicit approach makes it clear what is happening step by step, reducing confusion for other developers.
+
+---
+
+###### **In Summary**
+
+- Slice syntax like `array[1..]` is **not supported** in Monkey2/Wonkey because of its focus on simplicity, performance, and explicit memory management.
+- To achieve slicing, manually create a new array and copy the desired elements using a loop.
+
+#### Ternary operator ####
 And we can't write:
 ```monkey2
 	Local yOffset:= isPressed ? 2.0 : 0.0
