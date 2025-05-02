@@ -10,6 +10,7 @@ Using stdlib.plugins.libc..
 
 Using stdlib.system.memory
 Using stdlib.collections
+Using stdlib.io.json
 
 #rem monkeydoc Stream class.
 #end
