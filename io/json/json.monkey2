@@ -17,6 +17,8 @@ You can modify the members of a json object using methods such as [[JsonObject.S
 
 Namespace stdlib.io.json
 
+Using stdlib.system.io
+
 #rem monkeydoc JsonError class.
 #end
 Class JsonError Extends Throwable
