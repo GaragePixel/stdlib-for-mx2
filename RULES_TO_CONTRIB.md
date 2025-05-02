@@ -17,6 +17,345 @@ Good pratice: https://github.com/GaragePixel/stdlib-for-mx2/tree/main/io/tablet
 - Specifies naming conventions for methods, classes, and constants
 - Establishes visibility modifier usage and scoping rules
 
+## Keywords (Forbidden Variable Names)
+
+```
+Abstract, Alias, And, Array, As, Assert, Bool, Case, Cast
+Catch, Class, Const, Continue, Default, Delete, Delegate
+Dim, Do, Downto, EachIn, Else, ElseIf, End, EndIf, Enum
+Exit, Extends, Extern, False, Field, Final, Float, For
+Forever, Friend, Function, Get, Global, Goto, If, Implements
+Import, In, Inline, Int, Interface, Internal, Local, Method
+Mod, Module, Namespace, Native, New, Next, Nil, Not, Null
+Object, Operator, Or, Override, Private, Property, Protected
+Public, Ptr, Repeat, Return, Select, Self, Set, Shared
+Short, Shl, Shr, Static, Step, String, Struct, Super, Then
+Throw, To, True, Try, Type, Until, Using, Var, Variant
+Virtual, Void, Where, While, With, Wend
+```
+
+## Pattern Framework
+
+Critical patterns for Monkey2 syntax:
+
+### Class Pattern
+```
+Class [ClassName] [Extends BaseClass] [Implements Interface1, Interface2]
+
+	[AccessModifier] (public aera)
+
+	Field [ClosureName]:Void(Type) ' Declare an closure
+
+	[AccessModifier] (public aera)
+	
+	' Constructor
+	Method New([parameters])
+		[initialization]
+		[closure initialization (assignation) if any]
+	End
+	
+	' Methods (usual method like factories)
+	Method [name]:[ReturnType]([parameters])
+		[implementation]
+	End
+	
+	' Subclasses (can be nested containers for static function calling, or dynamically created)
+	Class [ClassName] [Extends BaseClass] [Implements Interface1, Interface2]
+		[Implementation]
+	End
+
+	' Properties
+	Property [name]:[Type]()
+		Return [fieldName]
+	End
+
+	Property [name]:[Type]()
+		Return [fieldName]
+	Setter([value]:[Type])
+		[fieldName] = [value]
+	End
+
+	' Methods (custom method more related to the class)
+	Method [name]:[ReturnType]([parameters])
+		[implementation]
+	End
+	
+	' Function (static method)
+	Function [name]:[ReturnType]([parameters])
+		[implementation]
+	End
+	
+	' Global variables (static fields)
+	Global [name]:[Type]
+
+	' Constants (static and dynamic)
+	Const _[constName]:[Type] = [value]
+
+	' Fields
+	Field _[fieldName]:[Type]
+	
+	[AccessModifier] (Private aera)
+
+	' Global variables (static fields)
+	Global _[name]:[Type]	
+End
+```
+
+### Property Pattern
+```
+Property [Name]:[Type]()
+    Return [field]
+End
+
+Property [name]:[Type]()
+    Return [fieldName]
+Setter([value]:[Type])
+    [fieldName] = [value]
+End
+```
+
+### Loop Patterns
+```
+' For loop
+For [initialization] Until [condition] [Step]
+    [Implementation]
+End
+
+' Foreach loop
+For Each [item]:[Type] = EachIn [collection]
+    [Implementation]
+End
+
+' While loop
+While [condition]
+    [Implementation]
+Wend
+
+' Repeat loop
+Repeat 
+    [Implementation]
+Until [condition]
+
+' Repeat loop
+Repeat 
+    [Implementation]
+While [condition]
+
+' Repeat loop
+Repeat 
+    [Implementation]
+    [condition to exit the loop] (use Exit keyword)
+Forever
+
+' For loop
+For Local [var]:[Type] = [start] Until [end] [Step increment]
+	[implementation]
+End
+
+' For loop
+For Local [var]:[Type] = [start] Until [end] [Step decrement] (end<start)
+	[implementation]
+End
+
+Local [nonlocalvar]:[Type]
+
+For [nonlocalvar] = [start] Until [end] [Step increment]
+	[implementation]
+End
+
+'Optimised
+Local [nonlocalvar]:[Type]
+
+For [nonlocalvar] = [start] Until [end] [Step increment]
+	[implementation]
+End
+
+'Optimised
+Local [nonlocalvar]:[Type]
+
+For [nonlocalvar] = [start] Until [end] [Step decrement] (end<start)
+	[implementation]
+End
+
+'Optimised with non recalculated [end]
+Local [nonlocalvar]:[Type]
+Local [end]:[Type]=[assignation for calculated end value]
+
+For [nonlocalvar] = [start] Until [end] [Step increment]
+	[implementation]
+End
+
+'Optimised with non recalculated [end]
+Local [nonlocalvar]:[Type]
+Local [end]:[Type]=[assignation for calculated end value]
+
+For [nonlocalvar] = [start] Until [end] [Step decrement] (end<start)
+	[implementation]
+End
+
+' For Each loop
+For Each [item]:[Type] = EachIn [collection]
+	[implementation]
+End
+```
+
+### **Method Pattern**
+```
+Method [MethodName]:[ReturnType]([Parameters])
+    [Implementation]
+End
+```
+
+### **Constructor Pattern**
+```
+Method New([Parameters])
+    [FieldAssignments]
+End
+```
+
+### **If-Else Pattern**
+```
+If [Condition]
+    [Implementation]
+ElseIf [Condition]
+    [Implementation]
+Else
+    [Implementation]
+End
+```
+
+### **Switch-Case Pattern**
+```
+Select [Variable]
+	Case [Value1]
+	    [Implementation]
+	Case [Value2]
+	    [Implementation]
+	Default
+	    [Implementation]
+End
+```
+
+### **Error Handling Pattern**
+```
+Try
+    [Implementation]
+Catch [Error]:[Type]
+    [ErrorHandling]
+End
+```
+
+### **Function Pattern**
+```
+Function [FunctionName]:[ReturnType]([Parameters])
+    [Implementation]
+End
+```
+
+### **Module Pattern**
+```
+Import [ModuleName]
+[Implementation]
+```
+
+### **Field Initialization Pattern**
+```
+Field [FieldName]:[Type] = [InitialValue]
+```
+
+### **Lazy Initialization Pattern (Property with Backing Field)**
+```
+Field _[FieldName]:[Type]
+
+Property [FieldName]:[Type]()
+    If _[FieldName] = Null Then
+        _[FieldName] = [Initialization]
+    End
+    Return _[FieldName]
+End
+```
+
+### **Event Pattern**
+```
+Field [EventName]:Void(Type) ' Declare an event
+
+Method [TriggerEventName](value:Type)
+    If [EventName]<>Null [EventName](value)
+End
+```
+
+### **File Structure Pattern**
+
+Namespace [namespace]
+
+#Rem
+'===============================================================================
+' [ClassName] - [Short Description]
+' Implementation: by iDkP from GaragePixel
+' Date: [YYYY-MM-DD], Aida 4
+'===============================================================================
+'
+' Purpose:
+'
+' 	[Description of the purpose of the class. Explain its role in the system or
+' 	how it solves a problem.]
+'
+' Functionality:
+'
+' 	- [List of main functionalities provided by the class.]
+' 	- [Explain key features or methods.]
+'
+' Notes:
+'
+' 	[Detailed notes about the implementation, such as design decisions,
+' 	integration with other components, or any constraints.]
+'
+' Technical advantages:
+'
+' 	- [Highlight standardization benefits or consistent design.]
+' 	- [Explain any compatibility or performance improvements.]
+'===============================================================================
+#End
+
+
+[content]
+```
+
+### **Module Import Pattern**
+' Standard modules
+Import "<stdlib>"
+Import "<sdk_mojo>" (if graphism needed)
+Import "<sdk>" (if advanced features needed)
+
+' Custom modules
+Import [custom.module.path]
+```
+
+### **Singleton Pattern**
+```
+Field _instance:[ClassName]
+
+Function GetInstance:[ClassName]()
+    If _instance = Null Then
+        _instance = New [ClassName]()
+    End
+    Return _instance
+End
+``` 
+
+### **Static Method Pattern**
+```
+Method [MethodName]:[ReturnType]([Parameters])
+    Local [Variable]:[Type] = [InitialValue]
+    [Implementation]
+End
+```
+
+### **Inline Commenting Pattern**
+```
+[Code] ' [Short explanation of the code]
+```
+
 ## Block Structure
 
 Aida 4's source code analysis capabilities are optimized for the following block structures:
