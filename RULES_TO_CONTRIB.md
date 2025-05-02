@@ -325,6 +325,7 @@ Namespace [namespace]
 ```
 
 ### **Module Import Pattern**
+```monkey2
 ' Standard modules
 Import "<stdlib>"
 Import "<sdk_mojo>" (if graphism needed)
