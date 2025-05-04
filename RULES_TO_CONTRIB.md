@@ -421,7 +421,7 @@ ElseIf otherCondition
 	' ElseIf branch
 Else
 	' Else branch
-End  ' If blocks use "EndIf" (one word)
+End  ' If blocks use "End" (one word)
 ```
 ```monkey2
 Select aidaMode
@@ -828,7 +828,7 @@ This document summarizes the essential coding conventions, syntax rules, and bes
 
 ## Functionality
 
-- Standard block syntax termination (End, Wend, but never use "Endif" or "End If")
+- Standard block syntax termination (End, Wend, but NEVER use "Endif" or "End If")
 - Variable declaration patterns with type inference support
 - Proper handling of canvas rendering methods
 - Input management conventions (Mouse/Tablet)
@@ -928,7 +928,7 @@ Write instead:
 - Function definitions ended with "End"
 - Class definitions ended with "End"
 - Interface definitions ended with "End"
-- If/Else blocks ended with "EndIf" (one word)
+- If/Else blocks ended with "End" (one word)
 - Select/Case blocks ended with "End"
 - Try/Catch blocks ended with "End"
 - Never use Then, example "If path = Null Then Return Null" must be wrote "If path = Null Return Null"
@@ -1134,7 +1134,7 @@ End
   - For loops terminated with "End" (never "Next")
   - While loops terminated with "Wend"
   - Method/Function/Class definitions ended with "End"
-  - If/Else blocks ended with "EndIf" (one word)
+  - If/Else blocks ended with "End" (one word)
   - Select/Case blocks ended with "End"
   - Try/Catch blocks ended with "End"
 - Variable naming restrictions:
