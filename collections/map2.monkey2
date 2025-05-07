@@ -411,12 +411,14 @@ Class Map2<K,V>
 	#end
 	Method Set:Bool( key:K,value:V )
 		
-		Local cmp:Int
+		Local cmp:Int		
+
+		If NotRoot( Varptr(key),Varptr(value)) Return True 'Added by iDkP
 
 		' Try hint path first if available
 		If _lastAddedNode
 			cmp=key <=> _lastAddedNode._key
-			If cmp=0
+			If Not cmp
 				Local oldValue:=_lastAddedNode._value
 				_lastAddedNode._value=value
 				Return oldValue
@@ -424,7 +426,6 @@ Class Map2<K,V>
 		End
 		
 		' Standard insertion logic...
-		If NotRoot( Varptr(key),Varptr(value)) Return True 'Added by iDkP
 	
 		Local node:=_root
 		Local parent:Node
@@ -467,7 +468,7 @@ Class Map2<K,V>
 			cmp=key<=>node._key
 			If cmp>0
 				node=node._right
-			Else If cmp<0
+			ElseIf cmp<0
 				node=node._left
 			Else
 				Return False
