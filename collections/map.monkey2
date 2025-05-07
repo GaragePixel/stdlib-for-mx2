@@ -31,18 +31,14 @@ Class Map<K,V>
 	Class Node
 	
 		#rem monkeydoc Gets the key contained in the node.
-		
 		@return The node's key.
-		
 		#end
 		Property Key:K()
 			Return _key
 		End
 		
 		#rem monkeydoc Gets the value contained in the node.
-		
 		@return The node's value.
-		
 		#end
 		Property Value:V()
 			Return _value
@@ -84,7 +80,7 @@ Class Map<K,V>
 					node=node._left
 				Wend
 				Return node
-			Endif
+			End
 			Local node:=Self,parent:=_parent
 			While parent And node=parent._right
 				node=parent
@@ -100,7 +96,7 @@ Class Map<K,V>
 					node=node._right
 				Wend
 				Return node
-			Endif
+			End
 			Local node:=Self,parent:=_parent
 			While parent And node=parent._left
 				node=parent
@@ -248,22 +244,16 @@ Class Map<K,V>
 	End
 	
 	#rem monkeydoc Gets a view of the map's keys.
-	
 	The returned value can be used with an Eachin loop to iterate over the map's keys.
-	
 	@return A MapKeys object.
-
 	#end
 	Property Keys:MapKeys()
 		Return New MapKeys( Self )
 	End
 
 	#rem monkeydoc Gets a view of the map's values.
-	
 	The returned value can be used with an Eachin loop to iterate over the map's values.
-	
 	@return A MapValues object.
-	
 	#end	
 	Property Values:MapValues()
 		Return New MapValues( Self )
@@ -287,9 +277,7 @@ Class Map<K,V>
 	End
 	
 	#rem monkeydoc Gets the number of keys in the map.
-	
 	@return The number of keys in the map.
-	
 	#end
 	Method Count:Int()
 		If Not _root Return 0
@@ -297,50 +285,35 @@ Class Map<K,V>
 	End
 
 	#rem monkeydoc Checks if the map is empty.
-	
 	@return True if the map is empty.
-	
 	#end
 	Property Empty:Bool()
 		Return _root=Null
 	End
 
 	#rem monkeydoc Checks if the map contains a given key.
-	
 	@param key The key to check for.
-	
 	@return True if the map contains the key.
-	
 	#end
 	Method Contains:Bool( key:K )
 		Return FindNode( key )<>Null
 	End
 	
 	#rem monkeydoc Sets the value associated with a key in the map.
-	
 	If the map does not contain `key`, a new key/value node is added and true is returned.
-	
 	If the map already contains `key`, its associated value is updated and false is returned.
-	
 	This operator functions identically to Set.
-	
 	@param key The key.
-	
 	@param value The value.
-	
 	@return True if a new node was added to the map.
-	
 	#end
 	Operator[]=( key:K,value:V )
 		Set( key,value )
 	End
 
 	#rem monkeydoc Gets the value associated with a key in the map.
-	
 	@param key The key.
-	
 	@return The value associated with `key`, or null if `key` is not in the map.
-	
 	#end
 	Operator[]:V( key:K )
 		Local node:=FindNode( key )
@@ -349,23 +322,17 @@ Class Map<K,V>
 	End
 	
 	#rem monkeydoc Sets the value associated with a key in the map.
-	
 	If the map does not contain `key`, a new key/value node is added to the map and true is returned.
-	
 	If the map already contains `key`, its associated value is updated and false is returned.
-	
 	@param key The key.
-	
 	@param value The value.
-	
 	@return True if a new node was added to the map, false if an existing node was updated.
-	
 	#end
 	Method Set:Bool( key:K,value:V )
 		If Not _root
 			_root=New Node( key,value,Node.Color.Red,Null )
 			Return True
-		Endif
+		End
 	
 		Local node:=_root,parent:Node,cmp:Int
 
@@ -379,7 +346,7 @@ Class Map<K,V>
 			Else
 				node._value=value
 				Return False
-			Endif
+			End
 		Wend
 		
 		node=New Node( key,value,Node.Color.Red,parent )
@@ -392,23 +359,17 @@ Class Map<K,V>
 	End
 	
 	#rem monkeydoc Adds a new key/value pair to a map.
-	
 	If the map does not contain `key', a new key/value node is created and true is returned.
-	
 	If the map already contains `key`, nothing happens and false is returned.
-	
 	@param key The key.
-	
 	@param value The value.
-	
 	@return True if a new node was added to the map, false if the map was not modified.
-	
 	#end
 	Method Add:Bool( key:K,value:V )
 		If Not _root
 			_root=New Node( key,value,Node.Color.Red,Null )
 			Return True
-		Endif
+		End
 	
 		Local node:=_root,parent:Node,cmp:Int
 
@@ -421,7 +382,7 @@ Class Map<K,V>
 				node=node._left
 			Else
 				Return False
-			Endif
+			End
 		Wend
 		
 		node=New Node( key,value,Node.Color.Red,parent )
@@ -434,17 +395,11 @@ Class Map<K,V>
 	End
 	
 	#rem monkeydoc Updates the value associated with a key in the map.
-
 	If the map does not contain `key', nothing happens and false is returned.
-	
 	If the map already contains `key`, its associated value is updated and true is returned.
-	
 	@param key The key.
-	
 	@param value The value.
-	
 	@return True if the value associated with `key` was updated, false if the map was not modified.
-	
 	#end
 	Method Update:Bool( key:K,value:V )
 		Local node:=FindNode( key )
@@ -454,11 +409,8 @@ Class Map<K,V>
 	End
 	
 	#rem monkeydoc Gets the value associated with a key in the map.
-	
 	@param key The key.
-	
 	@return The value associated with the key, or null if the key is not in the map.
-	
 	#end
 	Method Get:V( key:K )
 		Local node:=FindNode( key )
@@ -467,11 +419,8 @@ Class Map<K,V>
 	End
 	
 	#rem monkeydoc Removes a key from the map.
-	
 	@param key The key to remove.
-	
 	@return True if the key was removed, or false if the key is not in the map.
-	
 	#end
 	Method Remove:Bool( key:K )
 		Local node:=FindNode( key )
@@ -518,7 +467,7 @@ Class Map<K,V>
 				node=node._left
 			Else
 				Return node
-			Endif
+			End
 		Wend
 		Return Null
 	End
@@ -540,28 +489,28 @@ Class Map<K,V>
 			child=splice._left
 			node._key=splice._key
 			node._value=splice._value
-		Endif
+		End
 		
 		Local parent:=splice._parent
 		
 		If child
 			child._parent=parent
-		Endif
+		End
 		
 		If Not parent
 			_root=child
 			Return
-		Endif
+		End
 		
 		If splice=parent._left
 			parent._left=child
 		Else
 			parent._right=child
-		Endif
+		End
 		
 		If splice._color=Node.Color.Black 
 			DeleteFixup( child,parent )
-		Endif
+		End
 	End
 	
 	Method RotateLeft( node:Node )
@@ -569,17 +518,17 @@ Class Map<K,V>
 		node._right=child._left
 		If child._left
 			child._left._parent=node
-		Endif
+		End
 		child._parent=node._parent
 		If node._parent
 			If node=node._parent._left
 				node._parent._left=child
 			Else
 				node._parent._right=child
-			Endif
+			End
 		Else
 			_root=child
-		Endif
+		End
 		child._left=node
 		node._parent=child
 	End
@@ -589,17 +538,17 @@ Class Map<K,V>
 		node._left=child._right
 		If child._right
 			child._right._parent=node
-		Endif
+		End
 		child._parent=node._parent
 		If node._parent
 			If node=node._parent._right
 				node._parent._right=child
 			Else
 				node._parent._left=child
-			Endif
+			End
 		Else
 			_root=child
-		Endif
+		End
 		child._right=node
 		node._parent=child
 	End
@@ -617,11 +566,11 @@ Class Map<K,V>
 					If node=node._parent._right
 						node=node._parent
 						RotateLeft( node )
-					Endif
+					End
 					node._parent._color=Node.Color.Black
 					node._parent._parent._color=Node.Color.Red
 					RotateRight( node._parent._parent )
-				Endif
+				End
 			Else
 				Local uncle:=node._parent._parent._left
 				If uncle And uncle._color=Node.Color.Red
@@ -633,12 +582,12 @@ Class Map<K,V>
 					If node=node._parent._left
 						node=node._parent
 						RotateRight( node )
-					Endif
+					End
 					node._parent._color=Node.Color.Black
 					node._parent._parent._color=Node.Color.Red
 					RotateLeft( node._parent._parent )
-				Endif
-			Endif
+				End
+			End
 		Wend
 		_root._color=Node.Color.Black
 	End
@@ -656,7 +605,7 @@ Class Map<K,V>
 					parent._color=Node.Color.Red
 					RotateLeft( parent )
 					sib=parent._right
-				Endif
+				End
 				
 				If (Not sib._left Or sib._left._color=Node.Color.Black) And (Not sib._right Or sib._right._color=Node.Color.Black)
 					sib._color=Node.Color.Red
@@ -668,13 +617,13 @@ Class Map<K,V>
 						sib._color=Node.Color.Red
 						RotateRight( sib )
 						sib=parent._right
-					Endif
+					End
 					sib._color=parent._color
 					parent._color=Node.Color.Black
 					sib._right._color=Node.Color.Black
 					RotateLeft( parent )
 					node=_root
-				Endif
+				End
 			Else	
 				Local sib:=parent._left
 				
@@ -683,7 +632,7 @@ Class Map<K,V>
 					parent._color=Node.Color.Red
 					RotateRight( parent )
 					sib=parent._left
-				Endif
+				End
 				
 				If (Not sib._right Or sib._right._color=Node.Color.Black) And (Not sib._left Or sib._left._color=Node.Color.Black)
 					sib._color=Node.Color.Red
@@ -695,16 +644,15 @@ Class Map<K,V>
 						sib._color=Node.Color.Red
 						RotateLeft( sib )
 						sib=parent._left
-					Endif
+					End
 					sib._color=parent._color
 					parent._color=Node.Color.Black
 					sib._left._color=Node.Color.Black
 					RotateRight( parent )
 					node=_root
-				Endif
-			Endif
+				End
+			End
 		Wend
 		If node node._color=Node.Color.Black
 	End
-	
 End
