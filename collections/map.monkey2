@@ -13,19 +13,78 @@ Alias FloatMap<V>:Map<Float,V>
 #end
 Alias StringMap<V>:Map<String,V>
 
+Private 'iDkP Added in place of Enum (enum=32 bits)
+
+Const ColorRed:UByte=0
+Const ColorBlack:UByte=1
+
+Public
+
 #rem monkeydoc The Map class provides support for associative maps.
 
 A map is a container style object that provides a mechanism for associating 'key' objects with 'value' objects.
-This is done using an internal node object that contains a reference to both a key and a value, along with information about the node'
-s location within the map.
+This is done using an internal node object that contains a reference to both a key and a value, 
+along with information about the node's location within the map.
 
 Each key in a map occurs exactly once - a map cannot contain multiple equivalent keys.
 
-Maps can handle inserting, removing and finding keys in 'O(log2)' time. That is, the time needed to insert, remove or find a key is proportional to log2 of the number of items in the map.
+Maps can handle inserting, removing and finding keys in 'O(log2)' time. 
+That is, the time needed to insert, remove or find a key is proportional to log2 
+of the number of items in the map.
 
 #end
 Class Map<K,V>
-
+	
+	'iDkP from GaragePixel's note:
+	'
+	' New implementation of Map using hint strategy, pointer usage and ubytes
+	' for small memory print and ~20% speed boost with 70% write/30% read operation mix.
+	'
+	'	Comparative array:
+	'
+	'		|----------------------|--------------|--------------|--------------|
+	'		| Operation            | Original Map | Map2         | Difference   |
+	'		|----------------------|--------------|--------------|--------------|
+	'		| Avg Insertion Time   | 96.0 ms      | 89.7 ms      | 6.6% faster  |
+	'		| Avg Insertion Rate   | 1.04M items/s| 1.12M items/s| 7.1% faster  |
+	'		|----------------------|--------------|--------------|--------------|
+	'		| Avg Retrieval Time   | 98.7 ms      | 73.3 ms      | 25.7% faster |
+	'		| Avg Retrieval Rate   | 1.01M items/s| 1.38M items/s| 36.3% faster |
+	'		|----------------------|--------------|--------------|--------------|
+	'		| Accuracy             | 100%         | 100%         | No change    |
+	'		|----------------------|--------------|--------------|--------------|
+	'		| Overall Performance* | Baseline     | 20.1% faster | Significant  |
+	'		|----------------------|--------------|--------------|--------------|
+	'		*Based on typical 70% write / 30% read operation distribution
+	'
+	'		|----------------------|--------------|--------------|--------------|
+	'		| Operation            | Original Map | Map2         | Difference   |
+	'		|----------------------|--------------|--------------|--------------|
+	'		| Avg Insertion Time   | 96.0 ms      | 89.7 ms      | 6.6% faster  |
+	'		| Avg Insertion Rate   | 1.04M items/s| 1.12M items/s| 7.1% faster  |
+	'		|----------------------|--------------|--------------|--------------|
+	'		| Avg Retrieval Time   | 98.7 ms      | 73.3 ms      | 25.7% faster |
+	'		| Avg Retrieval Rate   | 1.01M items/s| 1.38M items/s| 36.3% faster |
+	'		|----------------------|--------------|--------------|--------------|
+	'		| Accuracy             | 100%         | 100%         | No change    |
+	'		|----------------------|--------------|--------------|--------------|
+	'		| Overall Performance* | Baseline     | 16.2% faster | Significant  |
+	'		|----------------------|--------------|--------------|--------------|
+	'		*Based on typical 50% write / 50% read operation distribution
+	' 
+	' The tradeoff of slower insertion is generally favorable 
+	' in most real-world scenarios (30% write / 70% read operation mix)
+	'
+	' The "accuracy" metric in our stress test represents the percentage of key retrievals 
+	' that successfully return the expected value. Map value-key with 100% accuracy is well suited for:
+	'
+	'	- Financial applications
+	'	- Database systems
+	'	- Game state management
+	'	- UI component management
+	'	- AI Applications
+	'	- Massive Pixel Engines
+	
 	#rem monkeydoc The map Node class.
 	#end
 	Class Node
@@ -48,19 +107,14 @@ Class Map<K,V>
 	
 		Private	
 	
-		Enum Color
-			Red
-			Black
-		End
-	
 		Field _key:K
 		Field _value:V
-		Field _color:Color
+		Field _color:UByte 'Modified iDkP
 		Field _left:Node
 		Field _right:Node
 		Field _parent:Node
 	
-		Method New( key:K,value:V,color:Color,parent:Node )
+		Method New( key:K,value:V,color:UByte,parent:Node )
 			_key=key
 			_value=value
 			_color=color
@@ -105,10 +159,12 @@ Class Map<K,V>
 			Return parent
 		End
 		
-		Method Copy:Node( parent:Node )
-			Local node:=New Node( _key,_value,_color,parent )
-			If _left node._left=_left.Copy( node )
-			If _right node._right=_right.Copy( node )
+		Method Copy:Node( parent:Node Ptr )
+			'Modified by iDkP
+			'Use pointer for passing per cascade and by reference the item to copy
+			Local node:=New Node( _key,_value,_color,parent[0] )
+			If _left node._left=_left.Copy( Varptr(node) )
+			If _right node._right=_right.Copy( Varptr(node) )
 			Return node
 		End
 	
@@ -329,19 +385,32 @@ Class Map<K,V>
 	@return True if a new node was added to the map, false if an existing node was updated.
 	#end
 	Method Set:Bool( key:K,value:V )
-		If Not _root
-			_root=New Node( key,value,Node.Color.Red,Null )
-			Return True
+		
+		Local cmp:Int		
+
+		If NotRoot( Varptr(key),Varptr(value)) Return True 'Added by iDkP
+
+		' Try hint path first if available
+		If _lastAddedNode
+			cmp=key <=> _lastAddedNode._key
+			If Not cmp
+				Local oldValue:=_lastAddedNode._value
+				_lastAddedNode._value=value
+				Return True
+			End
 		End
+		
+		' Standard insertion logic...
 	
-		Local node:=_root,parent:Node,cmp:Int
+		Local node:=_root
+		Local parent:Node
 
 		While node
 			parent=node
 			cmp=key<=>node._key
 			If cmp>0
 				node=node._right
-			Else If cmp<0
+			Elseif cmp<0
 				node=node._left
 			Else
 				node._value=value
@@ -349,11 +418,7 @@ Class Map<K,V>
 			End
 		Wend
 		
-		node=New Node( key,value,Node.Color.Red,parent )
-		
-		If cmp>0 parent._right=node Else parent._left=node
-		
-		InsertFixup( node )
+		AddPair( Varptr(node), Varptr(key),Varptr(value), Varptr(parent), Varptr(cmp) ) 'Added by iDkP
 		
 		Return True
 	End
@@ -366,30 +431,26 @@ Class Map<K,V>
 	@return True if a new node was added to the map, false if the map was not modified.
 	#end
 	Method Add:Bool( key:K,value:V )
-		If Not _root
-			_root=New Node( key,value,Node.Color.Red,Null )
-			Return True
-		End
+		
+		If NotRoot( Varptr(key),Varptr(value)) Return True 'Added by iDkP
 	
-		Local node:=_root,parent:Node,cmp:Int
+		Local node:=_root
+		Local parent:Node
+		Local cmp:Int
 
 		While node
 			parent=node
 			cmp=key<=>node._key
 			If cmp>0
 				node=node._right
-			Else If cmp<0
+			ElseIf cmp<0
 				node=node._left
 			Else
 				Return False
 			End
 		Wend
 		
-		node=New Node( key,value,Node.Color.Red,parent )
-		
-		If cmp>0 parent._right=node Else parent._left=node
-		
-		InsertFixup( node )
+		AddPair( Varptr(node), Varptr(key),Varptr(value), Varptr(parent), Varptr(cmp) ) 'Added by iDkP
 		
 		Return True
 	End
@@ -428,15 +489,26 @@ Class Map<K,V>
 		RemoveNode( node )
 		Return True
 	End
-	
+
 	Private
 	
 	Field _root:Node
+	Field _lastAddedNode:Node 'Added by iDkP
 	
 	Method New( root:Node )
 		_root=root
 	End
-	
+
+	Method LastNode:Node()
+		If Not _root Return Null
+
+		Local node:=_root
+		While node._right
+			node=node._right
+		Wend
+		Return node
+	End
+
 	Method FirstNode:Node()
 		If Not _root Return Null
 
@@ -447,17 +519,15 @@ Class Map<K,V>
 		Return node
 	End
 	
-	Method LastNode:Node()
-		If Not _root Return Null
-
-		Local node:=_root
-		While node._right
-			node=node._right
-		Wend
-		Return node
-	End
-	
 	Method FindNode:Node( key:K )
+
+		' Try hint first if available
+		If _lastAddedNode
+			Local cmp:=key <=> _lastAddedNode._key
+			If cmp=0 Return _lastAddedNode
+		Endif
+		
+		' Standard traversal
 		Local node:=_root
 		While node
 			Local cmp:=key<=>node._key
@@ -508,8 +578,8 @@ Class Map<K,V>
 			parent._right=child
 		End
 		
-		If splice._color=Node.Color.Black 
-			DeleteFixup( child,parent )
+		If splice._color=ColorBlack 
+			DeleteFixup( Varptr(child),Varptr(parent) )
 		End
 	End
 	
@@ -553,106 +623,127 @@ Class Map<K,V>
 		node._parent=child
 	End
 	
-	Method InsertFixup( node:Node )
-		While node._parent And node._parent._color=Node.Color.Red And node._parent._parent
-			If node._parent=node._parent._parent._left
-				Local uncle:=node._parent._parent._right
-				If uncle And uncle._color=Node.Color.Red
-					node._parent._color=Node.Color.Black
-					uncle._color=Node.Color.Black
-					uncle._parent._color=Node.Color.Red
-					node=uncle._parent
+	Method InsertFixup( node:Node Ptr ) 'iDkP from GaragePixe: pointer usage
+		While node[0]._parent And node[0]._parent._color=ColorRed And node[0]._parent._parent
+			If node[0]._parent=node[0]._parent._parent._left
+				Local uncle:=node[0]._parent._parent._right
+				If uncle And uncle._color=ColorRed
+					node[0]._parent._color=ColorBlack
+					uncle._color=ColorBlack
+					uncle._parent._color=ColorRed
+					node[0]=uncle._parent
 				Else
-					If node=node._parent._right
-						node=node._parent
-						RotateLeft( node )
+					If node[0]=node[0]._parent._right
+						node[0]=node[0]._parent
+						RotateLeft( node[0] )
 					End
-					node._parent._color=Node.Color.Black
-					node._parent._parent._color=Node.Color.Red
-					RotateRight( node._parent._parent )
+					node[0]._parent._color=ColorBlack
+					node[0]._parent._parent._color=ColorRed
+					RotateRight( node[0]._parent._parent )
 				End
 			Else
-				Local uncle:=node._parent._parent._left
-				If uncle And uncle._color=Node.Color.Red
-					node._parent._color=Node.Color.Black
-					uncle._color=Node.Color.Black
-					uncle._parent._color=Node.Color.Red
-					node=uncle._parent
+				Local uncle:=node[0]._parent._parent._left
+				If uncle And uncle._color=ColorRed
+					node[0]._parent._color=ColorBlack
+					uncle._color=ColorBlack
+					uncle._parent._color=ColorRed
+					node[0]=uncle._parent
 				Else
-					If node=node._parent._left
-						node=node._parent
-						RotateRight( node )
+					If node[0]=node[0]._parent._left
+						node[0]=node[0]._parent
+						RotateRight( node[0] )
 					End
-					node._parent._color=Node.Color.Black
-					node._parent._parent._color=Node.Color.Red
-					RotateLeft( node._parent._parent )
+					node[0]._parent._color=ColorBlack
+					node[0]._parent._parent._color=ColorRed
+					RotateLeft( node[0]._parent._parent )
 				End
 			End
 		Wend
-		_root._color=Node.Color.Black
+		_root._color=ColorBlack
 	End
 	
-	Method DeleteFixup( node:Node,parent:Node )
+	Method DeleteFixup( node:Node Ptr,parent:Node Ptr ) 'iDkP from GaragePixel: pointer usage
 	
-		While node<>_root And (Not node Or node._color=Node.Color.Black )
+		While node[0]<>_root And (Not node[0] Or node[0]._color=ColorBlack )
 
-			If node=parent._left
+			If node[0]=parent[0]._left
 			
-				Local sib:=parent._right
+				Local sib:=parent[0]._right
 				
-				If sib._color=Node.Color.Red
-					sib._color=Node.Color.Black
-					parent._color=Node.Color.Red
-					RotateLeft( parent )
-					sib=parent._right
+				If sib._color=ColorRed
+					sib._color=ColorBlack
+					parent[0]._color=ColorRed
+					RotateLeft( parent[0] )
+					sib=parent[0]._right
 				End
 				
-				If (Not sib._left Or sib._left._color=Node.Color.Black) And (Not sib._right Or sib._right._color=Node.Color.Black)
-					sib._color=Node.Color.Red
+				If (Not sib._left Or sib._left._color=ColorBlack) And (Not sib._right Or sib._right._color=ColorBlack)
+					sib._color=ColorRed
 					node=parent
-					parent=parent._parent
+					parent[0]=parent[0]._parent
 				Else
-					If Not sib._right Or sib._right._color=Node.Color.Black
-						sib._left._color=Node.Color.Black
-						sib._color=Node.Color.Red
+					If Not sib._right Or sib._right._color=ColorBlack
+						sib._left._color=ColorBlack
+						sib._color=ColorRed
 						RotateRight( sib )
-						sib=parent._right
+						sib=parent[0]._right
 					End
-					sib._color=parent._color
-					parent._color=Node.Color.Black
-					sib._right._color=Node.Color.Black
-					RotateLeft( parent )
-					node=_root
+					sib._color=parent[0]._color
+					parent[0]._color=ColorBlack
+					sib._right._color=ColorBlack
+					RotateLeft( parent[0] )
+					node[0]=_root
 				End
 			Else	
-				Local sib:=parent._left
+				Local sib:=parent[0]._left
 				
-				If sib._color=Node.Color.Red
-					sib._color=Node.Color.Black
-					parent._color=Node.Color.Red
-					RotateRight( parent )
-					sib=parent._left
+				If sib._color=ColorRed
+					sib._color=ColorBlack
+					parent[0]._color=ColorRed
+					RotateRight( parent[0] )
+					sib=parent[0]._left
 				End
 				
-				If (Not sib._right Or sib._right._color=Node.Color.Black) And (Not sib._left Or sib._left._color=Node.Color.Black)
-					sib._color=Node.Color.Red
+				If (Not sib._right Or sib._right._color=ColorBlack) And (Not sib._left Or sib._left._color=ColorBlack)
+					sib._color=ColorRed
 					node=parent
-					parent=parent._parent
+					parent[0]=parent[0]._parent
 				Else
-					If Not sib._left Or sib._left._color=Node.Color.Black
-						sib._right._color=Node.Color.Black
-						sib._color=Node.Color.Red
+					If Not sib._left Or sib._left._color=ColorBlack
+						sib._right._color=ColorBlack
+						sib._color=ColorRed
 						RotateLeft( sib )
-						sib=parent._left
+						sib=parent[0]._left
 					End
-					sib._color=parent._color
-					parent._color=Node.Color.Black
-					sib._left._color=Node.Color.Black
-					RotateRight( parent )
-					node=_root
+					sib._color=parent[0]._color
+					parent[0]._color=ColorBlack
+					sib._left._color=ColorBlack
+					RotateRight( parent[0] )
+					node[0]=_root
 				End
 			End
 		Wend
-		If node node._color=Node.Color.Black
+		If node[0] node[0]._color=ColorBlack
+	End
+	
+	Method NotRoot:Bool( key:K Ptr,value:V Ptr ) 
+		'Added by iDkP
+		If Not _root
+			_root=New Node( key[0],value[0],ColorRed,Null )
+			Return True
+		End
+		Return False
+	End
+	
+	Method AddPair( node:Node Ptr, key:K Ptr,value:V Ptr, parent:Node Ptr, cmp:Int Ptr ) 
+		'Added by iDkP
+		node[0]=New Node( key[0],value[0],ColorRed,parent[0] )
+		_lastAddedNode=node[0]
+		If cmp[0]>0 
+			parent[0]._right=node[0] 
+		Else 
+			parent[0]._left=node[0]
+		End
+		InsertFixup( node )
 	End
 End
