@@ -22,6 +22,9 @@
 
 		VERSION 1.1:
 
+			- 2025-05-08 - Map 20% speed up
+			- 2025-05-03 - Added Json FromStream()/ToStream()
+			- 2025-04-02 - Pixmap 8-9x speed up
 			- 2025-03-31 - Added cross renderer Texture, Image and Canvas wrapper, ImageBuffer and FrameBuffer
 			- 2025-03-28 - Added Gradiant primitive (stdlib/math/algebraic/vectorials/graphics/... )		
 			- 2025-03-24 - Added Drawing functions in pixmap (bezier, line, circle, gradiant, bayer matrix... )
