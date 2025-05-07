@@ -72,14 +72,14 @@ Class JsonValue
 
 	#rem monkeydoc Parses and constructs a JsonValue from a JSON stream.
 	#end 
-	Method FromStream:JsonValue( stream:Stream )
+	Method FromStream:JsonValue( stream:Stream ) 'Added by iDkP
 		Local json:String = stream.ReadJsonString()
 		Return Parse(json)
 	End
 
 	#rem monkeydoc Serializes a JsonValue to a JSON stream.
 	#end
-	Method ToStream( stream:Stream )
+	Method ToStream( stream:Stream ) 'Added by iDkP
 		stream.WriteJsonString(ToJson())
 	End
 
