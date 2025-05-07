@@ -19,7 +19,11 @@
 			- Merge stdlib with the new math module (THE next big step! )
 		
 			- Plugins updates
-	
+
+		2025-05-08 - Map 20% speed up
+		2025-05-03 - Added Json FromStream()/ToStream()
+		2025-04-02 - Pixmap 8-9x speed up
+
 		Phase 3:
 	
 		2025-02-03 - Publish sdk_mojo on github
