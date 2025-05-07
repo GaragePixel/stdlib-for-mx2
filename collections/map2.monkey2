@@ -410,11 +410,24 @@ Class Map2<K,V>
 	@return True if a new node was added to the map, false if an existing node was updated.
 	#end
 	Method Set:Bool( key:K,value:V )
+		
+		Local cmp:Int
+
+		' Try hint path first if available
+		If _lastAddedNode
+			cmp=key <=> _lastAddedNode._key
+			If cmp=0
+				Local oldValue:=_lastAddedNode._value
+				_lastAddedNode._value=value
+				Return oldValue
+			End
+		End
+		
+		' Standard insertion logic...
 		If NotRoot( Varptr(key),Varptr(value)) Return True 'Added by iDkP
 	
 		Local node:=_root
 		Local parent:Node
-		Local cmp:Int
 
 		While node
 			parent=node
@@ -531,6 +544,14 @@ Class Map2<K,V>
 	End
 	
 	Method FindNode:Node( key:K )
+
+		' Try hint first if available
+		If _lastAddedNode
+			Local cmp:=key <=> _lastAddedNode._key
+			If cmp=0 Return _lastAddedNode
+		Endif
+		
+		' Standard traversal
 		Local node:=_root
 		While node
 			Local cmp:=key<=>node._key
