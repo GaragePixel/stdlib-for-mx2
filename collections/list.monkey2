@@ -537,7 +537,20 @@ Class List<T> Implements IContainer<T>
 	Method Add( value:T )
 		AddLast( value )
 	End
+
+	#rem monkeydoc Bulk operation: Adds an array of values to the end of the list.
 	
+	This method behaves identically to AddLast.
+	
+	@param value The value to add.
+	
+	#end
+	Method AddAll:Void(values:T[]) 'Added by iDkP of GaragePixel
+		For Local value:=Eachin values
+			AddLast(value)
+		Next
+	End
+
 	#rem monkeydoc Adds all values in an array or container to the end of the list.
 	
 	@param values The values to add.
