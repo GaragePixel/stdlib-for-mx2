@@ -490,6 +490,72 @@ Class Map<K,V>
 		Return True
 	End
 
+	#rem monkeydoc Union: Add each keys from this (param) that exist in self
+	@param This The map to compare.
+	@param onPlace if False, returns a copy of the map, else nothing
+	#end
+	Method Append:Map<K,V>(this:Map<K,V>,onPlace:Bool=True) 'Added by iDkP from GaragePixel
+		'Sugar
+		Return Union(this,onPlace)
+	End
+	
+	#rem monkeydoc Union: Add each keys from this (param) that exist in self
+	@param This The map to compare.
+	@param onPlace if False, returns a copy of the map, else nothing
+	#end	
+	Method Union:Map<K,V>(this:Map<K,V>,onPlace:Bool=True) 'Added by iDkP from GaragePixel
+		'Add this to self
+		If onPlace 
+			For Local item:= Eachin this
+				Set(item.Key,item.Value)
+			Next
+			Return Null 
+		End
+		Local result:=Copy()
+		For Local item:= Eachin this
+			result.Set(item.Key,item.Value)
+		End
+		Return result
+	End 
+
+	#rem monkeydoc Intersect: Keep all keys from self that exist in this (param)
+	@param This The map to compare.
+	@param onPlace if False, returns a copy of the map, else nothing
+	#end	
+	Method Intersect:Map<K,V>(this:Map<K,V>, onPlace:Bool=True) 'Added by iDkP from GaragePixel
+		'Keep in self the keys that exist in this
+		If onPlace 
+			For Local item:= Eachin Self
+				If Not this.Contains(item.Key) Self.Remove(item.Key)
+			End 
+			Return Null
+		End 
+		Local result:=Copy()
+		For Local item:= Eachin result
+			If Not this.Contains(item.Key) result.Remove(item.Key)
+		End 	
+		Return result	
+	End
+
+	#rem monkeydoc Difference: Remove all keys from self that exist in this (param)
+	@param This The map to compare.
+	@param onPlace if False, returns a copy of the map, else nothing
+	#end
+	Method Diff:Map<K,V>(this:Map<K,V>, onPlace:Bool=True) 'Added by iDkP from GaragePixel
+		'Remove all keys from self that exist in this
+		If onPlace 
+			For Local item:= Eachin Self
+				If this.Contains(item.Key) Remove(item.Key)
+			End 
+			Return Null
+		End 
+		Local result:=Copy()
+		For Local item:= Eachin result
+			If this.Contains(item.Key) result.Remove(item.Key)
+		End 	
+		Return result	
+	End
+
 	Private
 	
 	Field _root:Node
