@@ -345,7 +345,7 @@ Class List<T> Implements IContainer<T>
 	@return The number of values in the list.
 	
 	#end
-	Method Count:Int()
+	Method Count:UInt() 'iDkP: UNSIGNED 32 bits!
 		Local node:=_head._succ,n:=0
 		While node<>_head
 			node=node._succ
@@ -748,11 +748,10 @@ Class List<T> Implements IContainer<T>
 	'
 	' MakeUnique, MakeUniqueFast, MakeUniqueType
 	' Contains, Append, Union, Intersect, Diff
-	' Copy
 	'----------------------------------------------
 		
 	#rem monkeydoc Make the items (only internal type accepted) of the list unique, keep the original order. 
-	@param onPlace If False, return a copy of the List
+	@param onPlace if False, return a copy of the List
 	@return Copy of the list or Null
 	#end
 	Method MakeUnique:List<T>(onPlace:Bool=True) Where T=IReal Or T=INumeric Or T=String Or T=Byte Or T=Bool Or T=Variant 'Added by iDkP from GaragePixel
@@ -832,7 +831,7 @@ Class List<T> Implements IContainer<T>
 
 	#rem monkeydoc Make the items (only internal type accepted) of the list unique, 
 	but do not keep the original order (faster).
-	@param onPlace If False, return a copy of the List
+	@param onPlace if False, return a copy of the List
 	@return Copy of the list or Null
 	#end
 	Method MakeUniqueFast:List<T>(onPlace:Bool=True) Where T=IReal Or T=INumeric Or T=String Or T=Byte Or T=Bool Or T=Variant 'Added by iDkP from GaragePixel
@@ -846,7 +845,7 @@ Class List<T> Implements IContainer<T>
 		' 	Source red-black tree: https://en.wikipedia.org/wiki/Red%E2%80%93black_tree
 		'
 		' 	- This method only takes internal type because:
-		' 		- To make a key from map, the type must be an internal type, not a custom type,
+		' 		- To make a key from map, the type must be an internal type, not a custom type
 		'
 		'	- Do not need to be output in the exact same order from the input
 		'
@@ -890,7 +889,7 @@ Class List<T> Implements IContainer<T>
 	End
 
 	#rem monkeydoc Make the items (any custom type accepted) of the list unique, keep the original order.
-	@param onPlace If False, return a copy of the List
+	@param onPlace if False, return a copy of the List
 	@return Copy of the list or Null
 	#end
 	Method MakeUniqueType:List<T>(onPlace:Bool=True) 'Added by iDkP from GaragePixel
@@ -929,7 +928,7 @@ Class List<T> Implements IContainer<T>
 		
 		'Speed up
 		Local lastHead:=lastNode '32 bits - used to stick the head on the last duplicate detected
-		Local lastCnt:UInt '32 bits - used to calculate the head from the number of programmed deletions
+		Local lastCnt:UInt '32 bits - used to calculate the head from the number of planned deletions
 
 		Repeat
 
@@ -961,8 +960,8 @@ Class List<T> Implements IContainer<T>
 					'same than above, we need to compare the node's value, where T could be from any type
 					If node.Value=nodeItem.Value
 						node=node.Pred
-						occurance-=1
 						node.Succ.Remove()
+						occurance-=1						
 						actCount-=1
 						op-=1
 						lp-=1
@@ -971,7 +970,7 @@ Class List<T> Implements IContainer<T>
 					node=node.Pred
 					op-=1
 
-				Until op=1 Or occurance=1 'Stop without checking the whole list if we know it was the last one
+				Until op=1 Or occurance=1 'Stop without checking the whole list if we know it was the last one duplicate
 
 			End 
 
@@ -1027,16 +1026,18 @@ Class List<T> Implements IContainer<T>
 		'		Source red-black tree: https://en.wikipedia.org/wiki/Red%E2%80%93black_tree
 		'
 		' 	This method only takes internal type because:
-		' 		- To make a key from map, the type must be an internal type, not a custom type,
+		' 		- To make a key from map, the type must be an internal type, not a custom type
 		'
 		If onPlace 
 			Self.AddAll(this)
+
 			'--------------------------
 			'
 			'Strange bug:  
 			'	Can't find overload for 'MakeUnique' with argument types (monkey.types.Bool)
 			'
 			'Return MakeUnique(True) 'Strange bug:  Can't find overload for 'MakeUnique' with argument types (monkey.types.Bool)
+			'
 			'--------------------------
 
 			' Need to un-inlined because the strange bug
@@ -1089,6 +1090,7 @@ Class List<T> Implements IContainer<T>
 		
 		Local result:=Copy()
 		result.AddAll(this)
+
 		'--------------------------
 		'
 		'Strange bug:  
@@ -1096,6 +1098,7 @@ Class List<T> Implements IContainer<T>
 		'
 		'result.MakeUnique(True) 
 		'Return result
+		'
 		'--------------------------
 
 		' Need to un-inlined because the strange bug
@@ -1142,7 +1145,7 @@ Class List<T> Implements IContainer<T>
 	End
 
 	#rem monkeydoc Keep all keys from self that exist in this (param)
-	@param This The list to compare.
+	@param This is the list to compare.
 	@param onPlace if False, returns a copy of the list, else nothing
 	#end	
 	Method Intersect:List<T>(this:List<T>, onPlace:Bool=True) 'Added by iDkP from GaragePixel
@@ -1161,7 +1164,7 @@ Class List<T> Implements IContainer<T>
 	End
 
 	#rem monkeydoc Remove all keys from self that exist in this (param)
-	@param This The list to compare.
+	@param This is the list to compare.
 	@param onPlace if False, returns a copy of the list, else nothing
 	#end
 	Method Diff:List<T>( this:List<T>, onPlace:Bool=True ) 'Added by iDkP from GaragePixel
