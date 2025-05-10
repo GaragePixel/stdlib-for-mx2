@@ -735,7 +735,7 @@ Class List<T> Implements IContainer<T>
 		AddFirst(n)
 	End 
 
-	#rem monkeydoc Same than RemoveFirst, but return nothing.
+	#rem monkeydoc Same than RemoveFirst.
 	@param value The value to add to the list.
 	#end	
 	Method Dequeue:T()
