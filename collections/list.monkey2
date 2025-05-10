@@ -705,6 +705,16 @@ Class List<T> Implements IContainer<T>
 		Return Null
 	End
 
+	#rem monkeydoc Return a copy of the list
+	@return Copy of the list
+	#end
+	Method Copy:List<T>() 'Added by iDkP from GaragePixel
+		'Added for consistency (there is an operator to copy a list, 
+		'but it is not obvious for a new user of the library)
+		Return New List<T>( Self )
+	End
+
+	'----------------------------------------------
 	' Extension: List As Queue
 	' iDkP from GaragePixel
 	' 2024-11
@@ -716,12 +726,456 @@ Class List<T> Implements IContainer<T>
 	'
 	'	FIFO Operations:
 	'		Possible usage of the list as queue is the implementation of BFS (Breadth-First Search).
-	
+	'----------------------------------------------
+
+	#rem monkeydoc Same than AddFirst, but return nothing.
+	@param value The value to add to the list.
+	#end
 	Method Enqueue(n:T)
 		AddFirst(n)
 	End 
-	
+
+	#rem monkeydoc Same than RemoveFirst, but return nothing.
+	@param value The value to add to the list.
+	#end	
 	Method Dequeue:T()
 		Return RemoveFirst()
+	End
+
+	'----------------------------------------------
+	' Mini-library: Set (math) functions with List
+	' 2025-05-10 - Added by iDkP from GaragePixel
+	'
+	' MakeUnique, MakeUniqueFast, MakeUniqueType
+	' Contains, Append, Union, Intersect, Diff
+	' Copy
+	'----------------------------------------------
+		
+	#rem monkeydoc Make the items (only internal type accepted) of the list unique, keep the original order. 
+	@param onPlace If False, return a copy of the List
+	@return Copy of the list or Null
+	#end
+	Method MakeUnique:List<T>(onPlace:Bool=True) Where T=IReal Or T=INumeric Or T=String Or T=Byte Or T=Bool Or T=Variant 'Added by iDkP from GaragePixel
+		
+		' iDkP from GaragePixel
+		' 2025-05-10 - Original algorithm for stdlib: 
+		' https://github.com/GaragePixel/stdlib-for-mx2/tree/main
+		'
+		' Note: 
+		'	- The algorithm uses a 32 bit enumerator, it's okay
+		' 	- Hyper fast algorithm using the red-black tree implementation of map (see note under)
+		' 	Source red-black tree: https://en.wikipedia.org/wiki/Red%E2%80%93black_tree
+		'
+		' Info:
+		'	In MaxScript, there was a function called MakeUniqueName() 
+		'	to ensure that a node was instantiated with a unique label. 
+		'	You can now enjoy that with this language.
+
+		Local map:=New Map<T,UInt>() 'Hash Key calculated from the T value, value as 32 bit marked
+		Local listItem:List<T>.Node=FirstNode() 'A node from List
+		Local listValue:T 'A value from List
+		Local value:UInt '32 bit marker
+		Local result:=New List<T> 'pruned list
+		Local op:UInt 'The list is defined as quasicircular (no root, but floating head) so we need a tracker
+		
+		'Map the values and note how many times they appear in the list
+		Repeat
+			
+			listValue=map.Get(listItem.Value)
+			
+			If listValue<>Null
+				map.Set(listItem.Value,map.Get(listItem.Value)+1)
+			End
+			
+			listItem=listItem.Succ
+			op+=1
+			
+		Until listItem=HeadNode()
+		
+		'As a backward iteration, put the value marked 1 in the result list, otherwise decrement
+		listItem=LastNode()
+		Repeat
+			
+			value=map.Get(listItem.Value)
+			
+			If value=1
+				result.AddFirst(listItem.Value)
+			Else 
+				map.Set(listItem.Value,value-1)
+			End 
+			
+			listItem=listItem.Pred
+			op-=1
+			
+		Until op=0
+		
+		'Finaly, if onPlace, set the actual self
+		
+		If onPlace 
+		
+			'As an extension, the self list should be refilled
+'			Clear() 
+'			For Local i:=Eachin result 
+'				Add(result.FindNode(i).Value)
+'			End
+
+			'But since the method was integrated, we can directly set self
+			_head=result._head
+			
+			Return Null
+			
+		' Else return Result if not onPlace
+		End
+		
+		Return result
+	End 
+
+	#rem monkeydoc Make the items (only internal type accepted) of the list unique, 
+	but do not keep the original order (faster).
+	@param onPlace If False, return a copy of the List
+	@return Copy of the list or Null
+	#end
+	Method MakeUniqueFast:List<T>(onPlace:Bool=True) Where T=IReal Or T=INumeric Or T=String Or T=Byte Or T=Bool Or T=Variant 'Added by iDkP from GaragePixel
+		
+		'iDkP from GaragePixel
+		'2025-05-10 - Original algorithm for stdlib: 
+		'https://github.com/GaragePixel/stdlib-for-mx2/tree/main
+		'
+		' Note: 
+		' 	- Hyper fast algorithm using the red-black tree implementation of map (see note under)
+		' 	Source red-black tree: https://en.wikipedia.org/wiki/Red%E2%80%93black_tree
+		'
+		' 	- This method only takes internal type because:
+		' 		- To make a key from map, the type must be an internal type, not a custom type,
+		'
+		'	- Do not need to be output in the exact same order from the input
+		'
+		' Info:
+		'	In MaxScript, there was a function called MakeUniqueName()
+		'	to ensure that a node was instantiated with a unique label. 
+		'	You can now enjoy that with this language. If the item's order
+		'	don't makes a deal, you can use this faster version of MakeUnique().
+
+		Local map:=New Map<T,T>() 'Hash Key calculated from the T value, value as T
+		Local listItem:List<T>.Node=FirstNode() 'A node from List
+		Local result:=New List<T> 'pruned list
+		
+		'Put in the map the list's values (will be set one time by value)
+		Repeat
+			
+			map.Set(listItem.Value,listItem.Value)
+			listItem=listItem.Succ
+			
+		Until listItem=HeadNode()
+		
+		'Retrieve the map's values:
+		
+		'Finaly, if onPlace, set the actual self
+		If onPlace 
+		
+			Clear()
+			For Local n:=Eachin map
+				Add(n.Value)
+			Next
+			
+			Return Null
+		End 
+			
+		'Else return Result if not onPlace
+		For Local n:=Eachin map
+			result.Add(n.Value)
+		Next
+		
+		Return result
+	End
+
+	#rem monkeydoc Make the items (any custom type accepted) of the list unique, keep the original order.
+	@param onPlace If False, return a copy of the List
+	@return Copy of the list or Null
+	#end
+	Method MakeUniqueType:List<T>(onPlace:Bool=True) 'Added by iDkP from GaragePixel
+
+		' iDkP from GaragePixel
+		' 2025-05-11 - Original algorithm
+
+		Local currList:= onPlace ? Self Else Copy()
+		
+		Local count:=currList.Count()
+		If count=1 Return currList
+		
+		Local firstNode:List<T>.Node=currList.FirstNode()
+
+		If count=2
+			If firstNode.Value=firstNode.Succ.Value
+				firstNode.Succ.Remove()
+				Return currList
+			Else 
+				Return currList
+			End 
+		End 
+
+		'Global loop
+		Local node:=firstNode 'Used to parse the list. Because FirstNode() has a guard we don't want, we call it only one time
+		Local nodeItem:=firstNode 'Current treated item
+		Local nodeToCompare:=firstNode 'Second item to compare with the current treated item
+		Local lastNode:=currList.LastNode() 'memoirize that
+		
+		'Inner loop
+		Local occurance:UInt '32 bits - count the number of duplicates in a list for the on-going treated item
+		Local actCount:=count '32 bits - active count, keep track of the number of items
+		Local lp:UInt=count+1 '32 bits - loop left, sets on the active count
+		Local comps:UInt '32 bits - used for the matching loop
+		Local op:UInt '32 bits - used for counting the deletions to perform
+		
+		'Speed up
+		Local lastHead:=lastNode '32 bits - used to stick the head on the last duplicate detected
+		Local lastCnt:UInt '32 bits - used to calculate the head from the number of programmed deletions
+
+		Repeat
+
+			occurance=0
+			nodeToCompare=firstNode
+			comps=actCount
+			
+			lastCnt=0
+			Repeat
+				
+				'we need to compare the node's value, where T could be from any type
+				If nodeToCompare.Value=nodeItem.Value 
+					occurance+=1
+					lastHead=nodeToCompare
+					lastCnt-=1
+				End
+				nodeToCompare=nodeToCompare.Succ
+				comps-=1
+				lastCnt+=1
+
+			Until comps=0
+			
+			If occurance>1
+
+				op=count-lastCnt
+				node=lastHead
+
+				Repeat
+					'same than above, we need to compare the node's value, where T could be from any type
+					If node.Value=nodeItem.Value
+						node=node.Pred
+						occurance-=1
+						node.Succ.Remove()
+						actCount-=1
+						op-=1
+						lp-=1
+					End 
+
+					node=node.Pred
+					op-=1
+
+				Until op=1 Or occurance=1 'Stop without checking the whole list if we know it was the last one
+
+			End 
+
+			nodeItem=nodeItem.Succ
+
+		lp-=1
+		Until lp=0
+
+		Return currList
+	End
+
+	#rem monkeydoc Finds the first node in the list containing a value.
+	@param value The value to find.
+	@return The first node containing the value, or null if the value was not found.
+	#end	
+	Method Contains:Node( value:T ) 'Added by iDkP from GaragePixel
+		'iDkP: Added as sugar for front-end consistance with map
+		Return FindNode(value)
+	End
+
+	#rem monkeydoc Add each keys from this (param) to self
+	@param This The list to compare.
+	@param onPlace if False, returns a copy of the list, else nothing
+	#end
+	Method Append:List<T>(this:List<T>,onPlace:Bool=True) 'Added by iDkP from GaragePixel
+		'Sugar
+		If onPlace 
+			Self.AddAll(this)
+			Return Null
+		End
+		Local result:=Copy()
+		result.AddAll(this)
+		Return result
+	End
+
+	#rem monkeydoc Add each item from this (param) that exist in self. 
+	Each item will be unique and in the same order from the two original lists. 
+	Note: Make also unique the items in the two original list.
+	@param This The list to compare.
+	@param onPlace if False, returns a copy of the list, else nothing
+	#end	
+	Method Union:List<T>(this:List<T>,onPlace:Bool=True) Where T=IReal Or T=INumeric Or T=String Or T=Byte Or T=Bool Or T=Variant 'Added by iDkP from GaragePixel
+		'
+		' iDkP from GaragePixel
+		' 2025-05-10 - Original algorithm for stdlib: 
+		' https://github.com/GaragePixel/stdlib-for-mx2/tree/main
+		'
+		' Description:
+		' 	Add this to self, do not keep doublons in the output list.
+		'
+		' Note:
+		' 	Hyper fast algorithm using the red-black tree implementation of map (see note under)
+		'		Source red-black tree: https://en.wikipedia.org/wiki/Red%E2%80%93black_tree
+		'
+		' 	This method only takes internal type because:
+		' 		- To make a key from map, the type must be an internal type, not a custom type,
+		'
+		If onPlace 
+			Self.AddAll(this)
+			'--------------------------
+			'
+			'Strange bug:  
+			'	Can't find overload for 'MakeUnique' with argument types (monkey.types.Bool)
+			'
+			'Return MakeUnique(True) 'Strange bug:  Can't find overload for 'MakeUnique' with argument types (monkey.types.Bool)
+			'--------------------------
+
+			' Need to un-inlined because the strange bug
+			Local map:=New Map<T,UInt>() 'Hash Key calculated from the T value, value as 32 bit marked
+			Local listItem:List<T>.Node=FirstNode() 'A node from List
+			Local listValue:T 'A value from List
+			Local value:UInt '32 bit marker
+			Local out:=New List<T> 'pruned list
+			Local op:UInt 'The list is defined as quasicircular (no root, but floating head) so we need a tracker
+			
+			'Map the values and note how many times they appear in the list
+			Repeat
+				
+				listValue=map.Get(listItem.Value)
+				
+				If listValue<>Null
+					map.Set(listItem.Value,map.Get(listItem.Value)+1)
+				End
+				
+				listItem=listItem.Succ
+				op+=1
+				
+			Until listItem=HeadNode()
+			
+			'As a backward iteration, put the value marked 1 in the out list, otherwise decrement
+			listItem=LastNode()
+			Repeat
+				
+				value=map.Get(listItem.Value)
+				
+				If value=1
+					out.AddFirst(listItem.Value)
+				Else 
+					map.Set(listItem.Value,value-1)
+				End 
+				
+				listItem=listItem.Pred
+				op-=1
+				
+			Until op=0
+			
+			'Finaly, directly set self
+			_head=out._head
+				
+			Return Null
+			
+		End 'onPlace version
+		
+		'------------------------- "returns a copy of the list" Version
+		
+		Local result:=Copy()
+		result.AddAll(this)
+		'--------------------------
+		'
+		'Strange bug:  
+		'	Can't find overload for 'MakeUnique' with argument types (monkey.types.Bool)
+		'
+		'result.MakeUnique(True) 
+		'Return result
+		'--------------------------
+
+		' Need to un-inlined because the strange bug
+		Local map:=New Map<T,UInt>() 'Hash Key calculated from the T value, value as 32 bit marked
+		Local listItem:List<T>.Node=result.FirstNode() 'A node from List
+		Local listValue:T 'A value from List
+		Local value:UInt '32 bit marker
+		Local out:=New List<T> 'pruned list
+		Local op:UInt 'The list is defined as quasicircular (no root, but floating head) so we need a tracker
+		
+		'Map the values and note how many times they appear in the list
+		Repeat
+			
+			listValue=map.Get(listItem.Value)
+			
+			If listValue<>Null
+				map.Set(listItem.Value,map.Get(listItem.Value)+1)
+			End
+			
+			listItem=listItem.Succ
+			op+=1
+			
+		Until listItem=result.HeadNode()
+		
+		'As a backward iteration, put the value marked 1 in the out list, otherwise decrement
+		listItem=result.LastNode()
+		Repeat
+			
+			value=map.Get(listItem.Value)
+			
+			If value=1
+				out.AddFirst(listItem.Value)
+			Else 
+				map.Set(listItem.Value,value-1)
+			End 
+			
+			listItem=listItem.Pred
+			op-=1
+			
+		Until op=0
+		
+		'Finaly, return result
+		Return out
+	End
+
+	#rem monkeydoc Keep all keys from self that exist in this (param)
+	@param This The list to compare.
+	@param onPlace if False, returns a copy of the list, else nothing
+	#end	
+	Method Intersect:List<T>(this:List<T>, onPlace:Bool=True) 'Added by iDkP from GaragePixel
+		'Keep in self the keys that exist in this
+		If onPlace 
+			For Local item:= Eachin Self
+				If this.FindNode(item)=Null Self.RemoveEach(item)
+			End
+			Return Null
+		End 
+		Local result:=Copy()
+		For Local item:= Eachin result
+			If this.FindNode(item)=Null result.RemoveEach(item)
+		End 	
+		Return result	
+	End
+
+	#rem monkeydoc Remove all keys from self that exist in this (param)
+	@param This The list to compare.
+	@param onPlace if False, returns a copy of the list, else nothing
+	#end
+	Method Diff:List<T>( this:List<T>, onPlace:Bool=True ) 'Added by iDkP from GaragePixel
+		'Remove all keys from self that exist in this
+		If onPlace 
+			For Local item:= Eachin Self
+				If this.FindNode(item)<>Null Self.RemoveEach(item)
+			End
+			Return Null
+		End 
+		Local result:=Copy()
+		For Local item:= Eachin result
+			If this.FindNode(item)<>Null result.RemoveEach(item)
+		End 	
+		Return result		
 	End
 End
