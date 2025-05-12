@@ -159,12 +159,10 @@ Class Map<K,V>
 			Return parent
 		End
 		
-		Method Copy:Node( parent:Node Ptr )
-			'Modified by iDkP
-			'Use pointer for passing per cascade and by reference the item to copy
-			Local node:=New Node( _key,_value,_color,parent[0] )
-			If _left node._left=_left.Copy( Varptr(node) )
-			If _right node._right=_right.Copy( Varptr(node) )
+		Method Copy:Node( parent:Node )
+			Local node:=New Node( _key,_value,_color,parent )
+			If _left node._left=_left.Copy( node )
+			If _right node._right=_right.Copy( node )
 			Return node
 		End
 	
@@ -257,7 +255,7 @@ Class Map<K,V>
 	Struct MapKeys
 	
 		Method All:KeyIterator()
-			Return New KeyIterator( _map.FirstNode() )
+			Return New KeyIterator( _map.FirstNode )
 		End
 		
 		Private
@@ -273,7 +271,7 @@ Class Map<K,V>
 	Struct MapValues
 	
 		Method All:ValueIterator()
-			Return New ValueIterator( _map.FirstNode() )
+			Return New ValueIterator( _map.FirstNode )
 		End
 		
 		Private
@@ -296,7 +294,7 @@ Class Map<K,V>
 	#end
 	
 	Method All:Iterator()
-		Return New Iterator( FirstNode() )
+		Return New Iterator( FirstNode )
 	End
 	
 	#rem monkeydoc Gets a view of the map's keys.
@@ -375,6 +373,15 @@ Class Map<K,V>
 		Local node:=FindNode( key )
 		If Not node Return Null
 		Return node._value
+	End
+	
+	Operator To:List<V>()
+		'Set a list of values (negligates the keys)
+		Local list:=New List<V>()
+		For Local item:=Eachin Self 
+			list.Add(item.Value)
+		End
+		Return list
 	End
 	
 	#rem monkeydoc Sets the value associated with a key in the map.
@@ -555,7 +562,7 @@ Class Map<K,V>
 		End 	
 		Return result	
 	End
-
+	
 	Private
 	
 	Field _root:Node
@@ -565,7 +572,7 @@ Class Map<K,V>
 		_root=root
 	End
 
-	Method LastNode:Node()
+	Property LastNode:Node() 'iDkP: passed public for special iterator, and as property for consistancy
 		If Not _root Return Null
 
 		Local node:=_root
@@ -575,7 +582,7 @@ Class Map<K,V>
 		Return node
 	End
 
-	Method FirstNode:Node()
+	Property FirstNode:Node() 'iDkP: passed to public for special iterator, and as property for consistancy
 		If Not _root Return Null
 
 		Local node:=_root
@@ -689,7 +696,7 @@ Class Map<K,V>
 		node._parent=child
 	End
 	
-	Method InsertFixup( node:Node Ptr ) 'iDkP from GaragePixe: pointer usage
+	Method InsertFixup( node:Node Ptr ) 'iDkP from GaragePixel: pointer usage
 		While node[0]._parent And node[0]._parent._color=ColorRed And node[0]._parent._parent
 			If node[0]._parent=node[0]._parent._parent._left
 				Local uncle:=node[0]._parent._parent._right
@@ -811,64 +818,5 @@ Class Map<K,V>
 			parent[0]._left=node[0]
 		End
 		InsertFixup( node )
-	End
-
-	' Extension: Sort With Filter
-	' iDkP from GaragePixel
-	' 2025-01
-	'
-	' The filter is just a Variant passed to the Sort in such way
-	' it can be within the compare function's scope. So we can use
-	' some extra parameters and tests in the compare function
-	' in order to turn it as a filter.
-	'
-	' It was an extension, so for to access to the private content,
-	' it was used Self a lot.
-	'
-	' TODO: Replace Self with the private variables?
-
-	Method Sort( filter:StackSortFilter,compare:Int( x:T,y:T ) )
-		Sort( filter,compare,0,Length-1 )
-	End
-
-	Method Sort( filter:StackSortFilter,compare:Int( x:T,y:T ),lo:Int,hi:Int )
-	
-		If hi<=lo Return
-		
-		If lo+1=hi
-			If compare( Self[hi],Self[lo] )<0 Swap( hi,lo )
-			Return
-		Endif
-		
-		Local i:=(lo+hi)/2
-		
-		If compare( Self[i],Self[lo] )<0 Swap( i,lo )
-
-		If compare( Self[hi],Self[i] )<0
-			Swap( hi,i )
-			If compare( Self[i],Self[lo] )<0 Swap( i,lo )
-		Endif
-		
-		Local x:=lo+1
-		Local y:=hi-1
-		Repeat
-			Local p:=Self[i]
-			While compare( Self[x],p )<0
-				x+=1
-			Wend
-			While compare( p,Self[y] )<0
-				y-=1
-			Wend
-			If x>y Exit
-			If x<y
-				Swap( x,y )
-				If i=x i=y Else If i=y i=x
-			Endif
-			x+=1
-			y-=1
-		Until x>y
-
-		Sort( filter,compare,lo,y )
-		Sort( filter,compare,x,hi )
 	End
 End
