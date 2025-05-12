@@ -16,7 +16,7 @@ Alias StringStack:Stack<String>
 Alias StackSortFilter:Variant 	' A variant you can pass trough the Sort function.
 								' See the Sort With Filter extension by iDkP from GaragePixel
 
-#rem monkeydoc The Stack class provides suport for dynamic arrays.
+#rem monkeydoc The Stack class provides support for dynamic arrays.
 
 A stack is an 'array like' container that grows dynamically as necessary.
 
@@ -819,15 +819,15 @@ Class Stack<T> Implements IContainer<T>
 	' iDkP from GaragePixel
 	' 2025-01
 	'
-	' The filter is just a Variant passed to the Sort in the way
-	' it can be in the compare function's scope. So we can use
+	' The filter is just a Variant passed to the Sort in such way
+	' it can be within the compare function's scope. So we can use
 	' some extra parameters and tests in the compare function
 	' in order to turn it as a filter.
 	'
 	' It was an extension, so for to access to the private content,
 	' it was used Self a lot.
 	'
-	' TODO: Replace Self with the private variables
+	' TODO: Replace Self with the private variables?
 
 	Method Sort( filter:StackSortFilter,compare:Int( x:T,y:T ) )
 		Sort( filter,compare,0,Length-1 )
