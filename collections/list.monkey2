@@ -408,7 +408,7 @@ Class List<T> Implements IContainer<T>
 
 	#rem monkeydoc Test if the list has one or two elements
 	
-	@return -1 if the last's 'some elements' but empty, one or two elements
+	@return -1 if the list's 'some elements' but empty, one or two elements
 	
 	@return 0 if the list's empty
 	
