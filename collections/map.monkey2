@@ -159,10 +159,12 @@ Class Map<K,V>
 			Return parent
 		End
 		
-		Method Copy:Node( parent:Node )
-			Local node:=New Node( _key,_value,_color,parent )
-			If _left node._left=_left.Copy( node )
-			If _right node._right=_right.Copy( node )
+		Method Copy:Node( parent:Node Ptr )
+			'Modified by iDkP
+			'Use pointer for passing per cascade and by reference the item to copy
+			Local node:=New Node( _key,_value,_color,parent[0] )
+			If _left node._left=_left.Copy( Varptr(node) )
+			If _right node._right=_right.Copy( Varptr(node) )
 			Return node
 		End
 	
@@ -255,7 +257,7 @@ Class Map<K,V>
 	Struct MapKeys
 	
 		Method All:KeyIterator()
-			Return New KeyIterator( _map.FirstNode )
+			Return New KeyIterator( _map.FirstNode() )
 		End
 		
 		Private
@@ -271,7 +273,7 @@ Class Map<K,V>
 	Struct MapValues
 	
 		Method All:ValueIterator()
-			Return New ValueIterator( _map.FirstNode )
+			Return New ValueIterator( _map.FirstNode() )
 		End
 		
 		Private
@@ -294,7 +296,7 @@ Class Map<K,V>
 	#end
 	
 	Method All:Iterator()
-		Return New Iterator( FirstNode )
+		Return New Iterator( FirstNode() )
 	End
 	
 	#rem monkeydoc Gets a view of the map's keys.
@@ -373,15 +375,6 @@ Class Map<K,V>
 		Local node:=FindNode( key )
 		If Not node Return Null
 		Return node._value
-	End
-	
-	Operator To:List<V>()
-		'Set a list of values (negligates the keys)
-		Local list:=New List<V>()
-		For Local item:=Eachin Self 
-			list.Add(item.Value)
-		End
-		Return list
 	End
 	
 	#rem monkeydoc Sets the value associated with a key in the map.
@@ -497,72 +490,6 @@ Class Map<K,V>
 		Return True
 	End
 
-	#rem monkeydoc Union: Add each keys from this (param) that exist in self
-	@param This The map to compare.
-	@param onPlace if False, returns a copy of the map, else nothing
-	#end
-	Method Append:Map<K,V>(this:Map<K,V>,onPlace:Bool=True) 'Added by iDkP from GaragePixel
-		'Sugar
-		Return Union(this,onPlace)
-	End
-	
-	#rem monkeydoc Union: Add each keys from this (param) that exist in self
-	@param This The map to compare.
-	@param onPlace if False, returns a copy of the map, else nothing
-	#end	
-	Method Union:Map<K,V>(this:Map<K,V>,onPlace:Bool=True) 'Added by iDkP from GaragePixel
-		'Add this to self
-		If onPlace 
-			For Local item:= Eachin this
-				Set(item.Key,item.Value)
-			Next
-			Return Null 
-		End
-		Local result:=Copy()
-		For Local item:= Eachin this
-			result.Set(item.Key,item.Value)
-		End
-		Return result
-	End 
-
-	#rem monkeydoc Intersect: Keep all keys from self that exist in this (param)
-	@param This The map to compare.
-	@param onPlace if False, returns a copy of the map, else nothing
-	#end	
-	Method Intersect:Map<K,V>(this:Map<K,V>, onPlace:Bool=True) 'Added by iDkP from GaragePixel
-		'Keep in self the keys that exist in this
-		If onPlace 
-			For Local item:= Eachin Self
-				If Not this.Contains(item.Key) Self.Remove(item.Key)
-			End 
-			Return Null
-		End 
-		Local result:=Copy()
-		For Local item:= Eachin result
-			If Not this.Contains(item.Key) result.Remove(item.Key)
-		End 	
-		Return result	
-	End
-
-	#rem monkeydoc Difference: Remove all keys from self that exist in this (param)
-	@param This The map to compare.
-	@param onPlace if False, returns a copy of the map, else nothing
-	#end
-	Method Diff:Map<K,V>(this:Map<K,V>, onPlace:Bool=True) 'Added by iDkP from GaragePixel
-		'Remove all keys from self that exist in this
-		If onPlace 
-			For Local item:= Eachin Self
-				If this.Contains(item.Key) Remove(item.Key)
-			End 
-			Return Null
-		End 
-		Local result:=Copy()
-		For Local item:= Eachin result
-			If this.Contains(item.Key) result.Remove(item.Key)
-		End 	
-		Return result	
-	End
-	
 	Private
 	
 	Field _root:Node
@@ -572,7 +499,7 @@ Class Map<K,V>
 		_root=root
 	End
 
-	Property LastNode:Node() 'iDkP: passed public for special iterator, and as property for consistancy
+	Method LastNode:Node()
 		If Not _root Return Null
 
 		Local node:=_root
@@ -582,7 +509,7 @@ Class Map<K,V>
 		Return node
 	End
 
-	Property FirstNode:Node() 'iDkP: passed to public for special iterator, and as property for consistancy
+	Method FirstNode:Node()
 		If Not _root Return Null
 
 		Local node:=_root
@@ -696,7 +623,7 @@ Class Map<K,V>
 		node._parent=child
 	End
 	
-	Method InsertFixup( node:Node Ptr ) 'iDkP from GaragePixel: pointer usage
+	Method InsertFixup( node:Node Ptr ) 'iDkP from GaragePixe: pointer usage
 		While node[0]._parent And node[0]._parent._color=ColorRed And node[0]._parent._parent
 			If node[0]._parent=node[0]._parent._parent._left
 				Local uncle:=node[0]._parent._parent._right
