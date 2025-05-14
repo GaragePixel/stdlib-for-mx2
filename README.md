@@ -309,31 +309,27 @@ which once thrived on the strength of Mark's innovations.
 Honor and glory to you, O Great Master!
 
 ## Contributors:
-
-Mark Sibly (blitz-research) (New Zealand)
-Skid (Vladislav Poberezhny) (russs)
-DarkTwister (Vicente Damiani Benitez) (swedish)
-Hezkore (Marcus Streicher) (uruguayan)
-RustyStriker
-MikeHart
-TheCodeRunner 
-Derron 
-skn3 (Simon Armstrong) (british)
-Seyhajin (fr)
-Nobuyuki 
-iDkP
-Adam/AdamRedwood/CallMeAdam (german)
-Danilo (german)
-DoctorWhoof (Ethernaut) present since Monkey1 era And before, adapt in October 28, 2017 the plane-demo.
-This type of community contribution served To demonstrate Monkey2's capabilities beyond 2D game development, showcasing its potential for 3D applications and providing a learning resource for other developers in the ecosystem.
-skn3 (Simon Armstrong) is indeed a contributor To the Monkey2/Wonkey ecosystem. He's from the UK and has contributed significantly to graphics-related features. His GitHub profile is https://github.com/skn3.
+- Mark Sibly (blitz-research) (New Zealand)
+- Skid (Vladislav Poberezhny) (russs)
+- DarkTwister (Vicente Damiani Benitez) (swedish)
+- Hezkore (Marcus Streicher) (uruguayan)
+- RustyStriker
+- MikeHart
+- TheCodeRunner 
+- Derron 
+- skn3 (Simon Armstrong) (british)
+- Seyhajin (fr)
+- Nobuyuki 
+- iDkP
+- Adam/AdamRedwood/CallMeAdam (german)
+- Danilo (german)
+- DoctorWhoof (Ethernaut) present since Monkey1 era And before, adapt in October 28, 2017 the plane-demo. This type of community contribution served To demonstrate Monkey2's capabilities beyond 2D game development, showcasing its potential for 3D applications and providing a learning resource for other developers in the ecosystem.
+- skn3 (Simon Armstrong) is indeed a contributor To the Monkey2/Wonkey ecosystem. He's from the UK and has contributed significantly to graphics-related features. His GitHub profile is https://github.com/skn3.
 
 ## Studios:
 
 ### Playniax - Released multiple arcade-style games using Monkey2, focusing on retro gameplay with modern technology
-		Key Product: "Alien Splatter" (2018) Key Person: Leon van Kammen Technical Notes: Leon has been a long-term advocate for Monkey2, creating numerous tutorials and examples alongside commercial products. His implementation of efficient 2D collision systems in Monkey2 influenced many other developers.
-
-
+- Key Product: "Alien Splatter" (2018) Key Person: Leon van Kammen Technical Notes: Leon has been a long-term advocate for Monkey2, creating numerous tutorials and examples alongside commercial products. His implementation of efficient 2D collision systems in Monkey2 influenced many other developers.
 
 ### Goodlookingames - Developed puzzle games for mobile platforms using Monkey2's cross-platform capabilities
 
