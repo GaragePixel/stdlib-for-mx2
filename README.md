@@ -17,6 +17,10 @@
 
 Please read the licence contained in the [LICENCE](https://github.com/GaragePixel/stdlib-for-mx2/blob/main/LICENCE) file of this distribution.
 
+- Modern C++11 backend, real GC, native threading, robust FFI, cross-platform SDL2/OpenGL rendering.
+- Rapid prototyping for desktop and native mobile without external dependencies.
+- Flexible, modular design with straightforward extension and patching.
+
 # The Project you can consult (roadmap, etc)
 
 https://github.com/users/GaragePixel/projects/2/views/3
@@ -325,7 +329,9 @@ Honor and glory to you, O Great Master!
 - Danilo (german)
 - DoctorWhoof (Ethernaut) present since Monkey1 era and before, adapt in October 28, 2017 the idiosyncratic plane-demo. This type of community contribution served To demonstrate Monkey2's capabilities beyond 2D game development, showcasing its potential for 3D applications and providing a learning resource for other developers in the ecosystem.
 - skn3 (Simon Armstrong) is indeed a contributor To the Monkey2/Wonkey ecosystem. His GitHub profile is https://github.com/skn3.
-- 
+
+---
+  
 - **Rene Damm**: Known for contributions to Unity Input System; previously active in Blitz/Monkey forums.
 - **Nil**: Alias; possibly a forum user or developer, no unique public profile found.
 - **James Boyd**: Known for indie game development and contributions in Blitz/Monkey forums.
@@ -377,9 +383,7 @@ Honor and glory to you, O Great Master!
 - **James Freeman**: Developer, some open-source projects.
 - **Jochen**: Alias, possible German developer.
 - **Aaron Woodard**: Developer, indie projects.
-- **Afan Olovcic**: Developer, some open-source repositories.
 - **MyQly**: Alias, known in Monkey2 community.
-- **Osakimov**: Developer, some GitHub presence.
 - **Dennis Rohn**: Developer, open-source contributions.
 - **Lucien Bulles**: Developer/artist, some public projects.
 - **Javier**: Too common; ambiguous.
