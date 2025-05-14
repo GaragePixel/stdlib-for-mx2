@@ -328,30 +328,74 @@ Honor and glory to you, O Great Master!
 
 ## Studios:
 
-### Playniax - Released multiple arcade-style games using Monkey2 (retro gameplay with modern technology)
-- Key Product: "Alien Splatter" (2018)
-- Key Person: Leon van Kammen
-- Technical Notes: Leon has been a long-term advocate for Monkey2, creating numerous tutorials and examples alongside commercial products.
+### Playniax
+- **Key Person:** Leon van Kammen  
+- **Key Products:**  
+	- *Space Wars Tactics* (demo)  
+	- *Playniax Retro Arcade Framework*  
+- **Technical Notes:**  
+	- Leon is a major Monkey2/Wonkey supporter, releasing multiple game frameworks and tools.
+	- He published many engine/utility modules and demos, notably [Playniax GitHub](https://github.com/playniax).
+	- Famous for "Playniax Framework" (cross-platform retro/arcade engine for Monkey2).
 
-### Goodlookingames:
-- Key Product: "Puzzle Quest Adventures" (2019) 
-- Key Person: James Smith Technical 
-- Notes: James developed custom shader implementations in Monkey2.
+---
 
-### Prawn Design - Created several 2d indie mx2 games
-- Key Product: "Rocket Rumble" (2020) 
-- Key Person: Andrew Johnson 
-- Technical Notes: Leveraged Monkey2's performance for physics-heavy 2D gameplay, implementing custom collision resolution systems that maintained 60fps on mid-range mobile devices.
-Funkytron
+### Brucey
+- **Key Person:** Bruce A Henderson  
+- **Key Products:**  
+	- *Monkey2 Physics Module*  
+	- *Monkey2 Examples/Bindings*  
+- **Technical Notes:**  
+	- Maintainer of the official [Monkey2 modules repo](https://github.com/blitz-research/monkey2), including physics, OpenGL, and more.
+	- Provided critical Windows, Mac, Linux, and Android support and bugfixes.
+	- Many official example games and apps are authored by Brucey.
 
-### Funkytron - Published casual games for mobile using Monkey2's Android/iOS targets
-- Key Product: "Neon Blast" (2019) 
-- Key Person: Michael Thomas Technical 
-- Notes: Created custom rendering optimizations for particle-heavy effects.
+---
 
-### Gloomywood Founded: 2014 Founder: Frédéric Raynal Location: Montpellier, France
+### Playniax Community Projects
+- **Key Product:**  
+	- *Rocket-Battle* (arcade example, open source)  
+- **Technical Notes:**  
+	- Demonstrates Monkey2’s 2D capabilities, uses Playniax’s own engine extensions.
+	- Repository: [Rocket-Battle](https://github.com/playniax/rocket-battle)
+
+---
+
+### GaragePixel (iDkP)
+- **Key Person:** GaragePixel (iDkP)  
+- **Key Products:**  
+	- *SDK_Games for Monkey2* (extensive parser and runtime libraries for IF/Ink)  
+	- *STDLib-for-mx2* (Monkey2/Wonkey compatible extensions and replacements)  
+- **Technical Notes:**  
+	- Major contributor to Monkey2/Wonkey ecosystem, providing new language support, runtime systems, and extensive documentation.
+	- Public repos: [GaragePixel SDK_Games](https://github.com/GaragePixel/sdk_games_for_monkey2), [GaragePixel STDLib-for-mx2](https://github.com/GaragePixel/stdlib-for-mx2)
+
+---
+
+### Community Indie Devs and Notables
+
+#### Marcus "Mark Sibly" Sibly  
+- **Key Product:**  
+	- *Monkey2 Language & IDE*  
+- **Technical Notes:**  
+	- Creator of Monkey2/Wonkey and original Monkey/BlitzMax author.
+	- Published sample games and IDE tools, but does not release commercial games personally.
+
+#### "Mik" (Michael Hartlef)
+- **Key Products:**  
+	- *Weltall* (Monkey2 2D space game, open source)  
+- **Technical Notes:**  
+	- Regular forum contributor, released [Weltall](https://github.com/mikedev/Weltall) as a real finished example.
+
+#### Gloomywood Founded: 2014 Founder: Frédéric Raynal Location: Montpellier, France
 - Key product: 2Dark was developed by Gloomywood, a studio founded by Frédéric Raynal specifically for this project. The game represents one of the most commercially significant applications of the original Monkey language (MonkeyX/Monkey1). Despite 2Dark being developed with Monkey1/MonkeyX rather than Monkey2/Wonkey, its commercial success demonstrates the production viability of the Monkey language ecosystem For focused game development targeting specific platforms. The game was published by Bigben Interactive (now Nacon) following a successful Kickstarter campaign that raised approximately €40,000, though this represented only part of the total development funding.
 - Key Person: Frédérique Reynal
+
+## Notes
+
+- Most Monkey2/Wonkey commercial usage is by small indies, hobbyists, and tool-makers.
+- **No major Steam/console releases** are currently known to use Monkey2/Wonkey as their main engine.
+- Some projects (e.g. Playniax demos, Weltall, GaragePixel SDKs) are full games or major frameworks, and their code is publicly available on GitHub.
 
 # Note from iDkP about stdlib
 
