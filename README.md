@@ -310,7 +310,6 @@ Honor and glory to you, O Great Master!
 
 ## Contributors:
 - Mark Sibly (blitz-research) (New Zealand)
-- Skid (Vladislav Poberezhny) (russs)
 - DarkTwister (Vicente Damiani Benitez) (swedish)
 - Hezkore (Marcus Streicher) (uruguayan)
 - RustyStriker
@@ -321,6 +320,7 @@ Honor and glory to you, O Great Master!
 - Seyhajin (fr)
 - Nobuyuki 
 - iDkP
+- Skid (Vladislav Poberezhny)
 - Adam/AdamRedwood/CallMeAdam (german)
 - Danilo (german)
 - DoctorWhoof (Ethernaut) present since Monkey1 era And before, adapt in October 28, 2017 the plane-demo. This type of community contribution served To demonstrate Monkey2's capabilities beyond 2D game development, showcasing its potential for 3D applications and providing a learning resource for other developers in the ecosystem.
