@@ -399,6 +399,7 @@ Honor and glory to you, O Great Master!
 - **Location:** Montpellier, France
 - **Key product:**
 	- *2Dark* was developed by Gloomywood, a studio founded by Frédéric Raynal specifically for this project. The game represents one of the most commercially significant applications of the original Monkey language (MonkeyX/Monkey1). Despite 2Dark being developed with Monkey1/MonkeyX rather than Monkey2/Wonkey, its commercial success demonstrates the production viability of the Monkey language ecosystem For focused game development targeting specific platforms. The game was published by Bigben Interactive (now Nacon) following a successful Kickstarter campaign that raised approximately €40,000, though this represented only part of the total development funding.
+- [Steam lin](https://store.steampowered.com/app/435100/2Dark/)
 - **Key Person:** Frédérique Reynal
 
 ### Shadow (Simon Armstrong)
