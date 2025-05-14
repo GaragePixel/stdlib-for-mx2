@@ -410,13 +410,14 @@ Honor and glory to you, O Great Master!
 ### Playniax
 - **Key Person:** Leon van Kammen  
 - **Key Products:**  
-	- *Space Wars Tactics* (demo)  
-	- *Playniax Retro Arcade Framework*  
+	- *Playniax Framework* (cross-platform arcade/retro engine for Monkey2/MonkeyX)
+	- *Space Wars* (arcade shooter demo, open source)
+	- *Rocket-Battle* (official example game, open source) - Repository: [Rocket-Battle](https://github.com/playniax/rocket-battle)
 - **Technical Notes:**  
-	- Leon is a major Monkey2/Wonkey supporter, releasing multiple game frameworks and tools.
-	- He published many engine/utility modules and demos, notably [Playniax GitHub](https://github.com/playniax).
-	- Famous for "Playniax Framework" (cross-platform retro/arcade engine for Monkey2).
-
+	- Leon is a major Monkey2 and MonkeyX supporter, releasing multiple frameworks, engines, and utilities.
+ 	- He published many engine/utility modules and demos, notably [Playniax GitHub](https://github.com/playniax).
+	- "Rocket-Battle" and "Space Wars" are official example projects
+ 	- Famous for "Playniax Framework" (cross-platform retro/arcade engine for Monkey2).
 ---
 
 ### Brucey
@@ -428,15 +429,6 @@ Honor and glory to you, O Great Master!
 	- Maintainer of the official [Monkey2 modules repo](https://github.com/blitz-research/monkey2), including physics, OpenGL, and more.
 	- Provided critical Windows, Mac, Linux, and Android support and bugfixes.
 	- Many official example games and apps are authored by Brucey.
-
----
-
-### Playniax Community Projects
-- **Key Product:**  
-	- *Rocket-Battle* (arcade example, open source)  
-- **Technical Notes:**  
-	- Demonstrates Monkey2’s 2D capabilities, uses Playniax’s own engine extensions.
-	- Repository: [Rocket-Battle](https://github.com/playniax/rocket-battle)
 
 ---
 
