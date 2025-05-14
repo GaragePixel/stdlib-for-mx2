@@ -390,12 +390,13 @@ Honor and glory to you, O Great Master!
 ## Notes
 
 - Most Monkey2/Wonkey commercial usage is by small indies, hobbyists, and tool-makers.
-- **No major Steam/console releases** are currently known to use Monkey2/Wonkey as their main engine.
 - Some projects (e.g. Playniax demos, Weltall, GaragePixel SDKs) are full games or major frameworks, and their code is publicly available on GitHub.
 
 ## MonkeyX / Monkey1
 
-#### Gloomywood Founded: 2014 Founder: Frédéric Raynal Location: Montpellier, France
+#### Gloomywood Founded: 2014 
+- **Founder:** Frédéric Raynal
+- **Location:** Montpellier, France
 - **Key product:**
 	- *2Dark* was developed by Gloomywood, a studio founded by Frédéric Raynal specifically for this project. The game represents one of the most commercially significant applications of the original Monkey language (MonkeyX/Monkey1). Despite 2Dark being developed with Monkey1/MonkeyX rather than Monkey2/Wonkey, its commercial success demonstrates the production viability of the Monkey language ecosystem For focused game development targeting specific platforms. The game was published by Bigben Interactive (now Nacon) following a successful Kickstarter campaign that raised approximately €40,000, though this represented only part of the total development funding.
 - **Key Person:** Frédérique Reynal
