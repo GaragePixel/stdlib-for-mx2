@@ -323,8 +323,8 @@ Honor and glory to you, O Great Master!
 - Skid (Vladislav Poberezhny)
 - Adam/AdamRedwood/CallMeAdam (german)
 - Danilo (german)
-- DoctorWhoof (Ethernaut) present since Monkey1 era And before, adapt in October 28, 2017 the plane-demo. This type of community contribution served To demonstrate Monkey2's capabilities beyond 2D game development, showcasing its potential for 3D applications and providing a learning resource for other developers in the ecosystem.
-- skn3 (Simon Armstrong) is indeed a contributor To the Monkey2/Wonkey ecosystem. He's from the UK and has contributed significantly to graphics-related features. His GitHub profile is https://github.com/skn3.
+- DoctorWhoof (Ethernaut) present since Monkey1 era and before, adapt in October 28, 2017 the idiosyncratic plane-demo. This type of community contribution served To demonstrate Monkey2's capabilities beyond 2D game development, showcasing its potential for 3D applications and providing a learning resource for other developers in the ecosystem.
+- skn3 (Simon Armstrong) is indeed a contributor To the Monkey2/Wonkey ecosystem. His GitHub profile is https://github.com/skn3.
 
 ## Studios:
 
