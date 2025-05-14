@@ -356,9 +356,8 @@ Funkytron
 - Key Person: James Smith Technical 
 - Notes: Focused on efficient mobile deployment, James developed custom shader implementations in Monkey2 that significantly improved battery performance on mobile devices.
 
-### Studio Name: Gloomywood Founded: 2014 Founder: Frédéric Raynal Location: Montpellier, France
-- Key product: 2Dark was developed by Gloomywood, a studio founded by Frédéric Raynal specifically for this project. The game represents one of the most commercially significant applications of the original Monkey language (MonkeyX/Monkey1)
-- Despite 2Dark being developed with Monkey1/MonkeyX rather than Monkey2/Wonkey, its commercial success demonstrates the production viability of the Monkey language ecosystem For focused game development targeting specific platforms. The game was published by Bigben Interactive (now Nacon) following a successful Kickstarter campaign that raised approximately €40,000, though this represented only part of the total development funding.
+### Gloomywood Founded: 2014 Founder: Frédéric Raynal Location: Montpellier, France
+- Key product: 2Dark was developed by Gloomywood, a studio founded by Frédéric Raynal specifically for this project. The game represents one of the most commercially significant applications of the original Monkey language (MonkeyX/Monkey1). Despite 2Dark being developed with Monkey1/MonkeyX rather than Monkey2/Wonkey, its commercial success demonstrates the production viability of the Monkey language ecosystem For focused game development targeting specific platforms. The game was published by Bigben Interactive (now Nacon) following a successful Kickstarter campaign that raised approximately €40,000, though this represented only part of the total development funding.
 - Key Person: Frédérique Reynal
 
 # Note from iDkP about stdlib
