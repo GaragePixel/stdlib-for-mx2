@@ -387,15 +387,69 @@ Honor and glory to you, O Great Master!
 - **Technical Notes:**  
 	- Regular forum contributor, released [Weltall](https://github.com/mikedev/Weltall) as a real finished example.
 
-#### Gloomywood Founded: 2014 Founder: Frédéric Raynal Location: Montpellier, France
-- Key product: 2Dark was developed by Gloomywood, a studio founded by Frédéric Raynal specifically for this project. The game represents one of the most commercially significant applications of the original Monkey language (MonkeyX/Monkey1). Despite 2Dark being developed with Monkey1/MonkeyX rather than Monkey2/Wonkey, its commercial success demonstrates the production viability of the Monkey language ecosystem For focused game development targeting specific platforms. The game was published by Bigben Interactive (now Nacon) following a successful Kickstarter campaign that raised approximately €40,000, though this represented only part of the total development funding.
-- Key Person: Frédérique Reynal
-
 ## Notes
 
 - Most Monkey2/Wonkey commercial usage is by small indies, hobbyists, and tool-makers.
 - **No major Steam/console releases** are currently known to use Monkey2/Wonkey as their main engine.
 - Some projects (e.g. Playniax demos, Weltall, GaragePixel SDKs) are full games or major frameworks, and their code is publicly available on GitHub.
+
+## MonkeyX / Monkey1
+
+#### Gloomywood Founded: 2014 Founder: Frédéric Raynal Location: Montpellier, France
+- **Key product:**
+	- *2Dark* was developed by Gloomywood, a studio founded by Frédéric Raynal specifically for this project. The game represents one of the most commercially significant applications of the original Monkey language (MonkeyX/Monkey1). Despite 2Dark being developed with Monkey1/MonkeyX rather than Monkey2/Wonkey, its commercial success demonstrates the production viability of the Monkey language ecosystem For focused game development targeting specific platforms. The game was published by Bigben Interactive (now Nacon) following a successful Kickstarter campaign that raised approximately €40,000, though this represented only part of the total development funding.
+- **Key Person:** Frédérique Reynal
+
+### Shadow (Simon Armstrong)
+- **Key Products:**  
+	- *Bananen Joe* (Monkey1, 2011)  
+	- *Shadow's Retro Platformer Engine* (Monkey1/MonkeyX)  
+- **Technical Notes:**  
+	- Early adopter and forum contributor, released several games and engines for Monkey1/MonkeyX.
+
+---
+
+### Playniax (MonkeyX)
+- **Key Products:**  
+	- *Playniax Framework for MonkeyX*  
+	- *Gravitrix* (MonkeyX, 2013)  
+- **Technical Notes:**  
+	- Multiple frameworks and 2D/3D engines for Monkey1 and MonkeyX.
+
+---
+
+### Blitzwerk (Denis Cerny)
+- **Key Products:**  
+	- *Space Invaders Clone* (MonkeyX)  
+	- *Platformer Engine* (MonkeyX)  
+- **Technical Notes:**  
+	- Open source examples, tools, and code on the old MonkeyX forums and GitHub.
+
+---
+
+### SteeG (Stefan Egger)
+- **Key Products:**  
+	- *Several Puzzle and Platform Games* (MonkeyX)  
+- **Technical Notes:**  
+	- Regular MonkeyX/Monkey1 contributor, released finished games and engines for educational use.
+
+---
+
+### Mark Sibly  
+- **Key Products:**  
+	- *Monkey1 Language and Tools*  
+- **Technical Notes:**  
+	- Founder and primary creator of Monkey1/MonkeyX and Blitz series.
+
+---
+
+## Notes
+
+- **Monkey2/Wonkey** projects tend to be modern, using C++11 backends, and target cross-platform desktop and mobile natively.
+- **Monkey1/MonkeyX** projects are historically Flash, HTML5, and desktop, with a strong retro/indie focus.
+- Many early indie games, frameworks, and demos for Monkey1/MonkeyX can still be found on the old [monkeycoder.co.nz](https://web.archive.org/web/20150906105334/http://www.monkeycoder.co.nz/) forums and [GitHub](https://github.com/search?q=monkeyx).
+- Notable others: "Bignic" (known for music tools and simple games), "MauroG" (experimental 3D engines), "BabaYaga" (various small games and experiments).
+- Some games/products were demos, frameworks, or educational and not always commercial releases.
 
 # Note from iDkP about stdlib
 
