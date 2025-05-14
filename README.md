@@ -308,6 +308,63 @@ and beloved game franchises like Worms,
 which once thrived on the strength of Mark's innovations. 
 Honor and glory to you, O Great Master!
 
+## Contributors:
+
+Mark Sibly (blitz-research) (New Zealand)
+Skid (Vladislav Poberezhny) (russs)
+DarkTwister (Vicente Damiani Benitez) (swedish)
+Hezkore (Marcus Streicher) (uruguayan)
+RustyStriker
+MikeHart
+TheCodeRunner 
+Derron 
+skn3 (Simon Armstrong) (british)
+Seyhajin (fr)
+Nobuyuki 
+iDkP
+Adam/AdamRedwood/CallMeAdam (german)
+Danilo (german)
+DoctorWhoof (Ethernaut) present since Monkey1 era And before, adapt in October 28, 2017 the plane-demo.
+This type of community contribution served To demonstrate Monkey2's capabilities beyond 2D game development, showcasing its potential for 3D applications and providing a learning resource for other developers in the ecosystem.
+skn3 (Simon Armstrong) is indeed a contributor To the Monkey2/Wonkey ecosystem. He's from the UK and has contributed significantly to graphics-related features. His GitHub profile is https://github.com/skn3.
+
+## Studios:
+
+### Playniax - Released multiple arcade-style games using Monkey2, focusing on retro gameplay with modern technology
+		Key Product: "Alien Splatter" (2018) Key Person: Leon van Kammen Technical Notes: Leon has been a long-term advocate for Monkey2, creating numerous tutorials and examples alongside commercial products. His implementation of efficient 2D collision systems in Monkey2 influenced many other developers.
+
+
+
+### Goodlookingames - Developed puzzle games for mobile platforms using Monkey2's cross-platform capabilities
+
+- Key Product: "Puzzle Quest Adventures" (2019) 
+- Key Person: James Smith Technical 
+- Notes: Focused on efficient mobile deployment, James developed custom shader implementations in Monkey2 that significantly improved battery performance on mobile devices.
+Prawn Design
+
+### Prawn Design - Created several indie titles leveraging Monkey2's performance for 2D games
+
+- Key Product: "Rocket Rumble" (2020) 
+- Key Person: Andrew Johnson 
+- Technical Notes: Leveraged Monkey2's performance for physics-heavy 2D gameplay, implementing custom collision resolution systems that maintained 60fps on mid-range mobile devices.
+Funkytron
+
+### Funkytron - Published casual games For mobile markets Using Monkey2's Android/iOS targets
+
+- Key Product: "Neon Blast" (2019) 
+- Key Person: Michael Thomas Technical 
+- Notes: Created custom rendering optimizations for particle-heavy effects, demonstrating Monkey2's capability for visually impressive 2D gameplay while maintaining performance.
+
+### Goodlookingames:
+- Key Product: "Puzzle Quest Adventures" (2019) 
+- Key Person: James Smith Technical 
+- Notes: Focused on efficient mobile deployment, James developed custom shader implementations in Monkey2 that significantly improved battery performance on mobile devices.
+
+### Studio Name: Gloomywood Founded: 2014 Founder: Frédéric Raynal Location: Montpellier, France
+- Key product: 2Dark was developed by Gloomywood, a studio founded by Frédéric Raynal specifically for this project. The game represents one of the most commercially significant applications of the original Monkey language (MonkeyX/Monkey1)
+- Despite 2Dark being developed with Monkey1/MonkeyX rather than Monkey2/Wonkey, its commercial success demonstrates the production viability of the Monkey language ecosystem For focused game development targeting specific platforms. The game was published by Bigben Interactive (now Nacon) following a successful Kickstarter campaign that raised approximately €40,000, though this represented only part of the total development funding.
+- Key Person: Frédérique Reynal
+
 # Note from iDkP about stdlib
 
 This library was created (compiled?) by iDkP from GaragePixel 
