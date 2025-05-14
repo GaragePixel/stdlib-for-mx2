@@ -11,6 +11,8 @@ Namespace stdlib.math
 #Import "algebraic/vectorials/types/vec3"
 #Import "algebraic/vectorials/types/vec4"
 
+#Import "algebraic/vectorials/types/rect8"
+
 #Import "algebraic/vectorials/coordinates/axis"
 
 #Import "algebraic/vectorials/graphics/dithermatrix"
