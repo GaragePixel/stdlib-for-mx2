@@ -328,31 +328,26 @@ Honor and glory to you, O Great Master!
 
 ## Studios:
 
-### Playniax - Released multiple arcade-style games using Monkey2, focusing on retro gameplay with modern technology
+### Playniax - Released multiple arcade-style games using Monkey2 (retro gameplay with modern technology)
 - Key Product: "Alien Splatter" (2018)
-- Key Person: Leon van Kammen Technical Notes: Leon has been a long-term advocate for Monkey2, creating numerous tutorials and examples alongside commercial products. His implementation of efficient 2D collision systems in Monkey2 influenced many other developers.
+- Key Person: Leon van Kammen
+- Technical Notes: Leon has been a long-term advocate for Monkey2, creating numerous tutorials and examples alongside commercial products.
 
-### Goodlookingames - Developed puzzle games for mobile platforms using Monkey2's cross-platform capabilities
+### Goodlookingames:
 - Key Product: "Puzzle Quest Adventures" (2019) 
 - Key Person: James Smith Technical 
-- Notes: Focused on efficient mobile deployment, James developed custom shader implementations in Monkey2 that significantly improved battery performance on mobile devices.
-Prawn Design
+- Notes: James developed custom shader implementations in Monkey2.
 
-### Prawn Design - Created several indie titles leveraging Monkey2's performance for 2D games
+### Prawn Design - Created several 2d indie mx2 games
 - Key Product: "Rocket Rumble" (2020) 
 - Key Person: Andrew Johnson 
 - Technical Notes: Leveraged Monkey2's performance for physics-heavy 2D gameplay, implementing custom collision resolution systems that maintained 60fps on mid-range mobile devices.
 Funkytron
 
-### Funkytron - Published casual games For mobile markets Using Monkey2's Android/iOS targets
+### Funkytron - Published casual games for mobile using Monkey2's Android/iOS targets
 - Key Product: "Neon Blast" (2019) 
 - Key Person: Michael Thomas Technical 
-- Notes: Created custom rendering optimizations for particle-heavy effects, demonstrating Monkey2's capability for visually impressive 2D gameplay while maintaining performance.
-
-### Goodlookingames:
-- Key Product: "Puzzle Quest Adventures" (2019) 
-- Key Person: James Smith Technical 
-- Notes: Focused on efficient mobile deployment, James developed custom shader implementations in Monkey2 that significantly improved battery performance on mobile devices.
+- Notes: Created custom rendering optimizations for particle-heavy effects.
 
 ### Gloomywood Founded: 2014 Founder: Frédéric Raynal Location: Montpellier, France
 - Key product: 2Dark was developed by Gloomywood, a studio founded by Frédéric Raynal specifically for this project. The game represents one of the most commercially significant applications of the original Monkey language (MonkeyX/Monkey1). Despite 2Dark being developed with Monkey1/MonkeyX rather than Monkey2/Wonkey, its commercial success demonstrates the production viability of the Monkey language ecosystem For focused game development targeting specific platforms. The game was published by Bigben Interactive (now Nacon) following a successful Kickstarter campaign that raised approximately €40,000, though this represented only part of the total development funding.
