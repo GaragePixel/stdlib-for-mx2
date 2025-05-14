@@ -75,7 +75,7 @@ Alias Rect8s:Rect8<Short>
 
 #rem monkeydoc Convenience type alias for Rect8\<Long\>.
 #end
-Alias Rect8l:Rect8<Long>
+'Alias Rect8l:Rect8<Long>
 
 #rem monkeydoc Convenience type alias for Rect8\<Float\>.
 #end
@@ -83,7 +83,7 @@ Alias Rect8f:Rect8<Float>
 
 #rem monkeydoc Convenience type alias for Rect8\<Double\>.
 #end
-Alias Rect8d:Rect8<Double>
+'Alias Rect8d:Rect8<Double>
 
 '========================================================================================
 '------------------------------------------------------------------------------ STRUCT
