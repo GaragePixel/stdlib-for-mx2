@@ -325,6 +325,81 @@ Honor and glory to you, O Great Master!
 - Danilo (german)
 - DoctorWhoof (Ethernaut) present since Monkey1 era and before, adapt in October 28, 2017 the idiosyncratic plane-demo. This type of community contribution served To demonstrate Monkey2's capabilities beyond 2D game development, showcasing its potential for 3D applications and providing a learning resource for other developers in the ecosystem.
 - skn3 (Simon Armstrong) is indeed a contributor To the Monkey2/Wonkey ecosystem. His GitHub profile is https://github.com/skn3.
+- 
+- **Rene Damm**: Known for contributions to Unity Input System; previously active in Blitz/Monkey forums.
+- **Nil**: Alias; possibly a forum user or developer, no unique public profile found.
+- **James Boyd**: Known for indie game development and contributions in Blitz/Monkey forums.
+- **Pharmhaus**: Alias, likely a developer or artist in the indie game community.
+- **Peter Rigby**: Blitz3D developer, early supporter of MonkeyX.
+- **kmac**: Alias, possibly a game developer or scripter; minimal public info.
+- **Thomas Finnerup**: Danish developer, contributed to Monkey community projects.
+- **Kraut Apps**: German indie studio, released games using MonkeyX.
+- **Turgut Temucin**: Known as "Turgut"; contributed to Blitz/Monkey ecosystem.
+- **Boz**: Alias, known for technical posts on Monkey2 forums.
+- **Phil7**: Alias, forum user and library contributor.
+- **starfruit**: Alias, possible contributor to graphics or audio libs.
+- **Jonathan Pittock**: Developer; has open-source projects and games in MonkeyX.
+- **Lee Wade**: Game developer, possibly contributed to Blitz/MonkeyX.
+- **Amon**: Alias, forum user, possibly a programmer or artist.
+- **Anatol Bogun**: Developer, active in open-source and indie game circles.
+- **Erik Thon**: Known as "ErikT"; contributed to Blitz and MonkeyX.
+- **Eric Stout**: Game developer, possible contributor to Blitz/MonkeyX.
+- **C.E.**: Initials only; ambiguous identity.
+- **Jules Duquette**: Developer, some activity in retro game scenes.
+- **Rajasekaran Senthil Kumaran**: Developer, open-source contributor (possible GitHub presence).
+- **Alan Purdom**: Game developer, retro forums.
+- **Christian Leth Jeppesen**: Danish developer, open-source contributor.
+- **Jon Decker**: Developer, involved in indie or game engine projects.
+- **Jean-Marc "JIHEM" QUÉRÉ**: French developer, active in retro and MonkeyX communities.
+- **Roger Lockerbie**: Developer, some open-source activity.
+- **Philippe Back**: Belgian developer, contributing to Blitz/MonkeyX.
+- **Jesse M Perez**: Indie developer, possible MonkeyX activity.
+- **iDkP**: Indie developer, Blitz3d/MonkeyX/Monkey2 supporter and libraries' contributor.
+- **Hotcakes**: Alias, known on Monkey2 forums.
+- **Paul Apgar**: Known for technical posts and library development.
+- **Kirsty**: Alias, possibly a developer or community member.
+- **Antony Wells**: Developer, open-source contributor.
+- **Pierrou**: Alias, graphics or audio library contributor.
+- **Felipe Alfonso**: Game developer, some Blitz/MonkeyX activity.
+- **Alan Broad**: Retro game developer, possible MonkeyX forum user.
+- **Abe Noll**: Developer, open-source projects.
+- **aleana**: Alias, forum user or artist.
+- **Jean-Luc Addams**: Retro developer, may have contributed to Blitz scene.
+- **Russell Palmer**: Developer, possible Blitz/MonkeyX activity.
+- **Aroldo Carvalho**: Developer, open-source libraries.
+- **Arthur**: Common, ambiguous.
+- **Daniele Prandini**: Developer, open-source and indie projects.
+- **Anthony Diamond**: Developer, forum user.
+- **Mario Givency**: Indie developer, some public code/projects.
+- **Jimmy Söderman Sers**: Swedish developer, open-source contributions.
+- **Adam Myatt**: Developer, possible MonkeyX community member.
+- **Mark Cooper**: Developer, ambiguous due to commonality.
+- **James Freeman**: Developer, some open-source projects.
+- **Jochen**: Alias, possible German developer.
+- **Aaron Woodard**: Developer, indie projects.
+- **Afan Olovcic**: Developer, some open-source repositories.
+- **MyQly**: Alias, known in Monkey2 community.
+- **Osakimov**: Developer, some GitHub presence.
+- **Dennis Rohn**: Developer, open-source contributions.
+- **Lucien Bulles**: Developer/artist, some public projects.
+- **Javier**: Too common; ambiguous.
+- **Richard Keam**: Developer, Blitz/MonkeyX forums.
+- **RenK**: Alias, forum user.
+- **Hezkore**: Known for game development tools and open-source libs.
+- **Bill Murray**: Unlikely the actor; developer with open-source activity.
+- **Richard Betson**: Developer, technical posts in Blitz/MonkeyX.
+- **Danilo**: Senior developer, major contributor to Wonkey (ex-Monkey2).
+- **Robinson Taylor**: Developer, indie projects.
+- **Diffrenzy**: Alias, graphics/audio developer.
+- **Catalin Lucaciu**: Developer, open-source projects.
+- **Lars Kristian Gretnes**: Norwegian developer, indie games.
+- **Ole Jostein Røtne**: Norwegian developer, open-source activity.
+- **alban read**: Developer, forums and open-source.
+- **Mark Mcvittie**: Developer, Blitz/Monkey community.
+- **York Burkhardt**: Developer, indie games.
+- **Chris B**: Alias, Blitz/MonkeyX forum user.
+- **Lee Murphy**: Developer, some open-source contributions.
+- **Carl Read**: Developer, possible Blitz/MonkeyX community member.
 
 ## Studios:
 
