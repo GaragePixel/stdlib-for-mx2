@@ -20,7 +20,7 @@ Alias RectLib<T>:stdlib.math.types.Rect<T>
 '----------------------------------------------------------------------------------------
 '----------------------------------------------------------------------------------------
 ' Aida.std.geom
-'				 						Rect8
+'				 						Rect9
 '
 '----------------------------------------------------------------------------------------
 '----------------------------------------------------------------------------------------
@@ -31,12 +31,12 @@ Alias RectLib<T>:stdlib.math.types.Rect<T>
 
 '----------------------------------------------------------------------------------------
 
-	The Rect8 class provides support for manipulating 
+	The Rect9 class provides support for manipulating 
 	rectangular regions with nine sub regions.
 
 	Very condensed technical information from the author:
 
-		Rect8/Box8/Pad and other usage names have been part of my structures for decades. 
+		Rect9/Box9/Pad and other usage names have been part of my structures for decades. 
 		In 2021 I came to rewrite it once again, using my latest techniques, 
 		to arrive at modeling the problem with only two rectangles; 
 		one for the outside, another for the inside, 
@@ -55,41 +55,34 @@ Alias RectLib<T>:stdlib.math.types.Rect<T>
 #end
 
 '========================================================================================
-'------------------------------------------------------------------------------ IMPORTS
-'========================================================================================
-
-'#Import "<mojo>"
-'#Import "<monkey>"
-
-'========================================================================================
 '------------------------------------------------------------------------------ ALIASES
 '========================================================================================
 
-#rem monkeydoc Convenience type alias for Rect8\<Int\>.
+#rem monkeydoc Convenience type alias for Rect9\<Int\>.
 #end
-Alias Rect8i:Rect8<Int>
+Alias Rect9i:Rect9<Int>
 
-#rem monkeydoc Convenience type alias for Rect8\<Short\>.
+#rem monkeydoc Convenience type alias for Rect9\<Short\>.
 #end
-Alias Rect8s:Rect8<Short>
+'Alias Rect9s:Rect9<Short>
 
-#rem monkeydoc Convenience type alias for Rect8\<Long\>.
+#rem monkeydoc Convenience type alias for Rect9\<Long\>.
 #end
-'Alias Rect8l:Rect8<Long>
+'Alias Rect9l:Rect9<Long>
 
-#rem monkeydoc Convenience type alias for Rect8\<Float\>.
+#rem monkeydoc Convenience type alias for Rect9\<Float\>.
 #end
-Alias Rect8f:Rect8<Float>
+Alias Rect9f:Rect9<Float>
 
-#rem monkeydoc Convenience type alias for Rect8\<Double\>.
+#rem monkeydoc Convenience type alias for Rect9\<Double\>.
 #end
-'Alias Rect8d:Rect8<Double>
+'Alias Rect9d:Rect9<Double>
 
 '========================================================================================
 '------------------------------------------------------------------------------ STRUCT
 '========================================================================================
 
-#rem monkeydoc The Rect8 class provides support for manipulating rectangular regions
+#rem monkeydoc The Rect9 class provides support for manipulating rectangular regions
 with nine sub regions.
 
 This object can to be called "pad". 
@@ -99,7 +92,7 @@ from the rect's border (relative coordinates)
 or from the absolute coordinates
 of the "margins-rect" within the rect.
 
-Rect8 provide the "pad"'s properties in order to manipulate
+Rect9 provide the "pad"'s properties in order to manipulate
 the margins-rect with absolute coordinates.
 For the relative coordinates, the vocabulary is about
 "padding".
@@ -123,10 +116,10 @@ the word "margins".
 	-> 	Access around the margins, margins' regions, 
 		margins' contains and other tests -> "Corners"
 		
-	->	The "outter-rect" is the Rect8 aera itself, it use
+	->	The "outter-rect" is the Rect9 aera itself, it use
 		no prefixe to manipulate it. Exemple ->  
 		Origine/Left/Contains is used to manipulate the 
-		rect8's outter-rect's aera directly.
+		rect9's outter-rect's aera directly.
 
 		   				   		Top
 		  						/\
@@ -197,10 +190,10 @@ but 51 write-able properties and 35 read-only properties.
 
 The most is programmed in this 86 properties,
 so, against the smallest memory print, the cost is
-some calculation times, keeped to reach the optimal
+some calculation times, kept to reach the optimal
 performances by the extreme binding of the computations.
 	
-Rect8 defines 29 operators, 28 pseudo-operators 
+Rect9 defines 29 operators, 28 pseudo-operators 
 (func operators), 73 public functions, 
 11 private functions and 7 constructors.
 	
@@ -211,20 +204,20 @@ It's a compromize between memory and calculations.
 Also, everything is automatic.
 		
 #end
-Struct Rect8<T>
+Struct Rect9<T>
 	
 	'----------------------------------------------------
 	'---------------------------------------------------- Constructors
 	'----------------------------------------------------
 	Public
 	'----------------------------------------------------
-	#rem monkeydoc Creates a new Rect8.
+	#rem monkeydoc Creates a new Rect9.
 	#end
 	Method New()
 		Init()
 	End	
 	
-	#rem monkeydoc Creates a new Rect8.
+	#rem monkeydoc Creates a new Rect9.
 	
 	@param rect object from the Rect class.
 	
@@ -245,7 +238,7 @@ Struct Rect8<T>
 		Init(padLeft,padTop,padRight,padBottom)	
 	End 
 
-	#rem monkeydoc Creates a new Rect8.
+	#rem monkeydoc Creates a new Rect9.
 	
 	@param min the 
 	
@@ -297,7 +290,7 @@ Struct Rect8<T>
 		Init(padLeft,padTop,padRight,padBottom)				
 	End	
 
-	#rem monkeydoc Creates a new Rect8.
+	#rem monkeydoc Creates a new Rect9.
 	
 	@param paddings the 4 values padding Left, Top, 
 	Right, Bottom in a Vec4.
@@ -318,21 +311,21 @@ Struct Rect8<T>
 	'---------------------------------------------------- Duplicators
 	'----------------------------------------------------	
 	
-	#rem monkeydoc Duplicate the rect8
+	#rem monkeydoc Duplicate the Rect9
 	#end	
-	Method Dup:Rect8<T>()
+	Method Dup:Rect9<T>()
 		' Deprecated (iDkP 2025-05-14)
 		' "Dup" is not really appreciated but used by Mark... so added.
 		Return Duplicate() ' <-- Pleases, uses this one instead.
 	End 
 	
-	Method Duplicate:Rect8<T>()
+	Method Duplicate:Rect9<T>()
 		' Deprecated (iDkP 2025-05-14)
-		Return New Rect8<T>(min,max,_paddingLeft,_paddingTop,_paddingRight,_paddingBottom)
+		Return New Rect9<T>(min,max,_paddingLeft,_paddingTop,_paddingRight,_paddingBottom)
 	End 	
 
-	Method Copy:Rect8<T>()
-		Return New Rect8<T>(min,max,_paddingLeft,_paddingTop,_paddingRight,_paddingBottom)
+	Method Copy:Rect9<T>()
+		Return New Rect9<T>(min,max,_paddingLeft,_paddingTop,_paddingRight,_paddingBottom)
 	End
 
 	'----------------------------------------------------
@@ -369,63 +362,63 @@ Struct Rect8<T>
 	'---------------------------------------------------- Convertors
 	'----------------------------------------------------	
 	
-	#rem monkeydoc Converts the rect8 to a rect8 of a different type.
+	#rem monkeydoc Converts the rect9 to a rect9 of a different type.
 	#end
-	Operator To<C>:Rect8<C>()
-		Return New Rect8<C>(New Rect(_rect0.min.x,_rect0.min.y,_rect0.max.x,_rect0.max.y),PaddingLeft,PaddingTop,PaddingRight,PaddingBottom)
+	Operator To<C>:Rect9<C>()
+		Return New Rect9<C>(New Rect(_rect0.min.x,_rect0.min.y,_rect0.max.x,_rect0.max.y),PaddingLeft,PaddingTop,PaddingRight,PaddingBottom)
 	End
 	
-	#rem monkeydoc Converts the rect8 to a rect of a different type.
+	#rem monkeydoc Converts the rect9 to a rect of a different type.
 	#end
 	Operator To<C>:Rect<C>()
 		Return New Rect<C>( min.x,min.y,max.x,max.y )
 	End
 	
-	#rem  monkeydoc Converts the rect8 to a printable string.
+	#rem  monkeydoc Converts the rect9 to a printable string.
 	#end
 	Operator To:String()
-		Return "Rect8("+_rect0.min.x+","+_rect0.min.y+","+_rect0.max.x+","+_rect0.max.y+","+PaddingLeft+","+PaddingTop+","+PaddingRight+","+PaddingBottom+")"
+		Return "Rect9("+_rect0.min.x+","+_rect0.min.y+","+_rect0.max.x+","+_rect0.max.y+","+PaddingLeft+","+PaddingTop+","+PaddingRight+","+PaddingBottom+")"
 	End	
 
 	'---------------------------------------------------- 
-	'---------------------------------------------------- Rect8 to Vec2
+	'---------------------------------------------------- Rect9 to Vec2
 	'---------------------------------------------------- Operators : Binary operators		
 	'---------------------------------------------------- 		
 	
-	#rem monkeydoc Adds a vector to the rect8 and returns the result.
+	#rem monkeydoc Adds a vector to the rect9 and returns the result.
 	#end
-	Operator+:Rect8( v:Vec2<T> )
-		Local r:=New Rect8( 	_rect0.min+v,_rect0.max+v,
+	Operator+:Rect9( v:Vec2<T> )
+		Local r:=New Rect9( 	_rect0.min+v,_rect0.max+v,
 								_paddingLeft,_paddingTop,_paddingRight,_paddingBottom )
 		r.Update()
 		r.Validate()
 		Return r
 	End
 	
-	#rem monkeydoc Subtracts a vector from the rect8 and returns the result.
+	#rem monkeydoc Subtracts a vector from the rect9 and returns the result.
 	#end
-	Operator-:Rect8( v:Vec2<T> )
-		Local r:=New Rect8( 	_rect0.min-v,_rect0.max-v,
+	Operator-:Rect9( v:Vec2<T> )
+		Local r:=New Rect9( 	_rect0.min-v,_rect0.max-v,
 								_paddingLeft,_paddingTop,_paddingRight,_paddingBottom )
 		r.Update()
 		r.Validate()
 		Return r
 	End
 		
-	#rem monkeydoc Multiples the rect8 by a vector and returns the result.
+	#rem monkeydoc Multiples the rect9 by a vector and returns the result.
 	#end
-	Operator*:Rect8( v:Vec2<T> )
-		Local r:=New Rect8( 	_rect0.min.x*v.x,_rect0.min.y*v.y,_rect0.max.x*v.x,_rect0.max.y*v.y,
+	Operator*:Rect9( v:Vec2<T> )
+		Local r:=New Rect9( 	_rect0.min.x*v.x,_rect0.min.y*v.y,_rect0.max.x*v.x,_rect0.max.y*v.y,
 								_paddingLeft,_paddingTop,_paddingRight,_paddingBottom )
 		r.Update()
 		r.Validate()
 		Return r
 	End
 	
-	#rem monkeydoc Divides the rect8 by a vector and returns the result.
+	#rem monkeydoc Divides the rect9 by a vector and returns the result.
 	#end
-	Operator/:Rect8( v:Vec2<T> )
-		Local r:=New Rect8( 	_rect0.min.x/v.x,_rect0.min.y/v.y,_rect0.max.x/v.x,_rect0.max.y/v.y,
+	Operator/:Rect9( v:Vec2<T> )
+		Local r:=New Rect9( 	_rect0.min.x/v.x,_rect0.min.y/v.y,_rect0.max.x/v.x,_rect0.max.y/v.y,
 								_paddingLeft,_paddingTop,_paddingRight,_paddingBottom )
 		r.Update()
 		r.Validate()
@@ -433,11 +426,11 @@ Struct Rect8<T>
 	End
 	
 	'---------------------------------------------------- 
-	'---------------------------------------------------- Rect8 to Vec2
+	'---------------------------------------------------- Rect9 to Vec2
 	'---------------------------------------------------- Operators : Assignment operators		
 	'---------------------------------------------------- 			
 
-	#rem monkeydoc Multiples the rect8 by a vector.
+	#rem monkeydoc Multiples the rect9 by a vector.
 	#end
 	Operator*=( v:Vec2<T> )
 		_rect0.min*=v
@@ -446,7 +439,7 @@ Struct Rect8<T>
 		Validate()
 	End
 	
-	#rem monkeydoc Divides the rect8 by a vector.
+	#rem monkeydoc Divides the rect9 by a vector.
 	#end
 	Operator/=( v:Vec2<T> )
 		_rect0.min/=v
@@ -455,7 +448,7 @@ Struct Rect8<T>
 		Validate()
 	End
 	
-	#rem monkeydoc Adds a vector to the rect8.
+	#rem monkeydoc Adds a vector to the rect9.
 	#end
 	Operator+=( v:Vec2<T> )
 		_rect0.min+=v
@@ -464,7 +457,7 @@ Struct Rect8<T>
 		Validate()
 	End
 	
-	#rem monkeydoc Subtracts a vector from the rect8.
+	#rem monkeydoc Subtracts a vector from the rect9.
 	#end
 	Operator-=( v:Vec2<T> )
 		_rect0.min-=v
@@ -474,28 +467,28 @@ Struct Rect8<T>
 	End
 	
 	'---------------------------------------------------- 
-	'---------------------------------------------------- Rect8 to Rect
+	'---------------------------------------------------- Rect9 to Rect
 	'---------------------------------------------------- Operators : Unary operators		
 	'---------------------------------------------------- 	
 
-	#rem monkeydoc Adds another rect to the rect8 and returns the result.
+	#rem monkeydoc Adds another rect to the rect9 and returns the result.
 	#end
 	Operator+:RectLib<T>( r:RectLib<T> )
 		Return New RectLib<T>( _rect0.min+r.min,_rect0.max+r.max )
 	End
 	
-	#rem monkeydoc Subtracts another rect from the rect8 and returns the result.
+	#rem monkeydoc Subtracts another rect from the rect9 and returns the result.
 	#end
 	Operator-:RectLib<T>( r:RectLib<T> )
 		Return New RectLib<T>( _rect0.min-r.min,_rect0.max-r.max )
 	End
 	
 	'---------------------------------------------------- 
-	'---------------------------------------------------- Rect8 to Rect
+	'---------------------------------------------------- Rect9 to Rect
 	'---------------------------------------------------- Operators : Binary operators		
 	'---------------------------------------------------- 	
 	
-	#rem monkeydoc Returns the intersection of the rect8 
+	#rem monkeydoc Returns the intersection of the rect9 
 	with another rect (intersected).
 	#end
 	Operator&:RectLib<T>( r:RectLib<T> )
@@ -506,14 +499,14 @@ Struct Rect8<T>
 		Return New RectLib<T>( x0,y0,x1,y1 )
 	End
 	
-	#rem monkeydoc Returns the intersection of the rect8 
+	#rem monkeydoc Returns the intersection of the rect9 
 	with another rect (intersected).
 	#end
 	Method Intersected:RectLib<T>( r:RectLib<T> )
 		Return Self&r
 	End	
 	
-	#rem monkeydoc Returns the union of the rect8 
+	#rem monkeydoc Returns the union of the rect9 
 	with another rect (united).
 	#end	
 	Operator|:RectLib<T>( r:RectLib<T> )
@@ -524,7 +517,7 @@ Struct Rect8<T>
 		Return New RectLib<T>( x0,y0,x1,y1 )
 	End	
 	
-	#rem monkeydoc Returns the union of the rect8 
+	#rem monkeydoc Returns the union of the rect9 
 	with another rect (united).
 	#end
 	Method United:RectLib<T>( r:RectLib<T> )
@@ -539,14 +532,14 @@ Struct Rect8<T>
 	'---------------------------------------------------- Operators : Difference
 	'----------------------------------------------------
 	
-	#rem monkeydoc Returns true if the Rect8 is different to the rect r, 
+	#rem monkeydoc Returns true if the Rect9 is different to the rect r, 
 	otherwise returns false.
 	#end
 	Operator<>:Bool( r:RectLib<T> )
 		Return _rect0<>r ?Else False
 	End
 
-	#rem monkeydoc Returns true if the Rect8.margins is different to the rect r, 
+	#rem monkeydoc Returns true if the Rect9.margins is different to the rect r, 
 	otherwise returns false.
 	#end
 	Method MarginsIsDiff:Bool( r:RectLib<T> )
@@ -558,21 +551,21 @@ Struct Rect8<T>
 	'---------------------------------------------------- Operators : Assignment operators		
 	'---------------------------------------------------- 	
 	
-	#rem monkeydoc Adds another rect to the rect8.
+	#rem monkeydoc Adds another rect to the rect9.
 	#end
 	Operator+=( r:RectLib<T> )
 		_rect0.min+=r.min
 		_rect0.max+=r.max
 	End
 	
-	#rem monkeydoc Subtracts another rect from the rect8.
+	#rem monkeydoc Subtracts another rect from the rect9.
 	#end
 	Operator-=( r:RectLib<T> )
 		_rect0.min-=r.min
 		_rect0.max-=r.max
 	End
 	
-	#rem monkeydoc Intersects the rect8 with another rect.
+	#rem monkeydoc Intersects the rect9 with another rect.
 	#end
 	Operator&=( r:RectLib<T> )
 		_rect0.min.x=Max( _rect0.min.x,r.min.x )
@@ -581,7 +574,7 @@ Struct Rect8<T>
 		_rect0.max.y=Min( _rect0.max.y,r.max.y )
 	End
 	
-	#rem monkeydoc Unions the rect8 with another rect.
+	#rem monkeydoc Unions the rect9 with another rect.
 	#end
 	Operator|=( r:RectLib<T> )
 		_rect0.min.x=Min( _rect0.min.x,r.min.x )
@@ -591,24 +584,24 @@ Struct Rect8<T>
 	End	
 	
 	'---------------------------------------------------- 
-	'---------------------------------------------------- Rect8 to Rect8
+	'---------------------------------------------------- Rect9 to Rect9
 	'---------------------------------------------------- Operators : Unary operators	
 	'---------------------------------------------------- 	
 	
-	#rem monkeydoc Adds another rect8 to the rect8 and returns the result.
+	#rem monkeydoc Adds another rect9 to the rect9 and returns the result.
 	#end
-	Operator+:Rect8( r:Rect8 )
-		Local r0:=New Rect8	( 	_rect0.min+r._rect0.min,_rect0.max+r._rect0.max, 
+	Operator+:Rect9( r:Rect9 )
+		Local r0:=New Rect9	( 	_rect0.min+r._rect0.min,_rect0.max+r._rect0.max, 
 								_paddingLeft,_paddingTop,_paddingRight,_paddingBottom )
 		r0.Update()
 		r0.Validate()
 		Return r0
 	End
 	
-	#rem monkeydoc Subtracts another rect8 from the rect8 and returns the result.
+	#rem monkeydoc Subtracts another rect9 from the rect9 and returns the result.
 	#end
-	Operator-:Rect8( r:Rect8 )
-		Local r0:=New Rect8	( 	_rect0.min-r._rect0.min,_rect0.max-r._rect0.max,
+	Operator-:Rect9( r:Rect9 )
+		Local r0:=New Rect9	( 	_rect0.min-r._rect0.min,_rect0.max-r._rect0.max,
 								_paddingLeft,_paddingTop,_paddingRight,_paddingBottom )
 		r0.Update()
 		r0.Validate()
@@ -616,14 +609,14 @@ Struct Rect8<T>
 	End
 	
 	'---------------------------------------------------- 
-	'---------------------------------------------------- Rect8 to Rect8
+	'---------------------------------------------------- Rect9 to Rect9
 	'---------------------------------------------------- Operators : Binary operators		
 	'---------------------------------------------------- 	
 	
-	#rem monkeydoc Returns the intersection of the rect8 
+	#rem monkeydoc Returns the intersection of the rect9 
 	with another rect (intersected).
 	#end
-	Operator&:RectLib<T>( r:Rect8<T> )
+	Operator&:RectLib<T>( r:Rect9<T> )
 		Local x0:=Max( _rect0.min.x,r.min.x )
 		Local y0:=Max( _rect0.min.y,r.min.y )
 		Local x1:=Min( _rect0.max.x,r.max.x )
@@ -631,17 +624,17 @@ Struct Rect8<T>
 		Return New RectLib<T>( x0,y0,x1,y1 )
 	End
 	
-	#rem monkeydoc Returns the intersection of the rect8 
+	#rem monkeydoc Returns the intersection of the rect9 
 	with another rect (intersected).
 	#end
-	Method Intersected:RectLib<T>( r:Rect8<T> )
+	Method Intersected:RectLib<T>( r:Rect9<T> )
 		Return Self&r
 	End		
 	
-	#rem monkeydoc Returns the union of the rect8 
+	#rem monkeydoc Returns the union of the rect9 
 	with another rect (united).
 	#end	
-	Operator|:RectLib<T>( r:Rect8<T> )
+	Operator|:RectLib<T>( r:Rect9<T> )
 		Local x0:=Min( _rect0.min.x,r.min.x )
 		Local y0:=Min( _rect0.min.y,r.min.y )
 		Local x1:=Max( _rect0.max.x,r.max.x )
@@ -649,10 +642,10 @@ Struct Rect8<T>
 		Return New RectLib<T>( x0,y0,x1,y1 )
 	End	
 	
-	#rem monkeydoc Returns the union of the rect8 
+	#rem monkeydoc Returns the union of the rect9 
 	with another rect (united).
 	#end
-	Method United:RectLib<T>( r:Rect8<T> )
+	Method United:RectLib<T>( r:Rect9<T> )
 		Local x0:=Min( _rect0.min.x,r.min.x )
 		Local y0:=Min( _rect0.min.y,r.min.y )
 		Local x1:=Max( _rect0.max.x,r.max.x )
@@ -660,46 +653,46 @@ Struct Rect8<T>
 		Return New RectLib<T>( x0,y0,x1,y1 )
 	End	
 	
-	#rem monkeydoc Returns true if the Rect8 is different to the rect8 r, 
+	#rem monkeydoc Returns true if the Rect9 is different to the rect9 r, 
 	otherwise returns false.
 	#end
-	Operator<>:Bool( r:Rect8<T> )
+	Operator<>:Bool( r:Rect9<T> )
 		Return _rect0<>r._rect0 And _rect1<>r._rect1 ?Else False
 	End
 
-	#rem monkeydoc Returns true if the Rect8.margins is different to the rect8 r.margins, 
+	#rem monkeydoc Returns true if the Rect9.margins is different to the rect9 r.margins, 
 	otherwise returns false.
 	#end
-	Method MarginsIsDiff:Bool( r:Rect8<T> )
+	Method MarginsIsDiff:Bool( r:Rect9<T> )
 		Return _rect1<>r._rect1 ?Else False
 	End		
 
 	'---------------------------------------------------- 
-	'---------------------------------------------------- Rect8 to Rect8
+	'---------------------------------------------------- Rect9 to Rect9
 	'---------------------------------------------------- Operators : Assignment operators		
 	'---------------------------------------------------- 			
 
-	#rem monkeydoc Adds another rect to the rect8.
+	#rem monkeydoc Adds another rect to the rect9.
 	#end
-	Operator+=( r:Rect8 )
+	Operator+=( r:Rect9 )
 		_rect0.min+=r._rect0.min
 		_rect0.max+=r._rect0.max
 		Update()
 		Validate()
 	End
 	
-	#rem monkeydoc Subtracts another rect8 from the rect8.
+	#rem monkeydoc Subtracts another rect9 from the rect9.
 	#end
-	Operator-=( r:Rect8 )
+	Operator-=( r:Rect9 )
 		_rect0.min-=r._rect0.min
 		_rect0.max-=r._rect0.max
 		Update()
 		Validate()
 	End
 	
-	#rem monkeydoc Intersects the rect8 with another rect8.
+	#rem monkeydoc Intersects the rect9 with another rect9.
 	#end
-	Operator&=( r:Rect8<T> )
+	Operator&=( r:Rect9<T> )
 		_rect0.min.x=Max( _rect0.min.x,r._rect0.min.x )
 		_rect0.min.y=Max( _rect0.min.y,r._rect0.min.y )
 		_rect0.max.x=Min( _rect0.max.x,r._rect0.max.x )
@@ -708,9 +701,9 @@ Struct Rect8<T>
 		Validate()
 	End
 	
-	#rem monkeydoc Unions the rect8 with another rect8.
+	#rem monkeydoc Unions the rect9 with another rect9.
 	#end
-	Operator|=( r:Rect8<T> )
+	Operator|=( r:Rect9<T> )
 		_rect0.min.x=Min( _rect0.min.x,r._rect0.min.x )
 		_rect0.min.y=Min( _rect0.min.y,r._rect0.min.y )
 		_rect0.max.x=Max( _rect0.max.x,r._rect0.max.x )
@@ -720,7 +713,7 @@ Struct Rect8<T>
 	End	
 
 	'---------------------------------------------------- 
-	'---------------------------------------------------- Rect8
+	'---------------------------------------------------- Rect9
 	'---------------------------------------------------- Operators : transpose func-operator
 	'---------------------------------------------------- 	
 	
@@ -744,8 +737,8 @@ Struct Rect8<T>
 	#rem monkeydoc Returns a copy of the rectangle 
 	that has its width and height exchanged.
 	#end
-	Method Transposed:Rect8<T>()
-		Local r0:=New Rect8(_rect0,_paddingLeft,_paddingTop,_paddingRight,_paddingBottom)
+	Method Transposed:Rect9<T>()
+		Local r0:=New Rect9(_rect0,_paddingLeft,_paddingTop,_paddingRight,_paddingBottom)
 		'Author's note : 
 		'	Thx to my swap implementation :D
 		Tools.Swap(Varptr r0._paddingRight,Varptr r0._paddingBottom) 'TODO change when swap integrated
@@ -762,7 +755,7 @@ Struct Rect8<T>
 	End	
 
 	'---------------------------------------------------- 
-	'---------------------------------------------------- Rect8
+	'---------------------------------------------------- Rect9
 	'---------------------------------------------------- Operators : translate func-operator
 	'---------------------------------------------------- 	
 
@@ -786,14 +779,14 @@ Struct Rect8<T>
 	relative to the current position.
 	The margins rect is isomorph.
 	#end
-	Method Translated:Rect8<T>(x:T,y:T)
+	Method Translated:Rect9<T>(x:T,y:T)
 		Return Translated(New Vec2<T>(x,y))
 	End	
 	
-	Method Translated:Rect8<T>(v:Vec2<T>)
+	Method Translated:Rect9<T>(v:Vec2<T>)
 		'author's note : 
 		'	thx to my swap implementation :D
-		Local r0:=New Rect8(_rect0,_paddingLeft,_paddingTop,_paddingRight,_paddingBottom)
+		Local r0:=New Rect9(_rect0,_paddingLeft,_paddingTop,_paddingRight,_paddingBottom)
 		r0._rect0+=v
 		r0.Update()
 		r0.Validate()
@@ -801,30 +794,30 @@ Struct Rect8<T>
 	End
 	
 	'---------------------------------------------------- 
-	'---------------------------------------------------- Rect8
+	'---------------------------------------------------- Rect9
 	'---------------------------------------------------- Operators : move func-operator
 	'---------------------------------------------------- 	
 
 	'-------------------------- Positional
-	#rem monkeydoc Moves and return a new Rect8,
+	#rem monkeydoc Moves and return a new Rect9,
 	leaving the top-left corner 
 	at the given position (x,y). 
 	The rectangle keeps its isomorphism.
 	#end
-	Method Move:Rect8<T>(v:Vec2<T>)
+	Method Move:Rect9<T>(v:Vec2<T>)
 		Return MoveTopLeft(v)
 	End 
 	
 	'-------------------------- Directional	
 
-	#rem monkeydoc Moves and return a new Rect8,
+	#rem monkeydoc Moves and return a new Rect9,
 	leaving the left corner 
 	at the given position v. 
 	The rectangle keeps its isomorphism.
 	#end
-	Method MoveLeft:Rect8<T>(v:T)
+	Method MoveLeft:Rect9<T>(v:T)
 		Local oldWidth:=Width
-		Local r0:=New Rect8(_rect0,_paddingLeft,_paddingTop,_paddingRight,_paddingBottom)
+		Local r0:=New Rect9(_rect0,_paddingLeft,_paddingTop,_paddingRight,_paddingBottom)
 		r0.Left=v
 		r0.Right=r0.Left+oldWidth
 		r0.UpdateLeft()
@@ -833,14 +826,14 @@ Struct Rect8<T>
 		Return r0			
 	End
 
-	#rem monkeydoc Moves and return a new Rect8,
+	#rem monkeydoc Moves and return a new Rect9,
 	leaving the top corner 
 	at the given position v. 
 	The rectangle keeps its isomorphism.
 	#end
-	Method MoveTop:Rect8<T>(v:T)
+	Method MoveTop:Rect9<T>(v:T)
 		Local oldHeight:=Height
-		Local r0:=New Rect8(_rect0,_paddingLeft,_paddingTop,_paddingRight,_paddingBottom)
+		Local r0:=New Rect9(_rect0,_paddingLeft,_paddingTop,_paddingRight,_paddingBottom)
 		r0.Top=v
 		r0.Bottom=r0.Top+oldHeight
 		r0.UpdateTop()
@@ -849,14 +842,14 @@ Struct Rect8<T>
 		Return r0			
 	End
 
-	#rem monkeydoc Moves and return a new Rect8,
+	#rem monkeydoc Moves and return a new Rect9,
 	leaving the right corner 
 	at the given position v. 
 	The rectangle keeps its isomorphism.
 	#end
-	Method MoveRight:Rect8<T>(v:T)
+	Method MoveRight:Rect9<T>(v:T)
 		Local oldWidth:=Width
-		Local r0:=New Rect8(_rect0,_paddingLeft,_paddingTop,_paddingRight,_paddingBottom)
+		Local r0:=New Rect9(_rect0,_paddingLeft,_paddingTop,_paddingRight,_paddingBottom)
 		r0.Right=v
 		r0.Left=r0.Right-oldWidth
 		r0.UpdateLeft()
@@ -865,14 +858,14 @@ Struct Rect8<T>
 		Return r0			
 	End
 
-	#rem monkeydoc Moves and return a new Rect8,
+	#rem monkeydoc Moves and return a new Rect9,
 	leaving the bottom corner 
 	at the given position v. 
 	The rectangle keeps its isomorphism.
 	#end
-	Method MoveBottom:Rect8<T>(v:T)
+	Method MoveBottom:Rect9<T>(v:T)
 		Local oldHeight:=Height
-		Local r0:=New Rect8(_rect0,_paddingLeft,_paddingTop,_paddingRight,_paddingBottom)
+		Local r0:=New Rect9(_rect0,_paddingLeft,_paddingTop,_paddingRight,_paddingBottom)
 		r0.Bottom=v
 		r0.Top=r0.Bottom-oldHeight
 		r0.UpdateTop()
@@ -883,15 +876,15 @@ Struct Rect8<T>
 
 	'-------------------------- Bi-Directional
 
-	#rem monkeydoc Moves and return a new Rect8,
+	#rem monkeydoc Moves and return a new Rect9,
 	leaving the top-left corner 
 	at the given position (x,y). 
 	The rectangle keeps its isomorphism.
 	#end	
-	Method MoveTopLeft:Rect8<T>(v:Vec2<T>)
+	Method MoveTopLeft:Rect9<T>(v:Vec2<T>)
 		Local oldHeight:=Height
 		Local oldWidth:=Width
-		Local r0:=New Rect8(_rect0,_paddingLeft,_paddingTop,_paddingRight,_paddingBottom)	
+		Local r0:=New Rect9(_rect0,_paddingLeft,_paddingTop,_paddingRight,_paddingBottom)	
 		r0.Top=v.y
 		r0.Bottom=r0.Top+oldHeight
 		r0.Left=v.x
@@ -901,15 +894,15 @@ Struct Rect8<T>
 		Return r0						
 	End 
 
-	#rem monkeydoc Moves and return a new Rect8,
+	#rem monkeydoc Moves and return a new Rect9,
 	leaving the top-right corner 
 	at the given position (x,y). 
 	The rectangle keeps its isomorphism.
 	#end
-	Method MoveTopRight:Rect8<T>(v:Vec2<T>)
+	Method MoveTopRight:Rect9<T>(v:Vec2<T>)
 		Local oldHeight:=Height
 		Local oldWidth:=Width
-		Local r0:=New Rect8(_rect0,_paddingLeft,_paddingTop,_paddingRight,_paddingBottom)
+		Local r0:=New Rect9(_rect0,_paddingLeft,_paddingTop,_paddingRight,_paddingBottom)
 		r0.Top=v.y
 		r0.Bottom=r0.Top+oldHeight
 		r0.Right=v.x
@@ -919,15 +912,15 @@ Struct Rect8<T>
 		Return r0
 	End 
 
-	#rem monkeydoc Moves and return a new Rect8,
+	#rem monkeydoc Moves and return a new Rect9,
 	leaving the bottom-left corner 
 	at the given position (x,y). 
 	The rectangle keeps its isomorphism.
 	#end	
-	Method MoveBottomLeft:Rect8<T>(v:Vec2<T>)
+	Method MoveBottomLeft:Rect9<T>(v:Vec2<T>)
 		Local oldHeight:=Height
 		Local oldWidth:=Width
-		Local r0:=New Rect8(_rect0,_paddingLeft,_paddingTop,_paddingRight,_paddingBottom)
+		Local r0:=New Rect9(_rect0,_paddingLeft,_paddingTop,_paddingRight,_paddingBottom)
 		r0.Bottom=v.y
 		r0.Top=r0.Bottom-oldHeight
 		r0.Left=v.x
@@ -937,15 +930,15 @@ Struct Rect8<T>
 		Return r0		
 	End 
 
-	#rem monkeydoc Moves and return a new Rect8, 
+	#rem monkeydoc Moves and return a new Rect9, 
 	leaving the bottom-right corner 
 	at the given position (x,y). 
 	The rectangle keeps its isomorphism.
 	#end	
-	Method MoveBottomRight:Rect8<T>(v:Vec2<T>)
+	Method MoveBottomRight:Rect9<T>(v:Vec2<T>)
 		Local oldHeight:=Height
 		Local oldWidth:=Width
-		Local r0:=New Rect8(_rect0,_paddingLeft,_paddingTop,_paddingRight,_paddingBottom)
+		Local r0:=New Rect9(_rect0,_paddingLeft,_paddingTop,_paddingRight,_paddingBottom)
 		r0.Bottom=v.y
 		r0.Top=r0.Bottom-oldHeight		
 		r0.Right=v.x
@@ -959,10 +952,10 @@ Struct Rect8<T>
 	leaving the center point at the given position (x,y). 
 	The rectangle keeps its isomorphism.
 	#end	
-	Method MoveCenter:Rect8<T>(v:Vec2<T>)
+	Method MoveCenter:Rect9<T>(v:Vec2<T>)
 		Local midWidth:=Tools.Mid1ds(_rect0.Left,_rect0.Right)
 		Local midHeigth:=Tools.Mid1ds(_rect0.Top,_rect0.Bottom)
-		Local r0:=New Rect8(_rect0,_paddingLeft,_paddingTop,_paddingRight,_paddingBottom)
+		Local r0:=New Rect9(_rect0,_paddingLeft,_paddingTop,_paddingRight,_paddingBottom)
 		r0._rect0.min.x=v.x-midWidth
 		r0._rect0.max.x=v.x+midWidth
 		r0._rect0.min.y=v.y-midHeigth
@@ -973,13 +966,13 @@ Struct Rect8<T>
 	End 
 
 	'---------------------------------------------------- 
-	'---------------------------------------------------- Rect8
+	'---------------------------------------------------- Rect9
 	'---------------------------------------------------- Operators : flip func-operator
 	'---------------------------------------------------- 	
 
 	'-------------------------- Flip (on place)
 
-	#rem monkeydoc Flip the rect8 horizontaly and verticaly 
+	#rem monkeydoc Flip the rect9 horizontaly and verticaly 
 	(margins-rect flipped too).
 	#end
 	Method Flip()	
@@ -1000,7 +993,7 @@ Struct Rect8<T>
 		Validate()
 	End 		
 
-	#rem monkeydoc Flip the rect8 horizontaly (and the margins-rect too).
+	#rem monkeydoc Flip the rect9 horizontaly (and the margins-rect too).
 	#end
 	Method FlipX()	
 		Local t:T
@@ -1014,7 +1007,7 @@ Struct Rect8<T>
 		ValidateH()				
 	End 
 
-	#rem monkeydoc Flip the rect8 verticaly (and the margins-rect too).
+	#rem monkeydoc Flip the rect9 verticaly (and the margins-rect too).
 	#end
 	Method FlipY()
 		Local t:T	
@@ -1030,11 +1023,11 @@ Struct Rect8<T>
 	
 	'-------------------------- Flipped (returns the result)
 
-	#rem monkeydoc Flip the rect8 horizontaly and verticaly 
+	#rem monkeydoc Flip the rect9 horizontaly and verticaly 
 	(margins-rect flipped too) and returns the result.
 	#end
-	Method Flipped:Rect8<T>()
-		Local r0:=New Rect8(_rect0,_paddingRight,_paddingBottom,_paddingLeft,_paddingTop)
+	Method Flipped:Rect9<T>()
+		Local r0:=New Rect9(_rect0,_paddingRight,_paddingBottom,_paddingLeft,_paddingTop)
 		Local t:=r0._rect0.max.x
 		r0._rect0.max.x=r0._rect0.min.x
 		r0._rect0.min.x=t	
@@ -1046,11 +1039,11 @@ Struct Rect8<T>
 		Return r0
 	End 		
 
-	#rem monkeydoc Flip the rect8 horizontaly (and the margins-rect too)
+	#rem monkeydoc Flip the rect9 horizontaly (and the margins-rect too)
 	and returns the result.
 	#end
-	Method FlippedX:Rect8<T>()
-		Local r0:=New Rect8(_rect0,_paddingRight,_paddingTop,_paddingLeft,_paddingBottom)
+	Method FlippedX:Rect9<T>()
+		Local r0:=New Rect9(_rect0,_paddingRight,_paddingTop,_paddingLeft,_paddingBottom)
 		Local t:=r0._rect0.max.x
 		r0._rect0.max.x=r0._rect0.min.x
 		r0._rect0.min.x=t		
@@ -1059,11 +1052,11 @@ Struct Rect8<T>
 		Return r0			
 	End 
 
-	#rem monkeydoc Flip the rect8 verticaly (and the margins-rect too)
+	#rem monkeydoc Flip the rect9 verticaly (and the margins-rect too)
 	and returns the result.
 	#end
-	Method FlippedY:Rect8<T>()
-		Local r0:=New Rect8(_rect0,_paddingLeft,_paddingBottom,_paddingRight,_paddingTop)
+	Method FlippedY:Rect9<T>()
+		Local r0:=New Rect9(_rect0,_paddingLeft,_paddingBottom,_paddingRight,_paddingTop)
 		Local t:=r0._rect0.max.y
 		r0._rect0.max.y=r0._rect0.min.y
 		r0._rect0.min.y=t		
@@ -1178,7 +1171,7 @@ Struct Rect8<T>
 	'---------------------------------------------------- Properties : math-tests
 	'----------------------------------------------------
 
-	#rem monkeydoc Is the rect8 a square ?
+	#rem monkeydoc Is the rect9 a square ?
 	#end
 	Property Square:Bool()
 		Return Height=Width ?Else False
@@ -1276,7 +1269,7 @@ Struct Rect8<T>
 		Validate()		
 	End 		
 
-	#rem monkeydoc The center of the rect8.
+	#rem monkeydoc The center of the rect9.
 	#end		
 	Property Center:Vec2<T>()
 		' "Center" is "positional" because it's set-able.
@@ -1470,13 +1463,13 @@ Struct Rect8<T>
 
 	'-------------------------- Geoms/Logic : Contains for outter rect
 
-	#rem monkeydoc Checks if the outter rect contains a vector or another rect/rect8.
+	#rem monkeydoc Checks if the outter rect contains a vector or another rect/rect9.
 	#end
 	Method Contains:Bool(x:T,y:T)
 		Return _rect0.Contains(New Vec2<T>(x,y))
 	End	
 	
-	#rem monkeydoc Checks if the outter rect contains a vector or another rect/rect8.
+	#rem monkeydoc Checks if the outter rect contains a vector or another rect/rect9.
 	#end
 	Method Contains:Bool(pos:Vec2<T>)
 		Return _rect0.Contains(pos)
@@ -1488,28 +1481,28 @@ Struct Rect8<T>
 		Return min.x<=r.min.x And max.x>=r.max.x And min.y<=r.min.y And max.y>=r.max.y
 	End	
 
-	#rem monkeydoc Checks if the outter rect contains a rect8.
+	#rem monkeydoc Checks if the outter rect contains a rect9.
 	#end	
-	Method Contains:Bool( r:Rect8<T> )
+	Method Contains:Bool( r:Rect9<T> )
 		Return min.x<=r.min.x And max.x>=r.max.x And min.y<=r.min.y And max.y>=r.max.y
 	End		
 
 	'-------------------------- Geoms : Centered
 	
-	#rem monkeydoc Gets the rect8 centered within another rect8.
+	#rem monkeydoc Gets the rect9 centered within another rect9.
 	#end 
-	Method Centered:Rect8<T>(rect:Rect8<T>)
+	Method Centered:Rect9<T>(rect:Rect9<T>)
 		Local x:T=(rect.Width-_rect0.Width)/2+rect._rect0.min.x
 		Local y:T=(rect.Height-_rect0.Height)/2+rect._rect0.min.y
-		Return New Rect8<T>(x,y,x+_rect0.Width,y+_rect0.Height,PaddingLeft,PaddingTop,PaddingRight,PaddingBottom)
+		Return New Rect9<T>(x,y,x+_rect0.Width,y+_rect0.Height,PaddingLeft,PaddingTop,PaddingRight,PaddingBottom)
 	End	
 	
-	#rem monkeydoc Gets the rect8 centered with a vec2.
+	#rem monkeydoc Gets the rect9 centered with a vec2.
 	#end 
-	Method Centered:Rect8<T>(v:Vec2<T>)
+	Method Centered:Rect9<T>(v:Vec2<T>)
 		Local x:T=_rect0.Width/2+v.x
 		Local y:T=_rect0.Height/2+v.y
-		Return New Rect8<T>(x,y,x+_rect0.Width,y+_rect0.Height,PaddingLeft,PaddingTop,PaddingRight,PaddingBottom)
+		Return New Rect9<T>(x,y,x+_rect0.Width,y+_rect0.Height,PaddingLeft,PaddingTop,PaddingRight,PaddingBottom)
 	End		
 	
 	#rem monkeydoc Gets the rect centered within another rect.
@@ -1544,28 +1537,28 @@ Struct Rect8<T>
 	#rem monkeydoc Set a new size for the outter rect without scaling the margins rect
 	(Resize the outterRect, MarginsRect-Locked)
 	#end	
-	Method ResizeRect:Rect8<T>(x0:T,y0:T,max:Vec2<T>)
+	Method ResizeRect:Rect9<T>(x0:T,y0:T,max:Vec2<T>)
 		Return ResizeRect(New Vec2<T>(x0,y0),max)
 	End 
 	
-	Method ResizeRect:Rect8<T>(min:Vec2<T>,x1:T,y1:T)
+	Method ResizeRect:Rect9<T>(min:Vec2<T>,x1:T,y1:T)
 		Return ResizeRect(min,New Vec2<T>(x1,y1))
 	End 
 	
-	Method ResizeRect:Rect8<T>(x0:T,y0:T,x1:T,y1:T)
+	Method ResizeRect:Rect9<T>(x0:T,y0:T,x1:T,y1:T)
 		Return ResizeRect(New Vec2<T>(x0,y0),New Vec2<T>(x1,y1))
 	End 
 	
-	Method ResizeRect:Rect8<T>(rect:RectLib<T>)
+	Method ResizeRect:Rect9<T>(rect:RectLib<T>)
 		Return ResizeRect(rect.min,rect.max)	
 	End 
 	
-	Method ResizeRect:Rect8<T>(min:Vec2<T>,max:Vec2<T>)	 
+	Method ResizeRect:Rect9<T>(min:Vec2<T>,max:Vec2<T>)	 
 		Local padLeft:=PadLeft 
 		Local padTop:=PadTop
 		Local padRight:=PadRight
 		Local padBottom:=PadBottom
-		Local r:=New Rect8<T>(min,max)	
+		Local r:=New Rect9<T>(min,max)	
 		r.Pad(padLeft,padTop,padRight,padBottom)
 		Return r
 	End 
@@ -1576,7 +1569,7 @@ Struct Rect8<T>
 	without scaling the margins rect.
 	(Resize OutterRect's sides, MarginsRect-Locked)
 	#end	
-	Method ResizeLeft:Rect8<T>(v:T)
+	Method ResizeLeft:Rect9<T>(v:T)
 		Return ResizeRect(v,Top,Right,Bottom)
 	End
 
@@ -1584,7 +1577,7 @@ Struct Rect8<T>
 	without scaling the margins rect.
 	(Resize OutterRect's sides, MarginsRect-Locked)
 	#end	
-	Method ResizeTop:Rect8<T>(v:T)
+	Method ResizeTop:Rect9<T>(v:T)
 		Return ResizeRect(Left,v,Right,Bottom)
 	End
 
@@ -1592,7 +1585,7 @@ Struct Rect8<T>
 	without scaling the margins rect.
 	(Resize OutterRect's sides, MarginsRect-Locked)
 	#end		
-	Method ResizeRight:Rect8<T>(v:T)
+	Method ResizeRight:Rect9<T>(v:T)
 		Return ResizeRect(Left,Top,v,Bottom)
 	End
 
@@ -1600,7 +1593,7 @@ Struct Rect8<T>
 	without scaling the margins rect.
 	(Resize OutterRect's sides, MarginsRect-Locked)
 	#end		
-	Method ResizeBottom:Rect8<T>(v:T)
+	Method ResizeBottom:Rect9<T>(v:T)
 		Return ResizeRect(Left,Top,Right,v)
 	End
 
@@ -1608,7 +1601,7 @@ Struct Rect8<T>
 	without scaling the margins rect.
 	(Resize OutterRect's sides, MarginsRect-Locked)
 	#end		
-	Method ResizeTopLeft:Rect8<T>(v:Vec2<T>)
+	Method ResizeTopLeft:Rect9<T>(v:Vec2<T>)
 		Return ResizeRect(v.x,v.y,Right,Bottom)
 	End
 
@@ -1616,7 +1609,7 @@ Struct Rect8<T>
 	without scaling the margins rect.
 	(Resize OutterRect's sides, MarginsRect-Locked)
 	#end		
-	Method ResizeTopRight:Rect8<T>(v:Vec2<T>)
+	Method ResizeTopRight:Rect9<T>(v:Vec2<T>)
 		Return ResizeRect(Left,v.y,v.x,Bottom)
 	End	
 
@@ -1624,7 +1617,7 @@ Struct Rect8<T>
 	without scaling the margins rect.
 	(Resize OutterRect's sides, MarginsRect-Locked)
 	#end		
-	Method ResizeBottomLeft:Rect8<T>(v:Vec2<T>)
+	Method ResizeBottomLeft:Rect9<T>(v:Vec2<T>)
 		Return ResizeRect(v.x,Top,Right,v.y)
 	End
 	
@@ -1632,7 +1625,7 @@ Struct Rect8<T>
 	without scaling the margins rect.
 	(Resize OutterRect's sides, MarginsRect-Locked)
 	#end		
-	Method ResizeBottomRight:Rect8<T>(v:Vec2<T>)
+	Method ResizeBottomRight:Rect9<T>(v:Vec2<T>)
 		Return ResizeRect(Left,Top,v.x,v.y)
 	End		
 	
@@ -1805,9 +1798,9 @@ Struct Rect8<T>
 		Return _rect1.Contains(pos)
 	End	
 	
-	#rem monkeydoc Checks if the margins rect contains a rect8.
+	#rem monkeydoc Checks if the margins rect contains a rect9.
 	#end		
-	Method MarginsContains:Bool( r:Rect8<T> )
+	Method MarginsContains:Bool( r:Rect9<T> )
 		Return _rect1.min.x<=r.min.x And _rect1.max.x>=r.max.x And _rect1.min.y<=r.min.y And _rect1.max.y>=r.max.y
 	End	
 
@@ -2030,59 +2023,59 @@ Struct Rect8<T>
 		Return CornerBottomRight.Contains(pos)
 	End	
 			
-	'-------------------------- Rect8
+	'-------------------------- Rect9
 
-	#rem monkeydoc Checks if the corner region top-left contains another rect8.
+	#rem monkeydoc Checks if the corner region top-left contains another rect9.
 	#end	
-	Method CornerTopLeftContains:Bool(r:Rect8<T>)
+	Method CornerTopLeftContains:Bool(r:Rect9<T>)
 		Return CornerTopLeft.Contains(r.Rect)
 	End	
 
-	#rem monkeydoc Checks if the corner region top-middle contains another rect8.
+	#rem monkeydoc Checks if the corner region top-middle contains another rect9.
 	#end		
-	Method CornerTopMiddleContains:Bool(r:Rect8<T>)
+	Method CornerTopMiddleContains:Bool(r:Rect9<T>)
 		Return CornerTopMiddle.Contains(r.Rect)
 	End
 
-	#rem monkeydoc Checks if the corner region top-right contains another rect8.
+	#rem monkeydoc Checks if the corner region top-right contains another rect9.
 	#end		
-	Method CornerTopRightContains:Bool(r:Rect8<T>)
+	Method CornerTopRightContains:Bool(r:Rect9<T>)
 		Return CornerTopRight.Contains(r.Rect)
 	End	
 
-	#rem monkeydoc Checks if the corner region middle-left contains another rect8.
+	#rem monkeydoc Checks if the corner region middle-left contains another rect9.
 	#end		
-	Method CornerMiddleLeftContains:Bool(r:Rect8<T>)
+	Method CornerMiddleLeftContains:Bool(r:Rect9<T>)
 		Return CornerMiddleLeft.Contains(r.Rect)
 	End	
 	
-	#rem monkeydoc Checks if the corner region middle contains another rect8.
+	#rem monkeydoc Checks if the corner region middle contains another rect9.
 	#end		
-	Method CornerMiddleContains:Bool(r:Rect8<T>)
+	Method CornerMiddleContains:Bool(r:Rect9<T>)
 		Return CornerMiddle.Contains(r.Rect)
 	End	
 
-	#rem monkeydoc Checks if the corner region middle-right contains another rect8.
+	#rem monkeydoc Checks if the corner region middle-right contains another rect9.
 	#end			
-	Method CornerMiddleRightContains:Bool(r:Rect8<T>)
+	Method CornerMiddleRightContains:Bool(r:Rect9<T>)
 		Return CornerMiddleRight.Contains(r.Rect)
 	End	
 
-	#rem monkeydoc Checks if the corner region bottom-left contains another rect8.
+	#rem monkeydoc Checks if the corner region bottom-left contains another rect9.
 	#end			
-	Method CornerBottomLeftContains:Bool(r:Rect8<T>)
+	Method CornerBottomLeftContains:Bool(r:Rect9<T>)
 		Return CornerBottomLeft.Contains(r.Rect)
 	End
 
-	#rem monkeydoc Checks if the corner region bottom-middle contains another rect8.
+	#rem monkeydoc Checks if the corner region bottom-middle contains another rect9.
 	#end			
-	Method CornerBottomMiddleContains:Bool(r:Rect8<T>)
+	Method CornerBottomMiddleContains:Bool(r:Rect9<T>)
 		Return CornerBottomMiddle.Contains(r.Rect)
 	End
 
-	#rem monkeydoc Checks if the corner region bottom-right contains another rect8.
+	#rem monkeydoc Checks if the corner region bottom-right contains another rect9.
 	#end			
-	Method CornerBottomRightContains:Bool(r:Rect8<T>)
+	Method CornerBottomRightContains:Bool(r:Rect9<T>)
 		Return CornerBottomRight.Contains(r.Rect)
 	End	
 		
@@ -2366,7 +2359,7 @@ Struct Rect8<T>
 		PadBottom=r.Bottom
 	End 
 	
-	Method Pad(r:Rect8<T>)
+	Method Pad(r:Rect9<T>)
 		PadLeft=r.Rect.Left
 		PadTop=r.Rect.Top
 		PadRight=r.Rect.Right
@@ -2495,13 +2488,6 @@ Struct Rect8<T>
 		End
 		
 		Function Swap<T>( a:T Ptr,b:T Ptr )
-			'-----------
-			'Author : 
-			'	Humanity, Adapted by iDkP for GaragePixel
-			'Year : 2021
-			'Usage Example:
-			'	Swap<Int>( Varptr chars[0+n], Varptr chars[chars.Length-n-1] )
-			'-----------
 			Local t:=a[0]
 			a[0]=b[0]
 			b[0]=t
@@ -2515,21 +2501,21 @@ End
 
 #rem monkeydoc Transforms a Rect\<Int\> by an AffineMat3.
 #end
-Function TransformRect8i<T>:Rect8i( rect8:Rect8i,matrix:AffineMat3<T> )
+Function TransformRect9i<T>:Rect9i( Rect9:Rect9i,matrix:AffineMat3<T> )
 	
-	Local min:=matrix * New Vec2<T>( rect8.min.x,rect8.min.y )
-	Local max:=matrix * New Vec2<T>( rect8.max.x,rect8.max.y )
+	Local min:=matrix * New Vec2<T>( Rect9.min.x,Rect9.min.y )
+	Local max:=matrix * New Vec2<T>( Rect9.max.x,Rect9.max.y )
 
-	Local min:=matrix * New Vec2<T>( rect8.MarginsRect.min.x,rect8.MarginsRect.min.y )
-	Local max:=matrix * New Vec2<T>( rect8.MarginsRect.max.x,rect8.MarginsRect.max.y )
+	Local min:=matrix * New Vec2<T>( Rect9.MarginsRect.min.x,Rect9.MarginsRect.min.y )
+	Local max:=matrix * New Vec2<T>( Rect9.MarginsRect.max.x,Rect9.MarginsRect.max.y )
 	
-	rect8.PaddingLeft=matrix * ( rect8.PaddingLeft )
-	rect8.PaddingTop=matrix * ( rect8.PaddingTop )
-	rect8.PaddingRight=matrix * ( rect8.PaddingRight )
-	rect8.PaddingBottom=matrix * ( rect8.PaddingBottom )
+	Rect9.PaddingLeft=matrix * ( Rect9.PaddingLeft )
+	Rect9.PaddingTop=matrix * ( Rect9.PaddingTop )
+	Rect9.PaddingRight=matrix * ( Rect9.PaddingRight )
+	Rect9.PaddingBottom=matrix * ( Rect9.PaddingBottom )
 		
 	Return New Recti( 	Round( min.x ),Round( min.y ),Round( max.x ),Round( max.y ), 
-						rect8.PaddingLeft,rect8.PaddingTop,
-						rect8.PaddingRight,rect8.PaddingBottom							)
+						Rect9.PaddingLeft,Rect9.PaddingTop,
+						Rect9.PaddingRight,Rect9.PaddingBottom							)
 	
 End
