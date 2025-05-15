@@ -245,7 +245,8 @@ Struct Rect9<T>
 	End 
 
 	#rem monkeydoc Creates a new Rect9.
-	@param min the TOFINISH
+	@param min the left top corner coordinates
+	@param min the right bottom corner coordinates
 	@param padLeft the padding from the left border in pixels.
 	@param padTop the padding from the top border in pixels.
 	@param padRight the padding from the right border in pixels.
@@ -260,7 +261,17 @@ Struct Rect9<T>
 		_rect1=New RectLib<T>()		
 		Init(padLeft,padTop,padRight,padBottom)	
 	End
-	
+
+	#rem monkeydoc Creates a new Rect9.
+	@param x0 the left top corner x coordinates
+	@param y0 the left top corner y coordinates
+	@param x1 the right bottom corner x coordinates
+	@param y1 the right bottom corner y coordinates
+	@param padLeft the padding from the left border in pixels.
+	@param padTop the padding from the top border in pixels.
+	@param padRight the padding from the right border in pixels.
+	@param padBottom the padding from the bottom border in pixels.
+	#end		
 	Method New(	x0:T,y0:T,x1:T,y1:T,
 				padLeft:T=0,padTop:T=0,padRight:T=0,padBottom:T=0	)
 				
@@ -270,7 +281,16 @@ Struct Rect9<T>
 		_rect1=New RectLib<T>()		
 		Init(padLeft,padTop,padRight,padBottom)				
 	End
-	
+
+	#rem monkeydoc Creates a new Rect9.
+	@param x0 the left top corner x coordinates
+	@param y0 the left top corner y coordinates
+	@param max The size of the rectangle from the left top side toward the bottom way
+	@param padLeft the padding from the left border in pixels.
+	@param padTop the padding from the top border in pixels.
+	@param padRight the padding from the right border in pixels.
+	@param padBottom the padding from the bottom border in pixels.
+	#end	
 	Method New(	x0:T,y0:T,max:Vec2<T>,
 				padLeft:T=0,padTop:T=0,padRight:T=0,padBottom:T=0	)
 				
@@ -281,6 +301,15 @@ Struct Rect9<T>
 		Init(padLeft,padTop,padRight,padBottom)			
 	End
 	
+	#rem monkeydoc Creates a new Rect9.
+	@param min The position of the rectangle from the left top corner
+	@param x1 the right bottom corner x coordinates
+	@param y1 the right bottom corner y coordinates
+	@param padLeft the padding from the left border in pixels.
+	@param padTop the padding from the top border in pixels.
+	@param padRight the padding from the right border in pixels.
+	@param padBottom the padding from the bottom border in pixels.
+	#end
 	Method New(	min:Vec2<T>,x1:T,y1:T,
 				padLeft:T=0,padTop:T=0,padRight:T=0,padBottom:T=0	)
 				
@@ -363,7 +392,7 @@ Struct Rect9<T>
 	#rem monkeydoc Converts the rect9 to a rect9 of a different type.
 	#end
 	Operator To<T2>:Rect9<T2>()
-		Return New Rect9<T2>(New Rect(_rect0.min.x,_rect0.min.y,_rect0.max.x,_rect0.max.y),PaddingLeft,PaddingTop,PaddingRight,PaddingBottom)
+		Return New Rect9<T2>(New Rect<T2>(_rect0.min.x,_rect0.min.y,_rect0.max.x,_rect0.max.y),PaddingLeft,PaddingTop,PaddingRight,PaddingBottom)
 	End
 	
 	#rem monkeydoc Converts the rect9 to a rect of a different type.
