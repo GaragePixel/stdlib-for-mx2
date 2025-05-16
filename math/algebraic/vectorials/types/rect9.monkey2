@@ -41,12 +41,10 @@ Using stdlib.graphics..
 '----------------------------------------------------------------------------------------
 
 	Purpose:
-
 		The Rect9 class provides support for manipulating 
 		rectangular regions with nine sub regions.
 
-	Example usages:
-	
+	Example usages:	
 		Drawing window's decorations, game's windows/dialog boxes, 
 		bitmapped contour aeras, button skins...
 
