@@ -43,14 +43,102 @@ Using stdlib.graphics..
 		 
 '----------------------------------------------------------------------------------------
 
-	The Rect9 class provides support for manipulating 
-	rectangular regions with nine sub regions.
+	Purpose:
+
+		The Rect9 class provides support for manipulating 
+		rectangular regions with nine sub regions.
 
 	Example usages:
+	
 		Drawing window's decorations, game's windows/dialog boxes, 
 		bitmapped contour aeras, button skins...
 
-	Very condensed technical information from the author:
+	Modern description (2025):
+
+		Purpose:
+
+			Rect9 provides an implementation of the 9-patch rectangle system commonly used in UI development. 
+			This technique divides a rectangle into 9 distinct regions that can be independently manipulated 
+			for creating scalable UI elements while maintaining proper border aesthetics when resized.
+				
+			Examples: 
+				- Window/Panel Skinning with 9-Slice Scaling
+				- Custom Dialog Box Layouts
+				- Bitmap/Texture Border Rendering
+				- Collision Zones/Physics engine boundary systems
+				- Map/Grid Region Partitioning/Procedural generation (region-based map creation)
+				- Padding-Aware Drawing
+				- Resizable Sprite Framing
+				- Advanced Clipping or Masking
+	
+		Functionality:
+		
+		    - Complete 9-patch representation with discrete control of all patch regions
+		    - Direct component access for fine-grained control of individual patches
+		    - Efficient memory layout optimized for both CPU and GPU operations
+		    - Region-aware scaling that preserves corner dimensions while properly stretching edges
+		    - Comprehensive constructor set supporting multiple initialization patterns
+		    - Robust geometric operations including translation, scaling, and intersection
+		    - Internal/external boundary calculations for content placement    
+		
+		Technical:
+		
+			Stores only two rects (outer, inner) and four paddings, deriving all 9-region aeras on demand. 
+			This minimizes memory and avoids bloat, with calculation deferred until needed.
+
+			Dozens of properties and 100+ methods/operators, covering all sensible geometric, logical, 
+			and arithmetic operations. Includes intersection, union, scaling, conversion, containment, 
+			centering, and more.		
+
+			| Element            | Count |
+			|--------------------|-------|
+			| Properties         | 86    |
+			| Operators          | 29    |
+			| Pseudo-operators   | 28    |
+			| Functions          | 73    |
+			| Private functions  | 11    |
+			| Constructors       | 7     |
+		
+		Description of the model:
+		
+			| A B C |
+			| D E F | <- 9-patch region layout
+			| G H I |
+			
+			This division allows for:
+			
+			- Non-scaling corners (A, C, G, I)
+			- Horizontally scalable top/bottom edges (B, H)
+			- Vertically scalable side edges (D, F)
+			- Fully scalable center region (E)
+			
+		A nice implementation:
+
+			Rect9 embodies my philosophy about proper mathematics in game development: 
+			data-first primitives over engine-locked components. Where google-godot implemented 9-patch as heavy, 
+			scene-integrated nodes focused solely on UI rendering, my implementation delivers a pure mathematical primitive 
+			with universal application.
+
+			The core difference is architectural: google-godot mixes rendering concerns with geometry, 
+			creating rigid, memory-intensive components that only function within their pipeline. 
+			Rect9 instead represents the fundamental 9-region concept as a standalone mathematical model, 
+			completely decoupled from rendering specifics.
+
+			Rect9 use universal math primitive. Works everywhere: rendering systems, physics collision detection, 
+			layout engines, region-specific transforms, even game logic like trigger zones. 
+			It's data-first, generic, and expressives a mathematically solution for 9-region probleme. 
+
+			The implementation differences extend beyond concept to technical execution. 
+			Where traditional approaches use special image formats with border pixel indicators, 
+			Rect9 provides explicit component values for direct mathematical manipulation. 
+			This enables zero-heap transformations, cache-optimized memory layout, 
+			and freedom from property reflection overhead.
+
+			For Monkey2/Wonkey developers needing versatile, reusable, and fully programmable 9-region mathematics, 
+			Rect9 delivers superior performance characteristics and cross-domain versatility that engine-tied implementations 
+			simply cannot match. One mathematical primitive, universal application for *nearly* anything!
+
+	Original description (2021): Very condensed technical information from the author:
 
 		Rect9/Box9/Pad and other usage names have been part of my structures for decades. 
 		In 2021 I came to rewrite it once again, using my latest techniques, 
