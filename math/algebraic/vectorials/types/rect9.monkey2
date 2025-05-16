@@ -53,18 +53,18 @@ Using stdlib.graphics..
 	Modern description (2025):
 
 		Purpose:
-		    Rect9 provides an implementation of the 9-patch rectangle system commonly used in UI development. 
-		    This technique divides a rectangle into 9 distinct regions that can be independently manipulated 
-		    for creating scalable UI elements while maintaining proper border aesthetics when resized.
+			Rect9 provides an implementation of the 9-patch rectangle system commonly used in UI development. 
+			This technique divides a rectangle into 9 distinct regions that can be independently manipulated 
+			for creating scalable UI elements while maintaining proper border aesthetics when resized.
 
 		Functionalities:
-		    - Complete 9-patch representation with discrete control of all patch regions
-		    - Direct component access for fine-grained control of individual patches
-		    - Efficient memory layout optimized for both CPU and GPU operations
-		    - Region-aware scaling that preserves corner dimensions while properly stretching edges
-		    - Comprehensive constructor set supporting multiple initialization patterns
-		    - Robust geometric operations including translation, scaling, and intersection
-		    - Internal/external boundary calculations for content placement    
+			- Complete 9-patch representation with discrete control of all patch regions
+			- Direct component access for fine-grained control of individual patches
+			- Efficient memory layout optimized for both CPU and GPU operations
+			- Region-aware scaling that preserves corner dimensions while properly stretching edges
+			- Comprehensive constructor set supporting multiple initialization patterns
+			- Robust geometric operations including translation, scaling, and intersection
+			- Internal/external boundary calculations for content placement    
 				
 		Application examples: 
 			- Window/Panel Skinning with 9-Slice Scaling
