@@ -17,9 +17,6 @@ Using stdlib.math.types..
 Using stdlib.math.matrices..
 Using stdlib.graphics..
 
-'Note iDkP 2025-05-14: RectLib is an alias for faster integration between Monkey2/stdlib, Monkey2/aida4 and Wonkey/std...
-'Alias RectLib<T>:stdlib.math.types.Rect<T> 
-
 #rem
 
 '----------------------------------------------------------------------------------------
@@ -56,23 +53,11 @@ Using stdlib.graphics..
 	Modern description (2025):
 
 		Purpose:
-
 			Rect9 provides an implementation of the 9-patch rectangle system commonly used in UI development. 
 			This technique divides a rectangle into 9 distinct regions that can be independently manipulated 
 			for creating scalable UI elements while maintaining proper border aesthetics when resized.
-				
-			Examples: 
-				- Window/Panel Skinning with 9-Slice Scaling
-				- Custom Dialog Box Layouts
-				- Bitmap/Texture Border Rendering
-				- Collision Zones/Physics engine boundary systems
-				- Map/Grid Region Partitioning/Procedural generation (region-based map creation)
-				- Padding-Aware Drawing
-				- Resizable Sprite Framing
-				- Advanced Clipping or Masking
-	
-		Functionality:
-		
+
+		Functionalities:
 		    - Complete 9-patch representation with discrete control of all patch regions
 		    - Direct component access for fine-grained control of individual patches
 		    - Efficient memory layout optimized for both CPU and GPU operations
@@ -80,9 +65,18 @@ Using stdlib.graphics..
 		    - Comprehensive constructor set supporting multiple initialization patterns
 		    - Robust geometric operations including translation, scaling, and intersection
 		    - Internal/external boundary calculations for content placement    
+				
+		Application examples: 
+			- Window/Panel Skinning with 9-Slice Scaling
+			- Custom Dialog Box Layouts
+			- Bitmap/Texture Border Rendering
+			- Collision Zones/Physics engine boundary systems
+			- Map/Grid Region Partitioning/Procedural generation (region-based map creation)
+			- Padding-Aware Drawing
+			- Resizable Sprite Framing
+			- Advanced Clipping or Masking
 		
 		Technical:
-		
 			Stores only two rects (outer, inner) and four paddings, deriving all 9-region aeras on demand. 
 			This minimizes memory and avoids bloat, with calculation deferred until needed.
 
@@ -116,8 +110,8 @@ Using stdlib.graphics..
 
 			Rect9 embodies my philosophy about proper mathematics in game development: 
 			data-first primitives over engine-locked components. Where google-godot implemented 9-patch as heavy, 
-			scene-integrated nodes focused solely on UI rendering, my implementation delivers a pure mathematical primitive 
-			with universal application.
+			scene-integrated nodes focused solely on UI rendering, my implementation delivers 
+			a pure mathematical primitive with universal application.
 
 			The core difference is architectural: google-godot mixes rendering concerns with geometry, 
 			creating rigid, memory-intensive components that only function within their pipeline. 
@@ -191,7 +185,7 @@ with nine sub regions.
 
 This object can to be called "pad". 
 		
-The user can define the pad in two possible ways :
+The programmer can define the pad in two possible ways :
 from the rect's border (relative coordinates) 
 or from the absolute coordinates
 of the "margins-rect" within the rect.
@@ -212,8 +206,8 @@ the word "margins".
 			Exemple : The outter-rect's right side is 
 			related to the outter-rect's right side
 			as :
-			MarginsRect.Left = outterRect.Left	+	MarginsLeft
-			MarginsRect.Right = outterRect.Right	-	MarginsRight
+			Inner.Left = Outter.Left	+	MarginsLeft
+			Inner.Right = Outter.Right	-	MarginsRight
 	
 	-> 	Access to the "inner-rect" : "Margins"
 	
@@ -243,71 +237,67 @@ the word "margins".
 								/\
 		  					  Bottom	
 		  					  
-	The outter rect is represented by these getters/setters :
+	The outter rect is represented by these getters/setters:
 	
 		Left/Top/Right/Bottom
 		TopLeft/TopRight
-		Bottomleft/BottomRight
-		
+		Bottomleft/BottomRight		
 
-	There are some outter rect's positions get-ables :
+	There are some outter rect's positions get-ables:
 	
 		MiddleLeft/MiddleTop/MiddleRight/MiddleBottom
-		MiddleV/MiddleH/Center
-		
+		MiddleV/MiddleH/Center		
 	
-	The margins rect is represented by these getters/setters :
+	The margins rect is represented by these getters/setters:
 	
 		MarginsLeft/MarginsTop/MarginsRight/MarginsBottom
 		MarginsTopLeft/MarginsTopRight
-		MarginsBottomLeft/MarginsBottomRight
-		
+		MarginsBottomLeft/MarginsBottomRight		
 
-	There are some margins rect's positions get-ables :
+	There are some margins rect's positions get-ables:
 	
 		MarginsMiddleLeft/MarginsMiddleTop/MarginsMiddleRight/MarginsMiddleBottom
-		MarginsMiddleV/MarginsMiddleH/MarginsCenter
-		
+		MarginsMiddleV/MarginsMiddleH/MarginsCenter		
 	
-	The margins rect is computed by this paddings' getters/setters :
+	The margins rect is computed by this paddings' getters/setters:
 	
 		PaddingLeft/PaddingTop/PaddingRight/PaddingBottom
-		These parameters can to be called as "the relative coordinates of the margins rect"
+		These parameters can to be called as "the relative coordinates of the margins rect"		
 		
-		
-	The padding can be setted/getted in absolute coordinates with :
+	The padding can be setted/getted in absolute coordinates with:
 	
 		PadLeft/PadTop/PadRight/PadBottom
-		These parameters can to be called as "the absolute coordinates of the margins rect"
-		
+		These parameters can to be called as "the absolute coordinates of the margins rect"		
 		
 	The aeras around the margins rect and between the margins and outter rect
-	are getted by these parameters :
+	are get by these parameters:
 	
 		CornerTopLeft/CornerTop/CornerTopRight
 		CornerMiddleLeft/CornerMiddle/CornerMiddleRight
 		CornerBottomLeft/CornerBottom/CornerBottomRight
-
-Designed to have the smallest memory print, 
-it use only 12 reals/numerics types 
-but 51 write-able properties and 35 read-only properties.
-
-The most is programmed in this 86 properties,
-so, against the smallest memory print, the cost is
-some calculation times, kept to reach the optimal
-performances by the extreme binding of the computations.
-	
-Rect9 defines 29 operators, 28 pseudo-operators 
-(func operators), 73 public functions, 
-11 private functions and 7 constructors.
-	
-The choice to use a rect in order to modelize
-the margins instead to compute it each time
-avoid the managing of some updates/validates commands. 
-It's a compromize between memory and calculations. 
-Also, everything is automatic.
 		
+	Foot Note:
+
+		Designed to have the smallest memory print, 
+		it use only 12 reals/numerics types 
+		but 51 write-able properties and 35 read-only properties.
+		
+		The most is programmed in this 86 properties,
+		so, against the smallest memory print, the cost is
+		some calculation times, kept to reach the optimal
+		performances by the extreme binding of the computations.
+			
+		Rect9 defines 29 operators, 28 pseudo-operators 
+		(func operators), 73 public functions, 
+		11 private functions and 7 constructors.
+			
+		The choice to use a rect in order to modelize
+		the margins instead to compute it each time
+		avoid the managing of some updates/validates commands. 
+		It's a compromize between memory and calculations. 
+		Also, everything is automatic.
 #end
+
 Struct Rect9<T>
 	
 	'----------------------------------------------------
@@ -425,31 +415,6 @@ Struct Rect9<T>
 		_rect1=New Rect<T>()
 		Init(paddings.w,paddings.x,paddings.y,paddings.z)				
 	End 
-	
-	'----------------------------------------------------
-	'---------------------------------------------------- Duplicators
-	'----------------------------------------------------		
-	
-	#rem '2025-05-15 iDkP: UNDONED, because by nature struct is temporary class
-	
-	#rem monkeydoc Duplicate the Rect9
-	#end
-	Method Dup:Rect9<T>()
-		' Deprecated (iDkP 2025-05-14)
-		' "Dup" is not really appreciated but used by Mark... so added.
-		Return Duplicate() ' <-- Pleases, uses this one instead.
-	End 
-	
-	Method Duplicate:Rect9<T>()
-		' Deprecated (iDkP 2025-05-14)
-		Return New Rect9<T>(min,max,_paddingLeft,_paddingTop,_paddingRight,_paddingBottom)
-	End 	
-
-	Method Copy:Rect9<T>()
-		Return New Rect9<T>(min,max,_paddingLeft,_paddingTop,_paddingRight,_paddingBottom)
-	End
-	
-	#end
 
 	'----------------------------------------------------
 	'---------------------------------------------------- Properties : Rects
@@ -457,7 +422,7 @@ Struct Rect9<T>
 	
 	#rem monkeydoc The outter rect.
 	#end	
-	Property Rect:Rect<T>()
+	Property Outter:Rect<T>()
 		Return _rect0
 	Setter(r:Rect<T>)
 		_rect0=r
@@ -475,7 +440,7 @@ Struct Rect9<T>
 	The inner rect is always within the outter rect. But in the other case,
 	the validation will keep the datas manifold.
 	#end	
-	Property MarginsRect:Rect<T>()
+	Property Inner:Rect<T>()
 		Return _rect1
 	Setter(r:Rect<T>)
 		Pad(r)
@@ -1143,10 +1108,10 @@ Struct Rect9<T>
 		Validate()
 	End 
 	
-	'-------------------------- Geoms : Resize the outterRect, MarginsRect-Locked
+	'-------------------------- Geoms : Resize the outterRect, Inner-Locked
 	
 	#rem monkeydoc Set a new size for the outter rect without scaling the inner rect
-	(Resize the outterRect, MarginsRect-Locked)
+	(Resize the outterRect, Inner-Locked)
 	#end	
 	Method ResizeRect:Rect9<T>(x0:T,y0:T,max:Vec2<T>)
 		Return ResizeRect(New Vec2<T>(x0,y0),max)
@@ -1174,11 +1139,11 @@ Struct Rect9<T>
 		Return r
 	End 
 	
-	'-------------------------- Geoms : Resize OutterRect's sides, MarginsRect-Locked
+	'-------------------------- Geoms : Resize OutterRect's sides, Inner-Locked
 	
 	#rem monkeydoc Set a new coordinate for the outter rect's left side 
 	without scaling the inner rect.
-	(Resize OutterRect's sides, MarginsRect-Locked)
+	(Resize OutterRect's sides, Inner-Locked)
 	#end	
 	Method ResizeLeft:Rect9<T>(v:T)
 		Return ResizeRect(v,Top,Right,Bottom)
@@ -1186,7 +1151,7 @@ Struct Rect9<T>
 
 	#rem monkeydoc Set a new coordinate for the outter rect's top side 
 	without scaling the inner rect.
-	(Resize OutterRect's sides, MarginsRect-Locked)
+	(Resize OutterRect's sides, Inner-Locked)
 	#end	
 	Method ResizeTop:Rect9<T>(v:T)
 		Return ResizeRect(Left,v,Right,Bottom)
@@ -1194,7 +1159,7 @@ Struct Rect9<T>
 
 	#rem monkeydoc Set a new coordinate for the outter rect's right side 
 	without scaling the inner rect.
-	(Resize OutterRect's sides, MarginsRect-Locked)
+	(Resize OutterRect's sides, Inner-Locked)
 	#end		
 	Method ResizeRight:Rect9<T>(v:T)
 		Return ResizeRect(Left,Top,v,Bottom)
@@ -1202,7 +1167,7 @@ Struct Rect9<T>
 
 	#rem monkeydoc Set a new coordinate for the outter rect's bottom side 
 	without scaling the inner rect.
-	(Resize OutterRect's sides, MarginsRect-Locked)
+	(Resize OutterRect's sides, Inner-Locked)
 	#end		
 	Method ResizeBottom:Rect9<T>(v:T)
 		Return ResizeRect(Left,Top,Right,v)
@@ -1210,7 +1175,7 @@ Struct Rect9<T>
 
 	#rem monkeydoc Set a new coordinate for the outter rect's top-left corner
 	without scaling the inner rect.
-	(Resize OutterRect's sides, MarginsRect-Locked)
+	(Resize OutterRect's sides, Inner-Locked)
 	#end		
 	Method ResizeTopLeft:Rect9<T>(v:Vec2<T>)
 		Return ResizeRect(v.x,v.y,Right,Bottom)
@@ -1218,7 +1183,7 @@ Struct Rect9<T>
 
 	#rem monkeydoc Set a new coordinate for the outter rect's top-right corner
 	without scaling the inner rect.
-	(Resize OutterRect's sides, MarginsRect-Locked)
+	(Resize OutterRect's sides, Inner-Locked)
 	#end		
 	Method ResizeTopRight:Rect9<T>(v:Vec2<T>)
 		Return ResizeRect(Left,v.y,v.x,Bottom)
@@ -1226,7 +1191,7 @@ Struct Rect9<T>
 
 	#rem monkeydoc Set a new coordinate for the outter rect's bottom-left corner
 	without scaling the inner rect.
-	(Resize OutterRect's sides, MarginsRect-Locked)
+	(Resize OutterRect's sides, Inner-Locked)
 	#end		
 	Method ResizeBottomLeft:Rect9<T>(v:Vec2<T>)
 		Return ResizeRect(v.x,Top,Right,v.y)
@@ -1234,7 +1199,7 @@ Struct Rect9<T>
 	
 	#rem monkeydoc Set a new coordinate for the outter rect's bottom-right corner
 	without scaling the inner rect.
-	(Resize OutterRect's sides, MarginsRect-Locked)
+	(Resize OutterRect's sides, Inner-Locked)
 	#end		
 	Method ResizeBottomRight:Rect9<T>(v:Vec2<T>)
 		Return ResizeRect(Left,Top,v.x,v.y)
@@ -1565,55 +1530,55 @@ Struct Rect9<T>
 	#rem monkeydoc Checks if the corner region top-left contains another rect9.
 	#end	
 	Method CornerTopLeftContains:Bool(r:Rect9<T>)
-		Return CornerTopLeft.Contains(r.Rect)
+		Return CornerTopLeft.Contains(r.Outter)
 	End	
 
 	#rem monkeydoc Checks if the corner region top-middle contains another rect9.
 	#end		
 	Method CornerTopMiddleContains:Bool(r:Rect9<T>)
-		Return CornerTopMiddle.Contains(r.Rect)
+		Return CornerTopMiddle.Contains(r.Outter)
 	End
 
 	#rem monkeydoc Checks if the corner region top-right contains another rect9.
 	#end		
 	Method CornerTopRightContains:Bool(r:Rect9<T>)
-		Return CornerTopRight.Contains(r.Rect)
+		Return CornerTopRight.Contains(r.Outter)
 	End	
 
 	#rem monkeydoc Checks if the corner region middle-left contains another rect9.
 	#end		
 	Method CornerMiddleLeftContains:Bool(r:Rect9<T>)
-		Return CornerMiddleLeft.Contains(r.Rect)
+		Return CornerMiddleLeft.Contains(r.Outter)
 	End	
 	
 	#rem monkeydoc Checks if the corner region middle contains another rect9.
 	#end		
 	Method CornerMiddleContains:Bool(r:Rect9<T>)
-		Return CornerMiddle.Contains(r.Rect)
+		Return CornerMiddle.Contains(r.Outter)
 	End	
 
 	#rem monkeydoc Checks if the corner region middle-right contains another rect9.
 	#end			
 	Method CornerMiddleRightContains:Bool(r:Rect9<T>)
-		Return CornerMiddleRight.Contains(r.Rect)
+		Return CornerMiddleRight.Contains(r.Outter)
 	End	
 
 	#rem monkeydoc Checks if the corner region bottom-left contains another rect9.
 	#end			
 	Method CornerBottomLeftContains:Bool(r:Rect9<T>)
-		Return CornerBottomLeft.Contains(r.Rect)
+		Return CornerBottomLeft.Contains(r.Outter)
 	End
 
 	#rem monkeydoc Checks if the corner region bottom-middle contains another rect9.
 	#end			
 	Method CornerBottomMiddleContains:Bool(r:Rect9<T>)
-		Return CornerBottomMiddle.Contains(r.Rect)
+		Return CornerBottomMiddle.Contains(r.Outter)
 	End
 
 	#rem monkeydoc Checks if the corner region bottom-right contains another rect9.
 	#end			
 	Method CornerBottomRightContains:Bool(r:Rect9<T>)
-		Return CornerBottomRight.Contains(r.Rect)
+		Return CornerBottomRight.Contains(r.Outter)
 	End	
 		
 	'-------------------------- Rect
@@ -1897,10 +1862,10 @@ Struct Rect9<T>
 	End 
 	
 	Method Pad(r:Rect9<T>)
-		PadLeft=r.Rect.Left
-		PadTop=r.Rect.Top
-		PadRight=r.Rect.Right
-		PadBottom=r.Rect.Bottom
+		PadLeft=r.Outter.Left
+		PadTop=r.Outter.Top
+		PadRight=r.Outter.Right
+		PadBottom=r.Outter.Bottom
 	End 				
 	
 	'----------------------------------------------------
@@ -2034,8 +1999,8 @@ Function TransformRect9i<T>:Rect9i( rect9:Rect9i,matrix:AffineMat3<T> )
 	Local min:=matrix * New Vec2<T>( rect9.min.x,rect9.min.y )
 	Local max:=matrix * New Vec2<T>( rect9.max.x,rect9.max.y )
 
-	Local min:=matrix * New Vec2<T>( rect9.MarginsRect.min.x,rect9.MarginsRect.min.y )
-	Local max:=matrix * New Vec2<T>( rect9.MarginsRect.max.x,rect9.MarginsRect.max.y )
+	Local min:=matrix * New Vec2<T>( rect9.Inner.min.x,rect9.Inner.min.y )
+	Local max:=matrix * New Vec2<T>( rect9.Inner.max.x,rect9.Inner.max.y )
 	
 	rect9.PaddingLeft=matrix * ( rect9.PaddingLeft )
 	rect9.PaddingTop=matrix * ( rect9.PaddingTop )
