@@ -34,7 +34,7 @@ Using stdlib.graphics..
 	Version 1.0 - 2025-05-14
 		2025-05-18 - New generalist graphical functions for mojo and sdk_mojo (DrawImageFit, DrawImageTiled)
 		2025-05-17 - Graphical Rect9 functions for mojo and sdk_mojo
-		2025-05-17 - Added Vertices (property)
+		2025-05-17 - Added Vertices, Corners, NotCorners, Aeras and AerasClock (new properties)
 		2025-05-16 - Graphical debugmode functions for mojo and sdk_mojo
 		2025-05-15 - Integration in stdlib, new name (rect9)
 	Version 0.1 - 2021-02-11
