@@ -44,5 +44,3 @@ The `Rect9` class is a highly versatile mathematical primitive for Monkey2/Wonke
 #### In summary
 
 `Rect9` is a mathematically rigorous, memory-efficient, and highly extensible solution for 9-patch region manipulation in Monkey2/Wonkey. Its design reflects a data-first philosophy, providing deep geometric control and performance benefits for any domain—not just UI rendering. The class is well-documented, follows strict implementation standards, and offers unmatched versatility for developers wanting both power and clarity.
-
-If you need detailed breakdowns of specific methods, operators, or usage patterns, just specify!
