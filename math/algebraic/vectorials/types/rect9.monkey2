@@ -32,6 +32,7 @@ Using stdlib.graphics..
 	Year : 2021
 
 	Version 1.0 - 2025-05-14
+		2025-05-17 - Added Vertices (property)
 		2025-05-15 - Integration in stdlib, new name (rect9)
 	Version 0.1 - 2021-02-11
 		2021-02-11 - The rect9's rewrote in a geoms-module style
@@ -44,7 +45,7 @@ Using stdlib.graphics..
 		The Rect9 class provides support for manipulating 
 		rectangular regions with nine sub regions.
 
-	Example usages:	
+	Example usages:
 		Drawing window's decorations, game's windows/dialog boxes, 
 		bitmapped contour aeras, button skins...
 
@@ -84,7 +85,7 @@ Using stdlib.graphics..
 
 			| Element            | Count |
 			|--------------------|-------|
-			| Properties         | 86    |
+			| Properties         | 91    |
 			| Operators          | 29    |
 			| Pseudo-operators   | 28    |
 			| Functions          | 73    |
@@ -120,12 +121,6 @@ Using stdlib.graphics..
 			layout engines, region-specific transforms, even game logic like trigger zones. 
 			It's data-first, generic, and expressives a mathematically solution for 9-region probleme. 
 
-			The implementation differences extend beyond concept to technical execution. 
-			Where traditional approaches use special image formats with border pixel indicators, 
-			Rect9 provides explicit component values for direct mathematical manipulation. 
-			This enables zero-heap transformations, cache-optimized memory layout, 
-			and freedom from property reflection overhead.
-
 			For Monkey2/Wonkey developers needing versatile, reusable, and fully programmable 9-region mathematics, 
 			Rect9 delivers superior performance characteristics and cross-domain versatility that engine-tied implementations 
 			simply cannot match. One mathematical primitive, universal application for *nearly* anything!
@@ -158,20 +153,20 @@ Using stdlib.graphics..
 #end
 Alias Rect9i:Rect9<Int>
 
-#rem monkeydoc Convenience type alias for Rect9\<Short\>.
-#end
+'#rem monkeydoc Convenience type alias for Rect9\<Short\>.
+'#end
 'Alias Rect9s:Rect9<Short>
 
-#rem monkeydoc Convenience type alias for Rect9\<Long\>.
-#end
+'#rem monkeydoc Convenience type alias for Rect9\<Long\>.
+'#end
 'Alias Rect9l:Rect9<Long>
 
 #rem monkeydoc Convenience type alias for Rect9\<Float\>.
 #end
 Alias Rect9f:Rect9<Float>
 
-#rem monkeydoc Convenience type alias for Rect9\<Double\>.
-#end
+'#rem monkeydoc Convenience type alias for Rect9\<Double\>.
+'#end
 'Alias Rect9d:Rect9<Double>
 
 '========================================================================================
@@ -278,9 +273,9 @@ the word "margins".
 
 		Designed to have the smallest memory print, 
 		it use only 12 reals/numerics types 
-		but 51 write-able properties and 35 read-only properties.
+		but 51 write-able properties and 39 read-only properties.
 		
-		The most is programmed in this 86 properties,
+		The most is programmed in this 91 properties,
 		so, against the smallest memory print, the cost is
 		some calculation times, kept to reach the optimal
 		performances by the extreme binding of the computations.
@@ -463,12 +458,16 @@ Struct Rect9<T>
 		'			Return New Rect9<T2>(New Rect<T2>(_rect0.min.x,_rect0.min.y,_rect0.max.x,_rect0.max.y),PaddingLeft,PaddingTop,PaddingRight,PaddingBottom)
 		'		End
 		'
-		'	The type conversion operator works only at the C level for internal datatype only.
+		'	It's bacause the type conversion operator works only at the C level for internal datatype only.
 		'	So, a solution was found:
 		'
 		Local r:=New Rect9<T2>
 		r._rect0=_rect0	'We cast implicitally at data level!
 		r._rect1=_rect1
+		r._paddingLeft=_paddingLeft
+		r._paddingTop=_paddingTop
+		r._paddingRight=_paddingRight
+		r._paddingBottom=_paddingBottom
 		Return r
 	End
 
@@ -1236,7 +1235,96 @@ Struct Rect9<T>
 	#end
 	Property InnerOrigin:Vec2<T>()
 		Return _rect1.min
+	End
+
+	#rem monkeydoc Vertices
+	Get an array of vertices. The vertices are organized like this:
+	
+	|	0	1	2	3	|
+	|	4	5	6	7	|
+	|	8	9	10	11	|
+	|	12	13	14	15	|
+	
+	In this array, the inner rect is represented from the vertices: 5, 6, 10, 9
+	and the outter rect, from the vertices: 0, 3, 15, 12
+	
+	@return Array of vertices
+	#end
+	Property Vertices:Vec2<T>[]()
+		'iDkP addition 2025-05-17
+		Local result:=New Vec2<T>[16](
+		New Vec2<T>(_rect0.Left,_rect0.Top),	New Vec2<T>(_rect1.Left,_rect0.Top), 	New Vec2<T>(_rect1.Right,_rect0.Top),		New Vec2<T>(_rect0.Right,_rect0.Top),
+		New Vec2<T>(_rect0.Left,_rect1.Top),	New Vec2<T>(_rect1.Left,_rect1.Top), 	New Vec2<T>(_rect1.Right,_rect1.Top),		New Vec2<T>(_rect0.Right,_rect1.Top),
+		New Vec2<T>(_rect0.Left,_rect1.Bottom),	New Vec2<T>(_rect1.Left,_rect1.Bottom),	New Vec2<T>(_rect1.Right,_rect1.Bottom),	New Vec2<T>(_rect0.Right,_rect1.Bottom),
+		New Vec2<T>(_rect0.Left,_rect0.Bottom),	New Vec2<T>(_rect1.Left,_rect0.Bottom),	New Vec2<T>(_rect1.Right,_rect0.Bottom),	New Vec2<T>(_rect0.Right,_rect0.Bottom)	)
+		Return result
 	End 
+
+	'-------------------------- Geoms : Surfacial
+
+	#rem monkeydoc Get an array of Rects representing the corners organized as:
+	
+	| 0 x 1 |
+	| x x x |
+	| 3 x 2 |
+	
+	@return the array of rects.
+	#end 
+	Property Corners:Rect<T>[]()
+		'iDkP addition 2025-05-17
+		Return New Rect<T>[](	CornerTopLeft,		CornerTopRight,		CornerBottomRight,	CornerBottomLeft	)
+	End
+
+	#rem monkeydoc Get an array of Rects representing the 'non-corners' organized as:
+	
+	| x 0 x |
+	| 1 x 2 |
+	| x 4 x |
+	
+	@return the array of rects.
+	#end
+	Property NotCorners:Rect<T>[]()
+		'iDkP addition 2025-05-17
+		Return New Rect<T>[](	CornerTopMiddle, 	CornerMiddleLeft, 	CornerMiddleRight, 	CornerBottomMiddle	)
+	End 
+
+	#rem monkeydoc Get an array of Rects representing each aera organized as:
+	
+	| 0 1 2 |
+	| 3 4 5 |
+	| 6 7 8 |
+	
+	The list enumerate the aera as: 0, 2, 3, 4, 5, 6, 7, 8
+	We just read the aera as 3 lines of 3 rectangles.
+	
+	@return the array of rects.
+	#end
+	Property Aeras:Rect<T>[]()
+		'iDkP addition 2025-05-17
+		Return New Rect<T>[](	CornerTopLeft,		CornerTopMiddle,	CornerTopRight,		
+								CornerMiddleLeft,	CornerMiddle,		CornerMiddleRight,	
+								CornerBottomLeft,	CornerBottomMiddle,	CornerBottomRight	)
+		
+	End
+
+	#rem monkeydoc Get an array of Rects representing each aera organized as:
+	
+	| 0 1 2 |
+	| 7 8 3 |
+	| 6 5 4 |
+	
+	The list enumerate the aera as: 0, 2, 3, 4, 5, 6, 7, 8
+	We just turn around the rect9 in the clockway.
+	
+	@return the array of rects.
+	#end
+	Property AerasClock:Rect<T>[]()
+		'iDkP addition 2025-05-17
+		Return New Rect<T>[](	CornerTopLeft,		CornerTopMiddle,	CornerTopRight,		
+								CornerMiddleRight,	CornerBottomRight,	CornerBottomMiddle,	
+								CornerBottomLeft,	CornerMiddleLeft,	CornerMiddle	)
+		
+	End
 	
 	'-------------------------- Geoms : Dimensional
 
