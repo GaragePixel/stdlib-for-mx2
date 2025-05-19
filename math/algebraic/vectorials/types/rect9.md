@@ -1,5 +1,5 @@
 ---
-### Rect9 Implementation (GaragePixel/iDkP, 2025-05-19, Aida v1.0)
+### Rect9 Implementation (GaragePixel/iDkP, 2025-05-19, Aida 4)
 
 #### Purpose
 
