@@ -1297,7 +1297,7 @@ Struct Rect9<T>
 	| 3 4 5 |
 	| 6 7 8 |
 	
-	The list enumerate the aera as: 0, 2, 3, 4, 5, 6, 7, 8
+	The list enumerate the aera as: 0, 1, 2, 3, 4, 5, 6, 7, 8
 	We just read the aera as 3 lines of 3 rectangles.
 	
 	@return the array of rects.
