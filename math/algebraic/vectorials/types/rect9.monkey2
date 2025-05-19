@@ -1316,7 +1316,7 @@ Struct Rect9<T>
 	| 7 8 3 |
 	| 6 5 4 |
 	
-	The list enumerate the aera as: 0, 2, 3, 4, 5, 6, 7, 8
+	The list enumerate the aera as: 0, 1, 2, 3, 4, 5, 6, 7, 8
 	We just turn around the rect9 in the clockway.
 	
 	@return the array of rects.
