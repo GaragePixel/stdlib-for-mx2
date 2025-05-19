@@ -461,7 +461,7 @@ Struct Rect9<T>
 		'			Return New Rect9<T2>(New Rect<T2>(_rect0.min.x,_rect0.min.y,_rect0.max.x,_rect0.max.y),PaddingLeft,PaddingTop,PaddingRight,PaddingBottom)
 		'		End
 		'
-		'	It's bacause the type conversion operator works only at the C level for internal datatype only.
+		'	It's because the type conversion operator works only at the C level for internal datatype only.
 		'	So, a solution was found:
 		'
 		Local r:=New Rect9<T2>
