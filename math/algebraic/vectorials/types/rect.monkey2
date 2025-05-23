@@ -1,6 +1,29 @@
 
 Namespace stdlib.math.types
 
+Enum TileMode 
+	
+	' Added by iDkP for GaragePixel:
+	' For now, the tilemode belongs to rect.
+	' But look, it really generic. So one day, when TileEnum 
+	' will grown, it will be moved in a place where enums are free of tax 
+	' and just happy.
+		
+	Fit=$0000 
+		
+	Left=$10 'The tiles are aligned to the left edge of a surface
+	Right=$20 'The tiles are aligned to the right edge of a surface
+	CenterX=$30 'The tiles are aligned in x to the center of a surface	
+	FitH=$00 'The tiles are adjusted in x to the center of a surface
+		
+	Top=$01 'The tiles are aligned to the top edge of a surface
+	Bottom=$02 'The tiles are aligned to the bottom edge of a surface
+	CenterY=$03 'The tiles are aligned in y to the center of a surface
+	FitV=$00 'The tiles are adjusted in x to the center of a surface
+		
+	Tiled=Left 'TileTopLeft Default: the tiles are aligned to the left of a surface
+End 
+
 #rem monkeydoc Convenience type alias for Rect\<Int\>.
 #end
 Alias Recti:Rect<Int>
@@ -340,7 +363,238 @@ Struct Rect<T>
 	Method ToString:String()
 		Return Self
 	End
+
+	#rem monkeydoc Creates a stack of rectangles tiled within this rectangle.
+	@author: iDkP for GaragePixel
+	@date: 2025-05-23
 	
+	This method generates rectangles in tiling patterns specified by the TileMode parameter.
+	It supports left/right/center horizontal alignment and top/bottom/center vertical alignment.
+
+	Note: No clipping is performed on the generated rectangles. When using for graphics
+	rendering, apply scissoring/clipping to the original rectangle to prevent drawing outside bounds.
+
+	The Tiled method generates all rectangles that would be needed for a complete tiling pattern, 
+	including those that would extend beyond the boundary of the original rectangle. 
+	This approach maximizes flexibility and performance by allowing the graphics system to handle clipping 
+	through hardware scissoring rather than creating partial rectangles, which would be computationally expensive.
+
+	For graphics rendering implementations, simply apply your engine's scissoring or clipping functionality 
+	to the original rectangle bounds before drawing the returned stack of rectangles.
+	
+	@param tile Rectangle to be used as the tiling pattern
+	@param mode Controls tiling arrangement (combination of horizontal and vertical modes)
+	
+	@return Stack of rectangles representing the tiles, or Null if tile has zero dimensions
+	#end 	
+	Method Tiled<T,T2>:Stack<Rect<T>>( tile:Rect<T2>, mode:TileMode=TileMode.Tiled )
+
+		' iDkP 2025-05-23:
+		'
+		' This method uses pointer-based closures to dynamically construct optimal tiling patterns at runtime. 
+		' The dual generic parameters allow for mixed-type operations, such as tiling float-based rectangles 
+		' within integer-based boundaries. The center alignment logic ensures true visual centering by forcing 
+		' odd-numbered tile counts.
+		'
+		' No clipping is performed on the generated rectangles - when using for graphics rendering, 
+		' you must apply scissoring to the original rectangle to prevent drawing outside its boundaries. 
+		' This approach maximizes rendering performance by leveraging hardware clipping rather than creating 
+		' partial rectangles.
+
+		'------- Guards -------
+
+		If tile.min.x=tile.max.x Or tile.min.y=tile.max.y 'Do not store 'flat' tile
+			'Comparing by check typing is faster that compute the sizes or counting the stack
+			Return Null
+		End
+		
+		Local result:=new Stack<Rect<T>>()
+
+		If mode = TileMode.Fit 'Semi-Guard
+			result.Add(Self)
+			Return result 
+		End
+		
+		'------- Setup -------
+
+		Local scalex:Float
+		Local scaley:Float
+		
+		'------- Steppers -------
+
+		Local startx:T
+		Local starty:T
+		Local endx:T
+		Local endy:T
+		Local stepx:T
+		Local stepy:T
+		Local sizetx:T
+		Local sizety:T
+		
+		'------- Define the program handles -------
+		
+		' _closure_ -> closure looks like stoke uppon something
+		
+		'We program dynamically the nested-loops using closures defined as:
+		
+		Local _programX_:Void(				tile:Rect<T2> Ptr,
+											startx:T Ptr,endx:T Ptr,starty:T Ptr,endy:T Ptr,stepx:T Ptr,stepy:T Ptr,y:T Ptr,
+											sizetx:T Ptr,sizety:T Ptr			)
+		
+		Local _programY_:Void(				programx:Void(	tile:Rect<T2> Ptr,
+															startx:T Ptr,endx:T Ptr,starty:T Ptr,endy:T Ptr,stepx:T Ptr,stepy:T Ptr,y:T Ptr,
+															sizetx:T Ptr,sizety:T Ptr		),
+
+											tile:Rect<T2> Ptr,
+											startx:T Ptr,endx:T Ptr,starty:T Ptr,endy:T Ptr,stepx:T Ptr,stepy:T Ptr,
+											sizetx:T Ptr,sizety:T Ptr			) 
+		
+		
+		'------- Define the programs -------
+		
+		'Each programs is wrote as lambda embeddable in the closures
+		
+		' Program x Tile
+		
+		Local program_x_Tile:=Lambda(		tile:Rect<T2> Ptr,
+											startx:T Ptr,endx:T Ptr,starty:T Ptr,endy:T Ptr,stepx:T Ptr,stepy:T Ptr,y:T Ptr,
+											sizetx:T Ptr,sizety:T Ptr			)
+										
+			For Local x:T=startx[0] Until endx[0] Step stepx[0]
+				
+				result.Add(	New Rect<T>(	x,
+											y[0],
+											x+sizetx[0],
+											y[0]+sizety[0]	)	)
+			End
+		End
+
+		' Program x Fit
+		
+		Local program_x_Fit:=Lambda(		tile:Rect<T2> Ptr,
+											startx:T Ptr,endx:T Ptr,starty:T Ptr,endy:T Ptr,stepx:T Ptr,stepy:T Ptr,y:T Ptr,
+											sizetx:T Ptr,sizety:T Ptr			)
+			
+			result.Add(		New Rect<T>(	startx[0],
+											y[0],
+											startx[0]+sizetx[0],
+											sizety[0]	)	)
+		End
+
+		' Program y Tile
+		
+		Local program_y_Tile:=Lambda(		programx:Void(	tile:Rect<T2> Ptr,
+															startx:T Ptr,endx:T Ptr,starty:T Ptr,endy:T Ptr,stepx:T Ptr,stepy:T Ptr,y:T Ptr,
+															sizetx:T Ptr,sizety:T Ptr),
+														
+											tile:Rect<T2> Ptr,
+											startx:T Ptr,endx:T Ptr,starty:T Ptr,endy:T Ptr,stepx:T Ptr,stepy:T Ptr,
+											sizetx:T Ptr,sizety:T Ptr			)
+
+			Local CastTyPtr:T Ptr 			'memoirize (only one pointer will be enough)
+										
+			For Local y:T=starty[0] Until endy[0] Step stepy[0]
+				
+				CastTyPtr=Varptr(Cast<T>(y))
+				
+				programx(					tile,
+											startx,endx,starty,endy,stepx,stepy,CastTyPtr,sizetx,sizety)
+			End
+		End 
+
+		' Program y Fit
+		
+		Local program_y_Fit:=Lambda(		programx:Void(	tile:Rect<T2> Ptr,
+															startx:T Ptr,endx:T Ptr,starty:T Ptr,endy:T Ptr,stepx:T Ptr,stepy:T Ptr,y:T Ptr,
+															sizetx:T Ptr,sizety:T Ptr),
+														
+											tile:Rect<T2> Ptr,
+											startx:T Ptr,endx:T Ptr,starty:T Ptr,endy:T Ptr,stepx:T Ptr,stepy:T Ptr,
+											sizetx:T Ptr,sizety:T Ptr			)
+										
+			programx(						tile,
+											startx,endx,starty,endy,stepx,stepy,starty,sizetx,sizety)
+		End
+		
+		'------- Parametrize the modes -------
+		
+		'The steppers are set and the programs are choosen to be mounted in the closures
+		
+		'Select mode X (horizontal alignment)
+		Select UByte(mode) & $F0
+			Case TileMode.Right
+				startx=X+Width-tile.Width
+				endx=X-tile.Width
+				stepx=-tile.Width
+				scalex=1
+				sizetx=scalex*tile.Width
+				_programX_=program_x_Tile
+			Case TileMode.CenterX
+				Local centerX:Float = X + Width / 2
+				Local tileCount:Int = Int(Width / tile.Width) 'Calculate center of pattern
+				If tileCount Mod 2 = 0 tileCount += 1  'Ensure odd number for true center
+				Local halfTiles:Int = tileCount / 2
+				startx = (centerX - halfTiles*tile.Width - tile.Width/2)-tile.Width 'Position first tile so middle tile is centered
+				endx = X + Width + tile.Width
+				stepx=tile.Width
+				scalex=1
+				sizetx=scalex*tile.Width
+				_programX_=program_x_Tile
+			Case TileMode.FitH
+				startx=X
+				scalex=Width/tile.Width
+				sizetx=scalex*tile.Width
+				_programX_=program_x_Fit
+			Default 'Left
+				startx=X
+				endx=Width+tile.Width+tile.Width
+				stepx=tile.Width
+				scalex=1
+				sizetx=scalex*tile.Width
+				_programX_=program_x_Tile
+		End
+		
+		'Select mode Y (vertical alignment)
+		Select UByte(mode) & $0F
+			Case TileMode.Bottom
+				starty=Y+Height-tile.Height
+				endy=Y-tile.Height
+				stepy=-tile.Height	
+				scaley=1
+				sizety=scaley*tile.Height
+				_programY_=program_y_Tile
+			Case TileMode.CenterY
+				Local centerY:Float = Y + Height / 2
+				Local tileCount:Int = Int(Height / tile.Height) 'Calculate center of pattern
+				If tileCount Mod 2 = 0 tileCount += 1  'Ensure odd number for true center
+				Local halfTiles:Int = tileCount / 2
+				starty = (centerY - halfTiles*tile.Height - tile.Height/2)-tile.Height 'Position first tile so middle tile is centered
+				endy = Y + Height + tile.Height
+				stepy=tile.Height
+				sizety=scaley*tile.Height
+				scaley=1
+				_programY_=program_y_Tile
+			Case TileMode.FitV
+				starty=Y
+				scaley=Height/tile.Height
+				sizety=scaley*tile.Height
+				_programY_=program_y_Fit
+			Default 'Top
+				starty=Y
+				endy=Height+tile.Height+tile.Height
+				stepy=tile.Height
+				scaley=1
+				sizety=scaley*tile.Height
+				_programY_=program_y_Tile
+		End
+		
+		'------- Run the program -------
+		
+		'Procedure call: Now, we can run the main closure who will executes the choosen programs
+		_programY_(_programX_,Varptr(tile),Varptr(startx),Varptr(endx),Varptr(starty),Varptr(endy),Varptr(stepx),Varptr(stepy),Varptr(sizetx),Varptr(sizety))
+
+		Return result
+	End
 End
 
 #rem monkeydoc Transforms a Rect\<Int\> by an AffineMat3.
