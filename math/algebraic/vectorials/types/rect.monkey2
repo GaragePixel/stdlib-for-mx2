@@ -369,7 +369,8 @@ Struct Rect<T>
 	@date: 2025-05-23
 	
 	This method generates rectangles in tiling patterns specified by the TileMode parameter.
-	It supports left/right/center horizontal alignment and top/bottom/center vertical alignment.
+	It supports left/right/center horizontal alignment and top/bottom/center vertical alignment, 
+	and horizontal /vertical fitting.
 
 	Note: No clipping is performed on the generated rectangles. When using for graphics
 	rendering, apply scissoring/clipping to the original rectangle to prevent drawing outside bounds.
