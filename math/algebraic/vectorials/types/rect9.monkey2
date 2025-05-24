@@ -29,9 +29,10 @@ Using stdlib.graphics..
 
 	Library : stdlib & Aida.std & std
 	Author : iDkP for GaragePixel
-	Year : 2021
+	Year : 2021, updated 2025
 
 	Version 1.0 - 2025-05-14
+		2025-05-24 - Added new capabilities in rect, related to rect9, about tiling
 		2025-05-18 - New generalist graphical functions for mojo and sdk_mojo (DrawImageFit, DrawImageTiled)
 		2025-05-17 - Graphical Rect9 functions for mojo and sdk_mojo
 		2025-05-17 - Added Vertices, Corners, NotCorners, Aeras and AerasClock (new properties)
@@ -1302,7 +1303,7 @@ Struct Rect9<T>
 	
 	@return the array of rects.
 	#end
-	Property Aeras:Rect<T>[]()
+	Property Patches:Rect<T>[]()
 		'iDkP addition 2025-05-17
 		Return New Rect<T>[](	CornerTopLeft,		CornerTopMiddle,	CornerTopRight,		
 								CornerMiddleLeft,	CornerMiddle,		CornerMiddleRight,	
