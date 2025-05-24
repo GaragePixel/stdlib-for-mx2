@@ -370,7 +370,7 @@ Struct Rect<T>
 	
 	This method generates rectangles in tiling patterns specified by the TileMode parameter.
 	It supports left/right/center horizontal alignment and top/bottom/center vertical alignment, 
-	and horizontal /vertical fitting.
+	and horizontal/vertical fitting.
 
 	Note: No clipping is performed on the generated rectangles. When using for graphics
 	rendering, apply scissoring/clipping to the original rectangle to prevent drawing outside bounds.
@@ -388,7 +388,7 @@ Struct Rect<T>
 	
 	@return Stack of rectangles representing the tiles, or Null if tile has zero dimensions
 	#end 	
-	Method Tiled<T,T2>:Stack<Rect<T>>( tile:Rect<T2>, mode:TileMode=TileMode.Tiled )
+	Method Tiled<T>:Stack<Rect<T>>( tile:Rect<T>, mode:TileMode=TileMode.Tiled )
 
 		' iDkP 2025-05-23:
 		'
@@ -438,15 +438,15 @@ Struct Rect<T>
 		
 		'We program dynamically the nested-loops using closures defined as:
 		
-		Local _programX_:Void(				tile:Rect<T2> Ptr,
+		Local _programX_:Void(				tile:Rect<T> Ptr,
 											startx:T Ptr,endx:T Ptr,starty:T Ptr,endy:T Ptr,stepx:T Ptr,stepy:T Ptr,y:T Ptr,
 											sizetx:T Ptr,sizety:T Ptr			)
 		
-		Local _programY_:Void(				programx:Void(	tile:Rect<T2> Ptr,
+		Local _programY_:Void(				programx:Void(	tile:Rect<T> Ptr,
 															startx:T Ptr,endx:T Ptr,starty:T Ptr,endy:T Ptr,stepx:T Ptr,stepy:T Ptr,y:T Ptr,
 															sizetx:T Ptr,sizety:T Ptr		),
 
-											tile:Rect<T2> Ptr,
+											tile:Rect<T> Ptr,
 											startx:T Ptr,endx:T Ptr,starty:T Ptr,endy:T Ptr,stepx:T Ptr,stepy:T Ptr,
 											sizetx:T Ptr,sizety:T Ptr			) 
 		
@@ -457,12 +457,12 @@ Struct Rect<T>
 		
 		' Program x Tile
 		
-		Local program_x_Tile:=Lambda(		tile:Rect<T2> Ptr,
+		Local program_x_Tile:=Lambda(		tile:Rect<T> Ptr,
 											startx:T Ptr,endx:T Ptr,starty:T Ptr,endy:T Ptr,stepx:T Ptr,stepy:T Ptr,y:T Ptr,
 											sizetx:T Ptr,sizety:T Ptr			)
 										
 			For Local x:T=startx[0] Until endx[0] Step stepx[0]
-				
+
 				result.Add(	New Rect<T>(	x,
 											y[0],
 											x+sizetx[0],
@@ -472,23 +472,23 @@ Struct Rect<T>
 
 		' Program x Fit
 		
-		Local program_x_Fit:=Lambda(		tile:Rect<T2> Ptr,
+		Local program_x_Fit:=Lambda(		tile:Rect<T> Ptr,
 											startx:T Ptr,endx:T Ptr,starty:T Ptr,endy:T Ptr,stepx:T Ptr,stepy:T Ptr,y:T Ptr,
 											sizetx:T Ptr,sizety:T Ptr			)
 			
 			result.Add(		New Rect<T>(	startx[0],
 											y[0],
 											startx[0]+sizetx[0],
-											sizety[0]	)	)
+											y[0]+sizety[0]	)	)
 		End
 
 		' Program y Tile
 		
-		Local program_y_Tile:=Lambda(		programx:Void(	tile:Rect<T2> Ptr,
+		Local program_y_Tile:=Lambda(		programx:Void(	tile:Rect<T> Ptr,
 															startx:T Ptr,endx:T Ptr,starty:T Ptr,endy:T Ptr,stepx:T Ptr,stepy:T Ptr,y:T Ptr,
 															sizetx:T Ptr,sizety:T Ptr),
 														
-											tile:Rect<T2> Ptr,
+											tile:Rect<T> Ptr,
 											startx:T Ptr,endx:T Ptr,starty:T Ptr,endy:T Ptr,stepx:T Ptr,stepy:T Ptr,
 											sizetx:T Ptr,sizety:T Ptr			)
 
@@ -496,20 +496,23 @@ Struct Rect<T>
 										
 			For Local y:T=starty[0] Until endy[0] Step stepy[0]
 				
-				CastTyPtr=Varptr(Cast<T>(y))
+				CastTyPtr=Varptr(y)
 				
 				programx(					tile,
 											startx,endx,starty,endy,stepx,stepy,CastTyPtr,sizetx,sizety)
+
+'				programx(					tile,
+'											startx,endx,starty,endy,stepx,stepy,Varptr(y),sizetx,sizety)
 			End
 		End 
 
 		' Program y Fit
 		
-		Local program_y_Fit:=Lambda(		programx:Void(	tile:Rect<T2> Ptr,
+		Local program_y_Fit:=Lambda(		programx:Void(	tile:Rect<T> Ptr,
 															startx:T Ptr,endx:T Ptr,starty:T Ptr,endy:T Ptr,stepx:T Ptr,stepy:T Ptr,y:T Ptr,
 															sizetx:T Ptr,sizety:T Ptr),
 														
-											tile:Rect<T2> Ptr,
+											tile:Rect<T> Ptr,
 											startx:T Ptr,endx:T Ptr,starty:T Ptr,endy:T Ptr,stepx:T Ptr,stepy:T Ptr,
 											sizetx:T Ptr,sizety:T Ptr			)
 										
@@ -560,7 +563,7 @@ Struct Rect<T>
 			Case TileMode.Bottom
 				starty=Y+Height-tile.Height
 				endy=Y-tile.Height
-				stepy=-tile.Height	
+				stepy=-tile.Height
 				scaley=1
 				sizety=scaley*tile.Height
 				_programY_=program_y_Tile
@@ -572,8 +575,8 @@ Struct Rect<T>
 				starty = (centerY - halfTiles*tile.Height - tile.Height/2)-tile.Height 'Position first tile so middle tile is centered
 				endy = Y + Height + tile.Height
 				stepy=tile.Height
-				sizety=scaley*tile.Height
 				scaley=1
+				sizety=scaley*tile.Height
 				_programY_=program_y_Tile
 			Case TileMode.FitV
 				starty=Y
