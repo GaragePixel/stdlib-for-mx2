@@ -365,8 +365,8 @@ Struct Rect<T>
 	End
 
 	#rem monkeydoc Creates a stack of rectangles tiled within this rectangle.
-	@author: iDkP for GaragePixel
-	@date: 2025-05-23
+	@author iDkP for GaragePixel
+	@since 2025-05-23
 	
 	This method generates rectangles in tiling patterns specified by the TileMode parameter.
 	It supports left/right/center horizontal alignment and top/bottom/center vertical alignment, 
@@ -405,7 +405,7 @@ Struct Rect<T>
 		'------- Guards -------
 
 		If tile.min.x=tile.max.x Or tile.min.y=tile.max.y 'Do not store 'flat' tile
-			'Comparing by check typing is faster that compute the sizes or counting the stack
+			'Comparing by check typing is faster that computing the sizes or counting the stack
 			Return Null
 		End
 		
@@ -501,8 +501,6 @@ Struct Rect<T>
 				programx(					tile,
 											startx,endx,starty,endy,stepx,stepy,CastTyPtr,sizetx,sizety)
 
-'				programx(					tile,
-'											startx,endx,starty,endy,stepx,stepy,Varptr(y),sizetx,sizety)
 			End
 		End 
 
