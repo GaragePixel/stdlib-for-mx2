@@ -29,7 +29,8 @@ Using stdlib.graphics..
 
 	Library : stdlib & Aida.std & std
 	Author : iDkP for GaragePixel
-	Year : 2021, updated 2025
+	Since : 2021
+	Version : 2025-05-24
 
 	Version 1.0 - 2025-05-14
 		2025-05-24 - Added new capabilities in rect, related to rect9, about tiling
@@ -177,8 +178,10 @@ Alias Rect9f:Rect9<Float>
 '------------------------------------------------------------------------------ STRUCT
 '========================================================================================
 
-#rem monkeydoc The Rect9 class provides support for manipulating rectangular regions
-with nine sub regions.
+#rem monkeydoc The Rect9 class provides support for manipulating rectangular regions with nine sub regions.
+@author iDkP for GaragePixel
+@since 2021
+@version 2025-05-25
 
 This object can to be called "pad". 
 		
