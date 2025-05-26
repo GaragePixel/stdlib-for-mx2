@@ -19,18 +19,22 @@ Using stdlib.graphics..
 
 #rem
 
-'----------------------------------------------------------------------------------------
-'----------------------------------------------------------------------------------------
-' Aida.std.geom
-'				 						Rect9
-'
-'----------------------------------------------------------------------------------------
-'----------------------------------------------------------------------------------------
+	Library: stdlib & Aida.std & std
+	author: iDkP from GaragePixel
+	Since: 2021
+	Version: 2025-05-25
 
-	Library : stdlib & Aida.std & std
-	Author : iDkP for GaragePixel
-	Since : 2021
-	Version : 2025-05-24
+	Version 1.0 - 2025-05-14
+		2025-05-24 - Added new capabilities in rect, related to rect9, about tiling
+		2025-05-18 - New generalist graphical functions for mojo and sdk_mojo (DrawImageFit, DrawImageTiled)
+		2025-05-17 - Graphical Rect9 functions for mojo and sdk_mojo
+		2025-05-17 - Added Vertices, Corners, NotCorners, Aeras and AerasClock (new properties)
+		2025-05-16 - Graphical debugmode functions for mojo and sdk_mojo
+		2025-05-15 - Integration in stdlib, new name (rect9)
+	Version 0.1 - 2021-02-11
+		2021-02-11 - The rect9's rewrote in a geoms-module style
+		2021-02-04 - First test V0.1
+		2021-01-27 - Rect9 idea (implementation of some old stuff from 2007 and new intuitions)
 
 	Version 1.0 - 2025-05-14
 		2025-05-24 - Added new capabilities in rect, related to rect9, about tiling
