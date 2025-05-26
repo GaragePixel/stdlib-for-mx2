@@ -365,8 +365,8 @@ Struct Rect<T>
 	End
 
 	#rem monkeydoc Creates a stack of rectangles tiled within this rectangle.
-	@author: iDkP for GaragePixel
-	@since: 2025-05-23
+	@author iDkP for GaragePixel
+	@since 2025-05-23
 	
 	This method generates rectangles in tiling patterns specified by the TileMode parameter.
 	It supports left/right/center horizontal alignment and top/bottom/center vertical alignment, 
