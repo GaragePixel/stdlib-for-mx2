@@ -365,8 +365,8 @@ Struct Rect<T>
 	End
 
 	#rem monkeydoc Creates a stack of rectangles tiled within this rectangle.
-	@author iDkP for GaragePixel
-	@since 2025-05-23
+	@author: iDkP for GaragePixel
+	@since: 2025-05-23
 	
 	This method generates rectangles in tiling patterns specified by the TileMode parameter.
 	It supports left/right/center horizontal alignment and top/bottom/center vertical alignment, 
@@ -388,7 +388,7 @@ Struct Rect<T>
 	
 	@return Stack of rectangles representing the tiles, or Null if tile has zero dimensions
 	#end 	
-	Method Tiled<T>:Stack<Rect<T>>( tile:Rect<T>, mode:TileMode=TileMode.Tiled )
+	Method Tiled<T>:Stack<Rect<T>>( tile:Rect<T>, mode:TileMode=TileMode.Tiled ) Where T Implements IReal Or T Implements INumeric
 
 		' iDkP 2025-05-23:
 		'
@@ -500,7 +500,6 @@ Struct Rect<T>
 				
 				programx(					tile,
 											startx,endx,starty,endy,stepx,stepy,CastTyPtr,sizetx,sizety)
-
 			End
 		End 
 
