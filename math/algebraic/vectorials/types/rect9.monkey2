@@ -15,7 +15,6 @@ Namespace stdlib.math.types
 
 Using stdlib.math.types..
 Using stdlib.math.matrices..
-Using stdlib.graphics..
 
 #rem
 
