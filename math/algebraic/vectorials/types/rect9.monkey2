@@ -35,20 +35,6 @@ Using stdlib.math.matrices..
 		2021-02-04 - First test V0.1
 		2021-01-27 - Rect9 idea (implementation of some old stuff from 2007 and new intuitions)
 
-	Version 1.0 - 2025-05-14
-		2025-05-24 - Added new capabilities in rect, related to rect9, about tiling
-		2025-05-18 - New generalist graphical functions for mojo and sdk_mojo (DrawImageFit, DrawImageTiled)
-		2025-05-17 - Graphical Rect9 functions for mojo and sdk_mojo
-		2025-05-17 - Added Vertices, Corners, NotCorners, Aeras and AerasClock (new properties)
-		2025-05-16 - Graphical debugmode functions for mojo and sdk_mojo
-		2025-05-15 - Integration in stdlib, new name (rect9)
-	Version 0.1 - 2021-02-11
-		2021-02-11 - The rect9's rewrote in a geoms-module style
-		2021-02-04 - First test V0.1
-		2021-01-27 - Rect9 idea (implementation of some old stuff from 2007 and new intuitions)
-		 
-'----------------------------------------------------------------------------------------
-
 	Purpose:
 		The Rect9 class provides support for manipulating 
 		rectangular regions with nine sub regions.
