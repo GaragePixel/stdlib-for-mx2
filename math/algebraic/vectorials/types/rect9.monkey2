@@ -24,6 +24,7 @@ Using stdlib.math.matrices..
 	Version: 2025-05-25
 
 	Version 1.0 - 2025-05-14
+		2025-05-29 - Added a user guide and important feature's summary
 		2025-05-29 - Added batch operations: MoveOutterBorders, MoveInnerBorders
 		2025-05-24 - Added new capabilities in rect, related to rect9, about tiling
 		2025-05-18 - New generalist graphical functions for mojo and sdk_mojo (DrawImageFit, DrawImageTiled)
