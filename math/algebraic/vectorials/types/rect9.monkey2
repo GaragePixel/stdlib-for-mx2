@@ -24,6 +24,7 @@ Using stdlib.math.matrices..
 	Version: 2025-05-25
 
 	Version 1.0 - 2025-05-14
+		2025-05-29 - Added batch operations: MoveOutterBorders, MoveInnerBorders
 		2025-05-24 - Added new capabilities in rect, related to rect9, about tiling
 		2025-05-18 - New generalist graphical functions for mojo and sdk_mojo (DrawImageFit, DrawImageTiled)
 		2025-05-17 - Graphical Rect9 functions for mojo and sdk_mojo
@@ -137,7 +138,132 @@ Using stdlib.math.matrices..
 		like intersections, contains, transpositions and flips. 
 		Okay that produced 2000 lines, but it's one of my prettiest classes, 
 		and fully documented!
-#end
+
+#end 	Quick usage guide and some important feature's summaries.
+	added 2025-05-29
+
+	Features:
+
+	Minimal storage, maximal access: Rect9 gives you all the nine-patch power you want, 
+	with just two rects and four paddings under the hood.
+
+	The most important feature of the Rect9 struct is its minimal-memory, 
+	maximal-functionality 9-region model—specifically, the way it only stores two rectangles 
+	(outer and inner) plus four paddings, yet exposes full nine-patch logic and 91+ properties for UI, 
+	graphics, and math workflows. Only two rects and four paddings are ever stored, 
+	so memory use is minimal regardless of how many Rect9s exist.
+
+	All derived geometry—edges, corners, center, paddings, margins, regions are computed on demand. 
+	This exposes 9-patch semantics (stretchable edges, fixed corners) with zero redundancy.
+	Intuitive math with rects and vectors (+, -, *, &), 
+	all while maintaining rect integrity and validation.
+	
+	You can use Rect9 for layout, collision, procedural maps, or scalable UI 
+	without being tied to rendering or a specific engine.
+
+	Similar Structures in the Literature:
+
+		Rect9 is a pure mathematical primitive: geometry-first, memory-efficient, and engine-agnostic, 
+		unlike the most current implementations.
+		So this is an overview of similar implementations aside my work:
+	
+		Comparable 9-Region Models:
+	
+		    Android 9-Patch (.9.png):
+		        Used for scalable UI assets. Defines stretchable regions via 1-pixel borders on a bitmap.
+		        Limitation: Tied to rendering pipeline; not a general-purpose geometric primitive.
+		        
+		    Godot Engine NinePatchRect:
+		        Node for scalable UI panels. Exposes margin and patch region properties.
+		        Limitation: Engine-coupled, with less geometric expressiveness and no math operators.
+		        
+		    Qt QMargins/QRect/QRectF:
+		        Offers margin and rectangle manipulation (no true 9-region model).
+		        Limitation: No native 9-patch logic—composition required for similar effect.
+		        
+		    CSS Box Model (Web):
+		        Conceptual separation of margin, border, padding, content—no 9-region math, but similar intent.
+		        Limitation: Declarative, not a code object; no direct math operations.
+		        Anyway the CSS model can produces negative marges, my model no (it performs a validation).
+	
+	A quick user guide:
+	
+	Use margin (outer rect: Margins) for moving the exterior outward.
+	Use padding (inner rect: Padding/Pad) for moving the interior inward.
+
+	Moving the Exterior (Applying Margins / Expanding Outward):
+
+		To "move" or expand the outer rectangle (give it a margin, or make the entire rect9 larger), 
+		you work with operations that adjust the outer bounds. 
+		This is like adding margin around the entire rect9. Typical approaches:
+		
+			- Direct Outer Rect Manipulation:
+				Set the Outer property directly, or use methods/operators that modify the outer rectangle.
+				
+			- Margin Properties:
+				Properties like MarginsLeft, MarginsTop etc, allow you to grow or shrink the overall bounds.
+				    - Increasing these values expands the rect outward.
+				    - Decreasing contracts it inward (shrinks toward the center).
+				    
+			- Operators:
+				Overloaded operators like + or | may support union or expansion with another rect 
+				or margin vector.	
+
+		    - Use batch operation:
+		    	MoveOutterBorders()
+				
+		Code example:
+		
+			' Expand the entire rect outward by 10 units on each side:
+			rect.Outer = rect.Outer + Vec2i(10,10)
+			' OR, if supported:
+			rect.MarginsLeft += 10
+			rect.MarginsRight += 10
+
+	Moving the Interior (Applying Padding / Contracting Inward):
+	
+		To move the inner rectangle inward (like adding padding, 
+		or shrinking the usable area inside the rect9), 
+		work with inner bounds or the padding properties:
+		
+		    - Direct Inner Rect Manipulation:
+		    	Set the Inner property to adjust the area inside the 9 regions.
+		    	
+		    - Padding Properties:
+		    		Properties like PaddingLeft, PaddingTop etc., let you 
+		    		grow or shrink the inner area relative to the outer rectangle.
+		        		- Increasing padding moves the inner rect inward 
+		        		(shrinks the center area, thickens the borders).
+		        		- Decreasing padding expands the center region (thinner borders).
+		        		
+		    - Pad Properties:
+		    	Properties like PadLeft or methods prefixed with Pad provide control 
+		    	over the inner rect position in absolute (screen) coordinate, 
+		    	regardless of the outer rect.
+		    	
+		    - Use batch operation:
+		    	MoveInnerBorders()
+		   
+	   Code example:
+	   
+			' Move the inner rect inward by 8 pixels (thicker padding):
+			rect.PaddingLeft += 8
+			rect.PaddingRight += 8
+			rect.PaddingTop += 8
+			rect.PaddingBottom += 8
+			' OR, direct assignment:
+			rect.Inner = rect.Inner - Vec2i(8,8)	   
+
+	Notes:
+	
+	    - All adjustments are validated: Mutating operations (+=, etc.) 
+	    automatically update dependent properties, keeping the rect valid.
+	    - Margin and padding are conceptually separate: margin affects the container (outer rect), 
+	    padding affects the content (inner rect).
+	    - For most UI scenarios, adjust padding to shrink usable content (move inward), 
+		and margins to affect the overall placement/size (move outward).
+	
+#end 
 
 '========================================================================================
 '------------------------------------------------------------------------------ ALIASES
@@ -1100,7 +1226,38 @@ Struct Rect9<T>
 		Update()
 		Validate()
 	End 
-	
+
+	'-------------------------- Geoms : Batch operation - Moves all four borders as a single
+
+	'Method takes all four border deltas (left, top, right, bottom) as parameters 
+	'and applies them in one call, then validates once.
+
+	#rem monkeydoc Moves each border of the outter rect outward by the given amounts.
+	@added 2025-05-29
+	@param left T left edge
+	@param top T top edge
+	@param right T right edge
+	@param bottom T bottom edge
+	@param outside T each edges in the same time
+	#end
+	Method MoveOutterBorders(left:T, top:T, right:T, bottom:T)
+		_rect0.min.x -= left
+		_rect0.min.y -= top
+		_rect0.max.x += right
+		_rect0.max.y += bottom
+		Update()
+		Validate()
+	End
+
+	Method MoveOutterBorders(outside:T)
+		_rect0.min.x -= outside
+		_rect0.min.y -= outside
+		_rect0.max.x += outside
+		_rect0.max.y += outside
+		Update()
+		Validate()
+	End
+
 	'-------------------------- Geoms : Resize the outterRect, Inner-Locked
 	
 	#rem monkeydoc Set a new size for the outter rect without scaling the inner rect
@@ -1451,7 +1608,38 @@ Struct Rect9<T>
 		r.y=_rect1.Bottom
 		Return r
 	End		
-	
+
+	'-------------------------- Geoms : Batch operation - Moves all four borders as a single
+
+	'Method takes all four border deltas (left, top, right, bottom) as parameters 
+	'and applies them in one call, then validates once.
+
+	#rem monkeydoc Moves each border of the inner rect inward by the given amounts (increasing padding).
+	@added 2025-05-29
+	@param left T left edge
+	@param top T top edge
+	@param right T right edge
+	@param bottom T bottom edge
+	@param inside T each edges in the same time
+	#end
+	Method MoveInnerBorders(left:T, top:T, right:T, bottom:T)
+		_paddingLeft  += left
+		_paddingTop   += top
+		_paddingRight += right
+		_paddingBottom+= bottom
+		Update()
+		Validate()
+	End
+
+	Method MoveInnerBorders(inside:T)
+		_paddingLeft  += inside
+		_paddingTop   += inside
+		_paddingRight += inside
+		_paddingBottom+= inside
+		Update()
+		Validate()
+	End
+
 	'----------------------------------------------------
 	'---------------------------------------------------- Properties : Corners
 	'----------------------------------------------------
