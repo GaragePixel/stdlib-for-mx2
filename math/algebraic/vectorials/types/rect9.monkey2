@@ -23,7 +23,7 @@ Using stdlib.math.matrices..
 	Since: 2021
 	Version: 2025-05-25
 
-	Version 1.0 - 2025-05-14
+	Version 1.0 - 2025-05-29 - 2025-05-14
 		2025-05-29 - Added a user guide and important feature's summary
 		2025-05-29 - Added batch operations: MoveOutterBorders, MoveInnerBorders
 		2025-05-24 - Added new capabilities in rect, related to rect9, about tiling
@@ -32,7 +32,7 @@ Using stdlib.math.matrices..
 		2025-05-17 - Added Vertices, Corners, NotCorners, Aeras and AerasClock (new properties)
 		2025-05-16 - Graphical debugmode functions for mojo and sdk_mojo
 		2025-05-15 - Integration in stdlib, new name (rect9)
-	Version 0.1 - 2021-02-11
+	Version 0.1 - 2021-02-11 - 2021-01-27
 		2021-02-11 - The rect9's rewrote in a geoms-module style
 		2021-02-04 - First test V0.1
 		2021-01-27 - Rect9 idea (implementation of some old stuff from 2007 and new intuitions)
@@ -139,8 +139,8 @@ Using stdlib.math.matrices..
 		like intersections, contains, transpositions and flips. 
 		Okay that produced 2000 lines, but it's one of my prettiest classes, 
 		and fully documented!
-
-#end 	Quick usage guide and some important feature's summaries.
+#end
+#rem 	Quick usage guide and some important feature's summaries.
 	added 2025-05-29
 
 	Features:
