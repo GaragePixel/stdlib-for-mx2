@@ -69,6 +69,8 @@ Namespace stdlib
 
 #Import "io/stringio"
 
+#Import "io/chartype"
+
 Function Main()
 	
 	'Capture app start time
