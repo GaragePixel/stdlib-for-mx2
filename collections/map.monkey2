@@ -32,6 +32,9 @@ Maps can handle inserting, removing and finding keys in 'O(log2)' time.
 That is, the time needed to insert, remove or find a key is proportional to log2 
 of the number of items in the map.
 
+'iDkP: 
+'	Note: Using Red-Black Tree agorithm, internally. It's really fast.
+
 #end
 Class Map<K,V>
 	
@@ -159,15 +162,14 @@ Class Map<K,V>
 			Return parent
 		End
 		
-		Method Copy:Node( parent:Node Ptr )
+		Method Copy:Node( parent:Node )
 			'Modified by iDkP
 			'Use pointer for passing per cascade and by reference the item to copy
-			Local node:=New Node( _key,_value,_color,parent[0] )
-			If _left node._left=_left.Copy( Varptr(node) )
-			If _right node._right=_right.Copy( Varptr(node) )
+			Local node:=New Node( _key,_value,_color,parent )
+			If _left node._left=_left.Copy( node )
+			If _right node._right=_right.Copy( node )
 			Return node
 		End
-	
 	End
 	
 	Struct Iterator
@@ -257,7 +259,7 @@ Class Map<K,V>
 	Struct MapKeys
 	
 		Method All:KeyIterator()
-			Return New KeyIterator( _map.FirstNode() )
+			Return New KeyIterator( _map.FirstNode )
 		End
 		
 		Private
@@ -273,7 +275,7 @@ Class Map<K,V>
 	Struct MapValues
 	
 		Method All:ValueIterator()
-			Return New ValueIterator( _map.FirstNode() )
+			Return New ValueIterator( _map.FirstNode )
 		End
 		
 		Private
@@ -296,7 +298,7 @@ Class Map<K,V>
 	#end
 	
 	Method All:Iterator()
-		Return New Iterator( FirstNode() )
+		Return New Iterator( FirstNode )
 	End
 	
 	#rem monkeydoc Gets a view of the map's keys.
@@ -335,7 +337,7 @@ Class Map<K,V>
 	#rem monkeydoc Gets the number of keys in the map.
 	@return The number of keys in the map.
 	#end
-	Method Count:Int()
+	Method Count:UInt() 'iDkP: unsigned 32 bit!
 		If Not _root Return 0
 		Return _root.Count( 0 )
 	End
@@ -376,6 +378,23 @@ Class Map<K,V>
 		If Not node Return Null
 		Return node._value
 	End
+
+	#rem monkeydoc Casts the map to a list of values.
+	
+	The `To:List<V>` operator allows you to extract all values from the map
+	and store them in a new list. The keys are discarded during this process.
+	
+	@return A new `List<V>` containing the map's values.
+	#end
+	Operator To:List<V>() 'Added by iDkP
+		'2025-05-09 iDkP
+		'Set a list of values (negligates the keys)
+		Local list:=New List<V>()
+		For Local item:=Eachin Self 
+			list.Add(item.Value)
+		End
+		Return list
+	End
 	
 	#rem monkeydoc Sets the value associated with a key in the map.
 	If the map does not contain `key`, a new key/value node is added to the map and true is returned.
@@ -388,7 +407,7 @@ Class Map<K,V>
 		
 		Local cmp:Int		
 
-		If NotRoot( Varptr(key),Varptr(value)) Return True 'Added by iDkP
+		If NotRoot( key,value) Return True 'Added by iDkP
 
 		' Try hint path first if available
 		If _lastAddedNode
@@ -418,7 +437,7 @@ Class Map<K,V>
 			End
 		Wend
 		
-		AddPair( Varptr(node), Varptr(key),Varptr(value), Varptr(parent), Varptr(cmp) ) 'Added by iDkP
+		AddPair( node, key,value, parent, cmp ) 'Added by iDkP
 		
 		Return True
 	End
@@ -432,7 +451,7 @@ Class Map<K,V>
 	#end
 	Method Add:Bool( key:K,value:V )
 		
-		If NotRoot( Varptr(key),Varptr(value)) Return True 'Added by iDkP
+		If NotRoot( key,value) Return True 'Added by iDkP
 	
 		Local node:=_root
 		Local parent:Node
@@ -450,7 +469,7 @@ Class Map<K,V>
 			End
 		Wend
 		
-		AddPair( Varptr(node), Varptr(key),Varptr(value), Varptr(parent), Varptr(cmp) ) 'Added by iDkP
+		AddPair( node, key,value, parent, cmp ) 'Added by iDkP
 		
 		Return True
 	End
@@ -490,6 +509,72 @@ Class Map<K,V>
 		Return True
 	End
 
+	#rem wonkeydoc Union: Add each keys from this (param) that exist in self
+	@param This The map to compare.
+	@param onPlace if False, returns a copy of the map, else nothing
+	#end
+	Method Append:Map<K,V>(this:Map<K,V>,onPlace:Bool=True) 'Added by iDkP from GaragePixel
+		'Sugar
+		Return Union(this,onPlace)
+	End
+
+	#rem wonkeydoc Union: Add each keys from this (param) that exist in self
+	@param This The map to compare.
+	@param onPlace if False, returns a copy of the map, else nothing
+	#end	
+	Method Union:Map<K,V>(this:Map<K,V>,onPlace:Bool=True) 'Added by iDkP from GaragePixel
+		'Add this to self
+		If onPlace 
+			For Local item:= Eachin this
+				Set(item.Key,item.Value)
+			Next
+			Return Null 
+		End
+		Local result:=Copy()
+		For Local item:= Eachin this
+			result.Set(item.Key,item.Value)
+		End
+		Return result
+	End 
+
+	#rem wonkeydoc Intersect: Keep all keys from self that exist in this (param)
+	@param This The map to compare.
+	@param onPlace if False, returns a copy of the map, else nothing
+	#end	
+	Method Intersect:Map<K,V>(this:Map<K,V>, onPlace:Bool=True) 'Added by iDkP from GaragePixel
+		'Keep in self the keys that exist in this
+		If onPlace 
+			For Local item:= Eachin Self
+				If Not this.Contains(item.Key) Self.Remove(item.Key)
+			End 
+			Return Null
+		End 
+		Local result:=Copy()
+		For Local item:= Eachin result
+			If Not this.Contains(item.Key) result.Remove(item.Key)
+		End 	
+		Return result	
+	End
+
+	#rem wonkeydoc Difference: Remove all keys from self that exist in this (param)
+	@param This The map to compare.
+	@param onPlace if False, returns a copy of the map, else nothing
+	#end
+	Method Diff:Map<K,V>(this:Map<K,V>, onPlace:Bool=True) 'Added by iDkP from GaragePixel
+		'Remove all keys from self that exist in this
+		If onPlace 
+			For Local item:= Eachin Self
+				If this.Contains(item.Key) Remove(item.Key)
+			End 
+			Return Null
+		End 
+		Local result:=Copy()
+		For Local item:= Eachin result
+			If this.Contains(item.Key) result.Remove(item.Key)
+		End 	
+		Return result	
+	End
+
 	Private
 	
 	Field _root:Node
@@ -499,7 +584,7 @@ Class Map<K,V>
 		_root=root
 	End
 
-	Method LastNode:Node()
+	Property LastNode:Node() 'iDkP: passed public for special iterator, and as property for consistancy
 		If Not _root Return Null
 
 		Local node:=_root
@@ -509,7 +594,7 @@ Class Map<K,V>
 		Return node
 	End
 
-	Method FirstNode:Node()
+	Property FirstNode:Node() 'iDkP: passed public for special iterator, and as property for consistancy
 		If Not _root Return Null
 
 		Local node:=_root
@@ -579,7 +664,7 @@ Class Map<K,V>
 		End
 		
 		If splice._color=ColorBlack 
-			DeleteFixup( Varptr(child),Varptr(parent) )
+			DeleteFixup( child,parent )
 		End
 	End
 	
@@ -623,126 +708,126 @@ Class Map<K,V>
 		node._parent=child
 	End
 	
-	Method InsertFixup( node:Node Ptr ) 'iDkP from GaragePixe: pointer usage
-		While node[0]._parent And node[0]._parent._color=ColorRed And node[0]._parent._parent
-			If node[0]._parent=node[0]._parent._parent._left
-				Local uncle:=node[0]._parent._parent._right
+	Method InsertFixup( node:Node ) 'iDkP from GaragePixe: pointer usage
+		While node._parent And node._parent._color=ColorRed And node._parent._parent
+			If node._parent=node._parent._parent._left
+				Local uncle:=node._parent._parent._right
 				If uncle And uncle._color=ColorRed
-					node[0]._parent._color=ColorBlack
+					node._parent._color=ColorBlack
 					uncle._color=ColorBlack
 					uncle._parent._color=ColorRed
-					node[0]=uncle._parent
+					node=uncle._parent
 				Else
-					If node[0]=node[0]._parent._right
-						node[0]=node[0]._parent
-						RotateLeft( node[0] )
+					If node=node._parent._right
+						node=node._parent
+						RotateLeft( node )
 					End
-					node[0]._parent._color=ColorBlack
-					node[0]._parent._parent._color=ColorRed
-					RotateRight( node[0]._parent._parent )
+					node._parent._color=ColorBlack
+					node._parent._parent._color=ColorRed
+					RotateRight( node._parent._parent )
 				End
 			Else
-				Local uncle:=node[0]._parent._parent._left
+				Local uncle:=node._parent._parent._left
 				If uncle And uncle._color=ColorRed
-					node[0]._parent._color=ColorBlack
+					node._parent._color=ColorBlack
 					uncle._color=ColorBlack
 					uncle._parent._color=ColorRed
-					node[0]=uncle._parent
+					node=uncle._parent
 				Else
-					If node[0]=node[0]._parent._left
-						node[0]=node[0]._parent
-						RotateRight( node[0] )
+					If node=node._parent._left
+						node=node._parent
+						RotateRight( node )
 					End
-					node[0]._parent._color=ColorBlack
-					node[0]._parent._parent._color=ColorRed
-					RotateLeft( node[0]._parent._parent )
+					node._parent._color=ColorBlack
+					node._parent._parent._color=ColorRed
+					RotateLeft( node._parent._parent )
 				End
 			End
 		Wend
 		_root._color=ColorBlack
 	End
 	
-	Method DeleteFixup( node:Node Ptr,parent:Node Ptr ) 'iDkP from GaragePixel: pointer usage
+	Method DeleteFixup( node:Node,parent:Node ) 'iDkP from GaragePixel: pointer usage
 	
-		While node[0]<>_root And (Not node[0] Or node[0]._color=ColorBlack )
+		While node<>_root And (Not node Or node._color=ColorBlack )
 
-			If node[0]=parent[0]._left
+			If node=parent._left
 			
-				Local sib:=parent[0]._right
+				Local sib:=parent._right
 				
 				If sib._color=ColorRed
 					sib._color=ColorBlack
-					parent[0]._color=ColorRed
-					RotateLeft( parent[0] )
-					sib=parent[0]._right
+					parent._color=ColorRed
+					RotateLeft( parent )
+					sib=parent._right
 				End
 				
 				If (Not sib._left Or sib._left._color=ColorBlack) And (Not sib._right Or sib._right._color=ColorBlack)
 					sib._color=ColorRed
 					node=parent
-					parent[0]=parent[0]._parent
+					parent=parent._parent
 				Else
 					If Not sib._right Or sib._right._color=ColorBlack
 						sib._left._color=ColorBlack
 						sib._color=ColorRed
 						RotateRight( sib )
-						sib=parent[0]._right
+						sib=parent._right
 					End
-					sib._color=parent[0]._color
-					parent[0]._color=ColorBlack
+					sib._color=parent._color
+					parent._color=ColorBlack
 					sib._right._color=ColorBlack
-					RotateLeft( parent[0] )
-					node[0]=_root
+					RotateLeft( parent )
+					node=_root
 				End
 			Else	
-				Local sib:=parent[0]._left
+				Local sib:=parent._left
 				
 				If sib._color=ColorRed
 					sib._color=ColorBlack
-					parent[0]._color=ColorRed
-					RotateRight( parent[0] )
-					sib=parent[0]._left
+					parent._color=ColorRed
+					RotateRight( parent )
+					sib=parent._left
 				End
 				
 				If (Not sib._right Or sib._right._color=ColorBlack) And (Not sib._left Or sib._left._color=ColorBlack)
 					sib._color=ColorRed
 					node=parent
-					parent[0]=parent[0]._parent
+					parent=parent._parent
 				Else
 					If Not sib._left Or sib._left._color=ColorBlack
 						sib._right._color=ColorBlack
 						sib._color=ColorRed
 						RotateLeft( sib )
-						sib=parent[0]._left
+						sib=parent._left
 					End
-					sib._color=parent[0]._color
-					parent[0]._color=ColorBlack
+					sib._color=parent._color
+					parent._color=ColorBlack
 					sib._left._color=ColorBlack
-					RotateRight( parent[0] )
-					node[0]=_root
+					RotateRight( parent )
+					node=_root
 				End
 			End
 		Wend
-		If node[0] node[0]._color=ColorBlack
+		If node node._color=ColorBlack
 	End
 	
-	Method NotRoot:Bool( key:K Ptr,value:V Ptr ) 
+	Method NotRoot:Bool( key:K,value:V ) 
 		'Added by iDkP
 		If Not _root
-			_root=New Node( key[0],value[0],ColorRed,Null )
+			_root=New Node( key,value,ColorRed,Null )
 			Return True
 		End
 		Return False
 	End
 	
-	Method AddPair( node:Node Ptr, key:K Ptr,value:V Ptr, parent:Node Ptr, cmp:Int Ptr ) 
-		'Added by iDkP
-		node[0]=New Node( key[0],value[0],ColorRed,parent[0] )
-		_lastAddedNode=node[0]
-		If cmp[0]>0 
-			parent[0]._right=node[0] 
+	Method AddPair( node:Node, key:K,value:V, parent:Node, cmp:Int ) 
+		'[Author] iDkP
+		node=New Node( key,value,ColorRed,parent )
+		_lastAddedNode=node
+		If cmp>0 
+			parent._right=node 
 		Else 
-			parent[0]._left=node[0]
+			parent._left=node
 		End
 		InsertFixup( node )
 	End
