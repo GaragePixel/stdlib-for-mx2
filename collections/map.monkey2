@@ -509,7 +509,7 @@ Class Map<K,V>
 		Return True
 	End
 
-	#rem wonkeydoc Union: Add each keys from this (param) that exist in self
+	#rem monkeydoc Union: Add each keys from this (param) that exist in self
 	@param This The map to compare.
 	@param onPlace if False, returns a copy of the map, else nothing
 	#end
@@ -518,7 +518,7 @@ Class Map<K,V>
 		Return Union(this,onPlace)
 	End
 
-	#rem wonkeydoc Union: Add each keys from this (param) that exist in self
+	#rem monkeydoc Union: Add each keys from this (param) that exist in self
 	@param This The map to compare.
 	@param onPlace if False, returns a copy of the map, else nothing
 	#end	
@@ -537,7 +537,7 @@ Class Map<K,V>
 		Return result
 	End 
 
-	#rem wonkeydoc Intersect: Keep all keys from self that exist in this (param)
+	#rem monkeydoc Intersect: Keep all keys from self that exist in this (param)
 	@param This The map to compare.
 	@param onPlace if False, returns a copy of the map, else nothing
 	#end	
@@ -556,7 +556,7 @@ Class Map<K,V>
 		Return result	
 	End
 
-	#rem wonkeydoc Difference: Remove all keys from self that exist in this (param)
+	#rem monkeydoc Difference: Remove all keys from self that exist in this (param)
 	@param This The map to compare.
 	@param onPlace if False, returns a copy of the map, else nothing
 	#end
