@@ -1,5 +1,5 @@
 
-Namespace stdlib.collections
+Namespace std.collections
 
 #rem monkeydoc Convenience type alias for Map\<Int,V\>.
 #end
@@ -34,10 +34,9 @@ of the number of items in the map.
 
 'iDkP: 
 '	Note: Using Red-Black Tree agorithm, internally. It's really fast.
-
 #end
 Class Map<K,V>
-	
+
 	'iDkP from GaragePixel's note:
 	'
 	' New implementation of Map using hint strategy, pointer usage and ubytes
@@ -112,7 +111,7 @@ Class Map<K,V>
 	
 		Field _key:K
 		Field _value:V
-		Field _color:UByte 'Modified iDkP
+		Field _color:UByte 'Modified by iDkP
 		Field _left:Node
 		Field _right:Node
 		Field _parent:Node
@@ -124,7 +123,7 @@ Class Map<K,V>
 			_parent=parent
 		End
 		
-		Method Count:Int( n:Int )
+		Method Count:Int( n:Int ) 'iDkP: 32 bits!
 			If _left n=_left.Count( n )
 			If _right n=_right.Count( n )
 			Return n+1
@@ -137,7 +136,7 @@ Class Map<K,V>
 					node=node._left
 				Wend
 				Return node
-			End
+			Endif
 			Local node:=Self,parent:=_parent
 			While parent And node=parent._right
 				node=parent
@@ -153,7 +152,7 @@ Class Map<K,V>
 					node=node._right
 				Wend
 				Return node
-			End
+			Endif
 			Local node:=Self,parent:=_parent
 			While parent And node=parent._left
 				node=parent
@@ -163,13 +162,12 @@ Class Map<K,V>
 		End
 		
 		Method Copy:Node( parent:Node )
-			'Modified by iDkP
-			'Use pointer for passing per cascade and by reference the item to copy
 			Local node:=New Node( _key,_value,_color,parent )
 			If _left node._left=_left.Copy( node )
 			If _right node._right=_right.Copy( node )
 			Return node
 		End
+	
 	End
 	
 	Struct Iterator
@@ -259,7 +257,7 @@ Class Map<K,V>
 	Struct MapKeys
 	
 		Method All:KeyIterator()
-			Return New KeyIterator( _map.FirstNode )
+			Return New KeyIterator( _map.FirstNode ) 'Modified by iDkP
 		End
 		
 		Private
@@ -275,7 +273,7 @@ Class Map<K,V>
 	Struct MapValues
 	
 		Method All:ValueIterator()
-			Return New ValueIterator( _map.FirstNode )
+			Return New ValueIterator( _map.FirstNode ) 'Modified by iDkP
 		End
 		
 		Private
@@ -298,7 +296,7 @@ Class Map<K,V>
 	#end
 	
 	Method All:Iterator()
-		Return New Iterator( FirstNode )
+		Return New Iterator( FirstNode ) 'Modified by iDkP
 	End
 	
 	#rem monkeydoc Gets a view of the map's keys.
@@ -318,9 +316,7 @@ Class Map<K,V>
 	End
 	
 	#rem monkeydocs Copies the map.
-	
 	@return A new map.
-	
 	#end
 	Method Copy:Map()
 		Local root:Node
@@ -334,10 +330,10 @@ Class Map<K,V>
 		_root=Null
 	End
 	
-	#rem monkeydoc Gets the number of keys in the map.
-	@return The number of keys in the map.
+	#rem monkeydoc Gets the number of keys in the map.	
+	@return The number of keys in the map.	
 	#end
-	Method Count:UInt() 'iDkP: unsigned 32 bit!
+	Method Count:Int() 'iDkP: UNSIGNED 32 bits!
 		If Not _root Return 0
 		Return _root.Count( 0 )
 	End
@@ -380,14 +376,13 @@ Class Map<K,V>
 	End
 
 	#rem monkeydoc Casts the map to a list of values.
-	
+	@author iDkP from GaragePixel
+	@since 2025-05-09
 	The `To:List<V>` operator allows you to extract all values from the map
 	and store them in a new list. The keys are discarded during this process.
-	
 	@return A new `List<V>` containing the map's values.
 	#end
-	Operator To:List<V>() 'Added by iDkP
-		'2025-05-09 iDkP
+	Operator To:List<V>()
 		'Set a list of values (negligates the keys)
 		Local list:=New List<V>()
 		For Local item:=Eachin Self 
@@ -403,11 +398,17 @@ Class Map<K,V>
 	@param value The value.
 	@return True if a new node was added to the map, false if an existing node was updated.
 	#end
-	Method Set:Bool( key:K,value:V )
+	Method Set:Bool( key:K,value:V ) 'Modified by iDkP
 		
 		Local cmp:Int		
 
-		If NotRoot( key,value) Return True 'Added by iDkP
+		'If NotRoot( key,value) 
+		'If NotRoot( Varptr(key),Varptr(value)) 'Modified by iDkP
+		'If NotRoot( key,Varptr(value)) 'Modified by iDkP
+		If NotRoot( key,value) 'Modified by iDkP
+			_root=New Node( key,value,ColorRed,Null )
+			Return True 'Added by iDkP
+		End
 
 		' Try hint path first if available
 		If _lastAddedNode
@@ -436,7 +437,7 @@ Class Map<K,V>
 				Return False
 			End
 		Wend
-		
+
 		AddPair( node, key,value, parent, cmp ) 'Added by iDkP
 		
 		Return True
@@ -449,9 +450,12 @@ Class Map<K,V>
 	@param value The value.
 	@return True if a new node was added to the map, false if the map was not modified.
 	#end
-	Method Add:Bool( key:K,value:V )
-		
-		If NotRoot( key,value) Return True 'Added by iDkP
+	Method Add:Bool( key:K,value:V ) 'Modified by iDkP
+
+		If NotRoot( key,value) 'Modified by iDkP
+			_root=New Node( key,value,ColorRed,Null )
+			Return True 'Modified by iDkP
+		End
 	
 		Local node:=_root
 		Local parent:Node
@@ -468,7 +472,7 @@ Class Map<K,V>
 				Return False
 			End
 		Wend
-		
+
 		AddPair( node, key,value, parent, cmp ) 'Added by iDkP
 		
 		Return True
@@ -509,20 +513,21 @@ Class Map<K,V>
 		Return True
 	End
 
-	#rem wonkeydoc Union: Add each keys from this (param) that exist in self
+	#rem monkeydoc Union: Add each keys from this (param) that exist in self
 	@param This The map to compare.
 	@param onPlace if False, returns a copy of the map, else nothing
 	#end
-	Method Append:Map<K,V>(this:Map<K,V>,onPlace:Bool=True) 'Added by iDkP from GaragePixel
+	Method Append:Map<K,V>(this:Map<K,V>,onPlace:Bool=True) 'Modified by iDkP
 		'Sugar
 		Return Union(this,onPlace)
 	End
 
-	#rem wonkeydoc Union: Add each keys from this (param) that exist in self
+	#rem monkeydoc Union: Add each keys from this (param) that exist in self
 	@param This The map to compare.
 	@param onPlace if False, returns a copy of the map, else nothing
 	#end	
-	Method Union:Map<K,V>(this:Map<K,V>,onPlace:Bool=True) 'Added by iDkP from GaragePixel
+	Method Union:Map<K,V>(this:Map<K,V>,onPlace:Bool=True) 'Modified by iDkP
+		
 		'Add this to self
 		If onPlace 
 			For Local item:= Eachin this
@@ -537,11 +542,12 @@ Class Map<K,V>
 		Return result
 	End 
 
-	#rem wonkeydoc Intersect: Keep all keys from self that exist in this (param)
+	#rem monkeydoc Intersect: Keep all keys from self that exist in this (param)
 	@param This The map to compare.
 	@param onPlace if False, returns a copy of the map, else nothing
 	#end	
-	Method Intersect:Map<K,V>(this:Map<K,V>, onPlace:Bool=True) 'Added by iDkP from GaragePixel
+	Method Intersect:Map<K,V>(this:Map<K,V>, onPlace:Bool=True) 'Modified by iDkP
+		
 		'Keep in self the keys that exist in this
 		If onPlace 
 			For Local item:= Eachin Self
@@ -556,11 +562,12 @@ Class Map<K,V>
 		Return result	
 	End
 
-	#rem wonkeydoc Difference: Remove all keys from self that exist in this (param)
+	#rem monkeydoc Difference: Remove all keys from self that exist in this (param)
 	@param This The map to compare.
 	@param onPlace if False, returns a copy of the map, else nothing
 	#end
-	Method Diff:Map<K,V>(this:Map<K,V>, onPlace:Bool=True) 'Added by iDkP from GaragePixel
+	Method Diff:Map<K,V>(this:Map<K,V>, onPlace:Bool=True) 'Modified by iDkP
+		
 		'Remove all keys from self that exist in this
 		If onPlace 
 			For Local item:= Eachin Self
@@ -574,27 +581,18 @@ Class Map<K,V>
 		End 	
 		Return result	
 	End
-
+	
 	Private
 	
 	Field _root:Node
-	Field _lastAddedNode:Node 'Added by iDkP
+	Field _lastAddedNode:Node 'Modified by iDkP
 	
 	Method New( root:Node )
 		_root=root
 	End
+	
+	Property FirstNode:Node() 'iDkP: passed as property for consistancy
 
-	Property LastNode:Node() 'iDkP: passed public for special iterator, and as property for consistancy
-		If Not _root Return Null
-
-		Local node:=_root
-		While node._right
-			node=node._right
-		Wend
-		Return node
-	End
-
-	Property FirstNode:Node() 'iDkP: passed public for special iterator, and as property for consistancy
 		If Not _root Return Null
 
 		Local node:=_root
@@ -604,13 +602,24 @@ Class Map<K,V>
 		Return node
 	End
 	
-	Method FindNode:Node( key:K )
+	Property LastNode:Node() 'iDkP: passed as property for consistancy
+
+		If Not _root Return Null
+
+		Local node:=_root
+		While node._right
+			node=node._right
+		Wend
+		Return node
+	End
+
+	Method FindNode:Node( key:K ) 'Modified by iDkP
 
 		' Try hint first if available
 		If _lastAddedNode
 			Local cmp:=key <=> _lastAddedNode._key
 			If cmp=0 Return _lastAddedNode
-		Endif
+		End
 		
 		' Standard traversal
 		Local node:=_root
@@ -618,7 +627,7 @@ Class Map<K,V>
 			Local cmp:=key<=>node._key
 			If cmp>0
 				node=node._right
-			Else If cmp<0
+			Elseif cmp<0
 				node=node._left
 			Else
 				Return node
@@ -633,7 +642,7 @@ Class Map<K,V>
 		If Not node._left
 			splice=node
 			child=node._right
-		Else If Not node._right
+		Elseif Not node._right
 			splice=node
 			child=node._left
 		Else
@@ -650,12 +659,12 @@ Class Map<K,V>
 		
 		If child
 			child._parent=parent
-		End
+		Endif
 		
 		If Not parent
 			_root=child
 			Return
-		End
+		Endif
 		
 		If splice=parent._left
 			parent._left=child
@@ -663,7 +672,7 @@ Class Map<K,V>
 			parent._right=child
 		End
 		
-		If splice._color=ColorBlack 
+		If splice._color=ColorBlack
 			DeleteFixup( child,parent )
 		End
 	End
@@ -673,7 +682,7 @@ Class Map<K,V>
 		node._right=child._left
 		If child._left
 			child._left._parent=node
-		End
+		Endif
 		child._parent=node._parent
 		If node._parent
 			If node=node._parent._left
@@ -708,7 +717,7 @@ Class Map<K,V>
 		node._parent=child
 	End
 	
-	Method InsertFixup( node:Node ) 'iDkP from GaragePixe: pointer usage
+	Method InsertFixup( node:Node )
 		While node._parent And node._parent._color=ColorRed And node._parent._parent
 			If node._parent=node._parent._parent._left
 				Local uncle:=node._parent._parent._right
@@ -721,11 +730,11 @@ Class Map<K,V>
 					If node=node._parent._right
 						node=node._parent
 						RotateLeft( node )
-					End
+					Endif
 					node._parent._color=ColorBlack
 					node._parent._parent._color=ColorRed
 					RotateRight( node._parent._parent )
-				End
+				Endif
 			Else
 				Local uncle:=node._parent._parent._left
 				If uncle And uncle._color=ColorRed
@@ -741,14 +750,14 @@ Class Map<K,V>
 					node._parent._color=ColorBlack
 					node._parent._parent._color=ColorRed
 					RotateLeft( node._parent._parent )
-				End
-			End
+				Endif
+			Endif
 		Wend
 		_root._color=ColorBlack
 	End
 	
-	Method DeleteFixup( node:Node,parent:Node ) 'iDkP from GaragePixel: pointer usage
-	
+	Method DeleteFixup( node:Node,parent:Node )
+		
 		While node<>_root And (Not node Or node._color=ColorBlack )
 
 			If node=parent._left
@@ -760,7 +769,7 @@ Class Map<K,V>
 					parent._color=ColorRed
 					RotateLeft( parent )
 					sib=parent._right
-				End
+				Endif
 				
 				If (Not sib._left Or sib._left._color=ColorBlack) And (Not sib._right Or sib._right._color=ColorBlack)
 					sib._color=ColorRed
@@ -772,13 +781,13 @@ Class Map<K,V>
 						sib._color=ColorRed
 						RotateRight( sib )
 						sib=parent._right
-					End
+					Endif
 					sib._color=parent._color
 					parent._color=ColorBlack
 					sib._right._color=ColorBlack
 					RotateLeft( parent )
 					node=_root
-				End
+				Endif
 			Else	
 				Local sib:=parent._left
 				
@@ -787,7 +796,7 @@ Class Map<K,V>
 					parent._color=ColorRed
 					RotateRight( parent )
 					sib=parent._left
-				End
+				Endif
 				
 				If (Not sib._right Or sib._right._color=ColorBlack) And (Not sib._left Or sib._left._color=ColorBlack)
 					sib._color=ColorRed
@@ -799,29 +808,27 @@ Class Map<K,V>
 						sib._color=ColorRed
 						RotateLeft( sib )
 						sib=parent._left
-					End
+					Endif
 					sib._color=parent._color
 					parent._color=ColorBlack
 					sib._left._color=ColorBlack
 					RotateRight( parent )
 					node=_root
-				End
-			End
+				Endif
+			Endif
 		Wend
 		If node node._color=ColorBlack
 	End
-	
-	Method NotRoot:Bool( key:K,value:V ) 
-		'Added by iDkP
+
+	Method NotRoot:Bool( key:K,value:V ) 'Added by iDkP
 		If Not _root
 			_root=New Node( key,value,ColorRed,Null )
 			Return True
 		End
 		Return False
 	End
-	
-	Method AddPair( node:Node, key:K,value:V, parent:Node, cmp:Int ) 
-		'[Author] iDkP
+
+	Method AddPair( node:Node, key:K,value:V, parent:Node, cmp:Int ) 'Added by iDkP
 		node=New Node( key,value,ColorRed,parent )
 		_lastAddedNode=node
 		If cmp>0 
@@ -830,5 +837,6 @@ Class Map<K,V>
 			parent._left=node
 		End
 		InsertFixup( node )
-	End
+	End 
+
 End
