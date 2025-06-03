@@ -1350,6 +1350,32 @@ Struct Rect9<T>
 		Return r0
 	End 	
 
+	'-------------------------- Transformative
+	
+	Method Zoom( amount:T )
+		_rect0.min.x-=amount
+		_rect0.min.y-=amount
+		_rect0.max.x+=amount
+		_rect0.max.y+=amount
+		_rect1.min.x-=amount
+		_rect1.min.y-=amount
+		_rect1.max.x+=amount
+		_rect1.max.y+=amount
+	End 
+
+	Method Zoomed:Rect9<T>( amount:T )
+		Local r0:=New Rect9(_rect0,_paddingLeft,_paddingTop,_paddingRight,_paddingBottom)
+		r0._rect0.min.x-=amount
+		r0._rect0.min.y-=amount
+		r0._rect0.max.x+=amount
+		r0._rect0.max.y+=amount
+		r0._rect1.min.x-=amount
+		r0._rect1.min.y-=amount
+		r0._rect1.max.x+=amount
+		r0._rect1.max.y+=amount
+		Return r0
+	End 
+
 	'---------------------------------------------------- 
 	'---------------------------------------------------- Rect9
 	'---------------------------------------------------- Operators : flip func-operator
