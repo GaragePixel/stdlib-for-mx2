@@ -312,7 +312,7 @@ and beloved game franchises like Worms,
 which once thrived on the strength of Mark's innovations. 
 Honor and glory to you, O Great Master!
 
-## Contributors:
+## Contributors (so many peoples through the years! ):
 - Mark Sibly (blitz-research) (New Zealand)
 - DarkTwister (Vicente Damiani Benitez) (swedish)
 - Hezkore (Marcus Streicher) (uruguayan)
