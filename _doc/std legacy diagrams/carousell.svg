@@ -48,12 +48,12 @@
 		<image id="img0" x="0" y="0" width="640" height="480"			
 			href="Monkey2 STD Kernel Page 01 - GaragePixel.jpg"/>
 		<image id="img1" x="640" y="0" width="640" height="480"
-			href="https://raw.githubusercontent.com/GaragePixel/stdlib-for-mx2/main/_doc/std%20legacy%20diagrams/diagram2.png"/>
+			href="Monkey2 STD Kernel Page 02 - GaragePixel.jpg"/>
 		<image id="img2" x="1280" y="0" width="640" height="480"
-			href="https://raw.githubusercontent.com/GaragePixel/stdlib-for-mx2/main/_doc/std%20legacy%20diagrams/diagram3.png"/>
+			href="Monkey2 STD Kernel Page 03 - GaragePixel.jpg"/>
 		<!-- Clone the first image for seamless looping -->
 		<image id="img3" x="1920" y="0" width="640" height="480"
-			href="https://raw.githubusercontent.com/GaragePixel/stdlib-for-mx2/main/_doc/std%20legacy%20diagrams/diagram1.png"/>
+			href="Monkey2 STD Kernel Page 01 - GaragePixel.jpg"/>
 	</g>
 
 	<script type="application/ecmascript"><![CDATA[
