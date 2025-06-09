@@ -46,7 +46,7 @@
 			Below is a demo with placeholders. Replace with your images!
 		-->
 		<image id="img0" x="0" y="0" width="640" height="480"			
-			href="diagram2.png"/>
+			href="Monkey2 STD Kernel Page 01 - GaragePixel.jpg"/>
 		<image id="img1" x="640" y="0" width="640" height="480"
 			href="https://raw.githubusercontent.com/GaragePixel/stdlib-for-mx2/main/_doc/std%20legacy%20diagrams/diagram2.png"/>
 		<image id="img2" x="1280" y="0" width="640" height="480"
