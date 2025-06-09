@@ -1,0 +1,130 @@
+<!--
+	Implementation credit: iDkP from GaragePixel
+	Date: 2025-06-09
+
+	Purpose: SVG Carousel displaying images from
+	https://github.com/GaragePixel/stdlib-for-mx2/tree/main/_doc/std%20legacy%20diagrams
+	- Each image is scaled to fit the SVG frame
+	- Images slide every 3s (carousel effect)
+	- No visible transition between last and first (infinite loop)
+	- Custom smoothstep timing curve for transition
+-->
+
+<svg
+	xmlns="http://www.w3.org/2000/svg"
+	width="640"
+	height="480"
+	viewBox="0 0 640 480"
+	style="background: #111;"
+>
+	<title>SVG Carousel - GaragePixel stdlib-for-mx2 Diagrams</title>
+	<desc>
+		SVG Carousel
+		Implementation credit: iDkP from GaragePixel
+		Date: 2025-06-09
+	</desc>
+
+	<style>
+		.carousel-images {
+			will-change: transform;
+			transition: none; /* Animation is handled via SMIL/JS */
+		}
+		.carousel-bg {
+			fill: #222;
+		}
+	</style>
+
+	<g class="carousel-bg">
+		<rect x="0" y="0" width="640" height="480" fill="#222"/>
+	</g>
+
+	<g id="carousel" class="carousel-images">
+		<!--
+			Replace href values with your actual image raw URLs, e.g.:
+			https://raw.githubusercontent.com/GaragePixel/stdlib-for-mx2/main/_doc/std%20legacy%20diagrams/your-image.png
+
+			Below is a demo with placeholders. Replace with your images!
+		-->
+		<image id="img0" x="0" y="0" width="640" height="480"
+			href="https://raw.githubusercontent.com/GaragePixel/stdlib-for-mx2/main/_doc/std%20legacy%20diagrams/diagram1.png"/>
+		<image id="img1" x="640" y="0" width="640" height="480"
+			href="https://raw.githubusercontent.com/GaragePixel/stdlib-for-mx2/main/_doc/std%20legacy%20diagrams/diagram2.png"/>
+		<image id="img2" x="1280" y="0" width="640" height="480"
+			href="https://raw.githubusercontent.com/GaragePixel/stdlib-for-mx2/main/_doc/std%20legacy%20diagrams/diagram3.png"/>
+		<!-- Clone the first image for seamless looping -->
+		<image id="img3" x="1920" y="0" width="640" height="480"
+			href="https://raw.githubusercontent.com/GaragePixel/stdlib-for-mx2/main/_doc/std%20legacy%20diagrams/diagram1.png"/>
+	</g>
+
+	<script type="application/ecmascript"><![CDATA[
+	// -- Carousel Parameters --
+	const frameWidth = 640;
+	const frameHeight = 480;
+	const delay = 3000; // ms per slide
+	const images = [
+		document.getElementById('img0'),
+		document.getElementById('img1'),
+		document.getElementById('img2'),
+		document.getElementById('img3'), // clone of first
+	];
+	const numImages = images.length - 1; // last is clone
+	const totalSlides = numImages + 1; // for looping
+	const carousel = document.getElementById('carousel');
+
+	// -- Smoothstep function for timing curve --
+	function smoothLerp(t) {
+		// Accelerate, then slow: S-curve, but faster at start
+		// Use easeInOutCubic: t<0.5 ? 4t^3 : 1-(-2t+2)^3/2
+		return t < 0.5
+			? 4 * t * t * t
+			: 1 - Math.pow(-2 * t + 2, 3) / 2;
+	}
+
+	// -- Animation Loop --
+	let current = 0;
+	let startTimestamp = null;
+
+	function animateSlides(ts) {
+		if (!startTimestamp) startTimestamp = ts;
+		const elapsed = ts - startTimestamp;
+
+		const slideIdx = Math.floor(elapsed / delay);
+		let localElapsed = elapsed % delay;
+
+		// On seamless loop: snap instantly after last clone
+		if (slideIdx > numImages) {
+			// Reset to start
+			startTimestamp = ts;
+			current = 0;
+			for (let i = 0; i < images.length; ++i)
+				images[i].setAttribute('x', frameWidth * i);
+			requestAnimationFrame(animateSlides);
+			return;
+		}
+
+		// Lerp [0..1] for current slide transition
+		let t = localElapsed / delay;
+		t = Math.max(0, Math.min(1, t));
+		const curve = smoothLerp(t);
+
+		// Calculate translation
+		const offset = (slideIdx + curve) * frameWidth;
+
+		carousel.setAttribute('transform', `translate(${-offset},0)`);
+
+		requestAnimationFrame(animateSlides);
+	}
+
+	// -- Start animation --
+	requestAnimationFrame(animateSlides);
+	]]></script>
+
+	<!--
+		How to use:
+		1. Replace <image href="..."> tags with your actual images.
+		2. Add or remove images as desired (must also adjust images[] in script if >4).
+		3. Place SVG in your repo, open in browser or embed.
+		4. Enjoy seamless, smoothstep-curve sliding carousel!
+	-->
+
+</svg>
