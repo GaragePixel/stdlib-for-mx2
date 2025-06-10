@@ -1,0 +1,75 @@
+<!--
+	Implementation credit: iDkP from GaragePixel
+	Date: 2025-06-09
+
+	Purpose: SVG Carousel displaying images from
+	https://github.com/GaragePixel/stdlib-for-mx2/tree/main/_doc/std%20legacy%20diagrams
+	- Each image is scaled to fit the SVG frame
+	- Images slide every 3s (carousel effect)
+	- No visible transition between last and first (infinite loop)
+	- Custom smoothstep timing curve for transition
+-->
+
+<svg
+	xmlns="http://www.w3.org/2000/svg"
+	width="640"
+	height="480"
+	viewBox="0 0 640 480"
+	style="background: #111;"
+>
+	<title>SVG Carousel - GaragePixel stdlib-for-mx2 Diagrams</title>
+	<desc>
+		SVG Carousel
+		Implementation credit: iDkP from GaragePixel
+		Date: 2025-06-09
+	</desc>
+
+	<style>
+		.carousel-bg {
+			fill: #222;
+		}
+		#img0 {
+			animation: slide 25s cubic-bezier(0.7,1.2,0.6,1.0) infinite;
+		}
+		#img1 {
+			animation: slide 25s cubic-bezier(0.7,1.2,0.6,1.0) infinite;
+		}
+		#img2 {
+			animation: slide 25s cubic-bezier(0.7,1.2,0.6,1.0) infinite;
+		}
+		#img3 {
+			animation: slide 25s cubic-bezier(0.7,1.2,0.6,1.0) infinite;
+		}
+		@keyframes slide {
+
+			17%   	{ transform: translateX(0%);} // hold
+
+			18.99% 	{ transform: translateX(-100%);}
+			19% 	{ transform: translateX(-100%);}
+
+			54%  	{ transform: translateX(-100%);}
+			56% 	{ transform: translateX(-200%);}
+
+			84%  	{ transform: translateX(-200%);}
+			86.99% 	{ transform: translateX(-300%);}
+
+			87%  	{ transform: translateX(0px);} // hold
+		}
+	</style>
+
+	<g class="carousel-bg">
+		<rect x="0" y="0" width="640" height="480" fill="#222"/>
+	</g>
+
+	<g id="carousel" class="carousel-images">
+		<image id="img0" x="0" y="0" width="640" height="480"
+			href="Monkey2 STD Kernel Page 01 - GaragePixel.jpg"/>			
+		<image id="img1" x="640" y="0" width="640" height="480"
+			href="Monkey2 STD Kernel Page 02 - GaragePixel.jpg"/>
+		<image id="img2" x="1280" y="0" width="640" height="480"
+			href="Monkey2 STD Kernel Page 03 - GaragePixel.jpg"/>
+		<!-- Clone the first image for seamless looping -->
+		<image id="img3" x="1920" y="0" width="640" height="480"
+			href="Monkey2 STD Kernel Page 01 - GaragePixel.jpg"/>
+	</g>
+</svg>
