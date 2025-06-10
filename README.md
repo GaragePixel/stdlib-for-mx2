@@ -2,8 +2,7 @@
 	<h1>Mx2</h1>
 	<p><strong>Mx2</strong> is a easy to learn, oriented object, modern programming language for creating cross-platform applications.</p>
 	<img src="title.svg" alt="Large Title Example">
-//	<img src="https://raw.githubusercontent.com/GaragePixel/stdlib-for-mx2/4e865dd720d8a2b1cf3c584b48cf24308b41a7d6/_doc/std%20legacy%20diagrams/carousell3.svg" alt="carousell">	
-	<img src="carousell3.svg" alt="carousell">	
+	<img src="carousell3.svg" alt="carousel">
 </div>
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/GaragePixel/stdlib-for-mx2/ci.yml?branch=main)](https://github.com/GaragePixel/stdlib-for-mx2/actions)
