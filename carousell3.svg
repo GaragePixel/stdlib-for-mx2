@@ -47,7 +47,8 @@
 			19% 	{ transform: translateX(-100%);}
 
 			54%  	{ transform: translateX(-100%);}
-			56% 	{ transform: translateX(-200%);}
+			55.99% 	{ transform: translateX(-200%);}
+			56% 	{ transform: translateX(-200%);}		
 
 			84%  	{ transform: translateX(-200%);}
 			86.99% 	{ transform: translateX(-300%);}
