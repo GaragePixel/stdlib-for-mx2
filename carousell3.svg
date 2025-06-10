@@ -43,7 +43,6 @@
 		@keyframes slide {
 
 			17%   	{ transform: translateX(0%);} // hold
-
 			18.99% 	{ transform: translateX(-100%);}
 			19% 	{ transform: translateX(-100%);}
 
@@ -52,7 +51,6 @@
 
 			84%  	{ transform: translateX(-200%);}
 			86.99% 	{ transform: translateX(-300%);}
-
 			87%  	{ transform: translateX(0px);} // hold
 		}
 	</style>
