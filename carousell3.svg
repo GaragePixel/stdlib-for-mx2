@@ -1,11 +1,13 @@
 <!--
-	Implementation credit: iDkP from GaragePixel
+	Carousel for Github
+	Version 0.1
+	Author: iDkP from [GaragePixel](https://github.com/GaragePixel)
 	Date: 2025-06-09
 
-	Purpose: SVG Carousel displaying images from
-	https://github.com/GaragePixel/stdlib-for-mx2/tree/main/_doc/std%20legacy%20diagrams
+	Purpose: SVG Carousel displaying images, compatible Github viewer and Github's Markdown implementation.
 	- Each image is scaled to fit the SVG frame
-	- Images slide every 3s (carousel effect)
+	- Images slide every given secondes (carousel effect)
+	- Transition speed parametrizable.
 	- No visible transition between last and first (infinite loop)
 	- Custom smoothstep timing curve for transition
 -->
@@ -17,10 +19,11 @@
 	viewBox="0 0 640 480"
 	style="background: #111;"
 >
-	<title>SVG Carousel - GaragePixel stdlib-for-mx2 Diagrams</title>
+	<title>SVG Carousel for Github</title>
 	<desc>
-		SVG Carousel
-		Implementation credit: iDkP from GaragePixel
+		SVG Carousel for Github
+		Version 0.1
+		Author: iDkP from [GaragePixel](https://github.com/GaragePixel)
 		Date: 2025-06-09
 	</desc>
 
@@ -42,17 +45,17 @@
 		}
 		@keyframes slide {
 
-			16.66% 	{ transform: translateX(0%);} /* start */
-			18.65% 	{ transform: translateX(-100%);} /* end */
-			18.66% 	{ transform: translateX(-100%);} /* hold */
+			16.66% 	{ transform: translateX(0%);	} /* start */
+			18.65% 	{ transform: translateX(-100%);	} /* end */
+			18.66% 	{ transform: translateX(-100%);	} /* hold */
 
-			49.99%  { transform: translateX(-100%);} /* start */
-			51.98% 	{ transform: translateX(-200%);} /* end */
-			51.99% 	{ transform: translateX(-200%);} /* hold */
+			49.99%  { transform: translateX(-100%);	} /* start */
+			51.98% 	{ transform: translateX(-200%);	} /* end */
+			51.99% 	{ transform: translateX(-200%);	} /* hold */
 
-			83.32% 	{ transform: translateX(-200%);} /* start */
-			85.31% 	{ transform: translateX(-300%);} /* end */
-			85.32% 	{ transform: translateX(0px);} /* hold */
+			83.32% 	{ transform: translateX(-200%);	} /* start */
+			85.31% 	{ transform: translateX(-300%);	} /* end */
+			85.32% 	{ transform: translateX(0px);	} /* hold */
 		}
 	</style>
 
