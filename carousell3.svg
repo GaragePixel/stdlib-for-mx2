@@ -34,7 +34,7 @@
   			stroke: yellowgreen;
   			stroke-width: 9;
 		}
-		#carousel-bg .carousel-bg:hover > .rect {
+		#carousel-bg .carousel-bg:hover > .bg {
 			fill: #422;
   			stroke: darkseagreen;
   			stroke-width: 1;
@@ -69,7 +69,7 @@
 	</style>
 
 	<g class="carousel-bg">    		
-		<rect x="0" y="0" width="640" height="480"/>		
+		<rect id="bg" x="0" y="0" width="640" height="480"/>		
 	</g>
 	
 	<g id="carousel" class="carousel-images">
