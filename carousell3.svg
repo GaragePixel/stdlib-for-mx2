@@ -37,14 +37,14 @@
 			fill-fill-hover: yellowgreen
 		}
 
-		bg .carousel-bg-fill {
+		.carousel-bg-fill {
 			fill: #422;
   			stroke: darkseagreen;
   			stroke-width: 5;
 			fill-fill-hover: yellowgreen
 		}
 
-		bg .carousel-bg:hover > .carousel-bg-fill {
+		.carousel-bg:hover > .carousel-bg-fill {
 			fill: #422;
   			stroke: darkseagreen;
   			stroke-width: 5;
