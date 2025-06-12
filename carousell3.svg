@@ -33,9 +33,8 @@
 		.carousel-bg {
 			fill: #222;
 		}
-		#img0 {
-			
-			animation: 0s ease 25s normal forwards 1 fadeIn;
+		#img0 {			
+			animation: slide 25s cubic-bezier(0.7,1.2,0.6,1.0) infinite;
 		}
 		#img1 {
 			animation: slide 25s cubic-bezier(0.7,1.2,0.6,1.0) infinite;
