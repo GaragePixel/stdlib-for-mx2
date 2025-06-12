@@ -29,7 +29,7 @@
 	</desc>
 
 	<style>
-		.carousel-bg {
+		#bg {
 			fill: #222;
   			stroke: yellowgreen;
   			stroke-width: 9;
