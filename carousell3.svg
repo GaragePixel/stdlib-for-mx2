@@ -33,7 +33,7 @@
 		#bg {
 			fill: #422;
   			stroke: darkseagreen;
-  			stroke-width: 1;
+  			stroke-width: 5;
 			fill-fill-hover: yellowgreen
 		}
 
