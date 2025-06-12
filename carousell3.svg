@@ -91,7 +91,7 @@
 
 	<g class="carousel-bg">
 		<g class="carousel-bg-fill">
-			<rect id="bg" x="0" y="0" width="640" height="480"/>		
+			<rect class="carousel-bg-fill" id="bg" x="0" y="0" width="640" height="480"/>		
 		</g>
 	</g>
 	
