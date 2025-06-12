@@ -29,8 +29,10 @@
 	</desc>
 
 	<style>
-		.carousel-bg {
+		.carousel-bg .rect {
 			fill: #222;
+  			stroke: yellowgreen;
+  			stroke-width: 9;
 		}
 		.carousel-bg .rect:hover > .rect {
 			fill: #422;
