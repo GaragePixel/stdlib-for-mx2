@@ -13,12 +13,12 @@
 -->
 
 <svg
-	xmlns="http://www.w3.org/2000/svg"	
-	xmlns:xlink="http://www.w3.org/1999/xlink"
 	width="640"
 	height="480"
 	viewBox="0 0 640 480"
-	style="background: #111;">
+	style="background: #111;"
+	xmlns="http://www.w3.org/2000/svg"	
+	xmlns:xlink="http://www.w3.org/1999/xlink">
 	
 	<link
 	    xmlns="http://www.w3.org/1999/xhtml"
@@ -35,9 +35,12 @@
 	</desc>
 
 	<style>
-		.carousel-bg {
+		.carousel-bg:hover {
 			fill: #422;
 		}
+		.carousel-bg {
+			fill: #222;
+		}		
 		#img0 {
 			animation: slide 25s cubic-bezier(0.7,1.2,0.6,1.0) infinite;
 		}
