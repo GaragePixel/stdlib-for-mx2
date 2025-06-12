@@ -32,9 +32,8 @@
 
 		.carousel-bg-fill {
 			fill: var(--carousel-bg-fill-fill);
-  			stroke: darkseagreen;
-  			stroke-width: var(--carousel-bg-fill-stroke-width);
-			fill-fill-hover: yellowgreen
+			stroke: var(--carousel-bg-fill-stroke);
+			stroke-width: var(--carousel-bg-fill-stroke-width);
 		}
 
 		.carousel-bg-fill:hover {
@@ -49,16 +48,17 @@
 		  	--carousel-bg-fill-fill-hover: plum;
 		  	--carousel-bg-fill-stroke-hover: none;
 		}
-
-#bg .segment-fill {
-  fill: azure;
-  stroke: lightsteelblue;
-  stroke-width: 1;
-}
-#bg .segment:hover > .segment-fill {
-  fill: plum;
-  stroke: none;
-}
+		
+		#bg .carousel-bg-fill {
+		  fill: azure;
+		  stroke: lightsteelblue;
+		  stroke-width: 1;
+		}
+		
+		#bg .carousel-bg:hover > .carousel-bg-fill {
+		  fill: plum;
+		  stroke: none;
+		}
 
 		
 		#img0 {
