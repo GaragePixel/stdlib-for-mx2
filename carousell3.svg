@@ -49,6 +49,17 @@
 		  	--carousel-bg-fill-fill-hover: plum;
 		  	--carousel-bg-fill-stroke-hover: none;
 		}
+
+#bg .segment-fill {
+  fill: azure;
+  stroke: lightsteelblue;
+  stroke-width: 1;
+}
+#bg .segment:hover > .segment-fill {
+  fill: plum;
+  stroke: none;
+}
+
 		
 		#img0 {
 			animation: slide 25s cubic-bezier(0.7,1.2,0.6,1.0) infinite;
