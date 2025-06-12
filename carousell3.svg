@@ -34,16 +34,16 @@
 			fill: #222;
 		}		
 		#img0 {			
-			animation: slide 25s ease infinite;
+			animation: slide 25s ease infinite; /* we can just use ease in place of cubic-bezier, or cubic-bezier(0.7,1.2,0.6,1.0) */
 		}
 		#img1 {
-			animation: slide 25s cubic-bezier(0.7,1.2,0.6,1.0) infinite;
+			animation: slide 25s ease infinite;
 		}
 		#img2 {
-			animation: slide 25s cubic-bezier(0.7,1.2,0.6,1.0) infinite;
+			animation: slide 25s ease infinite;
 		}
 		#img3 {
-			animation: slide 25s cubic-bezier(0.7,1.2,0.6,1.0) infinite;
+			animation: slide 25s ease infinite;
 		}
 		@keyframes slide {
 
