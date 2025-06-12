@@ -30,25 +30,24 @@
 
 	<style>
 
-		#bg {
-			fill: #222;
-  			stroke: darkseagreen;
-  			stroke-width: 5;
-			fill-fill-hover: yellowgreen
-		}
-
 		.carousel-bg-fill {
-			fill: #422;
+			fill: var(--carousel-bg-fill-fill);
   			stroke: darkseagreen;
-  			stroke-width: 5;
+  			stroke-width: var(--carousel-bg-fill-stroke-width);
 			fill-fill-hover: yellowgreen
 		}
 
-		.carousel-bg:hover > .carousel-bg-fill {
-			fill: #422;
-  			stroke: darkseagreen;
-  			stroke-width: 5;
-			fill-fill-hover: yellowgreen
+		.carousel-bg-fill:hover {
+  			fill: var(--carousel-bg-fill-fill-hover);
+  			stroke: var(--carousel-bg-fill-stroke-hover);
+		}
+		
+		#bg {
+			--carousel-bg-fill-fill: azure;
+		  	--carousel-bg-fill-stroke: lightsteelblue;
+		  	--carousel-bg-fill-stroke-width: 1;
+		  	--carousel-bg-fill-fill-hover: plum;
+		  	--carousel-bg-fill-stroke-hover: none;
 		}
 		
 		#img0 {
