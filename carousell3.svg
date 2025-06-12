@@ -29,38 +29,9 @@
 	</desc>
 
 	<style>
-
-		.carousel-bg-fill {
-			fill: var(--carousel-bg-fill-fill);
-			stroke: var(--carousel-bg-fill-stroke);
-			stroke-width: var(--carousel-bg-fill-stroke-width);
-		}
-
-		.carousel-bg-fill:hover {
-  			fill: var(--carousel-bg-fill-fill-hover);
-  			stroke: var(--carousel-bg-fill-stroke-hover);
-		}
-		
-		#bg {
-			--carousel-bg-fill-fill: azure;
-		  	--carousel-bg-fill-stroke: lightsteelblue;
-		  	--carousel-bg-fill-stroke-width: 1;
-		  	--carousel-bg-fill-fill-hover: plum;
-		  	--carousel-bg-fill-stroke-hover: none;
-		}
-		
-		#bg .carousel-bg-fill {
-		  fill: azure;
-		  stroke: lightsteelblue;
-		  stroke-width: 1;
-		}
-		
-		#bg .carousel-bg:hover > .carousel-bg-fill {
-		  fill: plum;
-		  stroke: none;
-		}
-
-		
+		.carousel-bg {
+			fill: #222;
+		}		
 		#img0 {
 			animation: slide 25s cubic-bezier(0.7,1.2,0.6,1.0) infinite;
 		}
@@ -89,10 +60,9 @@
 		}
 	</style>
 
-	<g class="carousel-bg" id="bg">
-		<g class="carousel-bg-fill">
-			<rect class="carousel-bg-fill" x="0" y="0" width="640" height="480"/>		
-		</g>
+
+	<g class="carousel-bg">
+		<rect x="0" y="0" width="640" height="480" fill="#222"/>
 	</g>
 	
 	<g id="carousel" class="carousel-images">		
