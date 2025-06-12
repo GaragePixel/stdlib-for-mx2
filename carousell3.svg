@@ -20,12 +20,6 @@
 	xmlns="http://www.w3.org/2000/svg"	
 	xmlns:xlink="http://www.w3.org/1999/xlink">
 	
-	<link
-	    xmlns="http://www.w3.org/1999/xhtml"
-	    rel="stylesheet"
-	    href="style8.css"
-	    type="text/css" />	
-	
 	<title>SVG Carousel for Github</title>
 	<desc>
 		SVG Carousel for Github
@@ -35,12 +29,13 @@
 	</desc>
 
 	<style>
-		.carousel-bg:hover {
-			fill: #422;
-		}
 		.carousel-bg {
 			fill: #222;
-		}		
+		}
+		.carousel-bg .rect:hover {
+			fill: #422;
+		}
+
 		#img0 {
 			animation: slide 25s cubic-bezier(0.7,1.2,0.6,1.0) infinite;
 		}
