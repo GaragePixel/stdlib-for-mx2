@@ -89,8 +89,10 @@
 		}
 	</style>
 
-	<g class="carousel-bg">    		
-		<rect id="bg" x="0" y="0" width="640" height="480"/>		
+	<g class="carousel-bg">
+		<g class="carousel-bg-fill">
+			<rect id="bg" x="0" y="0" width="640" height="480"/>		
+		</g>
 	</g>
 	
 	<g id="carousel" class="carousel-images">
