@@ -107,6 +107,6 @@
 		<use href="#img0" x="1920" y="0" width="640" height="480" />
 		
 		-->
-		<use href="https://raw.githubusercontent.com/wonkey-coders/wonkey/develop/docs/img/logo-wonkey-anim.svg" x="1920" y="0" width="640" height="480" />
+		<use href="https://raw.githubusercontent.com/wonkey-coders/wonkey/develop/docs/img/logo-wonkey-anim.svg" x="0" y="0" width="640" height="480" />
 	</g>
 </svg>
