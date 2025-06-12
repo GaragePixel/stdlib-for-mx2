@@ -34,8 +34,10 @@
   			stroke: yellowgreen;
   			stroke-width: 9;
 		}
-		.carousel-bg:hover {
+		.carousel-bg:hover  > .carousel-bg {
 			fill: #422;
+  			stroke: yellowgreen;
+  			stroke-width: 1;
 		}
 
 		#img0 {
