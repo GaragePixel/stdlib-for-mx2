@@ -30,7 +30,7 @@
 
 	<style>
 
-		#bg {
+		#bg .carousel-bg {
 			fill: #422;
   			stroke: darkseagreen;
   			stroke-width: 1;
