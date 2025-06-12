@@ -31,12 +31,19 @@
 	<style>
 
 		#bg {
-			fill: #422;
+			fill: #222;
   			stroke: darkseagreen;
   			stroke-width: 5;
 			fill-fill-hover: yellowgreen
 		}
 
+		bg .carousel-bg-fill {
+			fill: #422;
+  			stroke: darkseagreen;
+  			stroke-width: 5;
+			fill-fill-hover: yellowgreen
+		}
+		
 		#img0 {
 			animation: slide 25s cubic-bezier(0.7,1.2,0.6,1.0) infinite;
 		}
