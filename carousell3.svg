@@ -32,7 +32,7 @@
 		.carousel-bg {
 			fill: #222;
 		}
-		.carousel-bg .rect:hover {
+		.carousel-bg .rect:hover > .rect {
 			fill: #422;
 		}
 
