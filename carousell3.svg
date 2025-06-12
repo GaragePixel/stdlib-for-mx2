@@ -31,7 +31,7 @@
 	<style>
 		#bg {
 			fill: #222;
-  			stroke: yellowgreen;
+  			stroke: yellow;
   			stroke-width: 9;
 		}
 		#bg .carousel-bg:hover {
