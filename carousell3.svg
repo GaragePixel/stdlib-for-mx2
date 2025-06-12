@@ -34,7 +34,7 @@
   			stroke: yellowgreen;
   			stroke-width: 9;
 		}
-		#carousel-bg .carousel-bg:hover > .bg {
+		#bg .carousel-bg:hover > .carousel-bg {
 			fill: #422;
   			stroke: darkseagreen;
   			stroke-width: 1;
