@@ -1,15 +1,15 @@
 
 Namespace stdlib.collections
 
-#rem wonkeydoc Convenience type alias for Map\<Int,V\>.
+#rem monkeydoc Convenience type alias for Map\<Int,V\>.
 #end
 Alias IntMap<V>:Map<Int,V>
 
-#rem wonkeydoc Convenience type alias for Map\<Float,V\>.
+#rem monkeydoc Convenience type alias for Map\<Float,V\>.
 #end
 Alias FloatMap<V>:Map<Float,V>
 
-#rem wonkeydoc Convenience type alias for Map\<String,V\>.
+#rem monkeydoc Convenience type alias for Map\<String,V\>.
 #end
 Alias StringMap<V>:Map<String,V>
 
@@ -20,7 +20,7 @@ Const ColorBlack:UByte=1
 
 Public
 
-#rem wonkeydoc The Map class provides support for associative maps.
+#rem monkeydoc The Map class provides support for associative maps.
 
 A map is a container style object that provides a mechanism for associating 'key' objects with 'value' objects.
 This is done using an internal node object that contains a reference to both a key and a value, 
@@ -87,18 +87,18 @@ Class Map<K,V>
 	'	- AI Applications
 	'	- Massive Pixel Engines
 	
-	#rem wonkeydoc The map Node class.
+	#rem monkeydoc The map Node class.
 	#end
 	Class Node
 	
-		#rem wonkeydoc Gets the key contained in the node.
+		#rem monkeydoc Gets the key contained in the node.
 		@return The node's key.
 		#end
 		Property Key:K()
 			Return _key
 		End
 		
-		#rem wonkeydoc Gets the value contained in the node.
+		#rem monkeydoc Gets the value contained in the node.
 		@return The node's value.
 		#end
 		Property Value:V()
@@ -286,20 +286,42 @@ Class Map<K,V>
 		
 	End
 	
-	#rem wonkeydoc Creates a new empty map.
+	#rem monkeydoc Creates a new empty map.
 	#end
 	Method New()
 	End
-	
-	#rem wonkeydoc Gets a node iterator.
-	
-	#end
-	
+
+	#rem monkeydoc Output an string from the data (map as only string types)
+	@author iDkP from GaragePixel
+	@since 2025-06-13
+	#end	
+	Method To:String() Where K=String And V=String
+		Local result:String
+		For Local item:=Eachin Self
+			result+="["+item.Key+"]["+item.Value+"]"
+		End
+		Return result
+	End 
+
+	#rem monkeydoc Output an verbose string from the data (map as only string types)
+	@author iDkP from GaragePixel
+	@since 2025-06-13
+	#end	
+	Method ToString:String() Where K=String And V=String
+		Local result:String="map[~n"
+		For Local item:=Eachin Self
+			result+="["+item.Key+"]["+item.Value+"]"
+		End
+		Return result+"]"
+	End 
+
+	#rem monkeydoc Gets a node iterator.	
+	#end	
 	Method All:Iterator()
 		Return New Iterator( FirstNode ) 'Modified by iDkP
 	End
 	
-	#rem wonkeydoc Gets a view of the map's keys.
+	#rem monkeydoc Gets a view of the map's keys.
 	The returned value can be used with an Eachin loop to iterate over the map's keys.
 	@return A MapKeys object.
 	#end
@@ -307,7 +329,7 @@ Class Map<K,V>
 		Return New MapKeys( Self )
 	End
 
-	#rem wonkeydoc Gets a view of the map's values.
+	#rem monkeydoc Gets a view of the map's values.
 	The returned value can be used with an Eachin loop to iterate over the map's values.
 	@return A MapValues object.
 	#end	
@@ -315,7 +337,7 @@ Class Map<K,V>
 		Return New MapValues( Self )
 	End
 	
-	#rem wonkeydocs Copies the map.
+	#rem monkeydocs Copies the map.
 	@return A new map.
 	#end
 	Method Copy:Map()
@@ -324,13 +346,13 @@ Class Map<K,V>
 		Return New Map( root )
 	End
 	
-	#rem wonkeydoc Removes all keys from the map.
+	#rem monkeydoc Removes all keys from the map.
 	#end
 	Method Clear()
 		_root=Null
 	End
 	
-	#rem wonkeydoc Gets the number of keys in the map.	
+	#rem monkeydoc Gets the number of keys in the map.	
 	@return The number of keys in the map.	
 	#end
 	Method Count:Int() 'iDkP: UNSIGNED 32 bits!
@@ -338,14 +360,14 @@ Class Map<K,V>
 		Return _root.Count( 0 )
 	End
 
-	#rem wonkeydoc Checks if the map is empty.
+	#rem monkeydoc Checks if the map is empty.
 	@return True if the map is empty.
 	#end
 	Property Empty:Bool()
 		Return _root=Null
 	End
 
-	#rem wonkeydoc Checks if the map contains a given key.
+	#rem monkeydoc Checks if the map contains a given key.
 	@param key The key to check for.
 	@return True if the map contains the key.
 	#end
@@ -353,7 +375,7 @@ Class Map<K,V>
 		Return FindNode( key )<>Null
 	End
 	
-	#rem wonkeydoc Sets the value associated with a key in the map.
+	#rem monkeydoc Sets the value associated with a key in the map.
 	If the map does not contain `key`, a new key/value node is added and true is returned.
 	If the map already contains `key`, its associated value is updated and false is returned.
 	This operator functions identically to Set.
@@ -365,7 +387,7 @@ Class Map<K,V>
 		Set( key,value )
 	End
 
-	#rem wonkeydoc Gets the value associated with a key in the map.
+	#rem monkeydoc Gets the value associated with a key in the map.
 	@param key The key.
 	@return The value associated with `key`, or null if `key` is not in the map.
 	#end
@@ -375,7 +397,7 @@ Class Map<K,V>
 		Return node._value
 	End
 
-	#rem wonkeydoc Casts the map to a list of values.
+	#rem monkeydoc Casts the map to a list of values.
 	@author iDkP from GaragePixel
 	@since 2025-05-09
 	The `To:List<V>` operator allows you to extract all values from the map
@@ -391,7 +413,7 @@ Class Map<K,V>
 		Return list
 	End
 	
-	#rem wonkeydoc Sets the value associated with a key in the map.
+	#rem monkeydoc Sets the value associated with a key in the map.
 	If the map does not contain `key`, a new key/value node is added to the map and true is returned.
 	If the map already contains `key`, its associated value is updated and false is returned.
 	@param key The key.
@@ -443,7 +465,7 @@ Class Map<K,V>
 		Return True
 	End
 	
-	#rem wonkeydoc Adds a new key/value pair to a map.
+	#rem monkeydoc Adds a new key/value pair to a map.
 	If the map does not contain `key', a new key/value node is created and true is returned.
 	If the map already contains `key`, nothing happens and false is returned.
 	@param key The key.
@@ -478,7 +500,7 @@ Class Map<K,V>
 		Return True
 	End
 	
-	#rem wonkeydoc Updates the value associated with a key in the map.
+	#rem monkeydoc Updates the value associated with a key in the map.
 	If the map does not contain `key', nothing happens and false is returned.
 	If the map already contains `key`, its associated value is updated and true is returned.
 	@param key The key.
@@ -492,7 +514,7 @@ Class Map<K,V>
 		Return True
 	End
 	
-	#rem wonkeydoc Gets the value associated with a key in the map.
+	#rem monkeydoc Gets the value associated with a key in the map.
 	@param key The key.
 	@return The value associated with the key, or null if the key is not in the map.
 	#end
@@ -502,7 +524,7 @@ Class Map<K,V>
 		Return Null
 	End
 	
-	#rem wonkeydoc Removes a key from the map.
+	#rem monkeydoc Removes a key from the map.
 	@param key The key to remove.
 	@return True if the key was removed, or false if the key is not in the map.
 	#end
