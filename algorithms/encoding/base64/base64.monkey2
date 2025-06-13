@@ -19,7 +19,7 @@ Public
 
 #rem monkeydoc Encode binary data to base64 text.
 #end
-Function EncodeBase64:String( data:UByte Ptr,length:Int )
+Function EncodeBase64:String( data:UByte Ptr,length:Int,pad:Bool=True )
 	
 	Local buf:=New Stack<UByte>,tmp:=New UByte[3],i:=0,j:=0
 	
@@ -33,7 +33,7 @@ Function EncodeBase64:String( data:UByte Ptr,length:Int )
 			buf.Add( encode[ (tmp[1] & $0f) Shl 2 | (tmp[2] & $c0) Shr 6 ] )
 			buf.Add( encode[  tmp[2] & $3f ] )
 			j=0
-		Endif
+		End
 	Wend
 	
 	If j
@@ -43,9 +43,11 @@ Function EncodeBase64:String( data:UByte Ptr,length:Int )
 		buf.Add( encode[ (tmp[0] & $03) Shl 4 | (tmp[1] & $f0) Shr 4 ] )
 		If j=2 buf.Add( encode[ (tmp[1] & $0f) Shl 2 | (tmp[2] & $c0) Shr 6 ] )
 			
-		If j=1 buf.Add( CHAR_EQUALS )
-		buf.Add( CHAR_EQUALS )
-	Endif
+		If pad 'Added by iDkP 2025-06-14
+			If j=1 buf.Add( CHAR_EQUALS )
+			buf.Add( CHAR_EQUALS )
+		End
+	End
 	
 	Return String.FromCString( buf.Data.Data,buf.Length )
 End
@@ -88,14 +90,14 @@ Function DecodeBase64:DataBuffer( str:String )
 			buf.Add( (tmp[1] & $0f) Shl 4 | (tmp[2] & $3c) Shr 2)
 			buf.Add( (tmp[2] & $03) Shl 6 | tmp[3] )
 			j=0
-		Endif
+		End
 	Wend
 	
 	If j
 		If j=1 Print "Base64 decode error"
 		If j>1 buf.Add( tmp[0] Shl 2 | (tmp[1] & $30) Shr 4)
 		If j>2 buf.Add( (tmp[1] & $0f) Shl 4 | (tmp[2] & $3c) Shr 2)
-	Endif
+	End
 	
 	Local data:=New DataBuffer( buf.Length )
 	
