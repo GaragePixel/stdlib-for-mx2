@@ -298,7 +298,7 @@ Class Map<K,V>
 	Method To:String() Where K=String And V=String
 		Local result:String
 		For Local item:=Eachin Self
-			result+="["+item.Key+"]["+item.Value+"]"
+			result+="["+item.Key+"]["+item.Value+"]~n"
 		End
 		Return result
 	End 
@@ -310,9 +310,10 @@ Class Map<K,V>
 	Method ToString:String() Where K=String And V=String
 		Local result:String="map[~n"
 		For Local item:=Eachin Self
-			result+="["+item.Key+"]["+item.Value+"]"
+			result+="["+item.Key+"]["+item.Value+"]~n"
 		End
-		Return result+"]"
+		result=result.Left(result.Length-2)+"]"
+		Return result
 	End 
 
 	#rem monkeydoc Gets a node iterator.	
