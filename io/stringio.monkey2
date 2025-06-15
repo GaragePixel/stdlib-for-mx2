@@ -5,33 +5,6 @@ Namespace stdlib.stringio
 
 Using stdlib.plugins.libc
 
-Function StringJoin<T>:String(delimiter:String, items:List<T>)
-
-	' Temporary place here
-		
-	' iDkP from GaragePixel 2025-05-04
-	' Utility function that joins a list of elements 
-	' into a single string with a specified delimiter.
-	' Note: 
-	' 	The item of type t must have the operator To.String
-	' 	in such a way the syntax item.ToString() could be
-	' 	adapted to Aida syntax.
-	
-	Local result:String = ""
-	Local first:Bool = True
-	
-	For Local item:T = Eachin items
-		If Not first
-			result += delimiter
-		Else
-			first = False
-		End
-		result += item
-	End
-	
-	Return result
-End
-
 #rem monkeydoc Loads a string from a file.
 
 An empty string will be returned if the file could not be opened.
@@ -176,6 +149,54 @@ Returns true if `str` equals "True", ignoring case. Otherwise, returns false.
 Function ParseBool:Bool( str:String )
 	
 	Return str.ToLower()="true"
+End
+
+#rem monkeydoc joins a list of elements into a single string with a specified delimiter
+@author iDkP from [GaragePixel](https://github.com/GaragePixel)
+@since 2025-05-14
+@param a list of compatible elements (string, integer, float), the custom t must have the operator To.String
+@returns a string
+#end 
+Function StringJoin<T>:String(delimiter:String, items:List<T>)
+	
+	' Temporary placed here
+	
+	Local result:String = ""
+	Local first:Bool = True
+	
+	For Local item:T = Eachin items
+		If Not first
+			result += delimiter
+		Else
+			first = False
+		End
+		result += item
+	End
+	
+	Return result
+End
+
+#rem monkeydoc joins a list of elements into a single string with a specified delimiter
+@author iDkP from [GaragePixel](https://github.com/GaragePixel)
+@since 2025-05-14
+@param a list of compatible elements (string, integer, float), the custom t must have the operator To.String
+@returns a string
+#end 
+Function StringJoin<T>:String(delimiter:String, items:Stack<T>)
+	
+	Local result:String = ""
+	Local first:Bool = True
+	
+	For Local item:T = Eachin items
+		If Not first
+			result += delimiter
+		Else
+			first = False
+		End
+		result += item
+	End
+	
+	Return result
 End
 
 #rem monkeydoc StringToCharArray
