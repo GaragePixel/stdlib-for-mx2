@@ -110,11 +110,8 @@ Function ULongToString:String( value:ULong,base:UInt )
 End
 
 #rem monkeydoc Converts a string to an unsigned long value.
-
 @param str String to convert.
-
 @param base Numeric base for conversion, eg: 2 for binary, 16 for hex etc.
-
 #end
 Function StringToULong:ULong( str:String,base:UInt )
 
@@ -174,11 +171,81 @@ Function ParseHex:ULong( str:String )
 End
 
 #rem monkeydoc Parse a boolean string.
-
 Returns true if `str` equals "True", ignoring case. Otherwise, returns false.
-
 #end
 Function ParseBool:Bool( str:String )
 	
 	Return str.ToLower()="true"
+End
+
+#rem monkeydoc StringToCharArray
+@author iDkP from [GaragePixel](https://github.com/GaragePixel)
+@since 2025-06-15
+Convert a string like " ", "~n", "~r~n", "~~", "~q", etc. to an array of char codes.
+Uses StringToULong from stdlib.
+@param str String to convert.
+@return an array of Int
+@example
+
+```monkey2
+Local delimArr:=StringToCharArray("~r~n")			' Returns [13,10]
+Local delimArr2:=StringToCharArray(" ~n")			' Returns [32,10]
+Local delimArr3:=StringToCharArray("XYZ")			' Returns [88,89,90]
+Local delimArr4:=StringToCharArray("~q")			' Returns [34]
+Local delimArr4:=StringToCharArray("XYZ~q~r~n")		' Returns [88,89,90,34,13,10]
+```
+#end
+Function StringToCharArray:Int[]( str:String )
+	
+	Local codes:=New Int[0]
+	Local i:=0
+	
+	While i<str.Length
+		
+		Local ch:=str[i]
+		
+		If ch=126 ' "~" for escape
+			If i+1<str.Length
+				Select str[i+1]
+					Case 110	' "n"
+						codes=codes.Resize( codes.Length+1 )
+						codes[codes.Length-1]=StringToULong("10",10)	' LF
+						i+=2
+					Case 114	' "r"
+						codes=codes.Resize( codes.Length+1 )
+						codes[codes.Length-1]=StringToULong("13",10)	' CR
+						i+=2
+					Case 116	' "t"
+						codes=codes.Resize( codes.Length+1 )
+						codes[codes.Length-1]=StringToULong("9",10)		' TAB
+						i+=2
+					Case 113	' "q"
+						codes=codes.Resize( codes.Length+1 )
+						codes[codes.Length-1]=StringToULong("34",10)	' Q
+						i+=2
+					Case 126	' "~"
+						codes=codes.Resize( codes.Length+1 )
+						codes[codes.Length-1]=StringToULong("126",10)	' literal ~
+						i+=2
+					Default
+						' Unrecognized escape, treat as literal
+						codes=codes.Resize( codes.Length+1 )
+						codes[codes.Length-1]=StringToULong( String(str[i+1]), 10 )
+						i+=2
+				End
+			Else
+				' Lone ~ at end, treat as literal
+				codes=codes.Resize( codes.Length+1 )
+				codes[codes.Length-1]=StringToULong("126",10)
+				i+=1
+			End
+		Else
+			' Normal character
+			codes=codes.Resize( codes.Length+1 )
+			codes[codes.Length-1]=StringToULong( String(ch), 10 )
+			i+=1
+		End
+	Wend
+	
+	Return codes
 End
