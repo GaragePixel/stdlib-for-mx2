@@ -219,6 +219,7 @@ Local delimArr4:=StringToCharArray("XYZ~q~r~n")		' Returns [88,89,90,34,13,10]
 Function StringToCharArray:Int[]( str:String )
 	
 	Local codes:=New Int[0]
+	If str.Length=0 codes=codes.Resize(1) ; codes[0]=0 ; Return codes 'Guard
 	Local i:=0
 	
 	While i<str.Length
