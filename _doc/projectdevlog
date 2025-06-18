@@ -24,7 +24,7 @@
 		2025-06-02 - Stack new implementations (improved Documentation and better usage of map, added sort filter)
 		2025-05-29 - Added Rect9 (Two-Rect Model, +91 properties, full patches ctrl, batch ops, 29 operators, 
 		28 pseudops, Translation, scaling, intersection, union, containment, centering, conversion, 
-		flipping, and more, kultiple Constructors, engine independence, validation, easy debug output, documentation
+		flipping, and more, kultiple Constructors, engine independence, validation, easy debug output, documentation)
 		2025-05-08 - Map 20% speed up
 		2025-05-03 - Added Json FromStream()/ToStream()
 		
