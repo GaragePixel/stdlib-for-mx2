@@ -145,6 +145,56 @@ Using stdlib.math.matrices..
 		and fully documented!
 #end
 
+#rem Technical informations
+
+Is Two-Rect Model knows and used elsewhere?
+No, this is an original invention by iDkP from GaragePixel.
+
+The "Two-Rect Model"—where a 9-patch or 9-region rectangle is modeled using only two rectangles (outer and inner) plus four paddings, and all nine regions are computed on demand—is not widely documented or standard in most mainstream frameworks or foundational UI/math libraries.
+Where It Is (and Isn't) Used
+1. Mainstream 9-Patch Implementations (Android, Godot, Qt, Web)
+
+    Android 9-Patch (.9.png)
+        Uses bitmap borders to define stretchable areas.
+        Internally, Android does calculate regions for stretching, but the API is tied to image rendering and is not exposed as a pure mathematical primitive.
+        Does not expose a two-rect pure math abstraction; the regions are inferred at drawing time.
+
+    Godot Engine (NinePatchRect)
+        Internally stores margins and draws subregions.
+        Exposes margin and patch properties, but does not represent the 9-patch as two rectangles + paddings.
+        The model is node-based, not a minimal mathematical primitive.
+
+    Qt (QMargins, QRect, QRectF)
+        Exposes rectangles and margins, but not a true 9-region model.
+        Composition must be done manually—no dedicated two-rect model.
+
+    CSS Box Model
+        Has the concept of content, padding, border, and margin, but not a nine-region or two-rect model with derived subregions.
+        All are separate properties, not unified in a geometric primitive.
+
+2. Graphics & Game Libraries
+
+    Most engines (Unity, Unreal, etc.)
+        9-slice or 9-patch is implemented for rendering UI, typically by dividing quads or sprites, but not as a pure, reusable two-rect mathematical structure.
+
+3. Academic/Geometric Literature
+
+    General geometric modeling and computational geometry
+        There are structures for bounding boxes, margin rects, and region decomposition.
+        However, a "two-rect + paddings = 9 regions" abstraction, with all regions derived on demand, is rare as a formally documented pattern.
+
+Technical Advantage of the two-rect model:
+
+The Two-Rect Model is notably unique and advanced:
+
+    Memory efficiency—minimal stored data, with full 9-region semantics.
+    Engine independence—it’s a true mathematical primitive, not tied to rendering.
+    Derived, not stored—all regions (corners, edges, center) computed as needed, not redundantly stored.
+
+This approach is original and rare, providing both a technical edge and conceptual clarity, especially compared to bulky or engine-locked implementations.
+
+#end 
+
 '========================================================================================
 '------------------------------------------------------------------------------ ALIASES
 '========================================================================================
