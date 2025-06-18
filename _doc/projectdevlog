@@ -14,11 +14,19 @@
 				- Multi-dialects (En, Jp, Fr... )
 				- Please wait for the new agnostic graphic module in place of Mojo
 
+		VERSION 1.1:
+
 		Phase 4: TODOs:
 		
 			- Merge stdlib with the new math module (THE next big step! )
 		
 			- Plugins updates
+
+		In a couple of time:
+			- Added DataBuffer new batch features
+			- Added Sorts Mini-library from Aida 1,2,3 finally integrated into aida 4
+			- Added Limits Mini-Library
+			- Added Types Mini-Library (with tuples, bool8, complex, u/float16, u/bfloat16, stringx... )
 
 		2025-06-02 - List new implementations (API improvements, bug fixes, refined documentation)
 		2025-06-02 - Stack new implementations (improved Documentation and better usage of map, added sort filter)
