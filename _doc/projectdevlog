@@ -23,11 +23,11 @@
 			- Plugins updates
 
 		In a couple of time:
-			- Added Syntax (consts, clippers, meta, swaps etc.)
-			- Added DataBuffer new batch features
-			- Added Sorts Mini-library from Aida 1,2,3 finally integrated into aida 4
+			- Added DataBuffer new batch features			
+			- Added Syntax (consts, clippers, meta, swaps etc.)			
 			- Added Limits Mini-Library
-			- Added Types Mini-Library (with tuples, bool8, complex, u/float16, u/bfloat16, stringx... )
+			- Added Types Mini-Library (tuples, bool8, complex, u/float16, u/bfloat16, stringx... )
+			- Added Sorts Mini-library from Aida 1,2,3 finally integrated into aida 4
 
 		2025-06-02 - List new implementations (API improvements, bug fixes, refined documentation)
 		2025-06-02 - Stack new implementations (improved Documentation and better usage of map, added sort filter)
