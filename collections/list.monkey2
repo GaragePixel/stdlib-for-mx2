@@ -742,6 +742,26 @@ Class List<T> Implements IContainer<T>
 		Return separator.Join( ToArray() )
 	End
 
+	#rem wonkeydoc Reverses the order of values in the list.
+	@author iDkP from GaragePixel
+	@since 2025-06-18
+	@param onPlace If True, reverses the list in place; if False, returns a new reversed copy.
+	@return The reversed list (self if in-place, new List if not).
+	#end
+	Method Reverse<T>:List<T>( onPlace:Bool=True )
+		Local lst:List<T> = onPlace ? Self Else New List<T>( Self )
+		Local left:Int = 0
+		Local right:Int = lst.Count()-1
+		While left < right
+			Local temp:T = lst[left]
+			lst[left] = lst[right]
+			lst[right] = temp
+			left += 1
+			right -= 1
+		Wend
+		Return lst
+	End
+
 	#rem monkeydoc Gets the head node of the list.
 	#end
 	Property HeadNode:Node()
