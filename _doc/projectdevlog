@@ -23,6 +23,7 @@
 			- Plugins updates
 
 		In a couple of time:
+			- Added Syntax (consts, clippers, meta, swaps etc.)
 			- Added DataBuffer new batch features
 			- Added Sorts Mini-library from Aida 1,2,3 finally integrated into aida 4
 			- Added Limits Mini-Library
