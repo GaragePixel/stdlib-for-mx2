@@ -679,7 +679,27 @@ Class Stack<T> Implements IContainer<T>
 		Sort( compareFunc,lo,y )
 		Sort( compareFunc,x,hi )
 	End
-	
+
+	#rem monkeydoc Reverses the order of values in the stack.
+	@author iDkP from GaragePixel
+	@since 2025-06-18
+	@param onPlace If True, reverses the stack in place; if False, returns a new reversed copy.
+	@return The reversed stack (self if in-place, new Stack if not).
+	#end
+	Method Reverse<T>:Stack<T>( onPlace:Bool=True )
+		Local stk:Stack<T> = onPlace ? Self Else New Stack<T>( Self )
+		Local left:Int = 0
+		Local right:Int = stk.Count()-1
+		While left < right
+			Local temp:T = stk[left]
+			stk[left] = stk[right]
+			stk[right] = temp
+			left += 1
+			right -= 1
+		Wend
+		Return stk
+	End
+
 	#rem monkeydoc Gets the top element of the stack
 	In debug builds, a runtime error will occur if the stack is empty.
 	@return The top element of the stack.
