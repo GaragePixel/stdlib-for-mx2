@@ -44,7 +44,8 @@
 			- 2025-03-24 - Added Drawing functions in pixmap (bezier, line, circle, gradiant, bayer matrix... )
 			- 2025-03-17 - Added Graphical Tablet API that should compile for Windows, Cocoa and Linux.
 			- 2025-03-15 - Added Line2, Circle2, Triangle2 and Poly2 as geometric primitive.
-	
+			- 2025-03-13 - List upgrade: FiFo semantic (commit: ed01d84)
+
 		VERSION 1.0 (16 days):
 		
 			RELEASE (1 day):
