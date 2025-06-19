@@ -259,7 +259,14 @@ Class Stack<T> Implements IContainer<T>
 	Property Capacity:Int() 'iDkP: 32 bits!
 		Return _data.Length
 	End
-	
+
+	#rem monkeydoc Returns a copy of the stack 
+	@return A copy of the current stack
+	#end
+	Method Copy:Stack<T>()
+		Return New Stack<T>(Self)
+	End 
+
 	#rem monkeydoc Compacts the stack
 	#end
 	Method Compact()
