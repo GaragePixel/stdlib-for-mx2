@@ -24,11 +24,12 @@
 
 		In a couple of time:
 			- Added DataBuffer new batch features			
-			- Added Syntax (consts, clippers, meta, swaps etc.)			
+			- Added Syntax (consts, clippers, meta, swaps, variantcasts, makevars, arrays etc.)
 			- Added Limits Mini-Library
 			- Added Types Mini-Library (tuples, bool8, complex, u/float16, u/bfloat16, stringx... )
 			- Added Sorts Mini-library from Aida 1,2,3 finally integrated into aida 4
 
+		2025-06-14 - Updated controllers list				
 		2025-06-02 - List new implementations (API improvements, bug fixes, refined documentation)
 		2025-06-02 - Stack new implementations (improved Documentation and better usage of map, added sort filter)
 		2025-05-29 - Added Rect9 (Two-Rect Model, +91 properties, full patches control, batch ops, 29 operators, 
