@@ -291,11 +291,128 @@ Class Map<K,V>
 	Method New()
 	End
 
-	#rem monkeydoc Output an string from the data (map as only string types)
+	#rem monkeydoc Creates a new prefilled map with keys from a pointed array.
+	@author iDkP from GaragePixel
+	@since 2025-06-20
+	The pre-filled value will fill the entire map (same value for the keys)
+	Note: K as Object allows indexing
+	@example
+		' Prefilled constructor - uniform value for all keys
+		Local names:=New String[]("Alice", "Bob", "Charlie")
+		Local scores:=New Map<String,Int>(names, 100)
+		' Result: scores = {"Alice"=100, "Bob"=100, "Charlie"=100}	
+		Print "scores = "+scores
+
+		' Prefilled map with same value for all keys
+		Local keys:=New Int[](100,200,300)
+		Local m0:=New Map<Int,Int>(keys, 42)
+		' Result: m1 = { "100"=42, 200=42, 300=42 }
+		Print "m0 = "+m0
+	#end
+	Method New( keys:K[], prefilled:V ) Where
+										K=Object Or K=String Or
+										K=Int Or K=Float Or K=Short Or K=Long Or K=Double Or K=Bool
+		Local len:=keys.Length
+		For Local k:=0 Until len
+			Add(keys[k],prefilled)
+		End
+	End
+
+	#rem monkeydoc Creates a new prefilled map with keys and values from pointed arrays.
+	@author iDkP from GaragePixel
+	@since 2025-06-20
+	The values will fill the entire map.
+	
+	If the value array is shorter than the key array, 
+	the same final value is repeated for the remaining keys.
+	
+	Conversely, if the value array is longer than the key array, 
+	the map will be sized based on the length of the key array 
+	and will therefore be filled sequentially until its length is reached.
+
+	Note: K and V as Object allowing indexing
+	
+	@example
+		' Prefilled map with same value for all keys
+		Local keys0:=New String[]("foo","bar","baz")
+		Local m1:=New Map<String,Int>(keys0, 42)
+		' Result: m1 = { "foo"=42, "bar"=42, "baz"=42 }
+		Print "m1 = "+m1
+
+		' Synchronized arrays constructor - paired key-value mapping
+		Local players:=New String[]("Alice", "Bob", "Charlie")
+		Local points:=New Int[](95, 87, 92)
+		Local rankings:=New Map<String,Int>(players, points)
+		' Result: rankings = {"Alice"=>95, "Bob"=>87, "Charlie"=>92}
+		Print "rankings = "+rankings
+
+		' Prefilled map with keys and values from arrays (values shorter, last value repeated)
+		Local keys2:=New String[]("a","b","c","d")
+		Local vals2:=New Int[](100,200)
+		Local m2:=New Map<String,Int>(keys2, vals2)
+		' Result: m2 = { "a"=100, "b"=200, "c"=200, "d"=200 }
+		Print "m2 = "+m2
+	#end
+	Method New( keys:K[], values:V[] ) 	Where 
+										(K=Object Or K=String Or K=Int Or K=Float Or K=Short Or K=Long Or K=Double Or K=Bool) And
+										(V=Object Or V=String Or V=Int Or V=Float Or V=Short Or V=Long Or V=Double Or V=Bool)
+		Local klen:=keys.Length
+		Local vlen:=values.Length
+		If klen>vlen
+			Local k:Int
+			For k=0 Until vlen
+				Add(keys[k],values[k])
+			End
+			For k=vlen Until klen
+				Add(keys[k],values[vlen-1])
+			End
+		Else 
+			For Local k:=0 Until klen
+				Add(keys[k],values[k])
+			End
+		End
+	End
+
+	#rem monkeydoc Creates a new indexed map with values from an array.
+	@author iDkP from GaragePixel
+	@since 2025-06-20
+	The values will fill the entire map.
+	The keys will be natural sequence integers 32 bits.
+	Note: V as Object allowing indexing
+	
+	@example
+		' Prefilled map with keys and values from arrays (keys shorter, extra values ignored)
+		Local keys3:=New String[]("k1","k2")
+		Local vals3:=New Int[](7,8,9)
+		Local m3:=New Map<String,Int>(keys3, vals3)
+		' Result: m3 = { "k1"=7, "k2"=8 }
+		Print "m3 = "+m3
+		
+		' Indexed constructor - sequential integer keys
+		Local items:=New String[]("sword", "shield", "potion")
+		Local inventory:=New Map<Int,String>(items)
+		' Result: inventory = {0="sword", 1="shield", 2="potion"}
+		Print "inventory = "+inventory
+	#end
+	Method New( values:V[] ) 	Where
+								(V=Object Or V=String Or V=Int Or V=Float Or V=Short Or V=Long Or V=Double Or V=Bool) And
+								K=Int '32 bits!
+
+		Local vlen:=values.Length
+		For Local k:=0 Until vlen
+			Add(k,values[k])
+		End
+	End
+
+	#rem monkeydoc Output an string from the data (map as string or numerical types)
 	@author iDkP from GaragePixel
 	@since 2025-06-13
+	stdlib.collections.Map<monkey.types.String,monkey.types.Int>' to type 'monkey.types.String
 	#end	
-	Method To:String() Where K=String And V=String
+	Method To:String() 	Where
+						(K=String Or K=Int Or K=Float Or K=Short Or K=Long Or K=Double Or K=Bool) And
+						(V=String Or V=Int Or V=Float Or V=Short Or V=Long Or V=Double Or V=Bool)
+
 		Local result:String
 		For Local item:=Eachin Self
 			result+="["+item.Key+"]["+item.Value+"]~n"
@@ -303,18 +420,21 @@ Class Map<K,V>
 		Return result
 	End 
 
-	#rem monkeydoc Output an verbose string from the data (map as only string types)
+	#rem monkeydoc Output an verbose string from the data (map as string or numerical types)
 	@author iDkP from GaragePixel
 	@since 2025-06-13
 	#end	
-	Method ToString:String() Where K=String And V=String
+	Method ToString:String() 	Where
+								(K=String Or K=Int Or K=Float Or K=Short Or K=Long Or K=Double Or K=Bool) And
+								(V=String Or V=Int Or V=Float Or V=Short Or V=Long Or V=Double Or V=Bool)
+
 		Local result:String="map[~n"
 		For Local item:=Eachin Self
 			result+="["+item.Key+"]["+item.Value+"]~n"
 		End
 		result=result.Left(result.Length-2)+"]"
 		Return result
-	End 
+	End  
 
 	#rem monkeydoc Gets a node iterator.	
 	#end	
