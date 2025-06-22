@@ -13,6 +13,9 @@ Alias FloatList:List<Float>
 #end
 Alias StringList:List<String>
 
+Alias SortFilter:Variant 	' A variant you can pass trough the Sort function.
+							' See the Sort With Filter extension by iDkP from GaragePixel
+
 #rem monkeydoc The List class provides support for linked lists.
 A linked list is a container style data structure that provides efficient support for the addition, removal and sequential traversal of objects.
 A linked list works by connecting elements together with 'next' and 'previous' references, making it very efficient to get from one element to the next, but not so efficient for accessing arbitrary elements.
@@ -675,7 +678,7 @@ Class List<T> Implements IContainer<T>
 		End
 	End
 
-	Method Sort( compareFunc:Int( x:T,y:T ) )
+	Method Sort( compareFunc:Int( x:T,y:T ),filter:SortFilter=Null )
 	
 		Local insize:=1
 		
