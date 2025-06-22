@@ -642,50 +642,50 @@ Class Stack<T> Implements IContainer<T>
 		End
 	End
 
-	Method Sort( compareFunc:Int( x:T,y:T ) )
-		Sort( compareFunc,0,_length-1 )
-	End
+'	Method Sort( compareFunc:Int( x:T,y:T ) )
+'		Sort( compareFunc,0,_length-1 )
+'	End
 
-	Method Sort( compareFunc:Int( x:T,y:T ),lo:Int,hi:Int ) 'iDkP: lo, hi = 32 bits
-	
-		If hi<=lo Return
-		
-		If lo+1=hi
-			If compareFunc( _data[hi],_data[lo] )<0 Swap( hi,lo )
-			Return
-		End
-		
-		Local i:=(lo+hi)/2
-		
-		If compareFunc( _data[i],_data[lo] )<0 Swap( i,lo )
-
-		If compareFunc( _data[hi],_data[i] )<0
-			Swap( hi,i )
-			If compareFunc( _data[i],_data[lo] )<0 Swap( i,lo )
-		End
-		
-		Local x:=lo+1
-		Local y:=hi-1
-		Repeat
-			Local p:=_data[i]
-			While compareFunc( _data[x],p )<0
-				x+=1
-			Wend
-			While compareFunc( p,_data[y] )<0
-				y-=1
-			Wend
-			If x>y Exit
-			If x<y
-				Swap( x,y )
-				If i=x i=y ElseIf i=y i=x
-			End
-			x+=1
-			y-=1
-		Until x>y
-
-		Sort( compareFunc,lo,y )
-		Sort( compareFunc,x,hi )
-	End
+'	Method Sort( compareFunc:Int( x:T,y:T ),lo:Int,hi:Int ) 'iDkP: lo, hi = 32 bits
+'	
+'		If hi<=lo Return
+'		
+'		If lo+1=hi
+'			If compareFunc( _data[hi],_data[lo] )<0 Swap( hi,lo )
+'			Return
+'		End
+'		
+'		Local i:=(lo+hi)/2
+'		
+'		If compareFunc( _data[i],_data[lo] )<0 Swap( i,lo )
+'
+'		If compareFunc( _data[hi],_data[i] )<0
+'			Swap( hi,i )
+'			If compareFunc( _data[i],_data[lo] )<0 Swap( i,lo )
+'		End
+'		
+'		Local x:=lo+1
+'		Local y:=hi-1
+'		Repeat
+'			Local p:=_data[i]
+'			While compareFunc( _data[x],p )<0
+'				x+=1
+'			Wend
+'			While compareFunc( p,_data[y] )<0
+'				y-=1
+'			Wend
+'			If x>y Exit
+'			If x<y
+'				Swap( x,y )
+'				If i=x i=y ElseIf i=y i=x
+'			End
+'			x+=1
+'			y-=1
+'		Until x>y
+'
+'		Sort( compareFunc,lo,y )
+'		Sort( compareFunc,x,hi )
+'	End
 
 	#rem monkeydoc Reverses the order of values in the stack.
 	@author iDkP from GaragePixel
@@ -772,11 +772,11 @@ Class Stack<T> Implements IContainer<T>
 	@param lo Index of first value to sort.
 	@param hi Index of last value to sort.@lo Int start index
 	#end
-	Method Sort( filter:StackSortFilter,compare:Int( x:T,y:T ) )
+	Method Sort( compare:Int( x:T,y:T ),filter:StackSortFilter=Null )
 		Sort( filter,compare,0,Length-1 )
 	End
 
-	Method Sort( filter:StackSortFilter,compare:Int( x:T,y:T ),lo:Int,hi:Int ) 'iDkP: lo, hi = 32 bits
+	Method Sort( compare:Int( x:T,y:T ),lo:Int,hi:Int,filter:StackSortFilter=Null ) 'iDkP: lo, hi = 32 bits
 	
 		If hi<=lo Return
 		
