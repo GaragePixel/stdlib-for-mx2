@@ -6,6 +6,8 @@
 </div>
 
 [![GitHub commit activity](https://img.shields.io/github/commit-activity/m/GaragePixel/stdlib-for-mx2?logo=git&label=commit)](https://github.com/GaragePixel/stdlib-for-mx2/commits)
+[![Translating status](https://img.shields.io/weblate/progress/stdlib-for-mx2?logo=weblate&color=informational)](https://hosted.weblate.org/engage/stdlib-for-mx2/)
+[![Code quality](https://img.shields.io/codefactor/grade/github/GaragePixel/stdlib-for-mx2?logo=codefactor)](https://www.codefactor.io/repository/github/GaragePixel/stdlib-for-mx2)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/GaragePixel/stdlib-for-mx2/ci.yml?branch=main)](https://github.com/GaragePixel/stdlib-for-mx2/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Code Coverage](https://img.shields.io/codecov/c/github/GaragePixel/stdlib-for-mx2/main.svg)](https://codecov.io/gh/GaragePixel/stdlib-for-mx2)
