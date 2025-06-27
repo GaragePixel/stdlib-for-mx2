@@ -404,10 +404,39 @@ Class Map<K,V>
 		End
 	End
 
+	#rem monkeydoc Creates a new map from interleaved key-value pairs (variant array).
+	@author iDkP from GaragePixel
+	@since 2025-06-27
+	Creates a map by reading pairs of key and value from a flat Variant[] array.
+	Notes:
+		- Use for dynamic, script-driven bulk creation, config, or interop with dynamic data
+		- Fast initialization from flexible data
+	@example
+		Local m:=New Map<String,Int>(New Variant[]("one",1,"two",2))
+		Print m 'outputs: {[one][1]}
+	#end
+	Method New( keys_vals:Variant[] ) 	Where 
+										(K=Object Or K=String Or K=Int Or K=Float Or K=Short Or K=Long Or K=Double Or K=Bool) And
+										(V=Object Or V=String Or V=Int Or V=Float Or V=Short Or V=Long Or V=Double Or V=Bool)
+		
+		Assert((keys_vals.Length Mod 2) = 0,"Pair missing: array length must be even.")
+		Local len:=keys_vals.Length/2
+
+		For Local i:=0 Until len+2 Step 2
+			Add(Cast<K>(keys_vals[i]),Cast<V>(keys_vals[i+1]))
+		Next
+	End
+
 	#rem monkeydoc Output an string from the data (map as string or numerical types)
 	@author iDkP from GaragePixel
 	@since 2025-06-13
 	stdlib.collections.Map<monkey.types.String,monkey.types.Int>' to type 'monkey.types.String
+	Note:
+		The output is automatically sorted according the keys.
+		For example: 
+			{[one][1]}
+			{[three][3]}
+			{[two][2]}
 	#end	
 	Method To:String() 	Where
 						(K=String Or K=Int Or K=Float Or K=Short Or K=Long Or K=Double Or K=Bool) And
@@ -415,10 +444,10 @@ Class Map<K,V>
 
 		Local result:String
 		For Local item:=Eachin Self
-			result+="["+item.Key+"]["+item.Value+"]~n"
+			result+="{["+item.Key+"]["+item.Value+"]}~n"
 		End
 		Return result
-	End 
+	End
 
 	#rem monkeydoc Output an verbose string from the data (map as string or numerical types)
 	@author iDkP from GaragePixel
@@ -430,7 +459,7 @@ Class Map<K,V>
 
 		Local result:String="map[~n"
 		For Local item:=Eachin Self
-			result+="["+item.Key+"]["+item.Value+"]~n"
+			result+="{["+item.Key+"]["+item.Value+"]}~n"
 		End
 		result=result.Left(result.Length-2)+"]"
 		Return result
