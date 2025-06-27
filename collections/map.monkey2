@@ -1,6 +1,13 @@
 
 Namespace stdlib.collections
 
+Private 
+
+#Import "../types/composites/tuples/tuple2.monkey2"
+Using stdlib.types
+
+Public
+
 #rem monkeydoc Convenience type alias for Map\<Int,V\>.
 #end
 Alias IntMap<V>:Map<Int,V>
@@ -464,6 +471,45 @@ Class Map<K,V>
 		result=result.Left(result.Length-2)+"]"
 		Return result
 	End  
+
+	#rem monkeydoc Creates a new map from interleaved key-value pairs (variant array).
+	@author iDkP from GaragePixel
+	@since 2025-06-27
+	Creates a map by reading pairs of key and value from a flat Variant[] array.
+	Notes:
+		- Use for dynamic, script-driven bulk creation, config, or interop with dynamic data
+		- Fast initialization from flexible data
+	@example
+		Local m:=New Map<String,Int>(New Variant[]("one",1,"two",2))
+		Print m 'outputs: {[one][1]}
+	#end
+
+	#rem monkeydoc Creates a map by reading pairs of key and value from an array of TupleKV<K,V>.
+	Notes:
+		- Use for dynamic, script-driven bulk creation, config, or interop with dynamic data.
+		- TupleKV<K,V>[] ensures keys/values are strongly typed (unlike Variant[]).
+		- More verbose, but you are sure, at least from a generated script, 
+		that the pair is always from the expected type.
+	
+	@example
+		Local m:=New Map<String,Int>(	New TupleKV<String,Int>[]	(	New TupleKV<String,Int>("one"	,1),
+																		New TupleKV<String,Int>("two"	,2),
+																		New TupleKV<String,Int>("three"	,3)	)
+		Print m 'outputs: {[one][1]}
+				'         {[three][3]}
+				'         {[two][2]}
+	
+	#end
+
+	Method New( kv:TupleKV<K,V>[] ) 	Where 
+										(K=Object Or K=String Or K=Int Or K=Float Or K=Short Or K=Long Or K=Double Or K=Bool) And
+										(V=Object Or V=String Or V=Int Or V=Float Or V=Short Or V=Long Or V=Double Or V=Bool)
+		Local len:=kv.Length
+
+		For Local i:=0 Until len
+			Add(kv[i].Item1,kv[i].Item2)
+		Next
+	End
 
 	#rem monkeydoc Gets a node iterator.	
 	#end	
