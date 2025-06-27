@@ -29,6 +29,7 @@
 			- Added Types Mini-Library (tuples, bool8, complex, u/float16, u/bfloat16, stringx... )
 			- Added Sorts Mini-library from Aida 1,2,3 finally integrated into aida 4
 
+		2025-06-27 - Added 2 constructors to Map: from Variant[] interleaved and from TupleKV[] (strongly typed)
 		2025-06-14 - Updated controllers list				
 		2025-06-02 - List new implementations (API improvements, bug fixes, refined documentation)
 		2025-06-02 - Stack new implementations (improved Documentation and better usage of map, added sort filter)
