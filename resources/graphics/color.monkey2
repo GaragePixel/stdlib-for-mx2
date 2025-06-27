@@ -144,7 +144,51 @@ Struct Color
 	#rem monkeydoc Platinum.
 	#end
 	Const Platinum:=New Color( 0.83493408973507777,0.81484503266020314,0.78399912482207756 )
-	
+
+	#rem monkeydoc CGA Legacy (0xAA/0xFF/0x55 mapped) 
+	@adapted by iDkP from GaragePixel
+	@since 2025-06-27
+	#end
+	Const CGA0:Color  = New Color( 0.00, 0.00, 0.00 )			' #000000
+	Const CGA1:Color  = New Color( 0.00, 0.00, 0.67 )			' #0000AA
+	Const CGA2:Color  = New Color( 0.00, 0.67, 0.00 )			' #00AA00
+	Const CGA3:Color  = New Color( 0.00, 0.67, 0.67 )			' #00AAAA
+	Const CGA4:Color  = New Color( 0.67, 0.00, 0.00 )			' #AA0000
+	Const CGA5:Color  = New Color( 0.67, 0.00, 0.67 )			' #AA00AA
+	Const CGA6:Color  = New Color( 0.67, 0.33, 0.00 )			' #AA5500
+	Const CGA7:Color  = New Color( 0.67, 0.67, 0.67 )			' #AAAAAA
+	Const CGA8:Color  = New Color( 0.33, 0.33, 0.33 )			' #555555
+	Const CGA9:Color  = New Color( 0.33, 0.33, 1.00 )			' #5555FF
+	Const CGA10:Color = New Color( 0.33, 1.00, 0.33 )			' #55FF55
+	Const CGA11:Color = New Color( 0.33, 1.00, 1.00 )			' #55FFFF
+	Const CGA12:Color = New Color( 1.00, 0.33, 0.33 )			' #FF5555
+	Const CGA13:Color = New Color( 1.00, 0.33, 1.00 )			' #FF55FF
+	Const CGA14:Color = New Color( 1.00, 1.00, 0.33 )			' #FFFF55
+	Const CGA15:Color = New Color( 1.00, 1.00, 1.00 )			' #FFFFFF
+
+	#rem monkeydoc CGA Next Gen
+	@adapted by iDkP from GaragePixel
+	@since 2025-06-27
+	@source https://int10h.org/blog/2022/06/ibm-5153-color-true-cga-palette/ 
+	@source http://www.oldskool.org/pc/cgacal
+	#end
+	Const CGA0NG:=New Color( 	0.00,	0.00,	0.00	)
+	Const CGA1NG:=New Color( 	0.00,	0.00,	0.77	)
+	Const CGA2NG:=New Color( 	0.00,	0.77,	0.00	)
+	Const CGA3NG:=New Color( 	0.00,	0.77,	0.77	)
+	Const CGA4NG:=New Color( 	0.77,	0.00,	0.00	)
+	Const CGA5NG:=New Color( 	0.77,	0.00,	0.77	)
+	Const CGA6NG:=New Color( 	0.77,	0.49,	0.00	)
+	Const CGA7NG:=New Color( 	0.77,	0.77,	0.77	)
+	Const CGA8NG:=New Color( 	0.31,	0.31,	0.31	)
+	Const CGA9NG:=New Color( 	0.31,	0.31,	0.86	)
+	Const CGA10NG:=New Color( 	0.31,	0.86,	0.31	)
+	Const CGA11NG:=New Color( 	0.31,	0.95,	0.95	)
+	Const CGA12NG:=New Color( 	0.86,	0.31,	0.31	)
+	Const CGA13NG:=New Color( 	0.95,	0.31,	0.95	)
+	Const CGA14NG:=New Color( 	0.95,	0.95,	0.31	)
+	Const CGA15NG:=New Color( 	1.00,	1.00,	1.00	)
+
 	#rem monkeydoc Red component of color.
 	#end
 	Field r:Float
