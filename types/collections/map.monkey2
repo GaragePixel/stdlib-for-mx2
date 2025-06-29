@@ -3,7 +3,7 @@ Namespace stdlib.collections
 
 Private 
 
-#Import "../types/composites/tuples/tuple2.monkey2"
+#Import "../composites/tuples/tuple2.monkey2"
 Using stdlib.types
 
 Public
