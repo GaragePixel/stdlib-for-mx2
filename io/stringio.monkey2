@@ -3,7 +3,11 @@ Namespace stdlib.stringio
 
 #Import "../plugins/libc/libc"
 
+#Import "../types/collections/collections"
+
 Using stdlib.plugins.libc
+
+Using stdlib.types.collections
 
 #rem monkeydoc Loads a string from a file.
 
