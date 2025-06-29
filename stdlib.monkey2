@@ -21,7 +21,7 @@ Namespace stdlib
 
 'Kernel:
 
-#Import "collections/collections"
+#Import "types/types"								'NEW (2025) AND INTEGRATED! Collections integrated (2025)
 
 #Import "system/system"								'THREAD MODULE OF Monkey-v2018.07 INTEGRATED!
 
@@ -35,7 +35,6 @@ Namespace stdlib
 #Import "resources/graphics/pixmap"
 #Import "resources/graphics/pixmaploader"
 #Import "resources/graphics/pixmapsaver"
-#Import "resources/graphics/color"
 
 #Import "resources/graphics/enums"
 
