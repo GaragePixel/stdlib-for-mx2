@@ -9,7 +9,7 @@ Using stdlib.plugins.libc..
 
 #Import "native/bbresource.h"
 
-#Import "../../collections/collections"
+#Import "../../types/collections/collections"
 
 Using stdlib.collections
 
