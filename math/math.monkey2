@@ -1,6 +1,10 @@
 
 Namespace stdlib.math
 
+#Import "identities/identities"
+
+#Import "types/complexes/complex"
+
 #Import "algebraic/vectorials/types/box"
 #Import "algebraic/vectorials/types/line"
 #Import "algebraic/vectorials/types/plane"
