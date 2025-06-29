@@ -1,7 +1,7 @@
 
 Namespace stdlib.graphics
 
-#Import "../../math/algebraic/vectorials/types/.."
+#Import "../../../../math/algebraic/vectorials/types/.."
 
 Using stdlib.math.types..
 
