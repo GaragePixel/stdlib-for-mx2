@@ -1,5 +1,5 @@
 
-Namespace stdlib.graphics
+Namespace stdlib.types
 
 #Import "../../../../math/algebraic/vectorials/types/.."
 
