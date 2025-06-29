@@ -39,7 +39,7 @@ Namespace stdlib.graphics
 #end
 
 #import "../../system/resources/resource"
-#import "../../collections/collections"
+#import "../../types/collections/collections"
 
 #import "pixmaploader"
 '#import "pixmapsaver"
