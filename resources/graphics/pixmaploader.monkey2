@@ -1,6 +1,10 @@
 
 Namespace stdlib.graphics.pixmaploader
 
+#import "../../types/composites/color"
+
+#import "pixmap"  
+
 #Import "../../system/io/stream/stream"
 
 #Import "../../plugins/stb/stb-image/stb-image"
@@ -8,6 +12,8 @@ Namespace stdlib.graphics.pixmaploader
 Using stdlib.plugins.stb.image
 
 Using stdlib.io
+
+Using stdlib.types
 
 Internal
 
