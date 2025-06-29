@@ -1,1 +1,3 @@
-#rem mioh
+Namespace stdlib.types
+
+#Import "collections/collections"
