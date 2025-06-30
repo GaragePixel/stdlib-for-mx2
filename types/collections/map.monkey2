@@ -513,8 +513,8 @@ Class Map<K,V>
 																			New TupleKV<String,Int>("two"	,2),
 																			New TupleKV<String,Int>("three"	,3)	)
 		Print m 'outputs: {[one][1]}
-				'         {[two][2]}
 				'         {[three][3]}
+				'         {[two][2]}
 	
 	#end
 	Method New( kv:Stack<TupleKV<K,V>> )	Where 
