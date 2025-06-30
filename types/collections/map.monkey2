@@ -508,11 +508,11 @@ Class Map<K,V>
 						(V=String Or V=Int Or V=Float Or V=Short Or V=Long Or V=Double Or V=Bool Or V=Variant)
 
 		Local result:String
-		Local iv:V,ik:K
+		Local iv:String,ik:String
 		For Local item:=Eachin Self
-			iv = Typeof(item.Value)="Variant" ?	"?????" Else item.Value
-			ik = Typeof(item.Key)="Variant" ? 	"?????" Else item.Key
-			result+="{["+Cast<String>(ik)+"]["+Cast<String>(iv)+"]}~n"
+			iv = Typeof(item.Value)=__t_variant__ ?	"?????" Else Cast<String>(item.Value)
+			ik = Typeof(item.Key)=__t_variant__ ? 	"?????" Else Cast<String>(item.Key)
+			result+="{["+ik+"]["+iv+"]}~n"
 		End
 		Return result
 	End 
@@ -528,11 +528,11 @@ Class Map<K,V>
 								(V=String Or V=Int Or V=Float Or V=Short Or V=Long Or V=Double Or V=Bool Or V=Variant)
 
 		Local result:String="map[~n"
-		Local iv:V,ik:K
+		Local iv:String,ik:String
 		For Local item:=Eachin Self
-			iv = Typeof(item.Value)="Variant" ?	"?????" Else item.Value
-			ik = Typeof(item.Key)="Variant" ? 	"?????" Else item.Key
-			result+="{["+Cast<String>(ik)+"]["+Cast<String>(iv)+"]}~n"
+			iv = Typeof(item.Value)=__t_variant__ ?	"?????" Else Cast<String>(item.Value)
+			ik = Typeof(item.Key)=__t_variant__ ? 	"?????" Else Cast<String>(item.Key)			
+			result+="{["+ik+"]["+iv+"]}~n"
 		End
 		result=result.Left(result.Length-2)+"]"
 		Return result
