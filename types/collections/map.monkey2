@@ -434,43 +434,6 @@ Class Map<K,V>
 		Next
 	End
 
-	#rem monkeydoc Output an string from the data (map as string or numerical types)
-	@author iDkP from GaragePixel
-	@since 2025-06-13
-	stdlib.collections.Map<monkey.types.String,monkey.types.Int>' to type 'monkey.types.String
-	Note:
-		The output is automatically sorted according the keys.
-		For example: 
-			{[one][1]}
-			{[three][3]}
-			{[two][2]}
-	#end	
-	Method To:String() 	Where
-						(K=String Or K=Int Or K=Float Or K=Short Or K=Long Or K=Double Or K=Bool) And
-						(V=String Or V=Int Or V=Float Or V=Short Or V=Long Or V=Double Or V=Bool)
-
-		Local result:String
-		For Local item:=Eachin Self
-			result+="{["+item.Key+"]["+item.Value+"]}~n"
-		End
-		Return result
-	End
-
-	#rem monkeydoc Output an verbose string from the data (map as string or numerical types)
-	@author iDkP from GaragePixel
-	@since 2025-06-13
-	#end	
-	Method ToString:String() 	Where
-								(K=String Or K=Int Or K=Float Or K=Short Or K=Long Or K=Double Or K=Bool) And
-								(V=String Or V=Int Or V=Float Or V=Short Or V=Long Or V=Double Or V=Bool)
-
-		Local result:String="map[~n"
-		For Local item:=Eachin Self
-			result+="{["+item.Key+"]["+item.Value+"]}~n"
-		End
-		result=result.Left(result.Length-2)+"]"
-		Return result
-	End
 	#rem monkeydoc Creates a map by reading pairs of key and value from an array of TupleKV<K,V>.
 	@author iDkP from GaragePixel
 	@since 2025-06-27
@@ -498,7 +461,7 @@ Class Map<K,V>
 			Add(kv[i].Item1,kv[i].Item2)
 		Next
 	End
-
+#rem
 	#rem monkeydoc Creates a map by reading pairs of key and value from an stack of TupleKV<K,V>.
 	@author iDkP from GaragePixel
 	@since 2025-06-30
@@ -526,6 +489,54 @@ Class Map<K,V>
 			Add(kv[i].Item1,kv[i].Item2)
 		Next
 	End
+#end
+	#rem monkeydoc Output an string from the data (map as string or numerical types)
+	@author iDkP from GaragePixel
+	@since 2025-06-13
+	@version 2025-06-30
+	Note: If the key or the value are from the Variant type, the element emits "?????" in the string.
+	stdlib.collections.Map<monkey.types.String,monkey.types.Int>' to type 'monkey.types.String
+	Note:
+		The output is automatically sorted according the keys.
+		For example: 
+			{[one][1]}
+			{[three][3]}
+			{[two][2]}
+	#end	
+	Method To:String() 	Where
+						(K=String Or K=Int Or K=Float Or K=Short Or K=Long Or K=Double Or K=Bool Or K=Variant) And
+						(V=String Or V=Int Or V=Float Or V=Short Or V=Long Or V=Double Or V=Bool Or V=Variant)
+
+		Local result:String
+		Local iv:V,ik:K
+		For Local item:=Eachin Self
+			iv = Typeof(item.Value)="Variant" ?	"?????" Else item.Value
+			ik = Typeof(item.Key)="Variant" ? 	"?????" Else item.Key
+			result+="{["+Cast<String>(ik)+"]["+Cast<String>(iv)+"]}~n"
+		End
+		Return result
+	End 
+
+	#rem monkeydoc Output an verbose string from the data (map as string or numerical types)
+	@author iDkP from GaragePixel
+	@since 2025-06-13
+	@version 2025-06-30
+	Note: If the key or the value are from the Variant type, the element emits "?????" in the string.
+	#end	
+	Method ToString:String() 	Where
+								(K=String Or K=Int Or K=Float Or K=Short Or K=Long Or K=Double Or K=Bool Or K=Variant) And
+								(V=String Or V=Int Or V=Float Or V=Short Or V=Long Or V=Double Or V=Bool Or V=Variant)
+
+		Local result:String="map[~n"
+		Local iv:V,ik:K
+		For Local item:=Eachin Self
+			iv = Typeof(item.Value)="Variant" ?	"?????" Else item.Value
+			ik = Typeof(item.Key)="Variant" ? 	"?????" Else item.Key
+			result+="{["+Cast<String>(ik)+"]["+Cast<String>(iv)+"]}~n"
+		End
+		result=result.Left(result.Length-2)+"]"
+		Return result
+	End 
 
 	#rem monkeydoc Gets a node iterator.	
 	#end	
