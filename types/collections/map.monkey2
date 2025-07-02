@@ -490,6 +490,71 @@ Class Map<K,V>
 		Next
 	End
 #end
+	#rem monkeydoc Resets the map with a new prefilled map with keys created from a pointed array.
+	@author iDkP from GaragePixel
+	@since 2025-07-02
+	The pre-filled value will fill the entire map (same value for the keys)
+	Note: K as Object allows indexing
+	#end
+	Method Reset( keys:K[], values:V ) 	Where 
+										K=Object Or 
+										K=String Or
+										K=Int Or K=Float Or 
+										K=Short Or K=Long Or K=Double Or K=Bool Or
+										K=Variant
+		Clear()
+		Local this:=New Map<K,V>(keys,values)
+		Self._root=this._root
+	End
+
+	#rem monkeydoc Resets a new prefilled map with keys and values created from pointed arrays.
+	@author iDkP from GaragePixel
+	@since 2025-07-02
+	The values will fill the entire map.
+	
+	If the value array is shorter than the key array, 
+	the same final value is repeated for the remaining keys.
+	
+	Conversely, if the value array is longer than the key array, 
+	the map will be sized based on the length of the key array 
+	and will therefore be filled sequentially until its length is reached.
+
+	Note: K and V as Object allowing indexing
+	#end
+	Method Reset( keys:K[], values:V[] ) 	Where 
+											(K=Object Or K=String Or K=Int Or K=Float Or K=Short Or K=Long Or K=Double Or K=Bool Or K=Variant) And
+											(V=Object Or V=String Or V=Int Or V=Float Or V=Short Or V=Long Or V=Double Or V=Bool Or V=Variant)
+		Clear()
+		Local this:=New Map<K,V>(keys,values)
+		Self._root=this._root
+	End
+
+	#rem monkeydoc Resets a map by reading pairs of key and value from an array of TupleKV<K,V>
+	or a array of Variants.
+	#end
+	Method Reset<V,K>( k_vals:V[] )	Where 
+									(V=Object Or V=String Or V=Int Or V=Float Or V=Short Or V=Long Or V=Double Or V=Bool Or V=Variant) And
+									(K=Object Or K=String Or K=Int Or K=Float Or K=Short Or K=Long Or K=Double Or K=Bool Or K=Variant)
+		Clear()
+		Local this:=New Map<K,V>(k_vals)
+		Self._root=this._root
+	End
+
+	#rem monkeydoc Resets a new indexed map with values from an array.
+	@author iDkP from GaragePixel
+	@since 2025-07-02
+	The values will fill the entire map.
+	The keys will be natural sequence integers 32 bits.
+	Note: V as Object allowing indexing
+	#end
+	Method Reset<K,V>( k_vals:V[] )	Where 
+									(V=Object Or V=String Or V=Int Or V=Float Or V=Short Or V=Long Or V=Double Or V=Bool Or V=Variant) And
+									K=Int '32 bits!
+		Clear()
+		Local this:=New Map<K,V>(k_vals)
+		Self._root=this._root
+	End
+
 	#rem monkeydoc Output an string from the data (map as string or numerical types)
 	@author iDkP from GaragePixel
 	@since 2025-06-13
