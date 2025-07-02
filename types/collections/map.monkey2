@@ -422,15 +422,15 @@ Class Map<K,V>
 		Local m:=New Map<String,Int>(New Variant[]("one",1,"two",2))
 		Print m 'outputs: {[one][1]}
 	#end
-	Method New( keys_vals:Variant[] ) 	Where 
-										(K=Object Or K=String Or K=Int Or K=Float Or K=Short Or K=Long Or K=Double Or K=Bool) And
-										(V=Object Or V=String Or V=Int Or V=Float Or V=Short Or V=Long Or V=Double Or V=Bool)
+	Method New( k_v:Variant[] ) 	Where 
+									(K=Object Or K=String Or K=Int Or K=Float Or K=Short Or K=Long Or K=Double Or K=Bool) And
+									(V=Object Or V=String Or V=Int Or V=Float Or V=Short Or V=Long Or V=Double Or V=Bool)
 		
-		Assert((keys_vals.Length Mod 2) = 0,"Pair missing: array length must be even.")
-		Local len:=keys_vals.Length/2
+		Assert((k_vals.Length Mod 2) = 0,"Pair missing: array length must be even.")
+		Local len:=k_vals.Length/2
 
 		For Local i:=0 Until len+2 Step 2
-			Add(Cast<K>(keys_vals[i]),Cast<V>(keys_vals[i+1]))
+			Add(Cast<K>(k_vals[i]),Cast<V>(k_vals[i+1]))
 		Next
 	End
 
