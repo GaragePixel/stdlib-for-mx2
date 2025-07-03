@@ -275,3 +275,121 @@ Function StringToCharArray:Int[]( str:String )
 	
 	Return codes
 End
+
+'Addition 2025-06-16 iDkP from GaragePixel
+
+#Rem monkeydoc pro Gets a string from a collection
+@author iDkP from [GaragePixel](https://github.com/GaragePixel)
+@since 2025-06-16
+The custom type T must implements an operator To.String
+#end
+Function ToString<T>:String( c:Stack<T> Ptr )
+	Local ctn:String
+	For Local i:=Eachin c[0]
+		ctn+=i
+	End 
+	Return ctn
+End 
+
+#Rem monkeydoc pro Gets a string from an array
+@author iDkP from [GaragePixel](https://github.com/GaragePixel)
+@since 2025-06-16
+The custom type T must implements an operator To.String
+#end 
+Function ToString<T>:String( c:T Ptr )
+	Local ctn:String
+	Local i:Int=0
+	While c[i]
+		i+=1
+		ctn+=c[i]
+	Wend
+	Return ctn
+End 
+
+#Rem monkeydoc pro Gets a string of chars
+@author iDkP from [GaragePixel](https://github.com/GaragePixel)
+@since 2025-06-16
+The custom type T must implements an operator To.String
+#end 
+Function CharToString<T>:String( c:Stack<T> Ptr )
+	Local ctn:String
+	Local i:Int=0
+	While c[0][i]
+		i+=1
+		ctn+=String.FromChar(c[0][i])
+	Wend
+	Return ctn
+End 
+
+#Rem monkeydoc pro Gets a string of chars from a custom type
+@author iDkP from [GaragePixel](https://github.com/GaragePixel)
+@since 2025-06-16
+The custom type T must implements an operator To.String
+#end 
+Function CharToString<T>:String( c:T Ptr )
+	Local ctn:String
+	Local i:Int=0
+	While c[i]
+		i+=1
+		ctn+=String.FromChar(c[i])
+	Wend
+	Return ctn
+End 
+
+#Rem monkeydoc Override a bit of character(s) within a string by an inserted string
+Note: If you want insert only one character, please use Insert instead.
+@author iDkP from GaragePixel
+@since 2025-06-23
+#End
+Function Overrides:String(str:String, characters:String, offset:UInt, interval:UInt=1)
+	Return Overrides(Varptr(str),Varptr(characters),offset,interval)[0]
+End 
+
+Function Overrides:String Ptr(str:String Ptr, characters:String Ptr, offset:UInt, interval:UInt=1)
+
+	'Note:
+	'Each time you call it, Monkey2/Wonkey allocates new memory and copies data, which is slow for large strings or many calls.
+	
+	'Example usage:
+	'	Local myString:="This sentence will be overridden"
+	'	Print myString
+	'	Local myPathString:="text"
+	'	Overrides(Varptr(myString),Varptr(myPathString),5)
+	'	Print myString
+	'	output:
+	'		This sentence will be overridden
+	'		This textentence will be overridden
+	'
+	'Example usage:
+	'	Local myString:="This sentence will be overridden"
+	'	Print myString
+	'	Local myPathString:="text"
+	'	Overrides(Varptr(myString),Varptr(myPathString),5,8)
+	'	Print myString
+	'	output:
+	'		This sentence will be overridden
+	'		This text will be overridden
+	
+	Local stra:=str[0].Slice(0,offset)
+	Local strb:=str[0].Slice(offset+interval)
+	str[0]=stra+characters[0]+strb
+	Return str
+End 
+
+#rem erase the quotes at the beginning and the ending of a string
+@author iDkP from GaragePixel
+@since 2025-07-02
+@example
+	Local myString="~qthis is a quoted string~q"
+	myString=Unquote(myString) 'output This is a quoted string (instead of "this is a quoted string")
+TODO:
+	Put it in the Aida4's strings minilibrary
+#end 
+Function Unquote:String(str:String)
+	Local strlen:=str.Length
+	If str.StartsWith("~q") 
+		str=str.Left(strlen-1)
+		Return str.EndsWith("~q") ? str.Right(strlen-2) Else str
+	End
+	Return str.EndsWith("~q") ? str.Right(strlen-1) Else str
+End
