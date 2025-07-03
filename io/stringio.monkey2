@@ -376,7 +376,7 @@ Function Overrides:String Ptr(str:String Ptr, characters:String Ptr, offset:UInt
 	Return str
 End 
 
-#rem erase the quotes at the beginning and the ending of a string
+#rem Erase the quotes at the beginning and the ending of a string
 @author iDkP from GaragePixel
 @since 2025-07-02
 @example
