@@ -433,11 +433,11 @@ Class Map<K,V>
 									(K=Object Or K=String Or K=Int Or K=Float Or K=Short Or K=Long Or K=Double Or K=Bool) And
 									(V=Object Or V=String Or V=Int Or V=Float Or V=Short Or V=Long Or V=Double Or V=Bool)
 		
-		Assert((k_vals.Length Mod 2) = 0,"Pair missing: array length must be even.")
-		Local len:=k_vals.Length/2
+		Assert((k.Length Mod 2) = 0,"Pair missing: array length must be even.")
+		Local len:=k.Length/2
 
 		For Local i:=0 Until len+2 Step 2
-			Add(Cast<K>(k_vals[i]),Cast<V>(k_vals[i+1]))
+			Add(Cast<K>(k[i]),Cast<V>(k[i+1]))
 		Next
 	End
 
