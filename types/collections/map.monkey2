@@ -4,6 +4,9 @@ Namespace stdlib.collections
 Private 
 
 #Import "../composites/tuples/tuple2.monkey2"
+
+#Import "../composites/tuples/tupleKV.monkey2"
+
 Using stdlib.types
 
 Public
@@ -39,8 +42,12 @@ Maps can handle inserting, removing and finding keys in 'O(log2)' time.
 That is, the time needed to insert, remove or find a key is proportional to log2 
 of the number of items in the map.
 
-'iDkP: 
-'	Note: Using Red-Black Tree agorithm, internally. It's really fast.
+iDkP: 
+	Note: Using Red-Black Tree agorithm, internally. It's really fast.
+
+Version (2025-07-04) note (iDkP):
+	- For some reason, New( kv:Stack<TupleKV<K,V>> ) can't be implemented, use Tuple<K,V>[] (array) instead.
+
 #end
 Class Map<K,V>
 
@@ -461,35 +468,7 @@ Class Map<K,V>
 			Add(kv[i].Item1,kv[i].Item2)
 		Next
 	End
-#rem
-	#rem monkeydoc Creates a map by reading pairs of key and value from an stack of TupleKV<K,V>.
-	@author iDkP from GaragePixel
-	@since 2025-06-30
-	Notes:
-		- Use for dynamic, script-driven bulk creation, config, or interop with dynamic data.
-		- Stack<TupleKV<K,V>> ensures keys/values are strongly typed (unlike Variant[]).
-		- More verbose, but you are sure, at least from a generated script, 
-		that the pair is always from the expected type.
-	
-	@example
-		Local m:=New Map<String,Int>(	New Stack<TupleKV<String,Int>>	(	New TupleKV<String,Int>("one"	,1),
-																			New TupleKV<String,Int>("two"	,2),
-																			New TupleKV<String,Int>("three"	,3)	)
-		Print m 'outputs: {[one][1]}
-				'         {[three][3]}
-				'         {[two][2]}
-	
-	#end
-	Method New( kv:Stack<TupleKV<K,V>> )	Where 
-											(K=Object Or K=String Or K=Int Or K=Float Or K=Short Or K=Long Or K=Double Or K=Bool) And
-											(V=Object Or V=String Or V=Int Or V=Float Or V=Short Or V=Long Or V=Double Or V=Bool)
-		Local len:=kv.Length
 
-		For Local i:=0 Until len
-			Add(kv[i].Item1,kv[i].Item2)
-		Next
-	End
-#end
 	#rem monkeydoc Resets the map with a new prefilled map with keys created from a pointed array.
 	@author iDkP from GaragePixel
 	@since 2025-07-02
