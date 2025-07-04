@@ -429,7 +429,7 @@ Class Map<K,V>
 		Local m:=New Map<String,Int>(New Variant[]("one",1,"two",2))
 		Print m 'outputs: {[one][1]}
 	#end
-	Method New( k_v:Variant[] ) 	Where 
+	Method New( k:Variant[] ) 	Where 
 									(K=Object Or K=String Or K=Int Or K=Float Or K=Short Or K=Long Or K=Double Or K=Bool) And
 									(V=Object Or V=String Or V=Int Or V=Float Or V=Short Or V=Long Or V=Double Or V=Bool)
 		
