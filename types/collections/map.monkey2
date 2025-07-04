@@ -511,11 +511,11 @@ Class Map<K,V>
 	#rem monkeydoc Resets a map by reading pairs of key and value from an array of TupleKV<K,V>
 	or a array of Variants.
 	#end
-	Method Reset<V,K>( k_vals:V[] )	Where 
-									(V=Object Or V=String Or V=Int Or V=Float Or V=Short Or V=Long Or V=Double Or V=Bool Or V=Variant) And
-									(K=Object Or K=String Or K=Int Or K=Float Or K=Short Or K=Long Or K=Double Or K=Bool Or K=Variant)
+	Method Reset<V,K>( k:V[] )	Where 
+								(V=Object Or V=String Or V=Int Or V=Float Or V=Short Or V=Long Or V=Double Or V=Bool Or V=Variant) And
+								(K=Object Or K=String Or K=Int Or K=Float Or K=Short Or K=Long Or K=Double Or K=Bool Or K=Variant)
 		Clear()
-		Local this:=New Map<K,V>(k_vals)
+		Local this:=New Map<K,V>(k)
 		Self._root=this._root
 	End
 
@@ -526,11 +526,11 @@ Class Map<K,V>
 	The keys will be natural sequence integers 32 bits.
 	Note: V as Object allowing indexing
 	#end
-	Method Reset<K,V>( k_vals:V[] )	Where 
-									(V=Object Or V=String Or V=Int Or V=Float Or V=Short Or V=Long Or V=Double Or V=Bool Or V=Variant) And
-									K=Int '32 bits!
+	Method Reset<K,V>( k:V[] )	Where 
+								(V=Object Or V=String Or V=Int Or V=Float Or V=Short Or V=Long Or V=Double Or V=Bool Or V=Variant) And
+								K=Int '32 bits!
 		Clear()
-		Local this:=New Map<K,V>(k_vals)
+		Local this:=New Map<K,V>(k)
 		Self._root=this._root
 	End
 
