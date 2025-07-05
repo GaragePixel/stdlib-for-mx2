@@ -1,6 +1,10 @@
 
 Namespace std.collections
 
+#Import "../composites/tuples/tuple2"
+
+Using stdlib.types..
+
 #rem monkeydoc Convenience type alias for Stack\<Int\>.
 #end
 Alias IntStack:Stack<Int>
