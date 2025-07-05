@@ -738,6 +738,19 @@ Class Stack<T> Implements IContainer<T>
 		Add( value )
 	End
 
+	#rem monkeydoc Calculate the average of a numerical stack
+	@author iDkP from GaragePixel
+	@since 2025-07-05
+	#end 
+	Method Average:T() Where T Implements INumeric
+		Local result:T=0
+		For Local n:Int=0 Until Length
+			result+=Self[n]
+		End 
+		result/=Length
+		Return result
+	End 
+
 	#rem monkeydoc Joins the values in a string stack.
 	@param separator The separator to be used when joining values.
 	@return The joined values.
