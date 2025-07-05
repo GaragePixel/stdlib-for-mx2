@@ -742,14 +742,32 @@ Class Stack<T> Implements IContainer<T>
 	@author iDkP from GaragePixel
 	@since 2025-07-05
 	#end 
-	Method Average:T() Where T Implements INumeric
+	Property Average:T() Where T Implements INumeric
 		Local result:T=0
 		For Local n:Int=0 Until Length
-			result+=Self[n]
+			result+=_data[n]
 		End 
 		result/=Length
 		Return result
-	End 
+	End
+
+	#rem monkeydoc Get the limits of the values in a numerical stack
+	@author iDkP from GaragePixel
+	@since 2025-07-05
+	@returns a Tuple2<T,T> where the 1st T is the lower bound and the 2nd the upper bound 
+	@todo A specific Limit struct
+	#end 	
+	Property Limits:Tuple2<T,T>()  Where T Implements INumeric
+		Local lim:=New Tuple2<T,T>
+		For Local n:Int=0 Until Length
+			If lim.Item1>_data[n] 
+				lim.Item1=_data[n]
+			Elseif lim.Item2<_data[n] 
+				lim.Item2=_data[n]
+			End
+		End 
+		Return lim
+	End
 
 	#rem monkeydoc Joins the values in a string stack.
 	@param separator The separator to be used when joining values.
