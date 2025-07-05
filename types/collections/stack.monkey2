@@ -2,8 +2,10 @@
 Namespace std.collections
 
 #Import "../composites/tuples/tuple2"
+#Import "../../limits/limits"
 
 Using stdlib.types..
+Using stdlib.limits
 
 #rem monkeydoc Convenience type alias for Stack\<Int\>.
 #end
@@ -761,15 +763,24 @@ Class Stack<T> Implements IContainer<T>
 	@returns a Tuple2<T,T> where the 1st T is the lower bound and the 2nd the upper bound 
 	@todo A specific Limit struct
 	#end 	
-	Property Limits:Tuple2<T,T>()  Where T Implements INumeric
+	Property Limits:Tuple2<T,T>()  Where 	T=Int Or T=UInt Or 
+											T=Float Or T=Double Or 
+											T=Long Or T=ULong Or 
+											T=Bool Or T=Short Or T=Short' Or' Implements INumeric
+'											T=Byte Or T=UByte Or T=Bool8
+
+		If Length = 0 Return Null 'Guard
 		Local lim:=New Tuple2<T,T>
-		For Local n:Int=0 Until Length
-			If lim.Item1>_data[n] 
+		lim.Item1=MaxValue<T>(0)
+		For Local n:Int=0 Until Length-1
+			If _data[n]<lim.Item1
 				lim.Item1=_data[n]
-			Elseif lim.Item2<_data[n] 
+			Elseif _data[n]>lim.Item2 'saves 1/2 n-ary-th tests
 				lim.Item2=_data[n]
 			End
 		End 
+		'Edge-case: upper limit never assignated because each values was equals
+		If lim.Item2=Null lim.Item2=lim.Item1
 		Return lim
 	End
 
