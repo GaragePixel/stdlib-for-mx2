@@ -15,6 +15,16 @@ Using stdlib.system.fiber
 
 Public
 
+#rem monkeydoc Timer resolutions
+@author iDkP from GaragePixel
+@since 2025-07-10
+#end
+Enum TimerResolution 
+	Secs
+	Millisecs
+	Microsecs
+End 
+
 #rem monkeydoc The Timer class.
 #end
 Class Timer
