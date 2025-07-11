@@ -8,3 +8,4 @@ Namespace stdlib.collections
 #Import "stack"
 #Import "deque"
 #Import "map"
+'#Import "ring"
