@@ -23,6 +23,8 @@ Namespace stdlib
 
 #Import "types/types"								'NEW (2025) AND INTEGRATED! Collections integrated (2025)
 
+#Import "limits/limits"								'NEW (2025) AND INTEGRATED!
+
 #Import "system/system"								'THREAD MODULE OF Monkey-v2018.07 INTEGRATED!
 
 #import "system/reflection/reflection"				'INTEGRATED!
