@@ -1,5 +1,5 @@
 
-Namespace stdlib.collections
+Namespace stdlib.types.collections
 
 #rem monkeydoc The IContainer interface is a 'dummy' interface that container classes should implement for compatibility with Eachin loops.
 
@@ -79,6 +79,9 @@ Note that if you erase a value, you should NOT bump the iterator - erase implici
 
 Finally, IContainer is not a 'real' interface because Monkey2 does not yet support generic interface methods. This feature is planned for a future version of monkey2.
 
+Added iDkP:
+Since 2025-07-13
+The IContainerB<T> interface provides implementation for multityped Class<A,B>
 #end
 Interface IContainer<T>
 
@@ -106,8 +109,36 @@ Interface IContainer<T>
 	'Method RemoveIf:Int( condition:Bool( value:T ) )
 	
 End
+Interface IContainerB<T,B>
+
+	'Property Empty:Bool()
+	
+	'Method All:IIterator<T>()
+
+	
+	'Sequence methods
+	
+	'Method Add( value:T )
+	
+	'Method AddAll( value:T[] )
+	
+	'Method AddAll<C>( values:C )
+	
+	'Method Contains:Bool( value:T )
+	
+	'Method Remove:Bool( value:T )
+	
+	'Method RemoveLast:Bool( value:T )
+	
+	'Method RemoveEach:Int( value:T )
+	
+	'Method RemoveIf:Int( condition:Bool( value:T ) )
+End
 
 #rem monkeydoc IIterator interface.
+Added iDkP:
+Since 2025-07-13
+The IIteratorB<T> interface provides implementation for multityped Class<A,B>
 #end
 Interface IIterator<T>
 
@@ -123,5 +154,19 @@ Interface IIterator<T>
 	'Method Erase()
 	
 	'Method Insert( value:T )
+End
+Interface IIteratorB<T,B>
+
+	'Property AtEnd:Bool()
 	
+	'Property Current:T()
+	
+	'Method Bump()
+	
+	
+	'Sequence methods
+	
+	'Method Erase()
+	
+	'Method Insert( value:T )
 End
