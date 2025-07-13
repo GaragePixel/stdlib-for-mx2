@@ -6,9 +6,15 @@ Namespace stdlib.types.collections
 
 Using stdlib.limits
 
-Alias Ring8<T>:Ring<T,UByte> 'can contains 255 elements '231?
-Alias Ring16<T>:Ring<T,UShort> 'can contains 16384 elements
-Alias Ring32<T>:Ring<T,Int>  'can contains 2147483647 elements
+Alias IntRing<T>:Ring32<Int>
+Alias FloatRing<T>:Ring32<Float>
+Alias StringRing<T>:Ring32<String>
+
+Alias Ring<T>:Ring32<T>
+
+Alias Ring8<T>:RingB<T,UByte> 	'can contains 255 elements '231?
+Alias Ring16<T>:RingB<T,UShort> 'can contains 16384 elements
+Alias Ring32<T>:RingB<T,Int>  	'can contains 2147483647 elements
 
 #rem monkeydoc The Ring class - A fixed-size circular buffer wrapper over Deque<T>.
 @author iDkP from GaragePixel
@@ -20,26 +26,90 @@ a bounded memory footprint with automatic oldest-element eviction.
 The Ring internally uses a Deque<T> for efficient O(1) operations at both ends 
 while enforcing strict capacity constraints.
 #end
-Class Ring<T,L> Where L Implements IShort Or L Implements ICompact
+Class RingB<T,B> Implements IContainerB<T,B> Where B Implements IShort Or B Implements ICompact
+
+	#rem monkeydoc The Ring.Iterator struct.
+	#end
+	Struct Iterator Implements IIteratorB<T,B>
 	
-	Method New( capacity:L )
-		Reset( capacity )
+		Private
+		
+		Field _ring:RingB
+		Field _index:Int
+		
+		Public
+		
+		Method AssertCurrent()
+			DebugAssert( _index<>_ring.Data.Tail,"Invalid ring iterator" )
+		End
+		
+		Method New( ring:RingB,index:B )
+			_ring=ring
+			_index=index
+		End
+		
+		#rem monkeydoc Checks if the iterator has reached the end of the ring.
+		#end
+		Property AtEnd:Bool()
+			Return _index=_ring.Data.Tail
+		End
+		
+		#rem monkeydoc The value currently pointed to by the iterator.
+		#end
+		Property Current:T()
+			AssertCurrent()
+			Return _ring.Data[_index]
+		Setter( current:T )
+			AssertCurrent()
+			_ring.Data[_index]=current
+		End
+		
+		#rem monkeydoc Bumps the iterator so it points to the next value in the ring.
+		#end
+		Method Bump()
+			AssertCurrent()
+			_index+=1
+			If _index=_ring.Capacity _index=0
+		End
+		
+		Method Erase()
+			RuntimeError( "Erase not supported for Rings" )
+		End
+		
+		#rem monkeydoc Safely inserts a value before the value pointed to by the iterator.
+		After calling this method, the iterator will point to the newly added value.
+		#end
+		Method Insert( value:T )
+			RuntimeError( "Insert not supported for Rings" )
+		End
+	End
+	
+	Method New( capacity:B )
+		Init( capacity )
 	End
 
 	Property Data:Deque<T>()
 		Return _data
 	End
 
-	Property Capacity:L()
+	Property Capacity:B()
 		Return _capacity
 	End
 
-	Property Length:Int()
+	Property Length:B()
 		Return _data.Length
 	End
 	
 	Property Empty:Bool()
 		Return _data.Empty
+	End
+
+	#rem monkeydoc Gets an iterator for visiting ring values.	
+	Returns an iterator suitable for use with Eachin, or for manual iteration.	
+	@return A ring iterator.	
+	#end
+	Method All:Iterator()
+		Return New Iterator( Self,_data.Head )
 	End
 	
 	Method Push( value:T )
@@ -48,25 +118,71 @@ Class Ring<T,L> Where L Implements IShort Or L Implements ICompact
 		End
 		_data.AddFirst( value )
 	End
+	
+	Method Push:T[]( values:T[] )
+		'Local remainder:T[quantity]
+		Return Null'the remainder
+	End
+
+	Method Push:T[]( values:T[], do:T(n:B,value:T) )
+		'Local remainder:T[quantity]
+		Push(values)
+		For Local n:B=0 Until values.Length-1
+			do(n,values[n])
+		End 
+		Return Null'the remainder
+	End
 
 	Method Flush()
-		Reset( _capacity )
+		Init( _capacity )
 	End
 	
 	Property Counts:Bool()
-		Return All(_data)
+		Return stdlib.types.bools.All(_data)
 		'Return _data.Length=0? True Else False
 	End	
-	
-	Protected
 	
 	Method Pop:T()
 		Return _data.RemoveFirst()
 	End
 	
+	Method Pop:T[](quantity:B)
+		Local remainder:T[]=New T[quantity]
+		For Local n:=0 Until quantity
+			remainder[n]=_data.RemoveFirst()
+		End 
+		Return remainder
+	End
+
+	Method Pop:T[](quantity:B, do:T(n:Int,value:T) )
+		Local remainder:T[]=New T[quantity]
+		For Local n:=0 Until quantity
+			remainder[n]=_data.RemoveFirst()
+			do(n,remainder[n])
+		End 
+		Return remainder
+	End
+	#rem monkedoc Gets the value of a ring element.
+	In debug builds, a runtime error will occur if `index` is less than 0, 
+	or greater than or equal to the length of the ring.	
+	#end
+	Operator[]:T( index:Int )
+		DebugAssert( index>=0 And index<Length,"Ring index out of range" )
+		Return _data.Data[ index ]
+	End
+	
+	#rem monkedoc Sets the value of a ring element.
+	In debug builds, a runtime error will occur if `index` is less than 0, 
+	or greater than or equal to the length of the ring.
+	#end
+	Operator[]=( index:Int,value:T )
+		DebugAssert( index>=0 And index<Length,"Ring index out of range" )
+		_data.Data[index]=value
+	End
+	
 	Private
 
-	Method Reset( capacity:L )
+	Method Init( capacity:B )
 		Clip(Varptr(capacity),0,Varptr(_maxCapacity))
 		_capacity=capacity
 		_maxCapacity=IntMax 'implicit casting
@@ -75,6 +191,6 @@ Class Ring<T,L> Where L Implements IShort Or L Implements ICompact
 	End
 	
 	Field _data:Deque<T>
-	Field _capacity:L
-	Field _maxCapacity:L=IntMax 'implicit casting
+	Field _capacity:B
+	Field _maxCapacity:B=IntMax 'implicit casting
 End
