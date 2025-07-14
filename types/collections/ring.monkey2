@@ -21,6 +21,15 @@ Alias Ring32<T>:RingB<T,Int>  	'can contains 2147483647 elements
 @since 2025-07-11
 A Ring is a fixed-capacity circular buffer that automatically overwrites the oldest elements 
 when new elements are added beyond capacity.
+The Ring class implements a fixed-size circular buffer with LIFO (Last In, First Out) semantics, 
+while the Deque implements a dynamic double-ended queue with FIFO capabilities. 
+
+- Ring expected behavior (LIFO):
+Push(0), Push(1), Push(2) → Iterator yields: 2, 1, 0
+	
+- Deque behavior (FIFO):
+AddLast(0), AddLast(1), AddLast(2) → Iterator yields: 0, 1, 2
+
 Rings are ideal for streaming data, logging systems, and any scenario where you need 
 a bounded memory footprint with automatic oldest-element eviction.
 The Ring internally uses a Deque<T> for efficient O(1) operations at both ends 
