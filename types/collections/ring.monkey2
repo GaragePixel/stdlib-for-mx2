@@ -36,22 +36,25 @@ Class RingB<T,B> Implements IContainerB<T,B> Where B Implements IShort Or B Impl
 		
 		Field _ring:RingB
 		Field _index:Int
+		Field _count:Int
 		
 		Public
 		
 		Method AssertCurrent()
-			DebugAssert( _index<>_ring.Data.Tail,"Invalid ring iterator" )
+			DebugAssert( Not AtEnd, "Invalid ring iterator" )
 		End
 		
 		Method New( ring:RingB,index:B )
-			_ring=ring
-			_index=index
+			_ring = ring
+			_count = 0
+			_index = _ring.Data.Tail
+			If _index = 0 _index = _ring.Capacity - 1 Else _index -= 1
 		End
 		
 		#rem monkeydoc Checks if the iterator has reached the end of the ring.
 		#end
 		Property AtEnd:Bool()
-			Return _index=_ring.Data.Tail
+			Return _count >= _ring.Length-1
 		End
 		
 		#rem monkeydoc The value currently pointed to by the iterator.
@@ -68,8 +71,8 @@ Class RingB<T,B> Implements IContainerB<T,B> Where B Implements IShort Or B Impl
 		#end
 		Method Bump()
 			AssertCurrent()
-			_index+=1
-			If _index=_ring.Capacity _index=0
+			_count+=1
+			_index = (_index - 1 + _ring.Capacity) Mod _ring.Capacity
 		End
 		
 		Method Erase()
@@ -109,7 +112,8 @@ Class RingB<T,B> Implements IContainerB<T,B> Where B Implements IShort Or B Impl
 	@return A ring iterator.	
 	#end
 	Method All:Iterator()
-		Return New Iterator( Self,_data.Head )
+		'Return New Iterator( Self,_data.Head )
+		Return New Iterator( Self,_data.Tail )
 	End
 	
 	Method Push( value:T )
