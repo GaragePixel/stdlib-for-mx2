@@ -6,8 +6,8 @@
 
 Namespace stdlib.syntax.makevars
 
-#Import "../../../types/types"
-#Import "variantcasts"
+'#Import "../../../types/types"
+'#Import "variantcasts"
 
 Using stdlib.types
 Using stdlib.syntax.variantcasts
