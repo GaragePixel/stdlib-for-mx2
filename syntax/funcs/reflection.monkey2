@@ -2,10 +2,6 @@
 
 #rem - Test:
 
-#Import "<aida_core>"
-
-Using aida_core..
-
 Struct Obj
 End 
 
