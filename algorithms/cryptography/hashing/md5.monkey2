@@ -3,11 +3,11 @@ Namespace stdlib.crypto.hashing.md5
 
 Private
 
-#Import "utils"
+'#Import "utils"
 
 Using stdlib.crypto.hashing.utils
 
-#Import "../../../io/stringio"
+'#Import "../../../io/stringio"
 
 Using stdlib.stringio
 
