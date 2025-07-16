@@ -1,9 +1,9 @@
 
 Namespace stdlib.stringio
 
-#Import "../plugins/libc/libc"
+'#Import "../plugins/libc/libc"
 
-#Import "../types/collections/collections"
+'#Import "../types/collections/collections"
 
 Using stdlib.plugins.libc
 
