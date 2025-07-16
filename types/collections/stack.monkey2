@@ -1,8 +1,8 @@
 
 Namespace std.collections
 
-#Import "../composites/tuples/tuple2"
-#Import "../../limits/limits"
+'#Import "../composites/tuples/tuple2"
+'#Import "../../limits/limits"
 
 Using stdlib.types..
 Using stdlib.limits
