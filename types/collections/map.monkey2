@@ -3,9 +3,9 @@ Namespace stdlib.collections
 
 Private 
 
-#Import "../composites/tuples/tuple2.monkey2"
+'#Import "../composites/tuples/tuple2.monkey2"
 
-#Import "../composites/tuples/tupleKV.monkey2"
+'#Import "../composites/tuples/tupleKV.monkey2"
 
 Using stdlib.types
 
