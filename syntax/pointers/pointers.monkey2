@@ -8,7 +8,7 @@
 
 Namespace stdlib.syntax.pointers
 
-#Import "../../config"
+'#Import "../../config"
 
 Using stdlib.config
 
