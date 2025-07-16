@@ -2,7 +2,7 @@
 
 Namespace stdlib.types.collections
 
-#Import "../../limits/limits"
+'#Import "../../limits/limits"
 
 Using stdlib.limits
 
