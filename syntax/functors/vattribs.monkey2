@@ -22,9 +22,9 @@ Namespace stdlib.syntax
 	End
 #end 
 
-#Import "../../types/types"
-#Import "../../system/reflection/reflection"
-#Import "../primitives/variants/variantcasts"
+'#Import "../../types/types"
+'#Import "../../system/reflection/reflection"
+'#Import "../primitives/variants/variantcasts"
 
 Using stdlib.types..
 Using stdlib.reflection
