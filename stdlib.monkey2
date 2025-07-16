@@ -25,7 +25,7 @@ Namespace stdlib
 
 #Import "limits/limits"								'NEW (2025) AND INTEGRATED!
 
-#Import "system/system"								'THREAD MODULE OF Monkey-v2018.07 INTEGRATED!
+#Import "system/system"								'THREAD AND REFLECTION MODULE OF Monkey-v2018.07 INTEGRATED!
 
 'Sub-systems:
 
