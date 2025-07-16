@@ -3,7 +3,7 @@ Namespace stdlib.crypto.hashing.sha256
 
 Private
 
-#Import "utils"
+'#Import "utils"
 
 Using stdlib.crypto.hashing.utils
 
