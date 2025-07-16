@@ -1,9 +1,9 @@
 
 Namespace stdlib.compression.zipfile
 
-#Import "../../../plugins/libc/libc"
+'#Import "../../../plugins/libc/libc"
 
-#Import "../../../plugins/miniz/miniz"
+'#Import "../../../plugins/miniz/miniz"
 
 Using stdlib.plugins.miniz
 
