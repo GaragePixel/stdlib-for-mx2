@@ -5,7 +5,7 @@ Namespace stdlib.io.jsonify
 
 Using stdlib.io.json
 
-#Import "../../math/math"
+'#Import "../../math/math"
 
 Using stdlib.math.types..
 
