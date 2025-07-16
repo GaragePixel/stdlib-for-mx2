@@ -3,15 +3,15 @@ Namespace stdlib.crypto.aes
 
 ' Originally a module from Jonathan Pittock
  
-#Import "../../../../plugins/libc/.."
+'#Import "../../../../plugins/libc/.."
 	
 Using stdlib.plugins.libc..
  
-#Import "../../memory/.."
+'#Import "../../memory/.."
 
-#Import "../../../../io/stringio"
+'#Import "../../../../io/stringio"
 
-#Import "<monkey>"
+'#Import "<monkey>"
 
 #Import "lib/aes.h"
 #Import "lib/aes.c"
