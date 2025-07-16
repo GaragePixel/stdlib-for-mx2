@@ -6,7 +6,7 @@
 
 Namespace stdlib.syntax.meta
 
-#Import "../../../types/types"
+'#Import "../../../types/types"
 
 Using stdlib.types
 
