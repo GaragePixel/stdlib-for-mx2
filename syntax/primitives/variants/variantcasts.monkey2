@@ -7,7 +7,7 @@ Namespace stdlib.syntax.variantcasts
 	'iDkP for GaragePixel
 	'	These sugars casts the internal defined types into variant.
 
-#Import "../../../types/builtin"
+'#Import "../../../types/builtin"
 
 Using stdlib.types
 
