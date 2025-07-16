@@ -1,6 +1,6 @@
 Namespace stdlib.syntax
 
-#Import "../../types/types"
+'#Import "../../types/types"
 
 Using stdlib.types..
 
