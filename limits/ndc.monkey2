@@ -4,8 +4,8 @@ Namespace stdlib.limits
 'idKp for GaragePixel
 '2023-12-26
 
-#Import "../types/aliases/bool8"
-#Import "../types/composites/bool8"
+'#Import "../types/aliases/bool8"
+'#Import "../types/composites/bool8"
 
 Using stdlib.types
 Using stdlib.types.bool8
