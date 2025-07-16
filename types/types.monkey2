@@ -1,6 +1,8 @@
 
 Namespace stdlib.types
 
+#Import "builtin"
+
 #Import "collections/collections"
 
 '#Import "../../monkey/math"
