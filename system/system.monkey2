@@ -24,7 +24,7 @@ Namespace stdlib.system
 #Import "process/process"
 #Import "process/processstream"
 
-#Import "io/filesystem/filesystem" 'not really needed here
+'#Import "io/filesystem/filesystem" 'not really needed here
 
 'Auxiliary-systems:
 
@@ -35,3 +35,7 @@ Namespace stdlib.system
 #Import "io/socket/socketstream"
 
 #Import "thread/thread"
+
+'Integrated:
+
+#import "reflection/reflection"					'INTEGRATED!
