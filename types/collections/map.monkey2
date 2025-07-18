@@ -790,7 +790,46 @@ Class Map<K,V>
 		If node Return node._value
 		Return Null
 	End
+
+	#rem monkeydoc Search if a contained value exists as the value of a key.
+	@author iDkP from GaragePixel
+	@since 2025-07-18
+	@param key The key.
+	@param key The values container. Accepts [[Array]], [[Stack]] and [[List]].
+	@return -1 if the key hasn't any contained values, or an index corresponding to the value's position in the container.
+	#end
+	Method Search:Int( key:K,values:Stack<V> )
+		'Added by iDkP from GaragePixel 2025-07-18
+		Return Search(key,values.Data)
+	End
 	
+	Method Search:Int( key:K,values:V[] )
+		'Added by iDkP from GaragePixel 2025-07-18
+		Local keynode:=FindNode(key)
+		If keynode
+			Local value:=FindNode(key).Value
+			Local valuesLength:=values.Length
+			For Local index:=0 Until valuesLength
+				If value=values[index] Return index
+			End 
+		End
+		Return -1
+	End
+
+	Method Search:Int( key:K,values:List<V> )
+		'Added by iDkP from GaragePixel 2025-07-18
+		Local keynode:=FindNode(key)
+		If keynode
+			Local value:=keynode.Value
+			Local index:Int=0
+			For Local item:=Eachin values
+				If value=item Return index
+				index+=1
+			End 
+		End 
+		Return -1
+	End
+
 	#rem monkeydoc Removes a key from the map.
 	@param key The key to remove.
 	@return True if the key was removed, or false if the key is not in the map.
