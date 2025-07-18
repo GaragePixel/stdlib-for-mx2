@@ -13,6 +13,7 @@ Namespace stdlib.syntax
 #Import "pointers/pointers"
 
 #Import "funcs/reflection"
+#Import "funcs/minmax"
 #Import "funcs/swaps"
 #Import "funcs/clippers/clips"
 #Import "funcs/clippers/trims"
@@ -20,7 +21,6 @@ Namespace stdlib.syntax
 #Import "funcs/clippers/wraps"
 #Import "funcs/clippers/frames"
 
-#Import "functors/minmax"
 #Import "functors/vattribs"
 #Import "functors/attribs"
 #Import "functors/foreach"
