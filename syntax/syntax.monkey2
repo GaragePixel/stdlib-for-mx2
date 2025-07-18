@@ -20,8 +20,10 @@ Namespace stdlib.syntax
 #Import "funcs/clippers/wraps"
 #Import "funcs/clippers/frames"
 
-#Import "functors/foreach"
 #Import "functors/vattribs"
 #Import "functors/attribs"
+#Import "functors/foreach"
+#Import "functors/assignif"
+#Import "functors/ifelse"
 
 #Import "aliases/aliases"
