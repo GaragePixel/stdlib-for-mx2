@@ -5,9 +5,6 @@ Namespace stdlib.syntax
 Since 2021? - 2025-02-02 - 2025-06-19 - 2025-06-21 (Aida 4)
 Author: iDkP from GaragePixel
 
-Purpose:
-	Review and completeness assessment of the stdlib.syntax array minilibrary.
-
 List of functionality:
 	- Copying (CopyTo for inlined usage)
 	- Reversal (full, subrange, pointer, inverse, pairwise, preserve)
@@ -15,25 +12,32 @@ List of functionality:
 	- Scaling and tiling (Stretch, Scale, Tile)
 	- Interleaving (Interleave)
 	- Patterned rearrangement (Twirl, Swap)
+	- Fill: Fill with single value or pattern
+	- Aggregation: Sum, Min, Max with inverse step
+	- Clamp/Clip: Bound all elements to a range
 
 TODO:
+A test To know which one is the faster:
+	- AssignIff(Max(Varptr(this[n]),Varptr(result))[0]<>this[n],Varptr(result))
+	- c=a[n];out = c < out ? c Else out
+
 Missing or possible extensions:
-	- Aggregation: Sum, Min, Max, Average.
-	- Set operations: Union, Intersection, Difference, Unique/Distinct.
-	- Chunking/Splitting: Split into fixed-size blocks, group by predicate.
-	- Flatten/Concat: For arrays-of-arrays.
-	- Fill: Fill with single value or pattern.
-	- Clamp/Clip: Bound all elements to a range.
-	- Sliding window: Windowed views for DSP, stats, ML.
+	- Aggregation: Average, complete min/max
+	- Set operations: Union, Intersection, Difference, Unique/Distinct
+	- Chunking/Splitting: Split into fixed-size blocks, group by predicate
+	- Flatten/Concat: For arrays-of-arrays
+	- Sliding window: Windowed views for DSP, stats, ML
+	- Reorganize the file, it's crappy actually
 
-Summary:
-	- For core permutations, copying, and pattern generation, your library is **complete and even advanced**.
+Possible application fields:
+	- For core permutations, copying, and pattern generation
+	- Graphics, DSP, procedural, and systems
+	
+Completion:
 	- For full "batteries-included" status, add functional, searching, set, and chunking utilities.
-	- For most projects—especially graphics, DSP, procedural, and systems—it is already a **top-tier array toolkit**.
-	- Documentation and naming make it both accessible and powerful.
-#end 
+#end
 
-Function CopyTo<T>:T[]( this:T[], out:T[], srcOffset:Int=0, dstOffset:Int=0, count:Int=Null )
+Function CopyTo<T>:T[]( this:T[],out:T[],srcOffset:Int=0,dstOffset:Int=0,count:Int=Null )
 	'
 	'A CopyTo who can be inlined
 	'Usage example:
@@ -51,10 +55,269 @@ End
 
 #rem monkeydoc @pro Return a copy of the array is needed
 #end
-Function Cpynd<T>:T[](data:T[],needed:Bool)
-    'Both useful and elegant^^
-    Return needed ? CopyTo(data,New T[data.Length]) Else data
+Function Cpynd<T>:T[]( data:T[],needed:Bool )
+	'Both useful and elegant^^
+	Return needed ? CopyTo(data,New T[data.Length]) Else data
 End
+
+' --- Bound all elements to a range:
+
+Function ClipArray<T1,T2,T3>( this:T1[],min:T2,max:T3 ) 		Where 	T1 Implements INumeric And
+	 																	T2 Implements INumeric And
+	 																	T3 Implements INumeric
+	 																	
+	'Note: The template <T1,T2,T3> cannot has T1 distingued from an array or anything else,
+	'leading a funcList.FindFunc() internal error, because the actual array class isn't a
+	'real class but, like Mark said, a pseudo-class. So we cannot derivated it from an
+	'interface for constraint inference. The name ClipArray was choosen to klunge it.
+
+	Local thisSize:=this.Size
+	For Local n:=0 until thisSize
+		Clip(Varptr(this[n]),Varptr(min),Varptr(max))
+	End
+End
+
+Function ClipArrayOver<T1,T2>( this:T1[],limit:T2 ) 			Where 	T1 Implements INumeric And
+	 																	T2 Implements INumeric
+	Local thisSize:=this.Size
+	For Local n:=0 until thisSize
+		ClipOver(Varptr(this[n]),Varptr(limit))
+	End
+End
+
+Function ClipArrayUnder<T1,T2>( this:T1[],limit:T2 ) 			Where 	T1 Implements INumeric And
+	 																	T2 Implements INumeric
+	Local thisSize:=this.Size
+	For Local n:=0 until thisSize
+		ClipUnder(Varptr(this[n]),Varptr(limit))
+	End
+End
+
+' --- Aggregations:
+
+Function Min<T>:T( this:T[],minlim:T=0 ) Where T Implements INumeric
+	Local thisSize:=this.Size
+	Local result:T=minlim 'implicit casting
+	For Local n:=0 Until thisSize
+		AssignIff(Min(Varptr(this[n]),Varptr(result))[0]<>this[n],Varptr(result))
+	End
+End
+
+Function Max<T>:T( this:T[],maxlim:T=LongMax ) Where T Implements INumeric
+	Local thisSize:=this.Size
+	Local result:T=maxlim 'auto and implicit casting
+	For Local n:=0 Until thisSize
+		AssignIff(Max(Varptr(this[n]),Varptr(result))[0]<>this[n],Varptr(result))
+	End
+End	
+
+Function Min<T>:T(a:T[],inverse:Bool8) Where T Implements INumeric
+
+	'iDkP from GaragePixel
+	'2025-02-18
+	
+	'Order n
+	
+	Local out:T
+	Local len:=T.Length
+	Local c:=out
+	Local starts:Int, ends:Int, shift:Int
+	
+	If inverse=False8
+		starts=len
+		ends=0
+		shift=-1
+	Else 
+		starts=0
+		ends=len
+		shift=1
+	End
+	
+	For Local n:=starts Until ends Step shift
+		c=a[n];out = c < out ? c Else out
+	End
+	
+	Return out
+End
+
+Function Max<T>:T(a:T[],inverse:Bool8) Where T Implements INumeric
+	
+	'iDkP from GaragePixel
+	'2025-02-18
+	
+	'Order n
+	
+	Local out:T
+	Local len:=T.Length
+	Local c:=out
+	Local starts:Int, ends:Int, shift:Int
+	
+	If last=False8
+		starts=len
+		ends=0
+		shift=-1
+	Else 
+		starts=0
+		ends=len
+		shift=1
+	End
+	
+	For Local n:=starts Until ends Step shift
+		c=a[n];out = c>=out ? c Else out
+	End
+	
+	Return out
+End
+
+Function Min<T>:T(a:T[],inverse:Bool) Where T Implements INumeric
+
+	'iDkP from GaragePixel
+	'2025-02-18
+	
+	'Order n
+	
+	Local out:T
+	Local len:=T.Length
+	Local c:=out
+	Local starts:Int, ends:Int, shift:Int
+	
+	If inverse=False
+		starts=len
+		ends=0
+		shift=-1
+	Else 
+		starts=0
+		ends=len
+		shift=1
+	End
+	
+	For Local n:=starts Until ends Step shift
+		c=a[n];out = c < out ? c Else out
+	End
+	
+	Return out
+End
+
+Function Max<T>:T(a:T[],inverse:Bool) Where T Implements INumeric
+	
+	'iDkP from GaragePixel
+	'2025-02-18
+	
+	'Order n
+	
+	Local out:T
+	Local len:=T.Length
+	Local c:=out
+	Local starts:Int, ends:Int, shift:Int
+	
+	If last=False
+		starts=len
+		ends=0
+		shift=-1
+	Else 
+		starts=0
+		ends=len
+		shift=1
+	End
+	
+	For Local n:=starts Until ends Step shift
+		c=a[n];out = c>=out ? c Else out
+	End
+	
+	Return out
+End
+
+Function Sum<T>:T( this:T[] ) Where T Implements INumeric
+	'Unsafe version, potentially faster
+	Local thisSize:=this.Size
+	Local result:T=0
+	For Local n:=0 Until thisSize
+		result+=this[n]
+	End
+	Return result
+End
+
+Function SumSafe<T>:T( this:T[] ) Where T Implements INumeric
+	'Safe version
+	If this
+		Local thisSize:=this.Size
+		If thisSize<>0
+			Local result:T=0
+			For Local n:=0 Until thisSize
+				result+=this[n]
+			End
+			Return result
+		Else
+			Return 0
+		End
+	End
+	Return Null
+End
+
+#rem monkeydoc @expert The length of the array.
+In the case of multi-dimensional arrays, the length of the array is the product
+of the sizes of all dimensions.
+#end
+Function Length<T,B>:B( this:T[] )
+	Return this.Length()
+End
+
+Function GetSizeInt<T>:Int( this:T[],dimension:Int )
+	'Gets the size of a single array dimension.
+	Return GetSize<T,Int,Int>( this )
+End
+
+Function GetSize<T,B,D>:B( this:T[],dimension:D )
+	'Gets the size of a single array dimension.
+	
+	'Note: the actual compiler 2025-07-17 will always return int (B=int)
+	'GetSizeInt and GetSize generic are so identical for now.
+	'In the future, GetSizeInt will be used as sugar but not in stdlib,
+	'maybe in a dedicated std wrote over, for beginners.
+	
+	'D datatype of is the pointer for each dimensions.
+	'Actually, the dimension is represented by an int and its max size
+	'is the  allowed by int adressage. If we want create many arrays
+	'some dimensions in byte, it will save many megabyte to use
+	'a certain type to reference the dimension of same type.
+	Return this.GetSize(dimension)
+End
+
+Function Resize<T,B>:B( this:T[],length:B )
+	'Resizes an array.
+	'Returns a copy of the array resized to length `length`.
+	'Note that this method does not modify this array in any way.
+	Return this.Resize(length)
+End
+
+Function Slice<T,B>:T[]( this:T[],from:B,copy:Bool=True )
+	'Extracts a subarray from the array.
+	'Returns an array consisting of all elements from `from` until (but not including) `tail`,
+	'or until the end of the string if `tail` is not specified.
+	'If either `from` or `tail` is negative, it represents an offset from the end of the array.
+	Return Slice<T,B>(from,Length<T,B>(this))
+End
+	
+Function Slice<T,B>:T[]( this:T[],from:B,tail:B,copy:Bool=True )
+	If copy Return this.Slice(from,tail)
+	this=this.Slice(from,tail)
+	Return this
+End
+
+Function Fill<T,B>( this:T[],value:T,from:B=0,toEnd:B=Null )
+	If toEnd=Null toEnd=this.Length 'auto
+	For Local n:=from Until toEnd
+		this[n]=value
+	End
+End
+Function FillFast<T>( this:T[],value:T )
+	If toEnd=Null toEnd=this.Length
+	For Local n:=0 Until toEnd
+		this[n]=value
+	End
+End
+
+'------------
 
 #rem monkeydoc hidden Merges two sorted arrays into a single sorted array.
 Merges the elements of arrays a and b, preserving order and stability.
@@ -73,7 +336,7 @@ On elements:
 @param b Second array.
 @return A new array containing all elements from a and b.
 #end
-Function Merge<T>:T[]( a:T[], b:T[] )
+Function Merge<T>:T[]( a:T[],b:T[] )
 	Local na:Int = a.Length
 	Local nb:Int = b.Length
 	Local res:T[] = New T[na + nb]
@@ -112,7 +375,7 @@ On elements [1, 2, 3, 4]
 
 @param arr Array to be reversed.
 #end
-Function Reverse<T>:T[]( arr:T[], copy:Bool=True )
+Function Reverse<T>:T[]( arr:T[],copy:Bool=True )
 
 	Local out:=Cpynd(arr, copy)
 	
@@ -143,7 +406,7 @@ On elements [1, 2, 3, 4] with start=1, atEnd=2
 @param start Index of the first element in the range.
 @param atEnd Index of the last element in the range (inclusive).
 #end
-Function Reverse<T>( data:T[], start:Int, atEnd:Int, copy:Bool=True )
+Function Reverse<T>( data:T[],start:Int,atEnd:Int,copy:Bool=True )
 	
 	Local out:=Cpynd(data, copy)
 	
@@ -158,7 +421,7 @@ Function Reverse<T>( data:T[], start:Int, atEnd:Int, copy:Bool=True )
 	Return out
 End
 
-Function Reverse<T>( data:T[], start:Int Ptr, atEnd:Int Ptr, copy:Bool=True )
+Function Reverse<T>( data:T[],start:Int Ptr,atEnd:Int Ptr,copy:Bool=True )
 	
 	Local out:=Cpynd(data, copy)
 	
@@ -193,7 +456,7 @@ Function Flip<T>:T[]( this:T[], copy:Bool=True )
 	Return out
 End
 
-Function Flipflap<T>:T[]( this:T[], preserve:Bool=False, copy:Bool=True )
+Function Flipflap<T>:T[]( this:T[],preserve:Bool=False,copy:Bool=True )
 	'Input (odd set):
 	'123456789
 	'Output with preserve=False (default):
@@ -242,7 +505,7 @@ Function Flipflap<T>:T[]( this:T[], preserve:Bool=False, copy:Bool=True )
 	Return result
 End
 
-Function Rotate<T>:T[]( this:T[], pivot:Int=Null, copy:Bool=True )
+Function Rotate<T>:T[]( this:T[],pivot:Int=Null,copy:Bool=True )
 	' Output (for pivot=4):
 	' 123456789 (input)
 	' 765432198
@@ -271,11 +534,11 @@ Function Rotate<T>:T[]( this:T[], pivot:Int=Null, copy:Bool=True )
 	Return Rot( this,vec,False )
 End
 
-Function Stretch<T>:T[]( this:T[], factor:Int=0, copy:Bool=True )
+Function Stretch<T>:T[]( this:T[],factor:Int=0,copy:Bool=True )
 	Return Scale(this,factor,copy)
 End
 
-Function Scale<T>:T[]( this:T[], factor:Int=0, copy:Bool=True )
+Function Scale<T>:T[]( this:T[],factor:Int=0,copy:Bool=True )
 	' Element-wise stretch/shrink of an array.
 	' Expansion: repeats each element by 'factor'.
 	' Contraction: keeps every abs(factor)-th element, always preserves first and last.
@@ -329,7 +592,7 @@ Function Scale<T>:T[]( this:T[], factor:Int=0, copy:Bool=True )
 	End
 End
 
-Function Tile<T>:T[]( this:T[], factor:Int=0, copy:Bool=True )
+Function Tile<T>:T[]( this:T[],factor:Int=0,copy:Bool=True )
 	' Expands or contracts the array by a scale factor.
 	' Examples:
 	'  with [1,2,3], Tile(3) → [1,2,3,1,2,3,1,2,3]
@@ -371,7 +634,7 @@ End
 @author: iDkP for GaragePixel,
 @since 2021?
 #end
-Function Rot<T>:T[]( arr:T[], shift:Int, copy:Bool=True )
+Function Rot<T>:T[]( arr:T[],shift:Int,copy:Bool=True )
 '	' this = "123456789"
 '	' Print Rot( this, -3 )
 '	' Output:
@@ -587,7 +850,7 @@ Function RotateByOffset<T>:T[]( this:T[],offset:Int=Null,copy:Bool=True )
 		k+=1
 	End
 	
-	If Not copy 
+	If Not copy
 		this=result
 		result=this
 	End
