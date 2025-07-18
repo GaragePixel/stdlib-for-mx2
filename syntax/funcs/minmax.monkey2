@@ -104,3 +104,36 @@ Function Max<T1,T2,T3>:T1(a:T1 Ptr,b:T2 Ptr,c:T3 Ptr) 		Where 	T1 Implements INu
 	'Note that byte with int,float,double are incompatible
 	Return Cast<T1>(a[0]<b[0] ? (b[0]<c[0] ? c[0] Else b[0]) Else (a[0]<c[0] ? c[0] Else a[0]))
 End
+
+Function Min<T>:T(a:T Ptr,b:T Ptr,c:T Ptr,d:T Ptr)
+	'Pointer version
+	'Order 4
+	Return Min(a,Min(b,Min(c,d)))
+End
+
+Function Max<T>:T(a:T Ptr,b:T Ptr,c:T Ptr,d:T Ptr)
+	'Pointer version
+	'Order 4
+	Return Max(a,Max(b,Max(c,d)))
+End
+
+Function SetMin<T>( a:T Ptr, b:T Ptr)
+	
+	'iDkP from GaragePixel
+	'2025-02-18	
+
+	'Pointer accelerations
+	If Pointer( b ) < Pointer( a )
+		Assign( a, b )
+	End
+End
+
+Function SetMax<T>( a:T Ptr, b:T Ptr)
+
+	'iDkP from GaragePixel
+	'2025-02-18
+	
+	If Pointer( b ) > Pointer( a )
+		Assign( a, b )
+	End
+End
