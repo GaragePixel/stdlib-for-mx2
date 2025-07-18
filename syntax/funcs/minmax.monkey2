@@ -37,10 +37,6 @@ Function Min<T1,T2>:T1(a:T1 Ptr,b:T2 Ptr)		 			Where 	T1 Implements INumeric And
 End
 
 Function Min<T>:T(a:T,b:T,c:T) 								Where 	T Implements INumeric
-	
-	'3 arguments breaks the overloading of the language min/max stuff
-	'So the language library non-native stuff was undoned,
-	'and in the the word we'll have peace!
 
 	Return a<b ? (a<c ? a Else c) Else (b<c ? c Else b)
 End
