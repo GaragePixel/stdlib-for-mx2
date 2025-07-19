@@ -4,6 +4,7 @@ Namespace stdlib.syntax
 #rem MiniLibrary: Arrays
 Since 2021? - 2025-02-02 - 2025-06-19 - 2025-06-21 (Aida 4)
 Author: iDkP from GaragePixel
+#end
 
 List of functionality:
 	- Copying (CopyTo for inlined usage)
