@@ -13,8 +13,9 @@ List of functionality:
 	- Interleaving (Interleave)
 	- Patterned rearrangement (Twirl, Swap)
 	- Fill: Fill with single value or pattern
-	- Aggregation: Sum, Min, Max with inverse step
+	- Aggregation: Sum, Min, Max with inverse step, Average
 	- Clamp/Clip: Bound all elements to a range
+	- Chunking/Splitting: Split into fixed-size blocks
 
 TODO:
 A test To know which one is the faster:
@@ -22,9 +23,8 @@ A test To know which one is the faster:
 	- c=a[n];out = c < out ? c Else out
 
 Missing or possible extensions:
-	- Aggregation: Average, complete min/max
 	- Set operations: Union, Intersection, Difference, Unique/Distinct
-	- Chunking/Splitting: Split into fixed-size blocks, group by predicate
+	- Chunking/Splitting: group by predicate
 	- Flatten/Concat: For arrays-of-arrays
 	- Sliding window: Windowed views for DSP, stats, ML
 	- Reorganize the file, it's crappy actually
@@ -36,6 +36,129 @@ Possible application fields:
 Completion:
 	- For full "batteries-included" status, add functional, searching, set, and chunking utilities.
 #end
+
+'TO TEST:
+Function SlidingRead<T,ChunkFormat>( 	this:T[],
+	
+										'data to write into:
+											data:T Ptr,
+	
+										'dimension x,y of the unidimensional array:
+											length:ChunkFormat Ptr,
+											height:ChunkFormat Ptr,
+													
+										'position of the window:
+											offsetX:UInt,
+											offsetY:UInt,
+											offsetLength:ChunkFormat,
+											offsetHeight:ChunkFormat,
+													
+										'Pointer in the window:
+											ptrX:UInt,
+											ptrY:UInt	)
+	
+	'Return the content
+	data[0]=this[	SlidingGetPtr(	Varptr(length),
+									Varptr(height),
+											
+									Varptr(offsetX),
+									Varptr(offsetY),
+									Varptr(offsetLength),
+									Varptr(offsetHeight),
+										
+									Varptr(ptrX),
+									Varptr(ptrY))	]
+End
+
+'TO TEST:
+Function SlidingWrite<T,ChunkFormat>( 	this:T[],
+	
+										'data to write/set:
+											data:T Ptr,
+	
+										'dimension x,y of the unidimensional array:
+											length:ChunkFormat Ptr,
+											height:ChunkFormat Ptr,
+													
+										'position of the window:
+											offsetX:UInt,
+											offsetY:UInt,
+											offsetLength:ChunkFormat,
+											offsetHeight:ChunkFormat,
+													
+										'Pointer in the window:
+											ptrX:UInt,
+											ptrY:UInt	)
+	
+	'Return the content
+	data[0]=this[	SlidingGetPtr(	Varptr(length),
+									Varptr(height),
+											
+									Varptr(offsetX),
+									Varptr(offsetY),
+									Varptr(offsetLength),
+									Varptr(offsetHeight),
+										
+									Varptr(ptrX),
+									Varptr(ptrY))	]
+End
+
+Private 'Get a pointer for read/write in a virtual 2d array from a sliding window
+Function SlidingGetPtr<T,ChunkFormat>:ChunkFormat Ptr( 	this:T[],
+	
+														'dimension x,y of the unidimensional array:
+															length:ChunkFormat Ptr,
+															height:ChunkFormat Ptr,
+																					
+														'position of the window:
+															offsetX:UInt Ptr,
+															offsetY:UInt Ptr,
+															offsetLength:ChunkFormat Ptr,
+															offsetHeight:ChunkFormat Ptr,
+																					
+														'Pointer in the window:
+															ptrX:UInt Ptr,
+															ptrY:UInt Ptr	)
+
+	'The pointer is inside the window
+	ptrX[0]=ptrX[0]>offsetLength[0] ? offsetLength[0] Else ptrX[0] 'guard
+	ptrY[0]=ptrY[0]>offsetHeight[0] ? offsetHeight[0] Else ptrY[0] 'guard
+	
+	'The window is inside the 2d array
+	offsetX[0]=offsetX[0]<=length[0]-offsetLength[0] ? offsetX[0] Else length[0]-offsetLength[0] 'guard, here <= avoids sub (edge case)
+	offsetY[0]=offsetY[0]<=height[0]-offsetHeight[0] ? offsetY[0] Else height[0]-offsetHeight[0] 'guard, here <= avoids sub (edge case)
+	
+	'Shift the pointer inside the 2d array
+	ptrX[0]+=offsetX[0]
+	ptrY[0]+=offsetY[0]
+	
+	'Pointer from 2d array to 1d array
+	ptrY[0]*=length[0]-1
+	ptrX[0]+=ptrY[0]
+	
+	'Return the content
+	Return ptrX
+End
+Public
+
+'TO TEST:
+Function Splitting<T>:T[][]( this:T[],chunksLength:Int )
+	'ToTest
+	Local thisLength:=this.Length
+	Local chunckNb:=Ceil(thisLength/chunksLength)
+	Local result:T[]=T[chunckNb]
+	Local toEnd:Int
+	Local limEnd:Int
+	For Local n:=0 Until chunckNb
+		T[n]=T[chunksLength]
+		limEnd=n*chunksLength+chunksLength
+		toEnd=limEnd>thisLength ? thisLength Else limEnd
+		this.CopyTo(result[n],n*chunksLength,0,toEnd)
+	End 
+	Return result
+End 
+
+'---
 
 Function CopyTo<T>:T[]( this:T[],out:T[],srcOffset:Int=0,dstOffset:Int=0,count:Int=Null )
 	'
@@ -95,32 +218,16 @@ End
 
 ' --- Aggregations:
 
-Function Min<T>:T( this:T[],minlim:T=0 ) Where T Implements INumeric
-	Local thisSize:=this.Size
-	Local result:T=minlim 'implicit casting
-	For Local n:=0 Until thisSize
-		AssignIff(Min(Varptr(this[n]),Varptr(result))[0]<>this[n],Varptr(result))
-	End
-End
-
-Function Max<T>:T( this:T[],maxlim:T=LongMax ) Where T Implements INumeric
-	Local thisSize:=this.Size
-	Local result:T=maxlim 'auto and implicit casting
-	For Local n:=0 Until thisSize
-		AssignIff(Max(Varptr(this[n]),Varptr(result))[0]<>this[n],Varptr(result))
-	End
-End	
-
-Function Min<T>:T(a:T[],inverse:Bool8) Where T Implements INumeric
+Function Min<T,Boolean>:T(a:T[],inverse:Boolean=False8,minlim:T=0) 			Where 		T Implements INumeric and
+																						Boolean=Bool Or Boolean=Bool8
 
 	'iDkP from GaragePixel
-	'2025-02-18
+	'2025-02-18 - 2025-07-19
 	
 	'Order n
 	
-	Local out:T
+	Local out:T=minlim 'implicit casting
 	Local len:=T.Length
-	Local c:=out
 	Local starts:Int, ends:Int, shift:Int
 	
 	If inverse=False8
@@ -134,25 +241,28 @@ Function Min<T>:T(a:T[],inverse:Bool8) Where T Implements INumeric
 	End
 	
 	For Local n:=starts Until ends Step shift
-		c=a[n];out = c < out ? c Else out
+'		c=a[n];out = c < out ? c Else out
+		AssignIff(Min(Varptr(this[n]),Varptr(out))[0]<this[n],Varptr(out))
 	End
 	
 	Return out
 End
 
-Function Max<T>:T(a:T[],inverse:Bool8) Where T Implements INumeric
-	
+Function Max<T,Boolean>:T( this:T[],inverse:Boolean=False8,maxlim:T=LongMax ) Where 	T Implements INumeric And
+																						Boolean=Bool Or Boolean=Bool8
+
 	'iDkP from GaragePixel
-	'2025-02-18
+	'2025-02-18 - 2025-07-19
 	
 	'Order n
-	
-	Local out:T
+
+	Local out:T=maxlim 'auto and implicit casting
+
+	'Local out:T
 	Local len:=T.Length
-	Local c:=out
 	Local starts:Int, ends:Int, shift:Int
 	
-	If last=False8
+	If inverse=False8
 		starts=len
 		ends=0
 		shift=-1
@@ -161,71 +271,14 @@ Function Max<T>:T(a:T[],inverse:Bool8) Where T Implements INumeric
 		ends=len
 		shift=1
 	End
-	
+
 	For Local n:=starts Until ends Step shift
-		c=a[n];out = c>=out ? c Else out
+		'c=a[n];out = c>=out ? c Else out
+		AssignIff(Max(Varptr(this[n]),Varptr(out))[0]<>this[n],Varptr(out))
 	End
 	
 	Return out
-End
-
-Function Min<T>:T(a:T[],inverse:Bool) Where T Implements INumeric
-
-	'iDkP from GaragePixel
-	'2025-02-18
-	
-	'Order n
-	
-	Local out:T
-	Local len:=T.Length
-	Local c:=out
-	Local starts:Int, ends:Int, shift:Int
-	
-	If inverse=False
-		starts=len
-		ends=0
-		shift=-1
-	Else 
-		starts=0
-		ends=len
-		shift=1
-	End
-	
-	For Local n:=starts Until ends Step shift
-		c=a[n];out = c < out ? c Else out
-	End
-	
-	Return out
-End
-
-Function Max<T>:T(a:T[],inverse:Bool) Where T Implements INumeric
-	
-	'iDkP from GaragePixel
-	'2025-02-18
-	
-	'Order n
-	
-	Local out:T
-	Local len:=T.Length
-	Local c:=out
-	Local starts:Int, ends:Int, shift:Int
-	
-	If last=False
-		starts=len
-		ends=0
-		shift=-1
-	Else 
-		starts=0
-		ends=len
-		shift=1
-	End
-	
-	For Local n:=starts Until ends Step shift
-		c=a[n];out = c>=out ? c Else out
-	End
-	
-	Return out
-End
+End	
 
 Function Sum<T>:T( this:T[] ) Where T Implements INumeric
 	'Unsafe version, potentially faster
@@ -253,6 +306,19 @@ Function SumSafe<T>:T( this:T[] ) Where T Implements INumeric
 	End
 	Return Null
 End
+
+#rem monkeydoc Average the values from a stack.
+@author iDkP from GaragePixel
+@since 2025-07-19
+#end 
+Function Avr<T>:T( this:T[] ) Where T Implements INumeric And T<>Bool
+	Local s:Double=0 'Sure that we'll fall in the larger range
+	Local len:=this.Size
+	For Local n:T=0 Until len
+		s+=this[n]
+	End 
+	Return s/len
+End 
 
 #rem monkeydoc @expert The length of the array.
 In the case of multi-dimensional arrays, the length of the array is the product
