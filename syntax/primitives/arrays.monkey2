@@ -16,6 +16,7 @@ List of functionality:
 	- Aggregation: Sum, Min, Max with inverse step, Average
 	- Clamp/Clip: Bound all elements to a range
 	- Chunking/Splitting: Split into fixed-size blocks
+	- Sliding window: Windowed views for DSP, stats, ML
 
 TODO:
 A test To know which one is the faster:
@@ -26,7 +27,6 @@ Missing or possible extensions:
 	- Set operations: Union, Intersection, Difference, Unique/Distinct
 	- Chunking/Splitting: group by predicate
 	- Flatten/Concat: For arrays-of-arrays
-	- Sliding window: Windowed views for DSP, stats, ML
 	- Reorganize the file, it's crappy actually
 
 Possible application fields:
@@ -37,7 +37,114 @@ Completion:
 	- For full "batteries-included" status, add functional, searching, set, and chunking utilities.
 #end
 
-'TO TEST:
+'Extract (copy) and virtual 2d array window
+Function SlidingExtract<T,ChunkFormat>(	src:T[], 'The source
+											srcLength:ChunkFormat Ptr,
+											srcHeight:ChunkFormat Ptr,
+											
+										'position of the window to extract:
+											srcOffsetX:UInt,
+											srcOffsetY:UInt,
+											srcOffsetLength:ChunkFormat,
+											srcOffsetHeight:ChunkFormat,
+											
+										'destination array reference
+											dst:T[]	)
+
+	#rem  
+	
+		- Example: 
+			scr:
+				****** length: 6
+				***12* height: 3
+				***34* window:
+							offsetx: 4
+							offsety: 2
+							offsetLength: 2
+							offsetHeight: 2
+			result:
+				1234
+	#end
+End 
+
+'Insert (paste) a virtual 2d array window
+Function SlidingInsert<T,ChunkFormat>(	src:T[], 'The source
+											srcLength:ChunkFormat Ptr,
+											srcHeight:ChunkFormat Ptr,
+											
+										'destination array reference
+										dst:T[],
+
+										'position of the window to extract:
+											dstOffsetX:UInt,
+											dstOffsetY:UInt,
+											dstOffsetLength:ChunkFormat,
+											dstOffsetHeight:ChunkFormat	)
+
+	#rem  
+	
+		- Example: 
+			scr:
+				1234 -> 12 srcLength: 2
+						34 srcHeight: 2
+			
+			result (dest):
+				****** dstLength: 6
+				***12* dstHeight: 3
+				***34* window:
+							dstOffsetx: 4
+							dstOffsety: 2
+							dstOffsetLength: 2
+							dstOffsetHeight: 2
+	#end
+End 
+
+'Copy a virtual 2d array to another virtual 2d array
+Function SlidingCopyTo<T,ChunkFormat>( 	src:T[], 'The source
+											srcLength:ChunkFormat Ptr,
+											srcHeight:ChunkFormat Ptr,
+
+										'position of the scr window:
+											srcOffsetX:UInt,
+											srcOffsetY:UInt,
+											srcOffsetLength:ChunkFormat,
+											srcOffsetHeight:ChunkFormat,
+
+										dest:T[], 'the destination array
+											dstLength:ChunkFormat Ptr,
+											dstHeight:ChunkFormat Ptr,
+
+										'position of the dest window:
+											dstOffsetX:UInt,
+											dstOffsetY:UInt	)
+	#rem  
+	
+		- Example: 
+			scr:
+				****** length: 6
+				***00* height: 3
+				***00* window:
+							offsetx: 4
+							offsety: 2
+							offsetLength: 2
+							offsetHeight: 2
+			dest
+			
+				****** length: 6
+				**X*** height: 4
+				****** window:
+				******	offsetx: 3
+						offsety: 2
+						
+			result:
+				******
+				**00**
+				**00**
+				******		
+	#end
+End 
+
+'Read a window from a virtual 2d array to another virtual 2d array
 Function SlidingRead<T,ChunkFormat>( 	this:T[],
 	
 										'data to write into:
@@ -58,7 +165,9 @@ Function SlidingRead<T,ChunkFormat>( 	this:T[],
 											ptrY:UInt	)
 	
 	'Return the content
-	data[0]=this[	SlidingGetPtr(	Varptr(length),
+	data[0]=this[	SlidingGetPtr(	this,
+	
+									Varptr(length),
 									Varptr(height),
 											
 									Varptr(offsetX),
@@ -70,7 +179,7 @@ Function SlidingRead<T,ChunkFormat>( 	this:T[],
 									Varptr(ptrY))	]
 End
 
-'TO TEST:
+'Write a window from a virtual 2d array to another virtual 2d array
 Function SlidingWrite<T,ChunkFormat>( 	this:T[],
 	
 										'data to write/set:
@@ -91,7 +200,9 @@ Function SlidingWrite<T,ChunkFormat>( 	this:T[],
 											ptrY:UInt	)
 	
 	'Return the content
-	data[0]=this[	SlidingGetPtr(	Varptr(length),
+	data[0]=this[	SlidingGetPtr(	this,
+	
+									Varptr(length),
 									Varptr(height),
 											
 									Varptr(offsetX),
@@ -103,7 +214,7 @@ Function SlidingWrite<T,ChunkFormat>( 	this:T[],
 									Varptr(ptrY))	]
 End
 
-Private 'Get a pointer for read/write in a virtual 2d array from a sliding window
+'Get a pointer for read/write in a virtual 2d array from a sliding window
 Function SlidingGetPtr<T,ChunkFormat>:ChunkFormat Ptr( 	this:T[],
 	
 														'dimension x,y of the unidimensional array:
@@ -139,7 +250,6 @@ Function SlidingGetPtr<T,ChunkFormat>:ChunkFormat Ptr( 	this:T[],
 	'Return the content
 	Return ptrX
 End
-Public
 
 'TO TEST:
 Function Splitting<T>:T[][]( this:T[],chunksLength:Int )
