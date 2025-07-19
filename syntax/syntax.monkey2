@@ -5,7 +5,7 @@ Namespace stdlib.syntax
 #Import "consts/logicals"
 #Import "consts/strings"
 
-#Import "primitives/arrays"
+#Import "primitives/arrays/arrays"
 #Import "primitives/variants/variantcasts"
 #Import "primitives/variants/meta"
 #Import "primitives/variants/makevars"
