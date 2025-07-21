@@ -194,7 +194,24 @@ Const True8:Bool8=$1
 ' version for the old Bool data type, per example NandBool(False,False) who will returns a heavy int32 as boolean,
 ' but Nand:Bool8(False,False) will returns a light byte as boolean.
 
-' Conversion from/to the old bool type
+' Conversion from/to the old bool type and ternary operator's result
+
+#rem monkeydoc Bool8 to Ternary.
+@author iDkP from GaragePixel
+@since 2025-07-21
+Implicite conversion from bool to int is possible. In this case:
+- if v=True8 return 1
+- if v=False8 return 0
+But this function is special:
+- if v=True8 return 1
+- if v=False8 return -1
+... as it's intented to be used to cast a binary compare functions, sometimes with a sort.
+#end 
+Function Bool8ToTernary:Int( v:Bool8 )
+	'if v=true return 1
+	'if v=false return -1
+	Return v=False8 ? -1 Else v
+End
 
 Function FromBool:Bool8(this:Bool)
 	Return Cast<Bool8>(this)
