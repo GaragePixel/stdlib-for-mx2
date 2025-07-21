@@ -21,6 +21,23 @@ Alias BoolArray:Bool[] 'Added iDkP 2025-07-09!
 
 '---------------------- Utils: Old Bool type
 
+#rem monkeydoc Bool to Ternary.
+@author iDkP from GaragePixel
+@since 2025-07-21
+Implicite conversion from bool to int is possible. In this case:
+- if v=True return 1
+- if v=False return 0
+But this function is special:
+- if v=True return 1
+- if v=False return -1
+... as it's intented to be used to cast a binary compare functions, sometimes with a sort.
+#end 
+Function BoolToTernary:Int( v:Bool )
+	'if v=true return 1
+	'if v=false return -1
+	Return v=False ? -1 Else v
+End
+
 Function Is:Bool(a:Bool)
 	'Deprecated int32 boolean version, for the reciprocal
 	Return a=True
